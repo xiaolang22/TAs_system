@@ -4,7 +4,7 @@
 
 ### linkedin.com
 
-![alt text](linkedin.png)
+![alt text](images/linkedin.png)
 
 - **Analysis focus**: Job posting process, CV screening mechanism, and candidate matching presentation.
 - **Key findings**:
@@ -13,7 +13,7 @@
 
 ### passport.lagou.com
 
-![alt text](lagou.png)
+![alt text](images/lagou.png)
 
 - **Analysis focus**: Recruiter (MO) candidate management interface, sorting/filtering functions, and notification mechanisms.
 - **Key findings**:
@@ -66,7 +66,7 @@ An online questionnaire was distributed to students at BUPT International School
 
 ### Questionnaire
 
-![alt text](Questionnaire.png)
+![alt text](images/Questionnaire.png)
 
 ### Survey Results
 
