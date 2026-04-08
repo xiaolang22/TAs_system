@@ -18,7 +18,7 @@
 
 下面以**TA修改个人资料**的场景为例，展示包含各个组件的完整业务流程：
 
-![[Pasted image 20260408184229.png]]
+<img src="images/pipline.png" width="300" alt="描述">
 
 
 
