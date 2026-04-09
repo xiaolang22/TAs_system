@@ -9,7 +9,18 @@
 </head>
 <body>
 <main class="container">
-    <h1>Create / Edit Applicant Profile</h1>
+    <header class="page-header">
+        <div>
+            <h1>Create / Edit Applicant Profile</h1>
+            <p class="hint">Signed in as <strong>${loginUser.role}</strong> (<code>${loginUser.username}</code>)</p>
+        </div>
+        <div class="header-actions">
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
+            <form method="post" action="${pageContext.request.contextPath}/logout">
+                <button type="submit" class="secondary-btn">Logout</button>
+            </form>
+        </div>
+    </header>
     <p class="hint">US01: enter and update your profile information.</p>
 
     <form method="get" action="${pageContext.request.contextPath}/profile" class="lookup-form">
