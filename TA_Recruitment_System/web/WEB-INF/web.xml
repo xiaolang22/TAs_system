@@ -21,6 +21,16 @@
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PostJobServlet</servlet-name>
+        <servlet-class>com.group19.servlet.PostJobServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PostJobServlet</servlet-name>
+        <url-pattern>/mo/post-job</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
