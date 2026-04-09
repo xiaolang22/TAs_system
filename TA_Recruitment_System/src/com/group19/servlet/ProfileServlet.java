@@ -2,6 +2,7 @@ package com.group19.servlet;
 
 import com.group19.dao.TADao;
 import com.group19.dto.ServiceResult;
+import com.group19.model.LoginUser;
 import com.group19.model.TA;
 import com.group19.service.ProfileService;
 import jakarta.servlet.ServletException;
@@ -47,6 +48,16 @@ public class ProfileServlet extends HttpServlet {
 
         if ("true".equalsIgnoreCase(req.getParameter("saved"))) {
             req.setAttribute("success", "Profile saved successfully.");
+        }
+
+        if (req.getAttribute("profile") == null) {
+            LoginUser loginUser = (LoginUser) req.getAttribute("loginUser");
+            if (loginUser != null && "TA".equalsIgnoreCase(loginUser.getRole())) {
+                TA draft = new TA();
+                draft.setName(loginUser.getDisplayName());
+                draft.setStudentId(loginUser.getUserId());
+                req.setAttribute("profile", draft);
+            }
         }
 
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
