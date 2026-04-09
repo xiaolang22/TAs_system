@@ -7,18 +7,21 @@ import com.group19.util.JsonFileUtil;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JobDao {
+    private final Path jobFilePath;
+    private final Type listType = new TypeToken<List<Job>>() {
+    }.getType();
 
-    private static final Path FILE_PATH = Paths.get("data", "jobs.json");
+    public JobDao(Path jobFilePath) {
+        this.jobFilePath = jobFilePath;
+    }
 
     public List<Job> findAll() {
-        Type listType = new TypeToken<List<Job>>() {}.getType();
         try {
-            List<Job> jobs = JsonFileUtil.readList(FILE_PATH, listType);
+            List<Job> jobs = JsonFileUtil.readList(jobFilePath, listType);
             return jobs != null ? jobs : new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,7 +33,7 @@ public class JobDao {
         List<Job> jobs = findAll();
         jobs.add(job);
         try {
-            JsonFileUtil.writeList(FILE_PATH, jobs);
+            JsonFileUtil.writeList(jobFilePath, jobs);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
