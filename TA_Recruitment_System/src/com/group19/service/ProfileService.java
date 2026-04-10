@@ -50,14 +50,25 @@ public class ProfileService {
             return ServiceResult.failure(String.join(" ", errors));
         }
 
+        String normalizedStudentId = normalize(studentId);
+        TA existing = null;
+        try {
+            existing = taDao.findByStudentId(normalizedStudentId);
+        } catch (IOException ignored) {
+            // If reading fails, we still allow saving profile fields and return a save error if write fails later.
+        }
+
         TA profile = new TA(
                 normalize(name),
-                normalize(studentId),
+                normalizedStudentId,
                 normalize(email),
                 normalize(programme),
                 normalize(skills),
                 normalize(availability));
         profile.setUpdatedAt(LocalDateTime.now().format(TS_FORMATTER));
+        if (existing != null && !isBlank(existing.getCvFilePath())) {
+            profile.setCvFilePath(existing.getCvFilePath());
+        }
 
         try {
             TA saved = taDao.saveOrUpdate(profile);
