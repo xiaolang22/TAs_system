@@ -5,6 +5,7 @@ import com.group19.dto.ServiceResult;
 import com.group19.model.LoginUser;
 import com.group19.model.TA;
 import com.group19.service.ProfileService;
+import com.group19.util.FileUploadUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,6 +51,10 @@ public class ProfileServlet extends HttpServlet {
             req.setAttribute("success", "Profile saved successfully.");
         }
 
+        if ("true".equalsIgnoreCase(req.getParameter("cvSaved"))) {
+            req.setAttribute("success", "CV uploaded successfully.");
+        }
+
         if (req.getAttribute("profile") == null) {
             LoginUser loginUser = (LoginUser) req.getAttribute("loginUser");
             if (loginUser != null && "TA".equalsIgnoreCase(loginUser.getRole())) {
@@ -58,6 +63,11 @@ public class ProfileServlet extends HttpServlet {
                 draft.setStudentId(loginUser.getUserId());
                 req.setAttribute("profile", draft);
             }
+        }
+
+        TA profile = (TA) req.getAttribute("profile");
+        if (profile != null) {
+            req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profile.getCvFilePath()));
         }
 
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);

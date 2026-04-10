@@ -34,6 +34,18 @@
     <p class="alert success ${empty success ? 'hidden' : ''}">${success}</p>
     <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
+    <section class="card">
+        <h2>Upload CV</h2>
+        <p class="hint">US02: upload a PDF or DOC/DOCX file. The latest upload will replace the previous one.</p>
+        <p class="hint">Current CV: <strong>${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
+        <form method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
+            <input type="hidden" name="studentId" value="${profile.studentId}">
+            <label for="cvFile">Choose file *</label>
+            <input id="cvFile" name="cvFile" type="file" accept=".pdf,.doc,.docx" required>
+            <button type="submit">Upload CV</button>
+        </form>
+    </section>
+
     <form method="post" action="${pageContext.request.contextPath}/profile" class="profile-form">
         <label for="name">Name *</label>
         <input id="name" name="name" type="text" value="${profile.name}" required>

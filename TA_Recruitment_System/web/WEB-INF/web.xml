@@ -53,6 +53,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
     </filter-mapping>
 
@@ -94,6 +99,16 @@
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.UploadCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
     </servlet-mapping>
 
     <servlet>

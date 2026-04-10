@@ -41,6 +41,11 @@ public class AuthFilter implements Filter {
             return;
         }
 
+        if ("/ta/upload-cv".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can upload CV.");
+            return;
+        }
+
         if ("/mo/post-job".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access post job.");
             return;
