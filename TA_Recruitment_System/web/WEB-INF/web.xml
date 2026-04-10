@@ -36,6 +36,11 @@
         <url-pattern>/logout</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/post-job</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.group19.servlet.LoginServlet</servlet-class>
