@@ -44,6 +44,7 @@ public class ProfileService {
             String email,
             String programme,
             String skills,
+            String experience,
             String availability) {
         List<String> errors = validate(name, studentId, email, programme, skills, availability);
         if (!errors.isEmpty()) {
@@ -56,6 +57,7 @@ public class ProfileService {
                 normalize(email),
                 normalize(programme),
                 normalize(skills),
+                normalize(experience),
                 normalize(availability));
         profile.setUpdatedAt(LocalDateTime.now().format(TS_FORMATTER));
 

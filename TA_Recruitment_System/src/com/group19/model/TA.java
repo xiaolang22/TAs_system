@@ -6,18 +6,28 @@ public class TA {
     private String email;
     private String programme;
     private String skills;
+    private String experience;
     private String availability;
+    private String cvFileName;
     private String updatedAt;
 
     public TA() {
     }
 
-    public TA(String name, String studentId, String email, String programme, String skills, String availability) {
+    public TA(
+            String name,
+            String studentId,
+            String email,
+            String programme,
+            String skills,
+            String experience,
+            String availability) {
         this.name = name;
         this.studentId = studentId;
         this.email = email;
         this.programme = programme;
         this.skills = skills;
+        this.experience = experience;
         this.availability = availability;
     }
 
@@ -67,6 +77,22 @@ public class TA {
 
     public void setAvailability(String availability) {
         this.availability = availability;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getCvFileName() {
+        return cvFileName;
+    }
+
+    public void setCvFileName(String cvFileName) {
+        this.cvFileName = cvFileName;
     }
 
     public String getUpdatedAt() {

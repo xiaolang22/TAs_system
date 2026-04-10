@@ -10,15 +10,27 @@
         <param-name>taDataFile</param-name>
         <param-value>/data/tas.json</param-value>
     </context-param>
+    <context-param>
+        <param-name>uploadDir</param-name>
+        <param-value>/uploads</param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>com.group19.servlet.ProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.UploadCVServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <url-pattern>/upload-cv</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
