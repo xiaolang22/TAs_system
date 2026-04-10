@@ -88,7 +88,7 @@
                 item.candidateName || "-",
                 item.studentId || "-",
                 item.candidateSkillsText || "-",
-                `${Number(item.matchScore || 0)}%`,
+                String(Number(item.matchScore || 0)) + "%",
                 missingSkills,
                 item.note || "-"
             ];
