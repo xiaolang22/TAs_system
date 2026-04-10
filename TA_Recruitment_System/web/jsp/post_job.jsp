@@ -37,7 +37,7 @@
 
         .card {
             width: 100%;
-            max-width: 720px;
+            max-width: 760px;
             background: #ffffff;
             border-radius: 20px;
             padding: 32px 28px 24px;
@@ -68,6 +68,39 @@
             font-size: 16px;
             color: #475569;
             line-height: 1.6;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .action-link {
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-weight: 700;
+        }
+
+        .action-link.primary {
+            background: #4763e4;
+            color: #ffffff;
+        }
+
+        .action-link.primary:hover {
+            background: #3d57d0;
+        }
+
+        .action-link.secondary {
+            background: #eef2ff;
+            color: #334155;
+        }
+
+        .action-link.secondary:hover {
+            background: #e2e8f0;
         }
 
         .info-box {
@@ -177,22 +210,6 @@
             background: #3d57d0;
         }
 
-        .footer-link {
-            margin-top: 18px;
-            text-align: center;
-        }
-
-        .footer-link a {
-            color: #4763e4;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .footer-link a:hover {
-            text-decoration: underline;
-        }
-
         @media (max-width: 700px) {
             .card {
                 padding: 24px 18px 20px;
@@ -219,6 +236,11 @@
         <p class="subtitle">
             Create a new TA recruitment post for applicants.
         </p>
+
+        <div class="action-row">
+            <a class="action-link primary" href="<%= request.getContextPath() %>/mo/jobs">View Job List</a>
+            <a class="action-link secondary" href="<%= request.getContextPath() %>/home">Back to Home</a>
+        </div>
 
         <div class="info-box">
             <strong>MO Workspace</strong>
@@ -306,10 +328,6 @@
 
             <button class="btn" type="submit">Post Job</button>
         </form>
-
-        <div class="footer-link">
-            <a href="<%= request.getContextPath() %>/home">Back to Home</a>
-        </div>
     </div>
 </div>
 </body>

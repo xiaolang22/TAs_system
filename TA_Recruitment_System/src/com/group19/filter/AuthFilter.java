@@ -10,6 +10,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
@@ -43,6 +44,16 @@ public class AuthFilter implements Filter {
 
         if ("/mo/post-job".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access post job.");
+            return;
+        }
+
+        if ("/mo/jobs".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access job list.");
+            return;
+        }
+
+        if ("/mo/applications".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can manage applications.");
             return;
         }
 
