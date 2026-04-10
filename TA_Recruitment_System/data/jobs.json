@@ -1,0 +1,26 @@
+[
+  {
+    "jobId": "job-001",
+    "title": "Introduction to Java Teaching Assistant",
+    "category": "TA",
+    "description": "Help with grading assignments, holding office hours, and assisting students with Java programming concepts.",
+    "requirements": "Proficiency in Java, good communication skills, previous TA experience preferred",
+    "hours": "10 hours/week",
+    "schedule": "Monday, Wednesday, Friday 2-4pm",
+    "deadline": "2026-04-30",
+    "status": "OPEN",
+    "createdAt": "2026-04-09T10:00:00"
+  },
+  {
+    "jobId": "job-002",
+    "title": "Data Structures Exam Invigilator",
+    "category": "Invigilator",
+    "description": "Invigilate the midterm exam for Data Structures course.",
+    "requirements": "Reliable, punctual, able to maintain exam integrity",
+    "hours": "3 hours",
+    "schedule": "April 20th, 9-12am",
+    "deadline": "2026-04-15",
+    "status": "OPEN",
+    "createdAt": "2026-04-09T10:30:00"
+  }
+]
