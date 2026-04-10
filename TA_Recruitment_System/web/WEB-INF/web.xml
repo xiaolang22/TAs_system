@@ -12,8 +12,23 @@
     </context-param>
 
     <context-param>
+        <param-name>applicationDataFile</param-name>
+        <param-value>/data/applications.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jobDataFile</param-name>
+        <param-value>/data/jobs.json</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>userDataFile</param-name>
         <param-value>/data/users.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>taDataFile</param-name>
+        <param-value>/data/tas.json</param-value>
     </context-param>
 
     <filter>
@@ -89,6 +104,26 @@
     <servlet-mapping>
         <servlet-name>PostJobServlet</servlet-name>
         <url-pattern>/mo/post-job</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ApplyServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ApplyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ApplyServlet</servlet-name>
+        <url-pattern>/apply</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>JobListServlet</servlet-name>
+        <servlet-class>com.group19.servlet.JobListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JobListServlet</servlet-name>
+        <url-pattern>/jobs</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
