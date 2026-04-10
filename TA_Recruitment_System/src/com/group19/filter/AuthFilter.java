@@ -39,6 +39,10 @@ public class AuthFilter implements Filter {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can access profile.");
             return;
         }
+        if ("/mo/review".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access candidate review.");
+            return;
+        }
 
         chain.doFilter(request, response);
     }

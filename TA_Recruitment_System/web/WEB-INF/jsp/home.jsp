@@ -32,7 +32,10 @@
 
     <section class="card ${loginUser.role == 'MO' ? '' : 'hidden'}">
         <h2>MO Workspace</h2>
-        <p>Your role has been identified as MO. MO-specific functions can be added here next.</p>
+        <p>Review applicants with skill match score and missing-skill notes (US10).</p>
+        <a class="link-btn" href="${pageContext.request.contextPath}/mo/review">
+            Go to Candidate Review
+        </a>
     </section>
 </main>
 </body>
