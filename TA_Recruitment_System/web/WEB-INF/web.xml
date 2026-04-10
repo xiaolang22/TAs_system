@@ -58,6 +58,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/parse-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
     </filter-mapping>
 
@@ -109,6 +114,16 @@
     <servlet-mapping>
         <servlet-name>UploadCVServlet</servlet-name>
         <url-pattern>/ta/upload-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ParseCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ParseCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ParseCVServlet</servlet-name>
+        <url-pattern>/ta/parse-cv</url-pattern>
     </servlet-mapping>
 
     <servlet>
