@@ -174,3 +174,41 @@ button:hover {
     padding: 14px;
     background: #f9fafb;
 }
+
+.job-search-card {
+    margin-top: 16px;
+}
+
+.job-search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.job-search-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.job-search-row input[type="search"],
+.job-search-row input[type="text"] {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.job-search-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.job-search-actions button {
+    white-space: nowrap;
+}
+
+.job-search-actions .link-btn {
+    text-align: center;
+}
