@@ -39,7 +39,7 @@
                        autocomplete="off">
                 <div class="job-search-actions">
                     <button type="submit">Search</button>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/jobs">Clear</a>
+                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/jobs">Reset</a>
                 </div>
             </div>
         </form>
