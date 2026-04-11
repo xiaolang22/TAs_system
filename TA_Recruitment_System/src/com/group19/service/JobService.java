@@ -1,16 +1,25 @@
 package com.group19.service;
 
+import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Job;
 
-import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class JobService {
 
     private final JobDao jobDao;
+    private final ApplicationDao applicationDao;
 
     public JobService(JobDao jobDao) {
         this(jobDao, null);
@@ -33,7 +42,7 @@ public class JobService {
             String deadlineTo,
             String excludeAppliedForTaStudentId
     ) {
-        String kw = keyword == null ? "" : keyword.trim().toLowerCase();
+        String kw = keyword == null ? "" : keyword.trim();
         String cat = category == null ? "" : category.trim().toLowerCase();
         String st = status == null ? "OPEN" : status.trim().toUpperCase();
 
@@ -95,11 +104,9 @@ public class JobService {
                         safe(job.getDescription()) + " " +
                         safe(job.getRequirements()) + " " +
                         safe(job.getCategory()) + " " +
-                        safe(job.getCourseCode()) + " " +
-                        safe(job.getSalary()) + " " +
                         safe(job.getHours()) + " " +
                         safe(job.getSchedule()) + " " +
-                        safe(job.getDeadline())).toLowerCase();
+                        safe(job.getDeadline()));
                 if (!haystack.contains(kw)) {
                     continue;
                 }
