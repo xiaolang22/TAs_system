@@ -1,12 +1,15 @@
 package com.group19.servlet;
 
 import com.group19.dao.ApplicationDao;
+import com.group19.dao.JobDao;
 import com.group19.dao.TADao;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Application;
+import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.model.TA;
 import com.group19.service.ApplicationService;
+import com.group19.service.JobService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,10 +19,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 
 public class ApplyServlet extends HttpServlet {
     private ApplicationService applicationService;
     private TADao taDao;
+    private JobService jobService;
 
     @Override
     public void init() {
@@ -36,6 +41,13 @@ public class ApplyServlet extends HttpServlet {
                 : appDataPath;
         Path appFilePath = resolveDataPath(appRelativePath);
         this.applicationService = new ApplicationService(new ApplicationDao(appFilePath));
+
+        String jobDataPath = getServletContext().getInitParameter("jobDataFile");
+        String jobRelativePath = jobDataPath == null || jobDataPath.isBlank()
+                ? "/data/jobs.json"
+                : jobDataPath;
+        Path jobFilePath = resolveJobDataPath(jobRelativePath);
+        this.jobService = new JobService(new JobDao(jobFilePath));
     }
 
     @Override
@@ -60,7 +72,16 @@ public class ApplyServlet extends HttpServlet {
         String jobId = req.getParameter("jobId");
         if (jobId == null || jobId.isBlank()) {
             req.setAttribute("error", "Job ID is missing");
-            req.getRequestDispatcher("/home").forward(req, resp);
+            req.setAttribute("loginUser", loginUser);
+            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+            return;
+        }
+
+        Job job = jobService.findById(jobId.trim());
+        if (job == null || !jobService.isOpenForApplication(job, LocalDate.now())) {
+            req.setAttribute("error", "This job is not open for applications.");
+            req.setAttribute("loginUser", loginUser);
+            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
             return;
         }
 
@@ -68,6 +89,7 @@ public class ApplyServlet extends HttpServlet {
         TA taProfile = taDao.findByStudentId(taStudentId);
         if (taProfile == null) {
             req.setAttribute("error", "Please complete your profile before applying");
+            req.setAttribute("loginUser", loginUser);
             req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
             return;
         }
@@ -84,6 +106,7 @@ public class ApplyServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/home?applySuccess=true");
         } else {
             req.setAttribute("error", result.getMessage());
+            req.setAttribute("loginUser", loginUser);
             req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
         }
     }
@@ -94,5 +117,13 @@ public class ApplyServlet extends HttpServlet {
             return Paths.get(realPath);
         }
         return Paths.get(System.getProperty("user.dir"), "data", "tas.json");
+    }
+
+    private Path resolveJobDataPath(String webRelativePath) {
+        String realPath = getServletContext().getRealPath(webRelativePath);
+        if (realPath != null && !realPath.isBlank()) {
+            return Paths.get(realPath);
+        }
+        return Paths.get(System.getProperty("user.dir"), "data", "jobs.json");
     }
 }

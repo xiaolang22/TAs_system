@@ -12,37 +12,42 @@
 <main class="container">
     <header class="page-header">
         <div>
-            <h1>Job Details</h1>
+            <h1>Job details</h1>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/jobs">Back to Job List</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/jobs">Back to job list</a>
         </div>
     </header>
 
     <%
         Job job = (Job) request.getAttribute("job");
+        String applyBlockedReason = (String) request.getAttribute("applyBlockedReason");
         if (job != null) {
     %>
     <section class="card">
         <h2><%= job.getTitle() %></h2>
-        <p><strong>Category:</strong> <%= job.getCategory() %></p>
-        <p><strong>Status:</strong> <%= job.getStatus() %></p>
-        <p><strong>Hours:</strong> <%= job.getHours() %></p>
-        <p><strong>Schedule:</strong> <%= job.getSchedule() %></p>
-        <p><strong>Deadline:</strong> <%= job.getDeadline() %></p>
+        <p><strong>Module / activity:</strong> <%= job.getCategory() == null ? "" : job.getCategory() %></p>
+        <p><strong>Status:</strong> <%= job.getStatus() == null ? "" : job.getStatus() %></p>
+        <p><strong>Hours:</strong> <%= job.getHours() == null ? "" : job.getHours() %></p>
+        <p><strong>Schedule:</strong> <%= job.getSchedule() == null ? "" : job.getSchedule() %></p>
+        <p><strong>Deadline:</strong> <%= job.getDeadline() == null ? "" : job.getDeadline() %></p>
 
         <h3>Description</h3>
-        <p><%= job.getDescription() %></p>
+        <p><%= job.getDescription() == null ? "" : job.getDescription() %></p>
 
-        <h3>Requirements</h3>
-        <p><%= job.getRequirements() %></p>
+        <h3>Required skills</h3>
+        <p><%= job.getRequirements() == null ? "" : job.getRequirements() %></p>
 
-        <div style="margin-top: 20px;">
+        <% if (applyBlockedReason != null && !applyBlockedReason.isBlank()) { %>
+        <p class="alert error"><%= applyBlockedReason %></p>
+        <% } else { %>
+        <div class="apply-form">
             <form method="post" action="${pageContext.request.contextPath}/apply">
                 <input type="hidden" name="jobId" value="<%= job.getJobId() %>">
-                <button type="submit" class="primary-btn">Apply for this Job</button>
+                <button type="submit">Apply for this job</button>
             </form>
         </div>
+        <% } %>
     </section>
     <%
         } else {
