@@ -9,6 +9,7 @@ public class Application {
     private String status;
     private String submittedAt;
     private String updatedAt;
+    private String decisionNote;
 
     public Application() {
     }
@@ -75,5 +76,13 @@ public class Application {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getDecisionNote() {
+        return decisionNote;
+    }
+
+    public void setDecisionNote(String decisionNote) {
+        this.decisionNote = decisionNote;
     }
 }

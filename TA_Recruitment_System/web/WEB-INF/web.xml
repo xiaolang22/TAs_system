@@ -26,11 +26,6 @@
         <param-value>/data/users.json</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>taDataFile</param-name>
-        <param-value>/data/tas.json</param-value>
-    </context-param>
-
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.group19.filter.AuthFilter</filter-class>
@@ -64,6 +59,16 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/jobs</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/applications</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -137,6 +142,26 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>MoJobListServlet</servlet-name>
+        <servlet-class>com.group19.servlet.MoJobListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MoJobListServlet</servlet-name>
+        <url-pattern>/mo/jobs</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageApplicationsServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ManageApplicationsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ManageApplicationsServlet</servlet-name>
+        <url-pattern>/mo/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ApplyServlet</servlet-name>
         <servlet-class>com.group19.servlet.ApplyServlet</servlet-class>
     </servlet>
@@ -159,4 +184,5 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
 </web-app>
