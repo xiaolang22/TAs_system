@@ -21,30 +21,6 @@
         </div>
     </header>
 
-    <%
-        String keywordParam = request.getParameter("keyword");
-        String keywordAttr = keywordParam == null ? "" : keywordParam
-                .replace("&", "&amp;")
-                .replace("\"", "&quot;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;");
-        boolean hasKeyword = keywordParam != null && !keywordParam.isEmpty();
-    %>
-    <section class="card job-search-card">
-        <form class="job-search-form" method="get" action="${pageContext.request.contextPath}/jobs">
-            <label for="job-keyword">Search positions</label>
-            <div class="job-search-row">
-                <input type="search" id="job-keyword" name="keyword" value="<%= keywordAttr %>"
-                       placeholder="Search is case-sensitive; spaces and punctuation matter."
-                       autocomplete="off">
-                <div class="job-search-actions">
-                    <button type="submit">Search</button>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/jobs">Reset</a>
-                </div>
-            </div>
-        </form>
-    </section>
-
     <section class="job-list">
         <%
             List<Job> jobs = (List<Job>) request.getAttribute("jobs");
@@ -67,9 +43,7 @@
                 }
             } else {
         %>
-        <p class="hint"><%= hasKeyword
-                ? "No positions match your search. Clear the search or try different keywords."
-                : "No jobs available at the moment." %></p>
+        <p class="hint">No jobs available at the moment.</p>
         <%
             }
         %>

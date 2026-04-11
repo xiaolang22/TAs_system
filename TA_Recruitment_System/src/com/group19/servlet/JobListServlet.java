@@ -33,13 +33,7 @@ public class JobListServlet extends HttpServlet {
         if (realPath != null && !realPath.isBlank()) {
             return Paths.get(realPath);
         }
-        String p = webRelativePath == null ? "/data/jobs.json" : webRelativePath.trim().replace('\\', '/');
-        if (!p.startsWith("/")) {
-            p = "/" + p;
-        }
-        int slash = p.lastIndexOf('/');
-        String fileName = slash >= 0 ? p.substring(slash + 1) : p;
-        return Paths.get(System.getProperty("user.dir"), "data", fileName);
+        return Paths.get(System.getProperty("user.dir"), "data", "jobs.json");
     }
 
     @Override
