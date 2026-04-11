@@ -1,6 +1,8 @@
 package com.group19.servlet;
 
 import com.group19.dao.TADao;
+import com.group19.dto.CVExtractedInfo;
+import com.group19.dto.CVUploadResult;
 import com.group19.dto.ServiceResult;
 import com.group19.model.TA;
 import com.group19.service.CVService;
@@ -13,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,11 +53,20 @@ public class UploadCVServlet extends HttpServlet {
         }
 
         Path uploadDir = resolveUploadDir();
-        ServiceResult<TA> result = cvService.uploadCv(studentId, cvPart, uploadDir);
+        ServiceResult<CVUploadResult> result = cvService.uploadCv(studentId, cvPart, uploadDir);
 
         if (result.isSuccess()) {
-            String encodedId = URLEncoder.encode(studentId.trim(), StandardCharsets.UTF_8);
-            resp.sendRedirect(req.getContextPath() + "/profile?studentId=" + encodedId + "&cvSaved=true");
+            CVUploadResult uploadResult = result.getData();
+            TA profile = uploadResult.getProfile();
+            CVExtractedInfo extractedInfo = uploadResult.getExtractedInfo();
+
+            applyExtractedPrefill(profile, extractedInfo);
+
+            req.setAttribute("profile", profile);
+            req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profile.getCvFilePath()));
+            req.setAttribute("autoFilled", extractedInfo.hasAny());
+            req.setAttribute("success", buildSuccessMessage(extractedInfo));
+            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
             return;
         }
 
@@ -74,6 +84,33 @@ public class UploadCVServlet extends HttpServlet {
         }
         req.setAttribute("error", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
+    }
+
+    private void applyExtractedPrefill(TA profile, CVExtractedInfo extractedInfo) {
+        if (profile == null || extractedInfo == null) {
+            return;
+        }
+
+        if (!isBlank(extractedInfo.getEducation())) {
+            profile.setProgramme(extractedInfo.getEducation());
+        }
+        if (!isBlank(extractedInfo.getSkills())) {
+            profile.setSkills(extractedInfo.getSkills());
+        }
+        if (!isBlank(extractedInfo.getExperience())) {
+            profile.setExperience(extractedInfo.getExperience());
+        }
+    }
+
+    private String buildSuccessMessage(CVExtractedInfo extractedInfo) {
+        if (extractedInfo != null && extractedInfo.hasAny()) {
+            return "CV uploaded successfully. Extracted education, skills and experience have been prefilled. You can edit before saving.";
+        }
+        return "CV uploaded successfully. No clear sections were extracted, please fill in profile fields manually.";
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty();
     }
 
     private Path resolveDataPath(String webRelativePath) {
