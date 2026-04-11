@@ -44,6 +44,7 @@ public class ProfileService {
             String email,
             String programme,
             String skills,
+            String experience,
             String availability) {
         List<String> errors = validate(name, studentId, email, programme, skills, availability);
         if (!errors.isEmpty()) {
@@ -65,9 +66,13 @@ public class ProfileService {
                 normalize(programme),
                 normalize(skills),
                 normalize(availability));
+        profile.setExperience(normalize(experience));
         profile.setUpdatedAt(LocalDateTime.now().format(TS_FORMATTER));
         if (existing != null && !isBlank(existing.getCvFilePath())) {
             profile.setCvFilePath(existing.getCvFilePath());
+        }
+        if (existing != null && isBlank(experience)) {
+            profile.setExperience(existing.getExperience());
         }
 
         try {

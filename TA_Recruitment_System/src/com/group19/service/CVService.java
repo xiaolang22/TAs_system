@@ -1,8 +1,11 @@
 package com.group19.service;
 
 import com.group19.dao.TADao;
+import com.group19.dto.CVExtractedInfo;
+import com.group19.dto.CVUploadResult;
 import com.group19.dto.ServiceResult;
 import com.group19.model.TA;
+import com.group19.util.CVParserUtil;
 import com.group19.util.FileUploadUtil;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
@@ -15,7 +18,7 @@ public class CVService {
         this.taDao = taDao;
     }
 
-    public ServiceResult<TA> uploadCv(String studentId, Part cvPart, Path uploadDir) {
+    public ServiceResult<CVUploadResult> uploadCv(String studentId, Part cvPart, Path uploadDir) {
         if (studentId == null || studentId.isBlank()) {
             return ServiceResult.failure("Student ID is required to upload CV.");
         }
@@ -53,8 +56,10 @@ public class CVService {
 
         existing.setCvFilePath("/uploads/" + storedFileName);
         try {
-            taDao.saveOrUpdate(existing);
-            return ServiceResult.success(existing, "CV uploaded successfully.");
+            TA saved = taDao.saveOrUpdate(existing);
+            CVExtractedInfo extractedInfo = CVParserUtil.extract(targetFile);
+            CVUploadResult payload = new CVUploadResult(saved, extractedInfo);
+            return ServiceResult.success(payload, "CV uploaded successfully.");
         } catch (IOException e) {
             return ServiceResult.failure("Failed to update profile with CV information.");
         }

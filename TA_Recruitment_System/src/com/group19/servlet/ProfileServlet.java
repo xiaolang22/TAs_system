@@ -85,10 +85,11 @@ public class ProfileServlet extends HttpServlet {
         String email = req.getParameter("email");
         String programme = req.getParameter("programme");
         String skills = req.getParameter("skills");
+        String experience = req.getParameter("experience");
         String availability = req.getParameter("availability");
 
         ServiceResult<TA> result =
-                profileService.saveProfile(name, studentId, email, programme, skills, availability);
+                profileService.saveProfile(name, studentId, email, programme, skills, experience, availability);
 
         if (result.isSuccess()) {
             String encodedId = URLEncoder.encode(studentId.trim(), StandardCharsets.UTF_8);
@@ -98,6 +99,7 @@ public class ProfileServlet extends HttpServlet {
         }
 
         TA draft = new TA(name, studentId, email, programme, skills, availability);
+        draft.setExperience(experience);
         req.setAttribute("profile", draft);
         req.setAttribute("error", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);

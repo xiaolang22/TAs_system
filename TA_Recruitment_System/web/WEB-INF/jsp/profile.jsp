@@ -37,6 +37,7 @@
     <section class="card">
         <h2>Upload CV</h2>
         <p class="hint">US02: upload a PDF or DOC/DOCX file. The latest upload will replace the previous one.</p>
+        <p class="hint">US03: after upload, the system will try to prefill education, skills and experience fields below.</p>
         <p class="hint">Current CV: <strong>${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
         <form method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
             <input type="hidden" name="studentId" value="${profile.studentId}">
@@ -44,6 +45,7 @@
             <input id="cvFile" name="cvFile" type="file" accept=".pdf,.doc,.docx" required>
             <button type="submit">Upload CV</button>
         </form>
+        <p class="alert success ${autoFilled ? '' : 'hidden'}">US03 prefill is ready below. Please review and save profile.</p>
     </section>
 
     <form method="post" action="${pageContext.request.contextPath}/profile" class="profile-form">
@@ -61,6 +63,9 @@
 
         <label for="skills">Skills *</label>
         <textarea id="skills" name="skills" rows="4" required>${profile.skills}</textarea>
+
+        <label for="experience">Experience (auto-filled from CV)</label>
+        <textarea id="experience" name="experience" rows="4">${profile.experience}</textarea>
 
         <label for="availability">Availability *</label>
         <textarea id="availability" name="availability" rows="3" required>${profile.availability}</textarea>
