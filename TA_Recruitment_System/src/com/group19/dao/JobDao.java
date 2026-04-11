@@ -7,6 +7,7 @@ import com.group19.util.JsonFileUtil;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,10 @@ public class JobDao {
 
     public JobDao(Path jobFilePath) {
         this.jobFilePath = jobFilePath;
+    }
+
+    public JobDao() {
+        this(Paths.get(System.getProperty("user.dir"), "data", "jobs.json"));
     }
 
     public List<Job> findAll() {
@@ -39,5 +44,17 @@ public class JobDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Job findById(String jobId) {
+        if (jobId == null || jobId.isBlank()) {
+            return null;
+        }
+        for (Job job : findAll()) {
+            if (job != null && jobId.equalsIgnoreCase(job.getJobId())) {
+                return job;
+            }
+        }
+        return null;
     }
 }
