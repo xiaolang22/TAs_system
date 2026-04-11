@@ -2,7 +2,6 @@ package com.group19.servlet;
 
 import com.group19.dao.JobDao;
 import com.group19.model.Job;
-import com.group19.service.JobService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import java.util.List;
 
 public class JobListServlet extends HttpServlet {
     private JobDao jobDao;
-    private JobService jobService;
 
     @Override
     public void init() {
@@ -25,7 +23,6 @@ public class JobListServlet extends HttpServlet {
                 : configuredPath;
         Path jobFilePath = resolveDataPath(relativePath);
         this.jobDao = new JobDao(jobFilePath);
-        this.jobService = new JobService(this.jobDao);
     }
 
     private Path resolveDataPath(String webRelativePath) {
@@ -56,13 +53,7 @@ public class JobListServlet extends HttpServlet {
             return;
         }
 
-        String keyword = req.getParameter("keyword");
-        List<Job> jobs;
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            jobs = jobService.searchJobs(keyword, null, "ALL");
-        } else {
-            jobs = jobDao.findAll();
-        }
+        List<Job> jobs = jobDao.findAll();
         req.setAttribute("jobs", jobs);
         req.getRequestDispatcher("/WEB-INF/jsp/job_list.jsp").forward(req, resp);
     }
