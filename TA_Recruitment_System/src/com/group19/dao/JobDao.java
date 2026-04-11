@@ -29,6 +29,18 @@ public class JobDao {
         }
     }
 
+    public Job findById(String jobId) {
+        if (jobId == null || jobId.isBlank()) {
+            return null;
+        }
+        for (Job job : findAll()) {
+            if (jobId.equals(job.getJobId())) {
+                return job;
+            }
+        }
+        return null;
+    }
+
     public boolean save(Job job) {
         List<Job> jobs = findAll();
         jobs.add(job);
