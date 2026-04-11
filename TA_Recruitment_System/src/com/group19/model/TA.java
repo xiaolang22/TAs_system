@@ -6,7 +6,9 @@ public class TA {
     private String email;
     private String programme;
     private String skills;
+    private String experience;
     private String availability;
+    private String cvFilePath;
     private String updatedAt;
 
     public TA() {
@@ -67,6 +69,22 @@ public class TA {
 
     public void setAvailability(String availability) {
         this.availability = availability;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getCvFilePath() {
+        return cvFilePath;
+    }
+
+    public void setCvFilePath(String cvFilePath) {
+        this.cvFilePath = cvFilePath;
     }
 
     public String getUpdatedAt() {

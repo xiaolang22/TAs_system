@@ -22,11 +22,22 @@
         </form>
     </header>
 
+    <p class="alert success ${empty param.applySuccess ? 'hidden' : ''}">
+        Application submitted successfully!
+    </p>
+
+    <p class="alert error ${empty error ? 'hidden' : ''}">
+        ${error}
+    </p>
+
     <section class="card ${loginUser.role == 'TA' ? '' : 'hidden'}">
         <h2>TA Workspace</h2>
         <p>You can continue to create or edit your profile information.</p>
         <a class="link-btn" href="${pageContext.request.contextPath}/profile">
             Go to TA Profile
+        </a>
+        <a class="link-btn" href="${pageContext.request.contextPath}/jobs">
+            Browse Available Jobs
         </a>
     </section>
 

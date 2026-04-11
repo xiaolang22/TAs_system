@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "name": "TA Test User",
+    "studentId": "231221618",
+    "email": "ta001@bupt.edu.cn",
+    "programme": "Computer Science",
+    "skills": "Java, Python, C++, Data Structures, Algorithms",
+    "availability": "Monday to Friday, 2pm-6pm",
+    "cvFilePath": "/uploads/cv_231221618.pdf",
+    "updatedAt": "2026-04-09T10:00:00"
+  }
+]

@@ -44,20 +44,36 @@ public class ProfileService {
             String email,
             String programme,
             String skills,
+            String experience,
             String availability) {
         List<String> errors = validate(name, studentId, email, programme, skills, availability);
         if (!errors.isEmpty()) {
             return ServiceResult.failure(String.join(" ", errors));
         }
 
+        String normalizedStudentId = normalize(studentId);
+        TA existing = null;
+        try {
+            existing = taDao.findByStudentId(normalizedStudentId);
+        } catch (IOException ignored) {
+            // If reading fails, we still allow saving profile fields and return a save error if write fails later.
+        }
+
         TA profile = new TA(
                 normalize(name),
-                normalize(studentId),
+                normalizedStudentId,
                 normalize(email),
                 normalize(programme),
                 normalize(skills),
                 normalize(availability));
+        profile.setExperience(normalize(experience));
         profile.setUpdatedAt(LocalDateTime.now().format(TS_FORMATTER));
+        if (existing != null && !isBlank(existing.getCvFilePath())) {
+            profile.setCvFilePath(existing.getCvFilePath());
+        }
+        if (existing != null && isBlank(experience)) {
+            profile.setExperience(existing.getExperience());
+        }
 
         try {
             TA saved = taDao.saveOrUpdate(profile);

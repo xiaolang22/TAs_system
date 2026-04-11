@@ -12,6 +12,16 @@
     </context-param>
 
     <context-param>
+        <param-name>applicationDataFile</param-name>
+        <param-value>/data/applications.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jobDataFile</param-name>
+        <param-value>/data/jobs.json</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>userDataFile</param-name>
         <param-value>/data/users.json</param-value>
     </context-param>
@@ -39,6 +49,31 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/review</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/parse-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/post-job</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/jobs</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/applications</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -91,7 +126,78 @@
         <url-pattern>/mo/review</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.UploadCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ParseCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ParseCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ParseCVServlet</servlet-name>
+        <url-pattern>/ta/parse-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PostJobServlet</servlet-name>
+        <servlet-class>com.group19.servlet.PostJobServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PostJobServlet</servlet-name>
+        <url-pattern>/mo/post-job</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MoJobListServlet</servlet-name>
+        <servlet-class>com.group19.servlet.MoJobListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MoJobListServlet</servlet-name>
+        <url-pattern>/mo/jobs</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageApplicationsServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ManageApplicationsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ManageApplicationsServlet</servlet-name>
+        <url-pattern>/mo/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ApplyServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ApplyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ApplyServlet</servlet-name>
+        <url-pattern>/apply</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>JobListServlet</servlet-name>
+        <servlet-class>com.group19.servlet.JobListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JobListServlet</servlet-name>
+        <url-pattern>/jobs</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
 </web-app>
