@@ -1,29 +1,16 @@
 package com.group19.service;
 
-import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Job;
 
-import java.time.LocalDate;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class JobService {
 
     private final JobDao jobDao;
-    private final ApplicationDao applicationDao;
-
-    public JobService() {
-        this(new JobDao(), null);
-    }
 
     public JobService(JobDao jobDao) {
         this(jobDao, null);
@@ -46,8 +33,7 @@ public class JobService {
             String deadlineTo,
             String excludeAppliedForTaStudentId
     ) {
-        // 关键词：区分大小写、空格与标点（不做 trim / toLowerCase）
-        String kw = keyword == null ? "" : keyword;
+        String kw = keyword == null ? "" : keyword.trim().toLowerCase();
         String cat = category == null ? "" : category.trim().toLowerCase();
         String st = status == null ? "OPEN" : status.trim().toUpperCase();
 
@@ -68,24 +54,12 @@ public class JobService {
 
         List<Job> all = jobDao.findAll();
         List<Job> result = new ArrayList<>();
-        LocalDate today = LocalDate.now();
-
         for (Job job : all) {
             if (job == null) {
                 continue;
             }
 
             if (job.getJobId() != null && excludeJobIds.contains(job.getJobId().trim())) {
-                continue;
-            }
-
-            // 公开岗位列表：不展示已关闭、已标记过期、或已超过截止日期的岗位（US04）
-            String jobStatusUpper = job.getStatus() == null ? "" : job.getStatus().trim().toUpperCase();
-            if ("CLOSED".equals(jobStatusUpper) || "EXPIRED".equals(jobStatusUpper)) {
-                continue;
-            }
-            LocalDate visibilityDeadline = parseDate(job.getDeadline());
-            if (visibilityDeadline != null && visibilityDeadline.isBefore(today)) {
                 continue;
             }
 
@@ -117,13 +91,15 @@ public class JobService {
             }
 
             if (!kw.isEmpty()) {
-                String haystack = safe(job.getTitle()) + " " +
+                String haystack = (safe(job.getTitle()) + " " +
                         safe(job.getDescription()) + " " +
                         safe(job.getRequirements()) + " " +
                         safe(job.getCategory()) + " " +
+                        safe(job.getCourseCode()) + " " +
+                        safe(job.getSalary()) + " " +
                         safe(job.getHours()) + " " +
                         safe(job.getSchedule()) + " " +
-                        safe(job.getDeadline());
+                        safe(job.getDeadline())).toLowerCase();
                 if (!haystack.contains(kw)) {
                     continue;
                 }
