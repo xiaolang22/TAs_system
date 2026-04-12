@@ -7,6 +7,20 @@
     "userId": "231221618"
   },
   {
+    "username": "ta099",
+    "password": "ta123456",
+    "role": "TA",
+    "displayName": "US09 tester1",
+    "userId": "231221619"
+  },
+  {
+    "username": "ta100",
+    "password": "ta123456",
+    "role": "TA",
+    "displayName": "US09 tester2",
+    "userId": "231221620"
+  },
+  {
     "username": "mo001",
     "password": "mo123456",
     "role": "MO",
