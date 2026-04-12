@@ -3,6 +3,7 @@ package com.group19.servlet;
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.TADao;
+import com.group19.dao.TimelineDao;
 import com.group19.dto.ApplicantReviewPageData;
 import com.group19.dto.ApplicantReviewRow;
 import com.group19.dto.ServiceResult;
@@ -10,6 +11,7 @@ import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
+import com.group19.service.ApplicationTimelineRecorder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +36,14 @@ public class ManageApplicationsServlet extends HttpServlet {
                 : appDataPath;
         Path appFilePath = resolveDataPath(appRelativePath, "applications.json");
         ApplicationDao applicationDao = new ApplicationDao(appFilePath);
-        this.applicationService = new ApplicationService(applicationDao);
+
+        String timelineDataPath = getServletContext().getInitParameter("timelineDataFile");
+        String timelineRelativePath = timelineDataPath == null || timelineDataPath.isBlank()
+                ? "/data/timelines.json"
+                : timelineDataPath;
+        Path timelineFilePath = resolveDataPath(timelineRelativePath, "timelines.json");
+        ApplicationTimelineRecorder timelineRecorder = new ApplicationTimelineRecorder(new TimelineDao(timelineFilePath));
+        this.applicationService = new ApplicationService(applicationDao, timelineRecorder);
 
         String taDataPath = getServletContext().getInitParameter("taDataFile");
         String taRelativePath = taDataPath == null || taDataPath.isBlank()
@@ -243,6 +252,7 @@ public class ManageApplicationsServlet extends HttpServlet {
                     .append(escapeHtml(applicant.getApplicationId()))
                     .append("\" name=\"status\">");
             html.append(statusOption("SUBMITTED", applicant.getStatus()));
+            html.append(statusOption("IN_REVIEW", applicant.getStatus()));
             html.append(statusOption("SHORTLISTED", applicant.getStatus()));
             html.append(statusOption("ACCEPTED", applicant.getStatus()));
             html.append(statusOption("REJECTED", applicant.getStatus()));
@@ -288,6 +298,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             case "shortlisted" -> "tag-warning";
             case "accepted" -> "tag-good";
             case "rejected" -> "tag-alert";
+            case "in_review" -> "tag-neutral";
             default -> "tag-neutral";
         };
     }

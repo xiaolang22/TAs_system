@@ -584,3 +584,137 @@ button:hover {
         grid-template-columns: 1fr;
     }
 }
+
+.application-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.application-status-card {
+    background: #ffffff;
+}
+
+.application-status-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.application-job-title {
+    margin: 0 0 6px;
+    font-size: 1.2rem;
+}
+
+.application-job-meta {
+    margin: 0;
+}
+
+.application-status-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.application-last-updated {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: baseline;
+}
+
+.application-last-updated .label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.application-last-updated .value {
+    font-weight: 700;
+    color: #111827;
+}
+
+.timeline-title {
+    margin-top: 18px;
+}
+
+.timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+}
+
+.timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 12px;
+    padding-bottom: 18px;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 10px;
+    bottom: 0;
+    width: 2px;
+    background: #e5e7eb;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+.timeline-marker {
+    width: 14px;
+    height: 14px;
+    margin-top: 4px;
+    border-radius: 999px;
+    background: #2563eb;
+    border: 2px solid #dbeafe;
+    justify-self: center;
+    z-index: 1;
+}
+
+.timeline-body {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: #ffffff;
+}
+
+.timeline-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.timeline-time {
+    font-size: 0.9rem;
+    color: #4b5563;
+    font-weight: 600;
+}
+
+.timeline-detail {
+    margin: 10px 0 0;
+    color: #374151;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}

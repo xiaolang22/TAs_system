@@ -51,6 +51,11 @@ public class AuthFilter implements Filter {
             return;
         }
 
+        if ("/ta/applications".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can view application status.");
+            return;
+        }
+
         if ("/mo/post-job".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access post job.");
             return;
