@@ -39,6 +39,9 @@
         <a class="link-btn" href="${pageContext.request.contextPath}/jobs">
             Browse Available Jobs
         </a>
+        <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">
+            My application status
+        </a>
     </section>
 
     <section class="card ${loginUser.role == 'MO' ? '' : 'hidden'}">

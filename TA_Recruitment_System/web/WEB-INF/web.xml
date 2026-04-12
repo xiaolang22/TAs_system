@@ -26,6 +26,11 @@
         <param-value>/data/users.json</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>timelineDataFile</param-name>
+        <param-value>/data/timelines.json</param-value>
+    </context-param>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.group19.filter.AuthFilter</filter-class>
@@ -54,6 +59,11 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/ta/upload-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/applications</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
@@ -134,6 +144,16 @@
     <servlet-mapping>
         <servlet-name>UploadCVServlet</servlet-name>
         <url-pattern>/ta/upload-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TaApplicationsServlet</servlet-name>
+        <servlet-class>com.group19.servlet.TaApplicationsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TaApplicationsServlet</servlet-name>
+        <url-pattern>/ta/applications</url-pattern>
     </servlet-mapping>
 
     <servlet>

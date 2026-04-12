@@ -160,10 +160,11 @@ public class ApplicantReviewService {
         String normalized = normalizeKey(status);
         return switch (normalized) {
             case "submitted" -> 0;
-            case "shortlisted" -> 1;
-            case "accepted" -> 2;
-            case "rejected" -> 3;
-            default -> 4;
+            case "in_review" -> 1;
+            case "shortlisted" -> 2;
+            case "accepted" -> 3;
+            case "rejected" -> 4;
+            default -> 5;
         };
     }
 
