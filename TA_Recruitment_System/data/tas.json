@@ -8,5 +8,25 @@
     "availability": "Monday to Friday, 2pm-6pm",
     "cvFilePath": "/uploads/cv_231221618.pdf",
     "updatedAt": "2026-04-09T10:00:00"
+  },
+  {
+    "name": "US09 test1",
+    "studentId": "231221619",
+    "email": "us09tester1@bupt.edu.cn",
+    "programme": "Software Engineering",
+    "skills": "Java, Spring Boot, SQL, Data Structures, Algorithms",
+    "availability": "Monday to Friday, 1pm-5pm",
+    "cvFilePath": "/uploads/cv_231221619.pdf",
+    "updatedAt": "2026-04-12T09:20:00"
+  },
+  {
+    "name": "US09 test2",
+    "studentId": "231221620",
+    "email": "us09tester2@bupt.edu.cn",
+    "programme": "Computer Science",
+    "skills": "Python, C++, Linux, Git, Communication",
+    "availability": "Tuesday to Saturday, 10am-4pm",
+    "cvFilePath": "/uploads/cv_231221620.pdf",
+    "updatedAt": "2026-04-12T09:35:00"
   }
 ]
