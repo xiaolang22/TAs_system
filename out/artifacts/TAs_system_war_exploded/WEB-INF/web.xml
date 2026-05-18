@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>TA Recruitment System</display-name>
+
+    <context-param>
+        <param-name>taDataFile</param-name>
+        <param-value>/data/tas.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>applicationDataFile</param-name>
+        <param-value>/data/applications.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jobDataFile</param-name>
+        <param-value>/data/jobs.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>userDataFile</param-name>
+        <param-value>/data/users.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>taDataFile</param-name>
+        <param-value>/data/tas.json</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.group19.filter.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/home</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/profile</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/logout</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/post-job</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.group19.servlet.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.group19.servlet.HomeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.group19.servlet.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.UploadCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PostJobServlet</servlet-name>
+        <servlet-class>com.group19.servlet.PostJobServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PostJobServlet</servlet-name>
+        <url-pattern>/mo/post-job</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ApplyServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ApplyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ApplyServlet</servlet-name>
+        <url-pattern>/apply</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>JobListServlet</servlet-name>
+        <servlet-class>com.group19.servlet.JobListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JobListServlet</servlet-name>
+        <url-pattern>/jobs</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>
