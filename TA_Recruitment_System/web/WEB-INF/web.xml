@@ -86,6 +86,16 @@
         <url-pattern>/mo/applications</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/admin/workload</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/workload</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.group19.servlet.LoginServlet</servlet-class>
@@ -194,6 +204,16 @@
     <servlet-mapping>
         <servlet-name>ManageApplicationsServlet</servlet-name>
         <url-pattern>/mo/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WorkloadServlet</servlet-name>
+        <servlet-class>com.group19.servlet.WorkloadServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WorkloadServlet</servlet-name>
+        <url-pattern>/admin/workload</url-pattern>
     </servlet-mapping>
 
     <servlet>

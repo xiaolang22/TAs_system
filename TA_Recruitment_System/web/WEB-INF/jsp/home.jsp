@@ -51,6 +51,14 @@
             Go to Candidate Review
         </a>
     </section>
+
+    <section class="card ${loginUser.role == 'ADMIN' ? '' : 'hidden'}">
+        <h2>Admin Workspace</h2>
+        <p>Monitor TA workload summaries and assigned hours across positions.</p>
+        <a class="link-btn" href="${pageContext.request.contextPath}/admin/workload">
+            View TA Workload
+        </a>
+    </section>
 </main>
 </body>
 </html>

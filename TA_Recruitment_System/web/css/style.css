@@ -718,3 +718,82 @@ button:hover {
     font-size: 0.92rem;
     line-height: 1.5;
 }
+
+.workload-shell {
+    display: grid;
+    gap: 18px;
+}
+
+.workload-toolbar {
+    display: grid;
+    gap: 14px;
+}
+
+.workload-filter-form {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(180px, 240px) auto;
+    gap: 12px;
+    align-items: end;
+}
+
+.workload-filter-form select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: #ffffff;
+    font: inherit;
+}
+
+.workload-filter-actions {
+    margin-top: 0;
+}
+
+.workload-summary-grid {
+    margin-top: 0;
+}
+
+.workload-table-card td:nth-child(4),
+.workload-table-card td:nth-child(5) {
+    white-space: nowrap;
+}
+
+.assigned-position-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.assigned-position-list li {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #ffffff;
+}
+
+.assigned-position-title {
+    margin-bottom: 6px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.assigned-position-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    color: #4b5563;
+    font-size: 0.88rem;
+}
+
+.workload-hours {
+    font-weight: 800;
+    color: #0f172a;
+}
+
+@media (max-width: 900px) {
+    .workload-filter-form {
+        grid-template-columns: 1fr;
+    }
+}

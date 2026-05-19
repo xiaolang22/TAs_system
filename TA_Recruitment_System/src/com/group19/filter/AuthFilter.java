@@ -71,6 +71,20 @@ public class AuthFilter implements Filter {
             return;
         }
 
+        if ("/admin/workload".equals(servletPath) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access workload dashboard.");
+            return;
+        }
+
+        if ("/mo/workload".equals(servletPath)) {
+            if (!"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access workload dashboard.");
+                return;
+            }
+            resp.sendRedirect(req.getContextPath() + "/admin/workload");
+            return;
+        }
+
         chain.doFilter(request, response);
     }
 
