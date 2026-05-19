@@ -22,6 +22,7 @@ import java.util.List;
 
 public class WorkloadServlet extends HttpServlet {
     private WorkloadService workloadService;
+    private int maxWeeklyWorkloadHours;
 
     @Override
     public void init() {
@@ -43,10 +44,14 @@ public class WorkloadServlet extends HttpServlet {
                 : jobDataPath;
         Path jobFilePath = resolveDataPath(jobRelativePath, "jobs.json");
 
+        this.maxWeeklyWorkloadHours = parsePositiveInt(
+                getServletContext().getInitParameter("maxWeeklyWorkloadHours"),
+                20);
         this.workloadService = new WorkloadService(
                 new TADao(taFilePath),
                 new ApplicationDao(applicationFilePath),
-                new JobDao(jobFilePath));
+                new JobDao(jobFilePath),
+                maxWeeklyWorkloadHours);
     }
 
     @Override
@@ -76,6 +81,8 @@ public class WorkloadServlet extends HttpServlet {
         req.setAttribute("assignmentFilter", assignmentFilter);
         req.setAttribute("workloadRows", rows);
         req.setAttribute("workloadRowCount", rows.size());
+        req.setAttribute("workloadWarningCount", countWorkloadWarnings(rows));
+        req.setAttribute("maxWeeklyWorkloadHours", maxWeeklyWorkloadHours);
         req.setAttribute("errorMsg", result.isSuccess() ? "" : result.getMessage());
 
         req.getRequestDispatcher("/WEB-INF/jsp/workload_dashboard.jsp").forward(req, resp);
@@ -101,5 +108,30 @@ public class WorkloadServlet extends HttpServlet {
 
     private static String trim(String value) {
         return value == null ? "" : value.trim();
+    }
+
+    private static int countWorkloadWarnings(List<TaWorkloadRow> rows) {
+        if (rows == null || rows.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        for (TaWorkloadRow row : rows) {
+            if (row != null && row.isHasWorkloadWarning()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private static int parsePositiveInt(String value, int defaultValue) {
+        if (value == null || value.isBlank()) {
+            return defaultValue;
+        }
+        try {
+            int parsed = Integer.parseInt(value.trim());
+            return parsed > 0 ? parsed : defaultValue;
+        } catch (NumberFormatException ignored) {
+            return defaultValue;
+        }
     }
 }

@@ -410,6 +410,14 @@ button:hover {
     background: #f8fafc;
 }
 
+.table-card tbody tr.row-warning {
+    background: #fffbeb;
+}
+
+.table-card tbody tr.row-warning:hover {
+    background: #fef3c7;
+}
+
 .table-main {
     display: grid;
     gap: 4px;
@@ -751,10 +759,12 @@ button:hover {
 
 .workload-summary-grid {
     margin-top: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .workload-table-card td:nth-child(4),
-.workload-table-card td:nth-child(5) {
+.workload-table-card td:nth-child(5),
+.workload-table-card td:nth-child(6) {
     white-space: nowrap;
 }
 
@@ -782,9 +792,17 @@ button:hover {
 .assigned-position-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 12px;
+    gap: 6px 10px;
+    align-items: center;
     color: #4b5563;
     font-size: 0.88rem;
+}
+
+.workload-warning-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 150px;
 }
 
 .workload-hours {
