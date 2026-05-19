@@ -29,7 +29,7 @@
         <div class="review-toolbar">
             <div>
                 <h2 class="section-title">Sort and Filter</h2>
-                <p class="hint">Default sort is by match degree. Workload warnings use a ${maxWeeklyWorkloadHours}-hour threshold.</p>
+                <p class="hint">Default sort is by match degree. Switching to status groups applicants by workflow stage.</p>
             </div>
             <form method="get" action="${pageContext.request.contextPath}/mo/applications">
                 <input type="hidden" name="jobId" value="${jobId}">
@@ -56,10 +56,6 @@
             <div class="summary-card">
                 <span class="label">Sorted by</span>
                 <span class="value">${sortLabel}</span>
-            </div>
-            <div class="summary-card">
-                <span class="label">Workload warnings</span>
-                <span class="value">${workloadWarningCount}</span>
             </div>
         </div>
 
