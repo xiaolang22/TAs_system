@@ -71,11 +71,6 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if ("/mo/workload".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access workload dashboard.");
-            return;
-        }
-
         chain.doFilter(request, response);
     }
 
