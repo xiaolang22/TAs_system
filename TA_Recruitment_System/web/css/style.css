@@ -410,14 +410,6 @@ button:hover {
     background: #f8fafc;
 }
 
-.table-card tbody tr.row-warning {
-    background: #fffbeb;
-}
-
-.table-card tbody tr.row-warning:hover {
-    background: #fef3c7;
-}
-
 .table-main {
     display: grid;
     gap: 4px;
@@ -441,18 +433,6 @@ button:hover {
 
 .inline-form textarea {
     min-height: 72px;
-}
-
-.workload-cell {
-    display: grid;
-    gap: 8px;
-    min-width: 170px;
-}
-
-.workload-warning-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
 }
 
 .review-toolbar {
@@ -490,7 +470,7 @@ button:hover {
 
 .review-summary-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
 }
 

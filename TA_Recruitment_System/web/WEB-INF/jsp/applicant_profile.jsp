@@ -37,11 +37,6 @@
             </section>
 
             <section class="card">
-                <h2 class="section-title">Workload warnings</h2>
-                ${workloadWarningHtml}
-            </section>
-
-            <section class="card">
                 <h2 class="section-title">Profile details</h2>
                 <div class="detail-grid">
                     <div class="detail-item">
