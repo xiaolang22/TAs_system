@@ -26,5 +26,12 @@
     "role": "MO",
     "displayName": "MO Test User",
     "userId": "MO1001"
+  },
+  {
+    "username": "admin001",
+    "password": "admin123456",
+    "role": "ADMIN",
+    "displayName": "Admin Test User",
+    "userId": "ADMIN1001"
   }
 ]

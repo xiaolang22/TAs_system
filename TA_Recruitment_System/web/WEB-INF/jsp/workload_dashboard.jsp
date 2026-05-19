@@ -43,7 +43,7 @@
         </div>
         <div class="header-actions">
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs">Job List</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/admin/workload">Refresh</a>
         </div>
     </header>
 
@@ -56,7 +56,7 @@
             <h2 class="section-title">Search and Filter</h2>
             <p class="hint">Search by TA profile fields or assigned position text.</p>
         </div>
-        <form method="get" action="<%= request.getContextPath() %>/mo/workload" class="workload-filter-form">
+        <form method="get" action="<%= request.getContextPath() %>/admin/workload" class="workload-filter-form">
             <div class="form-field">
                 <label for="keyword">Keyword</label>
                 <input
@@ -76,7 +76,7 @@
             </div>
             <div class="filter-actions workload-filter-actions">
                 <button type="submit">Apply</button>
-                <a class="link-btn secondary" href="<%= request.getContextPath() %>/mo/workload">Reset</a>
+                <a class="link-btn secondary" href="<%= request.getContextPath() %>/admin/workload">Reset</a>
             </div>
         </form>
     </section>

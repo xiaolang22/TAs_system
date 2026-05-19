@@ -10,7 +10,7 @@
 <body>
 <main class="container login-container">
     <h1>User Login & Identity Recognition</h1>
-    <p class="hint">US00: sign in with your TA or MO test account.</p>
+    <p class="hint">US00: sign in with your TA, MO, or admin test account.</p>
 
     <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
@@ -28,6 +28,7 @@
         <h2>Built-in test accounts</h2>
         <p><code>ta001 / ta123456</code> (role: TA)</p>
         <p><code>mo001 / mo123456</code> (role: MO)</p>
+        <p><code>admin001 / admin123456</code> (role: ADMIN)</p>
     </section>
 </main>
 </body>

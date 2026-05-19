@@ -88,6 +88,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/admin/workload</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/workload</url-pattern>
     </filter-mapping>
 
@@ -208,7 +213,7 @@
 
     <servlet-mapping>
         <servlet-name>WorkloadServlet</servlet-name>
-        <url-pattern>/mo/workload</url-pattern>
+        <url-pattern>/admin/workload</url-pattern>
     </servlet-mapping>
 
     <servlet>

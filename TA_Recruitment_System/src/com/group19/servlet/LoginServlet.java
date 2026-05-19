@@ -74,7 +74,9 @@ public class LoginServlet extends HttpServlet {
     private void redirectByRole(HttpServletRequest req, HttpServletResponse resp, LoginUser loginUser) throws IOException {
         String role = loginUser.getRole();
 
-        if ("MO".equalsIgnoreCase(role)) {
+        if ("ADMIN".equalsIgnoreCase(role)) {
+            resp.sendRedirect(req.getContextPath() + "/admin/workload");
+        } else if ("MO".equalsIgnoreCase(role)) {
             resp.sendRedirect(req.getContextPath() + "/mo/post-job");
         } else {
             resp.sendRedirect(req.getContextPath() + "/home");
