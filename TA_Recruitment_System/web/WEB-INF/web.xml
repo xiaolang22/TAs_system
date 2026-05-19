@@ -31,6 +31,11 @@
         <param-value>/data/timelines.json</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>maxWeeklyWorkloadHours</param-name>
+        <param-value>20</param-value>
+    </context-param>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.group19.filter.AuthFilter</filter-class>

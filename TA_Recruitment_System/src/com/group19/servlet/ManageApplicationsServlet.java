@@ -27,6 +27,7 @@ import java.util.List;
 public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
     private ApplicantReviewService applicantReviewService;
+    private int maxWeeklyWorkloadHours;
 
     @Override
     public void init() {
@@ -59,7 +60,10 @@ public class ManageApplicationsServlet extends HttpServlet {
         Path jobFilePath = resolveDataPath(jobRelativePath, "jobs.json");
         JobDao jobDao = new JobDao(jobFilePath);
 
-        this.applicantReviewService = new ApplicantReviewService(applicationDao, taDao, jobDao);
+        this.maxWeeklyWorkloadHours = parsePositiveInt(
+                getServletContext().getInitParameter("maxWeeklyWorkloadHours"),
+                20);
+        this.applicantReviewService = new ApplicantReviewService(applicationDao, taDao, jobDao, maxWeeklyWorkloadHours);
     }
 
     @Override
@@ -76,10 +80,12 @@ public class ManageApplicationsServlet extends HttpServlet {
         req.setAttribute("jobId", jobId);
         req.setAttribute("sortMode", sortMode);
         req.setAttribute("updated", req.getParameter("updated"));
+        req.setAttribute("maxWeeklyWorkloadHours", maxWeeklyWorkloadHours);
 
         if (jobId == null) {
             req.setAttribute("errorMsg", "Job ID is required.");
             req.setAttribute("jobTitle", "");
+            req.setAttribute("workloadWarningCount", 0);
             req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Job ID is required."));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
@@ -89,6 +95,7 @@ public class ManageApplicationsServlet extends HttpServlet {
         if (!result.isSuccess()) {
             req.setAttribute("errorMsg", result.getMessage());
             req.setAttribute("jobTitle", "");
+            req.setAttribute("workloadWarningCount", 0);
             req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(result.getMessage()));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
@@ -101,6 +108,7 @@ public class ManageApplicationsServlet extends HttpServlet {
         req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
         req.setAttribute("sortLabel", pageData.getSortLabel());
         req.setAttribute("applicantCount", applicants.size());
+        req.setAttribute("workloadWarningCount", countWorkloadWarnings(applicants));
 
         if (detailMode) {
             ApplicantReviewRow applicant = findApplicant(applicants, studentId);
@@ -158,14 +166,17 @@ public class ManageApplicationsServlet extends HttpServlet {
             req.setAttribute("jobTitle", pageData.getJob() == null ? "" : pageData.getJob().getTitle());
             req.setAttribute("applicantCount", pageData.getApplicants().size());
             req.setAttribute("sortLabel", pageData.getSortLabel());
+            req.setAttribute("workloadWarningCount", countWorkloadWarnings(pageData.getApplicants()));
             req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, pageData.getApplicants(), jobId, sortMode));
         } else {
             req.setAttribute("jobTitle", "");
+            req.setAttribute("workloadWarningCount", 0);
             req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(pageResult.getMessage()));
         }
 
         req.setAttribute("jobId", jobId);
         req.setAttribute("sortMode", sortMode);
+        req.setAttribute("maxWeeklyWorkloadHours", maxWeeklyWorkloadHours);
         req.setAttribute("errorMsg", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
     }
@@ -197,6 +208,8 @@ public class ManageApplicationsServlet extends HttpServlet {
         boolean resumeAvailable = applicant.getCvFilePath() != null && !applicant.getCvFilePath().isBlank();
         req.setAttribute("resumeAvailableClass", resumeAvailable ? "" : "hidden");
         req.setAttribute("resumeMissingClass", resumeAvailable ? "hidden" : "");
+        req.setAttribute("workloadLabel", applicant.getCurrentWorkloadLabel());
+        req.setAttribute("workloadWarningHtml", buildWorkloadWarningsHtml(applicant, true));
     }
 
     private static String buildApplicantRowsHtml(HttpServletRequest req, List<ApplicantReviewRow> applicants,
@@ -208,7 +221,11 @@ public class ManageApplicationsServlet extends HttpServlet {
         String contextPath = req.getContextPath();
         StringBuilder html = new StringBuilder();
         for (ApplicantReviewRow applicant : applicants) {
-            html.append("<tr>");
+            html.append("<tr");
+            if (applicant.isHasWorkloadWarning()) {
+                html.append(" class=\"row-warning\"");
+            }
+            html.append(">");
             html.append("<td><div class=\"table-main\"><strong>")
                     .append(escapeHtml(applicant.getTaName()))
                     .append("</strong><span class=\"table-subtext\">")
@@ -220,7 +237,11 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("<td><span class=\"status-pill tag-neutral\">")
                     .append(applicant.getMatchScore())
                     .append("%</span></td>");
-            html.append("<td>").append(escapeHtml(applicant.getCurrentWorkloadLabel())).append("</td>");
+            html.append("<td><div class=\"workload-cell\"><span>")
+                    .append(escapeHtml(applicant.getCurrentWorkloadLabel()))
+                    .append("</span>")
+                    .append(buildWorkloadWarningsHtml(applicant, false))
+                    .append("</div></td>");
             html.append("<td><span class=\"status-pill ")
                     .append(statusClass(applicant.getStatus()))
                     .append("\">")
@@ -265,6 +286,37 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("</td>");
             html.append("</tr>");
         }
+        return html.toString();
+    }
+
+    private static int countWorkloadWarnings(List<ApplicantReviewRow> applicants) {
+        if (applicants == null || applicants.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        for (ApplicantReviewRow applicant : applicants) {
+            if (applicant != null && applicant.isHasWorkloadWarning()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private static String buildWorkloadWarningsHtml(ApplicantReviewRow applicant, boolean showClearState) {
+        if (applicant == null || !applicant.isHasWorkloadWarning()) {
+            if (!showClearState) {
+                return "";
+            }
+            return "<div class=\"workload-warning-list\"><span class=\"status-pill tag-good\">No workload warning</span></div>";
+        }
+
+        StringBuilder html = new StringBuilder("<div class=\"workload-warning-list\">");
+        for (String reason : applicant.getWorkloadWarningReasons()) {
+            html.append("<span class=\"status-pill tag-alert\">")
+                    .append(escapeHtml(reason))
+                    .append("</span>");
+        }
+        html.append("</div>");
         return html.toString();
     }
 
@@ -360,6 +412,18 @@ public class ManageApplicationsServlet extends HttpServlet {
             return "";
         }
         return value.trim().toLowerCase();
+    }
+
+    private static int parsePositiveInt(String value, int defaultValue) {
+        if (value == null || value.isBlank()) {
+            return defaultValue;
+        }
+        try {
+            int parsed = Integer.parseInt(value.trim());
+            return parsed > 0 ? parsed : defaultValue;
+        } catch (NumberFormatException ignored) {
+            return defaultValue;
+        }
     }
 
     private Path resolveDataPath(String webRelativePath, String fallbackFileName) {
