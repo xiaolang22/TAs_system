@@ -11,15 +11,19 @@ import com.group19.model.Job;
 import com.group19.model.TA;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ApplicantReviewService {
@@ -28,15 +32,31 @@ public class ApplicantReviewService {
             "in", "is", "it", "knowledge", "of", "on", "or", "previous", "preferred", "proficiency",
             "skill", "skills", "strong", "support", "the", "to", "with", "able", "ability", "experience",
             "basic", "basics", "maintain", "maintaining", "reliable", "punctual");
+    private static final int DEFAULT_MAX_WEEKLY_WORKLOAD_HOURS = 20;
+    private static final Pattern HOURS_PATTERN = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+    private static final Pattern TIME_RANGE_PATTERN = Pattern.compile(
+            "\\b(\\d{1,2})(?::(\\d{2}))?\\s*(am|pm)?\\s*(?:-|to)\\s*(\\d{1,2})(?::(\\d{2}))?\\s*(am|pm)\\b",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern DAY_PATTERN = Pattern.compile(
+            "\\b(mon(?:day)?s?|tue(?:sday)?s?|wed(?:nesday)?s?|thu(?:rsday)?s?|fri(?:day)?s?|sat(?:urday)?s?|sun(?:day)?s?)\\b",
+            Pattern.CASE_INSENSITIVE);
 
     private final ApplicationDao applicationDao;
     private final TADao taDao;
     private final JobDao jobDao;
+    private final int maxWeeklyWorkloadHours;
 
     public ApplicantReviewService(ApplicationDao applicationDao, TADao taDao, JobDao jobDao) {
+        this(applicationDao, taDao, jobDao, DEFAULT_MAX_WEEKLY_WORKLOAD_HOURS);
+    }
+
+    public ApplicantReviewService(ApplicationDao applicationDao, TADao taDao, JobDao jobDao, int maxWeeklyWorkloadHours) {
         this.applicationDao = applicationDao;
         this.taDao = taDao;
         this.jobDao = jobDao;
+        this.maxWeeklyWorkloadHours = maxWeeklyWorkloadHours > 0
+                ? maxWeeklyWorkloadHours
+                : DEFAULT_MAX_WEEKLY_WORKLOAD_HOURS;
     }
 
     public ServiceResult<ApplicantReviewPageData> loadApplicantsForJob(String jobId, String sortMode) {
@@ -51,13 +71,13 @@ public class ApplicantReviewService {
 
         String normalizedSortMode = normalizeSortMode(sortMode);
         Map<String, TA> taMap = loadTaMap();
-        Map<String, Integer> workloadMap = buildWorkloadMap();
+        Map<String, WorkloadInfo> workloadMap = buildWorkloadMap();
         List<String> requirementTokens = tokenize(job.getRequirements());
 
         List<ApplicantReviewRow> rows = new ArrayList<>();
         for (Application application : applicationDao.findByJobId(job.getJobId())) {
             rows.add(buildRow(application, taMap.get(normalizeKey(application.getTaStudentId())),
-                    requirementTokens, workloadMap.getOrDefault(normalizeKey(application.getTaStudentId()), 0)));
+                    requirementTokens, workloadMap.getOrDefault(normalizeKey(application.getTaStudentId()), new WorkloadInfo())));
         }
 
         sortRows(rows, normalizedSortMode);
@@ -74,7 +94,7 @@ public class ApplicantReviewService {
             Application application,
             TA profile,
             List<String> requirementTokens,
-            int workloadCount) {
+            WorkloadInfo workloadInfo) {
         ApplicantReviewRow row = new ApplicantReviewRow();
         row.setApplicationId(valueOrEmpty(application.getApplicationId()));
         row.setJobId(valueOrEmpty(application.getJobId()));
@@ -89,8 +109,10 @@ public class ApplicantReviewService {
         row.setSkills(valueOrEmpty(profile == null ? null : profile.getSkills()));
         row.setExperience(valueOrEmpty(profile == null ? null : profile.getExperience()));
         row.setAvailability(valueOrEmpty(profile == null ? null : profile.getAvailability()));
-        row.setCurrentWorkload(workloadCount);
-        row.setCurrentWorkloadLabel(workloadCount + (workloadCount == 1 ? " active application" : " active applications"));
+        row.setCurrentWorkload(workloadInfo.applicationCount);
+        row.setTotalWorkloadHours(workloadInfo.totalHours);
+        row.setCurrentWorkloadLabel(buildWorkloadLabel(workloadInfo));
+        row.setWorkloadWarningReasons(buildWorkloadWarningReasons(workloadInfo, row.getJobId()));
 
         List<String> skillTokens = tokenize(row.getSkills());
         int score = calculateMatchScore(requirementTokens, skillTokens);
@@ -116,8 +138,16 @@ public class ApplicantReviewService {
         return taMap;
     }
 
-    private Map<String, Integer> buildWorkloadMap() {
-        Map<String, Integer> workloadMap = new HashMap<>();
+    private Map<String, WorkloadInfo> buildWorkloadMap() {
+        Map<String, Job> jobMap = new HashMap<>();
+        for (Job job : jobDao.findAll()) {
+            String jobId = normalizeKey(job.getJobId());
+            if (!jobId.isEmpty()) {
+                jobMap.put(jobId, job);
+            }
+        }
+
+        Map<String, List<WorkloadAssignment>> assignmentsByTa = new HashMap<>();
         for (Application application : applicationDao.findAll()) {
             if (!isActiveStatus(application.getStatus())) {
                 continue;
@@ -126,9 +156,238 @@ public class ApplicantReviewService {
             if (studentId.isEmpty()) {
                 continue;
             }
-            workloadMap.put(studentId, workloadMap.getOrDefault(studentId, 0) + 1);
+            Job job = jobMap.get(normalizeKey(application.getJobId()));
+            assignmentsByTa.computeIfAbsent(studentId, ignored -> new ArrayList<>())
+                    .add(new WorkloadAssignment(application, job));
+        }
+
+        Map<String, WorkloadInfo> workloadMap = new HashMap<>();
+        for (Map.Entry<String, List<WorkloadAssignment>> entry : assignmentsByTa.entrySet()) {
+            workloadMap.put(entry.getKey(), buildWorkloadInfo(entry.getValue()));
         }
         return workloadMap;
+    }
+
+    private WorkloadInfo buildWorkloadInfo(List<WorkloadAssignment> assignments) {
+        WorkloadInfo info = new WorkloadInfo();
+        if (assignments == null || assignments.isEmpty()) {
+            return info;
+        }
+
+        info.applicationCount = assignments.size();
+        for (WorkloadAssignment assignment : assignments) {
+            info.totalHours += assignment.hours;
+        }
+
+        for (int i = 0; i < assignments.size(); i++) {
+            for (int j = i + 1; j < assignments.size(); j++) {
+                WorkloadAssignment first = assignments.get(i);
+                WorkloadAssignment second = assignments.get(j);
+                if (hasScheduleConflict(first, second)) {
+                    info.conflictJobIds.add(normalizeKey(first.jobId));
+                    info.conflictJobIds.add(normalizeKey(second.jobId));
+                }
+            }
+        }
+        return info;
+    }
+
+    private List<String> buildWorkloadWarningReasons(WorkloadInfo workloadInfo, String currentJobId) {
+        List<String> reasons = new ArrayList<>();
+        if (workloadInfo == null) {
+            return reasons;
+        }
+        if (workloadInfo.conflictJobIds.contains(normalizeKey(currentJobId))) {
+            reasons.add("Time conflict");
+        }
+        if (workloadInfo.totalHours > maxWeeklyWorkloadHours) {
+            reasons.add("Hours limit exceeded");
+        }
+        return reasons;
+    }
+
+    private static String buildWorkloadLabel(WorkloadInfo workloadInfo) {
+        int applicationCount = workloadInfo == null ? 0 : workloadInfo.applicationCount;
+        double hours = workloadInfo == null ? 0 : workloadInfo.totalHours;
+        String applicationLabel = applicationCount
+                + (applicationCount == 1 ? " active application" : " active applications");
+        return applicationLabel + ", " + formatHours(hours) + " assigned hours";
+    }
+
+    private static boolean hasScheduleConflict(WorkloadAssignment first, WorkloadAssignment second) {
+        if (first == null || second == null || first.scheduleSlots.isEmpty() || second.scheduleSlots.isEmpty()) {
+            return false;
+        }
+        for (ScheduleSlot firstSlot : first.scheduleSlots) {
+            for (ScheduleSlot secondSlot : second.scheduleSlots) {
+                if (firstSlot.overlaps(secondSlot)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static List<ScheduleSlot> parseScheduleSlots(String schedule) {
+        if (schedule == null || schedule.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        List<ScheduleSlot> segmentedSlots = new ArrayList<>();
+        String[] segments = schedule.split("[;\\n]");
+        if (segments.length > 1) {
+            for (String segment : segments) {
+                segmentedSlots.addAll(parseScheduleSegment(segment));
+            }
+            if (!segmentedSlots.isEmpty()) {
+                return segmentedSlots;
+            }
+        }
+        return parseScheduleSegment(schedule);
+    }
+
+    private static List<ScheduleSlot> parseScheduleSegment(String schedule) {
+        List<ScheduleSlot> slots = new ArrayList<>();
+        List<DayOfWeek> days = extractDays(schedule);
+        List<TimeWindow> windows = extractTimeWindows(schedule);
+        if (days.isEmpty() || windows.isEmpty()) {
+            return slots;
+        }
+
+        for (DayOfWeek day : days) {
+            for (TimeWindow window : windows) {
+                slots.add(new ScheduleSlot(day, window.startMinutes, window.endMinutes));
+            }
+        }
+        return slots;
+    }
+
+    private static List<DayOfWeek> extractDays(String schedule) {
+        Set<DayOfWeek> days = new LinkedHashSet<>();
+        Matcher matcher = DAY_PATTERN.matcher(valueOrEmpty(schedule).toLowerCase(Locale.ROOT));
+        while (matcher.find()) {
+            DayOfWeek day = parseDay(matcher.group(1));
+            if (day != null) {
+                days.add(day);
+            }
+        }
+        return new ArrayList<>(days);
+    }
+
+    private static DayOfWeek parseDay(String rawDay) {
+        String normalized = normalizeKey(rawDay);
+        if (normalized.startsWith("mon")) {
+            return DayOfWeek.MONDAY;
+        }
+        if (normalized.startsWith("tue")) {
+            return DayOfWeek.TUESDAY;
+        }
+        if (normalized.startsWith("wed")) {
+            return DayOfWeek.WEDNESDAY;
+        }
+        if (normalized.startsWith("thu")) {
+            return DayOfWeek.THURSDAY;
+        }
+        if (normalized.startsWith("fri")) {
+            return DayOfWeek.FRIDAY;
+        }
+        if (normalized.startsWith("sat")) {
+            return DayOfWeek.SATURDAY;
+        }
+        if (normalized.startsWith("sun")) {
+            return DayOfWeek.SUNDAY;
+        }
+        return null;
+    }
+
+    private static List<TimeWindow> extractTimeWindows(String schedule) {
+        List<TimeWindow> windows = new ArrayList<>();
+        Matcher matcher = TIME_RANGE_PATTERN.matcher(valueOrEmpty(schedule).toLowerCase(Locale.ROOT));
+        while (matcher.find()) {
+            TimeWindow window = parseTimeWindow(matcher);
+            if (window != null) {
+                windows.add(window);
+            }
+        }
+        return windows;
+    }
+
+    private static TimeWindow parseTimeWindow(Matcher matcher) {
+        int startHour = parseIntOrDefault(matcher.group(1), -1);
+        int startMinute = parseIntOrDefault(matcher.group(2), 0);
+        int endHour = parseIntOrDefault(matcher.group(4), -1);
+        int endMinute = parseIntOrDefault(matcher.group(5), 0);
+        String endSuffix = normalizeKey(matcher.group(6));
+        String startSuffix = normalizeKey(matcher.group(3));
+        if (startSuffix.isEmpty()) {
+            startSuffix = inferStartSuffix(startHour, endHour, endSuffix);
+        }
+
+        int start = toMinutes(startHour, startMinute, startSuffix);
+        int end = toMinutes(endHour, endMinute, endSuffix);
+        if (start < 0 || end < 0) {
+            return null;
+        }
+        if (end <= start) {
+            end += 12 * 60;
+        }
+        if (end <= start || end - start > 12 * 60) {
+            return null;
+        }
+        return new TimeWindow(start, end);
+    }
+
+    private static String inferStartSuffix(int startHour, int endHour, String endSuffix) {
+        if ("pm".equals(endSuffix) && (startHour > endHour || (endHour == 12 && startHour < 12))) {
+            return "am";
+        }
+        return endSuffix;
+    }
+
+    private static int toMinutes(int hour, int minute, String suffix) {
+        if (hour < 1 || hour > 12 || minute < 0 || minute > 59 || suffix == null || suffix.isBlank()) {
+            return -1;
+        }
+        int normalizedHour = hour;
+        if ("am".equals(suffix)) {
+            normalizedHour = hour == 12 ? 0 : hour;
+        } else if ("pm".equals(suffix)) {
+            normalizedHour = hour == 12 ? 12 : hour + 12;
+        } else {
+            return -1;
+        }
+        return normalizedHour * 60 + minute;
+    }
+
+    private static double parseHours(String rawHours) {
+        Matcher matcher = HOURS_PATTERN.matcher(valueOrEmpty(rawHours));
+        double maxHours = 0;
+        while (matcher.find()) {
+            try {
+                maxHours = Math.max(maxHours, Double.parseDouble(matcher.group(1)));
+            } catch (NumberFormatException ignored) {
+                // Ignore malformed numeric fragments.
+            }
+        }
+        return maxHours;
+    }
+
+    private static int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.isBlank()) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException ignored) {
+            return defaultValue;
+        }
+    }
+
+    private static String formatHours(double hours) {
+        if (Math.rint(hours) == hours) {
+            return String.valueOf((int) hours);
+        }
+        return String.format(Locale.ROOT, "%.1f", hours);
     }
 
     private void sortRows(List<ApplicantReviewRow> rows, String sortMode) {
@@ -314,5 +573,52 @@ public class ApplicantReviewService {
         result = result.replace(">", "&gt;");
         result = result.replace("\"", "&quot;");
         return result.replace("'", "&#39;");
+    }
+
+    private static class WorkloadInfo {
+        private int applicationCount;
+        private double totalHours;
+        private final Set<String> conflictJobIds = new HashSet<>();
+    }
+
+    private static class WorkloadAssignment {
+        private final String jobId;
+        private final double hours;
+        private final List<ScheduleSlot> scheduleSlots;
+
+        private WorkloadAssignment(Application application, Job job) {
+            this.jobId = valueOrEmpty(application == null ? null : application.getJobId());
+            this.hours = parseHours(job == null ? null : job.getHours());
+            this.scheduleSlots = parseScheduleSlots(job == null ? null : job.getSchedule());
+        }
+    }
+
+    private static class ScheduleSlot {
+        private final DayOfWeek day;
+        private final int startMinutes;
+        private final int endMinutes;
+
+        private ScheduleSlot(DayOfWeek day, int startMinutes, int endMinutes) {
+            this.day = day;
+            this.startMinutes = startMinutes;
+            this.endMinutes = endMinutes;
+        }
+
+        private boolean overlaps(ScheduleSlot other) {
+            return other != null
+                    && day == other.day
+                    && startMinutes < other.endMinutes
+                    && other.startMinutes < endMinutes;
+        }
+    }
+
+    private static class TimeWindow {
+        private final int startMinutes;
+        private final int endMinutes;
+
+        private TimeWindow(int startMinutes, int endMinutes) {
+            this.startMinutes = startMinutes;
+            this.endMinutes = endMinutes;
+        }
     }
 }

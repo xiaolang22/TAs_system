@@ -1,5 +1,8 @@
 package com.group19.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ApplicantReviewRow {
     private String applicationId;
     private String jobId;
@@ -22,6 +25,8 @@ public class ApplicantReviewRow {
     private String missingSkillsText;
     private int currentWorkload;
     private String currentWorkloadLabel;
+    private double totalWorkloadHours;
+    private List<String> workloadWarningReasons = new ArrayList<>();
 
     public String getApplicationId() {
         return applicationId;
@@ -189,5 +194,25 @@ public class ApplicantReviewRow {
 
     public void setCurrentWorkloadLabel(String currentWorkloadLabel) {
         this.currentWorkloadLabel = currentWorkloadLabel;
+    }
+
+    public double getTotalWorkloadHours() {
+        return totalWorkloadHours;
+    }
+
+    public void setTotalWorkloadHours(double totalWorkloadHours) {
+        this.totalWorkloadHours = totalWorkloadHours;
+    }
+
+    public List<String> getWorkloadWarningReasons() {
+        return workloadWarningReasons;
+    }
+
+    public void setWorkloadWarningReasons(List<String> workloadWarningReasons) {
+        this.workloadWarningReasons = workloadWarningReasons == null ? new ArrayList<>() : workloadWarningReasons;
+    }
+
+    public boolean isHasWorkloadWarning() {
+        return workloadWarningReasons != null && !workloadWarningReasons.isEmpty();
     }
 }
