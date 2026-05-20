@@ -6,6 +6,7 @@ public class ParsedCVData {
     private String studentId;
     private String programme;
     private String skills;
+    private String experience;
     private String availability;
 
     public ParsedCVData() {
@@ -49,6 +50,14 @@ public class ParsedCVData {
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 
     public String getAvailability() {

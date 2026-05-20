@@ -1,7 +1,6 @@
 package com.group19.servlet;
 
 import com.group19.dao.TADao;
-import com.group19.dto.CVExtractedInfo;
 import com.group19.dto.CVUploadResult;
 import com.group19.dto.ServiceResult;
 import com.group19.model.TA;
@@ -58,14 +57,10 @@ public class UploadCVServlet extends HttpServlet {
         if (result.isSuccess()) {
             CVUploadResult uploadResult = result.getData();
             TA profile = uploadResult.getProfile();
-            CVExtractedInfo extractedInfo = uploadResult.getExtractedInfo();
-
-            applyExtractedPrefill(profile, extractedInfo);
 
             req.setAttribute("profile", profile);
             req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profile.getCvFilePath()));
-            req.setAttribute("autoFilled", extractedInfo.hasAny());
-            req.setAttribute("success", buildSuccessMessage(extractedInfo));
+            req.setAttribute("success", buildSuccessMessage(profile.getCvFilePath()));
             req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
             return;
         }
@@ -86,31 +81,12 @@ public class UploadCVServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
     }
 
-    private void applyExtractedPrefill(TA profile, CVExtractedInfo extractedInfo) {
-        if (profile == null || extractedInfo == null) {
-            return;
+    private String buildSuccessMessage(String cvFilePath) {
+        String fileName = FileUploadUtil.extractFileNameFromPath(cvFilePath);
+        if (fileName == null || fileName.isBlank()) {
+            return "CV uploaded successfully.";
         }
-
-        if (!isBlank(extractedInfo.getEducation())) {
-            profile.setProgramme(extractedInfo.getEducation());
-        }
-        if (!isBlank(extractedInfo.getSkills())) {
-            profile.setSkills(extractedInfo.getSkills());
-        }
-        if (!isBlank(extractedInfo.getExperience())) {
-            profile.setExperience(extractedInfo.getExperience());
-        }
-    }
-
-    private String buildSuccessMessage(CVExtractedInfo extractedInfo) {
-        if (extractedInfo != null && extractedInfo.hasAny()) {
-            return "CV uploaded successfully. Extracted education, skills and experience have been prefilled. You can edit before saving.";
-        }
-        return "CV uploaded successfully. No clear sections were extracted, please fill in profile fields manually.";
-    }
-
-    private boolean isBlank(String value) {
-        return value == null || value.trim().isEmpty();
+        return "CV uploaded successfully. Current file: " + fileName + ".";
     }
 
     private Path resolveDataPath(String webRelativePath) {
