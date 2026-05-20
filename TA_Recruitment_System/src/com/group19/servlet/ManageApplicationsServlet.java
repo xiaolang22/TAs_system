@@ -1,9 +1,14 @@
 package com.group19.servlet;
 
 import com.group19.dao.ApplicationDao;
+import com.group19.dao.JobDao;
+import com.group19.dao.TADao;
+import com.group19.dto.TARecommendation;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Application;
+import com.group19.model.Job;
 import com.group19.service.ApplicationService;
+import com.group19.service.RecommendationService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +24,8 @@ import java.util.List;
 
 public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
+    private RecommendationService recommendationService;
+    private JobDao jobDao;
 
     @Override
     public void init() {
@@ -28,7 +35,22 @@ public class ManageApplicationsServlet extends HttpServlet {
                 : appDataPath;
 
         Path appFilePath = resolveDataPath(appRelativePath);
-        this.applicationService = new ApplicationService(new ApplicationDao(appFilePath));
+        ApplicationDao applicationDao = new ApplicationDao(appFilePath);
+        this.applicationService = new ApplicationService(applicationDao);
+
+        String jobDataPath = getServletContext().getInitParameter("jobDataFile");
+        String jobRelativePath = jobDataPath == null || jobDataPath.isBlank()
+                ? "/data/jobs.json"
+                : jobDataPath;
+        Path jobFilePath = resolveDataPath(jobRelativePath);
+        this.jobDao = new JobDao(jobFilePath);
+
+        String taDataPath = getServletContext().getInitParameter("taDataFile");
+        String taRelativePath = taDataPath == null || taDataPath.isBlank()
+                ? "/data/tas.json"
+                : taDataPath;
+        Path taFilePath = resolveDataPath(taRelativePath);
+        this.recommendationService = new RecommendationService(new TADao(taFilePath), applicationDao);
     }
 
     @Override
@@ -39,15 +61,25 @@ public class ManageApplicationsServlet extends HttpServlet {
 
         String jobId = req.getParameter("jobId");
         List<Application> applications = new ArrayList<>();
+        List<TARecommendation> recommendations = new ArrayList<>();
+        Job job = null;
 
         if (jobId == null || jobId.isBlank()) {
             req.setAttribute("errorMsg", "Job ID is required");
         } else {
             applications = applicationService.getApplicationsByJobId(jobId);
+            job = findJobById(jobId);
+            if (job == null) {
+                req.setAttribute("errorMsg", "Job not found");
+            } else {
+                recommendations = recommendationService.recommendApplicants(job, applications);
+            }
         }
 
         req.setAttribute("jobId", jobId);
+        req.setAttribute("job", job);
         req.setAttribute("applications", applications);
+        req.setAttribute("recommendations", recommendations);
         req.getRequestDispatcher("/WEB-INF/jsp/manage_applications.jsp").forward(req, resp);
     }
 
@@ -75,10 +107,29 @@ public class ManageApplicationsServlet extends HttpServlet {
         }
 
         List<Application> applications = applicationService.getApplicationsByJobId(jobId);
+        Job job = findJobById(jobId);
+        List<TARecommendation> recommendations = job == null
+                ? new ArrayList<>()
+                : recommendationService.recommendApplicants(job, applications);
         req.setAttribute("jobId", jobId);
+        req.setAttribute("job", job);
         req.setAttribute("applications", applications);
+        req.setAttribute("recommendations", recommendations);
         req.setAttribute("errorMsg", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/manage_applications.jsp").forward(req, resp);
+    }
+
+    private Job findJobById(String jobId) {
+        if (jobId == null || jobId.isBlank()) {
+            return null;
+        }
+
+        for (Job job : jobDao.findAll()) {
+            if (jobId.equalsIgnoreCase(job.getJobId())) {
+                return job;
+            }
+        }
+        return null;
     }
 
     private Path resolveDataPath(String webRelativePath) {
