@@ -6,8 +6,10 @@ public class AssignedPositionDto {
     private String title;
     private String category;
     private String hoursText;
+    private String scheduleText;
     private double parsedHours;
     private boolean hoursCounted;
+    private boolean timeConflict;
 
     public String getApplicationId() {
         return applicationId;
@@ -49,6 +51,14 @@ public class AssignedPositionDto {
         this.hoursText = hoursText;
     }
 
+    public String getScheduleText() {
+        return scheduleText;
+    }
+
+    public void setScheduleText(String scheduleText) {
+        this.scheduleText = scheduleText;
+    }
+
     public double getParsedHours() {
         return parsedHours;
     }
@@ -63,5 +73,13 @@ public class AssignedPositionDto {
 
     public void setHoursCounted(boolean hoursCounted) {
         this.hoursCounted = hoursCounted;
+    }
+
+    public boolean isTimeConflict() {
+        return timeConflict;
+    }
+
+    public void setTimeConflict(boolean timeConflict) {
+        this.timeConflict = timeConflict;
     }
 }
