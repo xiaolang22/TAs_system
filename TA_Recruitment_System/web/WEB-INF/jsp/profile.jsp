@@ -35,28 +35,20 @@
     <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
     <section class="card">
-        <h2>Parse CV to Auto-Fill Profile</h2>
-        <p class="hint">US03: upload a CV file to auto-fill your profile. You can manually edit the results.</p>
-        <form id="parseCvForm" enctype="multipart/form-data" class="profile-form">
-            <label for="cvParseFile">Choose CV file *</label>
-            <input id="cvParseFile" name="cvParseFile" type="file" accept=".pdf" required>
-            <button type="submit" id="parseCvBtn">Parse & Auto-Fill</button>
-        </form>
-        <p class="alert info hidden" id="parseStatus"></p>
-    </section>
-
-    <section class="card">
-        <h2>Upload CV</h2>
-        <p class="hint">US02: upload a PDF or DOC/DOCX file. The latest upload will replace the previous one.</p>
-        <p class="hint">US03: after upload, the system will try to prefill education, skills and experience fields below.</p>
-        <p class="hint">Current CV: <strong>${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
-        <form method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
-            <input type="hidden" name="studentId" value="${profile.studentId}">
-            <label for="cvFile">Choose file *</label>
+        <h2>Resume Upload & Auto-Fill</h2>
+        <p class="hint">Upload a PDF or DOC/DOCX file. The latest uploaded resume replaces the previous one.</p>
+        <p class="hint">Auto-Fill uses the latest saved resume for the current Student ID to extract education, skills and experience.</p>
+        <p class="hint">Current CV: <strong id="currentCvName">${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
+        <form id="saveCvForm" method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
+            <input id="uploadStudentId" type="hidden" name="studentId" value="${profile.studentId}">
+            <label for="cvFile">Choose resume file *</label>
             <input id="cvFile" name="cvFile" type="file" accept=".pdf,.doc,.docx" required>
-            <button type="submit">Upload CV</button>
         </form>
-        <p class="alert success ${autoFilled ? '' : 'hidden'}">US03 prefill is ready below. Please review and save profile.</p>
+        <div class="row action-row">
+            <button type="button" id="saveCvBtn">Save Resume</button>
+            <button type="button" id="parseCvBtn" class="secondary-btn">Auto-Fill Fields</button>
+        </div>
+        <p class="alert info hidden" id="parseStatus"></p>
     </section>
 
     <form method="post" action="${pageContext.request.contextPath}/profile" class="profile-form">
@@ -87,26 +79,88 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const parseForm = document.getElementById('parseCvForm');
+    const saveCvForm = document.getElementById('saveCvForm');
     const parseBtn = document.getElementById('parseCvBtn');
+    const saveCvBtn = document.getElementById('saveCvBtn');
     const parseStatus = document.getElementById('parseStatus');
     const contextPath = '${pageContext.request.contextPath}';
+    const fileInput = document.getElementById('cvFile');
+    const studentIdInput = document.getElementById('studentId');
+    const uploadStudentIdInput = document.getElementById('uploadStudentId');
+    const currentCvName = document.getElementById('currentCvName');
 
-    parseForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const fileInput = document.getElementById('cvParseFile');
+    saveCvBtn.addEventListener('click', async function() {
         if (!fileInput.files || fileInput.files.length === 0) {
-            showStatus('Please select a CV file.', 'error');
+            showStatus('Please select a resume file before saving.', 'error');
+            return;
+        }
+        if (uploadStudentIdInput && studentIdInput) {
+            uploadStudentIdInput.value = studentIdInput.value;
+        }
+        if (!uploadStudentIdInput.value.trim()) {
+            showStatus('Please enter the Student ID before saving the resume.', 'error');
+            return;
+        }
+
+        saveCvBtn.disabled = true;
+        parseBtn.disabled = true;
+        showStatus('Saving resume, please wait...', 'info');
+
+        const formData = new FormData(saveCvForm);
+
+        try {
+            formData.append('ajax', 'true');
+            const response = await fetch(saveCvForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const responseText = await response.text();
+            if (!response.ok) {
+                console.error('Save resume request failed:', response.status, responseText);
+            }
+            let result = null;
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Unexpected save response:', responseText);
+                showStatus('Failed to save resume: server returned an unexpected response.', 'error');
+                return;
+            }
+
+            if (result.success && result.data && result.data.profile && result.data.profile.cvFilePath) {
+                currentCvName.textContent = extractFileName(result.data.profile.cvFilePath);
+                fileInput.value = '';
+                showStatus(result.message || 'Resume saved successfully.', 'success');
+            } else {
+                showStatus(result.message || 'Failed to save resume.', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showStatus('An error occurred while saving the resume.', 'error');
+        } finally {
+            saveCvBtn.disabled = false;
+            parseBtn.disabled = false;
+        }
+    });
+
+    parseBtn.addEventListener('click', async function() {
+        const studentIdValue = studentIdInput ? studentIdInput.value.trim() : '';
+        if (!studentIdValue) {
+            showStatus('Please enter the Student ID before using auto-fill.', 'error');
             return;
         }
 
         parseBtn.disabled = true;
+        saveCvBtn.disabled = true;
         parseBtn.textContent = 'Parsing...';
-        showStatus('Parsing CV, please wait...', 'info');
+        showStatus('Parsing the latest saved resume, please wait...', 'info');
 
         const formData = new FormData();
-        formData.append('cvParseFile', fileInput.files[0]);
+        formData.append('studentId', studentIdValue);
 
         try {
             const response = await fetch(contextPath + '/ta/parse-cv', {
@@ -119,54 +173,37 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success && result.data) {
                 const data = result.data;
                 fillForm(data);
-                showStatus('CV parsed successfully! Review and edit the fields below.', 'success');
+                showStatus('Resume parsed successfully. Review and edit the fields below before saving the profile.', 'success');
             } else {
                 showStatus(result.message || 'Failed to parse CV.', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            showStatus('An error occurred while parsing the CV.', 'error');
+            showStatus('An error occurred while parsing the saved resume.', 'error');
         } finally {
             parseBtn.disabled = false;
-            parseBtn.textContent = 'Parse & Auto-Fill';
+            saveCvBtn.disabled = false;
+            parseBtn.textContent = 'Auto-Fill Fields';
         }
     });
 
     function fillForm(data) {
-        if (data.name) {
-            const nameInput = document.getElementById('name');
-            if (nameInput && !nameInput.value.trim()) {
-                nameInput.value = data.name;
-            }
-        }
-        if (data.email) {
-            const emailInput = document.getElementById('email');
-            if (emailInput && !emailInput.value.trim()) {
-                emailInput.value = data.email;
-            }
-        }
-        if (data.studentId) {
-            const studentIdInput = document.getElementById('studentId');
-            if (studentIdInput && !studentIdInput.value.trim()) {
-                studentIdInput.value = data.studentId;
-            }
-        }
         if (data.programme) {
             const programmeInput = document.getElementById('programme');
-            if (programmeInput && !programmeInput.value.trim()) {
+            if (programmeInput) {
                 programmeInput.value = data.programme;
             }
         }
         if (data.skills) {
             const skillsInput = document.getElementById('skills');
-            if (skillsInput && !skillsInput.value.trim()) {
+            if (skillsInput) {
                 skillsInput.value = data.skills;
             }
         }
-        if (data.availability) {
-            const availabilityInput = document.getElementById('availability');
-            if (availabilityInput && !availabilityInput.value.trim()) {
-                availabilityInput.value = data.availability;
+        if (data.experience) {
+            const experienceInput = document.getElementById('experience');
+            if (experienceInput) {
+                experienceInput.value = data.experience;
             }
         }
     }
@@ -175,6 +212,15 @@ document.addEventListener('DOMContentLoaded', function() {
         parseStatus.textContent = message;
         parseStatus.className = 'alert ' + type;
         parseStatus.classList.remove('hidden');
+    }
+
+    function extractFileName(filePath) {
+        if (!filePath) {
+            return 'No CV uploaded.';
+        }
+        const normalized = String(filePath).replace(/\\/g, '/');
+        const lastSlash = normalized.lastIndexOf('/');
+        return lastSlash >= 0 ? normalized.substring(lastSlash + 1) : normalized;
     }
 });
 </script>
