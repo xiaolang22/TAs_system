@@ -22,6 +22,11 @@
     </context-param>
 
     <context-param>
+        <param-name>savedJobDataFile</param-name>
+        <param-value>/data/saved_jobs.json</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>userDataFile</param-name>
         <param-value>/data/users.json</param-value>
     </context-param>
@@ -64,6 +69,11 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/ta/applications</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/saved-jobs</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
@@ -164,6 +174,16 @@
     <servlet-mapping>
         <servlet-name>TaApplicationsServlet</servlet-name>
         <url-pattern>/ta/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SavedJobServlet</servlet-name>
+        <servlet-class>com.group19.servlet.SavedJobServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SavedJobServlet</servlet-name>
+        <url-pattern>/ta/saved-jobs</url-pattern>
     </servlet-mapping>
 
     <servlet>

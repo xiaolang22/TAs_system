@@ -304,10 +304,67 @@ button:hover {
 
 .job-card-actions {
     margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
 }
 
 .apply-form {
     margin-top: 16px;
+}
+
+.save-job-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.save-toggle.saved {
+    background: #4b5563;
+}
+
+.save-toggle.saved:hover {
+    background: #374151;
+}
+
+.detail-save-form {
+    margin-top: 14px;
+}
+
+.saved-jobs-panel h2 {
+    margin-top: 0;
+}
+
+.saved-job-list {
+    display: grid;
+    gap: 12px;
+}
+
+.saved-job-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.saved-job-item h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.saved-job-item .hint {
+    margin-bottom: 0;
+}
+
+.saved-job-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
 }
 
 .sr-only {

@@ -1,9 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %>
 <%@ page import="com.group19.model.Job" %>
+<%!
+    private String attr(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;")
+                .replace("\"", "&quot;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
+    }
+%>
 <%
     String jobListAction = request.getContextPath() + "/jobs";
     boolean showingHidden = Boolean.TRUE.equals(request.getAttribute("showingHidden"));
+    Set<String> savedJobIds = (Set<String>) request.getAttribute("savedJobIds");
+    boolean canSaveJobs = savedJobIds != null;
+    String currentRequestPath = (String) request.getAttribute("currentRequestPath");
+    if (currentRequestPath == null || currentRequestPath.isBlank()) {
+        currentRequestPath = request.getContextPath() + "/jobs";
+    }
     Object hfObj = request.getAttribute("hiddenFromOpenCount");
     int hiddenFromOpen = hfObj instanceof Number ? ((Number) hfObj).intValue() : 0;
     Object hpObj = request.getAttribute("hiddenPoolCount");
@@ -36,6 +54,13 @@
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
         </div>
     </header>
+
+    <p class="alert success ${empty savedJobMessage ? 'hidden' : ''}">
+        ${savedJobMessage}
+    </p>
+    <p class="alert error ${empty savedJobError ? 'hidden' : ''}">
+        ${savedJobError}
+    </p>
 
     <section class="card job-filters-card">
         <h2 class="section-title">Search &amp; filters</h2>
@@ -117,6 +142,18 @@
                 <a href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>" class="link-btn">
                     View details &amp; apply
                 </a>
+                <% if (canSaveJobs) {
+                    boolean saved = savedJobIds.contains(job.getJobId());
+                %>
+                <form method="post" action="${pageContext.request.contextPath}/ta/saved-jobs" class="save-job-form">
+                    <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
+                    <input type="hidden" name="action" value="<%= saved ? "remove" : "save" %>">
+                    <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
+                    <button type="submit" class="<%= saved ? "secondary-btn save-toggle saved" : "save-toggle" %>">
+                        <%= saved ? "Remove saved" : "Save for later" %>
+                    </button>
+                </form>
+                <% } %>
             </div>
         </article>
         <%

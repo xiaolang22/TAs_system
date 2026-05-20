@@ -1,5 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.group19.model.Job" %>
+<%!
+    private String attr(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;")
+                .replace("\"", "&quot;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +33,22 @@
     <%
         Job job = (Job) request.getAttribute("job");
         String applyBlockedReason = (String) request.getAttribute("applyBlockedReason");
+        Object savedObj = request.getAttribute("jobSaved");
+        boolean canSaveJob = savedObj instanceof Boolean;
+        boolean jobSaved = Boolean.TRUE.equals(savedObj);
+        String currentRequestPath = (String) request.getAttribute("currentRequestPath");
+        if (currentRequestPath == null || currentRequestPath.isBlank()) {
+            currentRequestPath = request.getContextPath() + "/jobs";
+        }
         if (job != null) {
     %>
+    <p class="alert success ${empty savedJobMessage ? 'hidden' : ''}">
+        ${savedJobMessage}
+    </p>
+    <p class="alert error ${empty savedJobError ? 'hidden' : ''}">
+        ${savedJobError}
+    </p>
+
     <section class="card">
         <h2><%= job.getTitle() %></h2>
         <p><strong>Module / activity:</strong> <%= job.getCategory() == null ? "" : job.getCategory() %></p>
@@ -37,6 +62,17 @@
 
         <h3>Required skills</h3>
         <p><%= job.getRequirements() == null ? "" : job.getRequirements() %></p>
+
+        <% if (canSaveJob) { %>
+        <form method="post" action="${pageContext.request.contextPath}/ta/saved-jobs" class="save-job-form detail-save-form">
+            <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
+            <input type="hidden" name="action" value="<%= jobSaved ? "remove" : "save" %>">
+            <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
+            <button type="submit" class="<%= jobSaved ? "secondary-btn save-toggle saved" : "save-toggle" %>">
+                <%= jobSaved ? "Remove saved" : "Save for later" %>
+            </button>
+        </form>
+        <% } %>
 
         <% if (applyBlockedReason != null && !applyBlockedReason.isBlank()) { %>
         <p class="alert error"><%= applyBlockedReason %></p>
