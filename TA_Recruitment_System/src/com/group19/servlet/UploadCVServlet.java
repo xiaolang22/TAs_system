@@ -1,5 +1,6 @@
 package com.group19.servlet;
 
+import com.google.gson.Gson;
 import com.group19.dao.TADao;
 import com.group19.dto.CVUploadResult;
 import com.group19.dto.ServiceResult;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +24,7 @@ import java.nio.file.Paths;
 public class UploadCVServlet extends HttpServlet {
     private CVService cvService;
     private ProfileService profileService;
+    private final Gson gson = new Gson();
 
     @Override
     public void init() {
@@ -54,14 +57,17 @@ public class UploadCVServlet extends HttpServlet {
         Path uploadDir = resolveUploadDir();
         ServiceResult<CVUploadResult> result = cvService.uploadCv(studentId, cvPart, uploadDir);
 
+        if (wantsJsonResponse(req)) {
+            writeJsonResponse(resp, result);
+            return;
+        }
+
         if (result.isSuccess()) {
             CVUploadResult uploadResult = result.getData();
             TA profile = uploadResult.getProfile();
-
-            req.setAttribute("profile", profile);
-            req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profile.getCvFilePath()));
-            req.setAttribute("success", buildSuccessMessage(profile.getCvFilePath()));
-            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
+            String encodedId = URLEncoder.encode(profile.getStudentId(), StandardCharsets.UTF_8);
+            String redirectUrl = req.getContextPath() + "/profile?studentId=" + encodedId + "&cvSaved=true";
+            resp.sendRedirect(redirectUrl);
             return;
         }
 
@@ -81,14 +87,6 @@ public class UploadCVServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
     }
 
-    private String buildSuccessMessage(String cvFilePath) {
-        String fileName = FileUploadUtil.extractFileNameFromPath(cvFilePath);
-        if (fileName == null || fileName.isBlank()) {
-            return "CV uploaded successfully.";
-        }
-        return "CV uploaded successfully. Current file: " + fileName + ".";
-    }
-
     private Path resolveDataPath(String webRelativePath) {
         String realPath = getServletContext().getRealPath(webRelativePath);
         if (realPath != null && !realPath.isBlank()) {
@@ -103,6 +101,23 @@ public class UploadCVServlet extends HttpServlet {
             return Paths.get(realPath);
         }
         return Paths.get(System.getProperty("user.dir"), "uploads");
+    }
+
+    private boolean wantsJsonResponse(HttpServletRequest req) {
+        String ajaxParam = req.getParameter("ajax");
+        if ("true".equalsIgnoreCase(ajaxParam)) {
+            return true;
+        }
+        String requestedWith = req.getHeader("X-Requested-With");
+        return requestedWith != null && "XMLHttpRequest".equalsIgnoreCase(requestedWith);
+    }
+
+    private void writeJsonResponse(HttpServletResponse resp, ServiceResult<CVUploadResult> result) throws IOException {
+        resp.setContentType("application/json; charset=UTF-8");
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        try (var writer = resp.getWriter()) {
+            writer.write(gson.toJson(result));
+        }
     }
 }
 

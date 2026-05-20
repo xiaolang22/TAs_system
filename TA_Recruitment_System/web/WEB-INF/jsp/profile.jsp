@@ -38,16 +38,16 @@
         <h2>Resume Upload & Auto-Fill</h2>
         <p class="hint">Upload a PDF or DOC/DOCX file. The latest uploaded resume replaces the previous one.</p>
         <p class="hint">Auto-Fill uses the latest saved resume for the current Student ID to extract education, skills and experience.</p>
-        <p class="hint">Current CV: <strong>${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
-        <form id="cvActionsForm" method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
+        <p class="hint">Current CV: <strong id="currentCvName">${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
+        <form id="saveCvForm" method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
             <input id="uploadStudentId" type="hidden" name="studentId" value="${profile.studentId}">
             <label for="cvFile">Choose resume file *</label>
             <input id="cvFile" name="cvFile" type="file" accept=".pdf,.doc,.docx" required>
-            <div class="row action-row">
-                <button type="submit" id="saveCvBtn">Save Resume</button>
-                <button type="button" id="parseCvBtn" class="secondary-btn">Auto-Fill Fields</button>
-            </div>
         </form>
+        <div class="row action-row">
+            <button type="button" id="saveCvBtn">Save Resume</button>
+            <button type="button" id="parseCvBtn" class="secondary-btn">Auto-Fill Fields</button>
+        </div>
         <p class="alert info hidden" id="parseStatus"></p>
     </section>
 
@@ -79,7 +79,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const cvActionsForm = document.getElementById('cvActionsForm');
+    const saveCvForm = document.getElementById('saveCvForm');
     const parseBtn = document.getElementById('parseCvBtn');
     const saveCvBtn = document.getElementById('saveCvBtn');
     const parseStatus = document.getElementById('parseStatus');
@@ -87,10 +87,63 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('cvFile');
     const studentIdInput = document.getElementById('studentId');
     const uploadStudentIdInput = document.getElementById('uploadStudentId');
+    const currentCvName = document.getElementById('currentCvName');
 
-    cvActionsForm.addEventListener('submit', function() {
+    saveCvBtn.addEventListener('click', async function() {
+        if (!fileInput.files || fileInput.files.length === 0) {
+            showStatus('Please select a resume file before saving.', 'error');
+            return;
+        }
         if (uploadStudentIdInput && studentIdInput) {
             uploadStudentIdInput.value = studentIdInput.value;
+        }
+        if (!uploadStudentIdInput.value.trim()) {
+            showStatus('Please enter the Student ID before saving the resume.', 'error');
+            return;
+        }
+
+        saveCvBtn.disabled = true;
+        parseBtn.disabled = true;
+        showStatus('Saving resume, please wait...', 'info');
+
+        const formData = new FormData(saveCvForm);
+
+        try {
+            formData.append('ajax', 'true');
+            const response = await fetch(saveCvForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const responseText = await response.text();
+            if (!response.ok) {
+                console.error('Save resume request failed:', response.status, responseText);
+            }
+            let result = null;
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Unexpected save response:', responseText);
+                showStatus('Failed to save resume: server returned an unexpected response.', 'error');
+                return;
+            }
+
+            if (result.success && result.data && result.data.profile && result.data.profile.cvFilePath) {
+                currentCvName.textContent = extractFileName(result.data.profile.cvFilePath);
+                fileInput.value = '';
+                showStatus(result.message || 'Resume saved successfully.', 'success');
+            } else {
+                showStatus(result.message || 'Failed to save resume.', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showStatus('An error occurred while saving the resume.', 'error');
+        } finally {
+            saveCvBtn.disabled = false;
+            parseBtn.disabled = false;
         }
     });
 
@@ -159,6 +212,15 @@ document.addEventListener('DOMContentLoaded', function() {
         parseStatus.textContent = message;
         parseStatus.className = 'alert ' + type;
         parseStatus.classList.remove('hidden');
+    }
+
+    function extractFileName(filePath) {
+        if (!filePath) {
+            return 'No CV uploaded.';
+        }
+        const normalized = String(filePath).replace(/\\/g, '/');
+        const lastSlash = normalized.lastIndexOf('/');
+        return lastSlash >= 0 ? normalized.substring(lastSlash + 1) : normalized;
     }
 });
 </script>

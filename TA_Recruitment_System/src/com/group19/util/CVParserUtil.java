@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 public final class CVParserUtil {
     private static final int MAX_SECTION_LENGTH = 600;
@@ -55,9 +57,14 @@ public final class CVParserUtil {
 
         try {
             String extension = extensionOf(cvFilePath.getFileName().toString());
-            String rawText = "docx".equals(extension)
-                    ? readDocxText(cvFilePath)
-                    : readGenericText(cvFilePath);
+            String rawText;
+            if ("pdf".equals(extension)) {
+                rawText = readPdfText(cvFilePath);
+            } else if ("docx".equals(extension)) {
+                rawText = readDocxText(cvFilePath);
+            } else {
+                rawText = readGenericText(cvFilePath);
+            }
             return parseFromText(rawText);
         } catch (IOException e) {
             return new CVExtractedInfo("", "", "");
@@ -255,6 +262,14 @@ public final class CVParserUtil {
             }
         }
         return "";
+    }
+
+    private static String readPdfText(Path filePath) throws IOException {
+        try (InputStream in = Files.newInputStream(filePath);
+             PDDocument document = PDDocument.load(in)) {
+            PDFTextStripper stripper = new PDFTextStripper();
+            return stripper.getText(document);
+        }
     }
 
     private static String readGenericText(Path filePath) throws IOException {
