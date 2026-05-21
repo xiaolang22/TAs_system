@@ -8,12 +8,14 @@ import com.group19.dto.ApplicantReviewRow;
 import com.group19.dto.ServiceResult;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.UserAccountDao;
+import com.group19.dto.TARecommendation;
 import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
 import com.group19.service.MoNewApplicationNotificationService;
+import com.group19.service.RecommendationService;
 import com.group19.util.ApplicationServiceFactory;
 import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
@@ -28,11 +30,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 
 public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
     private ApplicantReviewService applicantReviewService;
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
+    private RecommendationService recommendationService;
 
     @Override
     public void init() {
@@ -65,6 +69,7 @@ public class ManageApplicationsServlet extends HttpServlet {
                 new NotificationDao(notificationFilePath),
                 jobDao,
                 new UserAccountDao(userFilePath));
+        this.recommendationService = new RecommendationService(applicationDao);
     }
 
     @Override
@@ -89,6 +94,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             req.setAttribute("errorMsg", "Job ID is required.");
             req.setAttribute("jobTitle", "");
             req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Job ID is required."));
+            req.setAttribute("recommendationCardsHtml", buildEmptyRecommendationHtml("Job ID is required."));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
         }
@@ -98,6 +104,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             req.setAttribute("errorMsg", result.getMessage());
             req.setAttribute("jobTitle", "");
             req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(result.getMessage()));
+            req.setAttribute("recommendationCardsHtml", buildEmptyRecommendationHtml(result.getMessage()));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
         }
@@ -105,16 +112,13 @@ public class ManageApplicationsServlet extends HttpServlet {
         ApplicantReviewPageData pageData = result.getData();
         Job job = pageData.getJob();
         List<ApplicantReviewRow> applicants = pageData.getApplicants();
-        req.setAttribute("job", job);
-        req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
-        req.setAttribute("sortLabel", pageData.getSortLabel());
-        req.setAttribute("applicantCount", applicants.size());
+        List<TARecommendation> recommendations = recommendationService.recommend(job, applicants);
+        applyReviewPageAttributes(req, pageData, applicants, recommendations, jobId, sortMode);
 
         if (detailMode) {
             ApplicantReviewRow applicant = findApplicant(applicants, studentId);
             if (applicant == null) {
                 req.setAttribute("errorMsg", "Applicant not found for this job.");
-                req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
                 req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Applicant not found."));
                 req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
                 return;
@@ -125,7 +129,6 @@ public class ManageApplicationsServlet extends HttpServlet {
             return;
         }
 
-        req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, applicants, jobId, sortMode));
         req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
     }
 
@@ -162,20 +165,31 @@ public class ManageApplicationsServlet extends HttpServlet {
         ServiceResult<ApplicantReviewPageData> pageResult = applicantReviewService.loadApplicantsForJob(jobId, sortMode);
         if (pageResult.isSuccess()) {
             ApplicantReviewPageData pageData = pageResult.getData();
-            req.setAttribute("job", pageData.getJob());
-            req.setAttribute("jobTitle", pageData.getJob() == null ? "" : pageData.getJob().getTitle());
-            req.setAttribute("applicantCount", pageData.getApplicants().size());
-            req.setAttribute("sortLabel", pageData.getSortLabel());
-            req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, pageData.getApplicants(), jobId, sortMode));
+            applyReviewPageAttributes(req, pageData, pageData.getApplicants(),
+                    recommendationService.recommend(pageData.getJob(), pageData.getApplicants()), jobId, sortMode);
         } else {
             req.setAttribute("jobTitle", "");
             req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(pageResult.getMessage()));
+            req.setAttribute("recommendationCardsHtml", buildEmptyRecommendationHtml(pageResult.getMessage()));
         }
 
         req.setAttribute("jobId", jobId);
         req.setAttribute("sortMode", sortMode);
         req.setAttribute("errorMsg", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
+    }
+
+    private void applyReviewPageAttributes(HttpServletRequest req, ApplicantReviewPageData pageData,
+                                           List<ApplicantReviewRow> applicants,
+                                           List<TARecommendation> recommendations,
+                                           String jobId, String sortMode) {
+        Job job = pageData.getJob();
+        req.setAttribute("job", job);
+        req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
+        req.setAttribute("sortLabel", pageData.getSortLabel());
+        req.setAttribute("applicantCount", applicants == null ? 0 : applicants.size());
+        req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, applicants, jobId, sortMode));
+        req.setAttribute("recommendationCardsHtml", buildRecommendationCardsHtml(recommendations));
     }
 
     private static ApplicantReviewRow findApplicant(List<ApplicantReviewRow> applicants, String studentId) {
@@ -322,6 +336,72 @@ public class ManageApplicationsServlet extends HttpServlet {
         return "<tr><td colspan=\"8\"><div class=\"empty-state\">" + escapeHtml(message) + "</div></td></tr>";
     }
 
+    private static String buildRecommendationCardsHtml(List<TARecommendation> recommendations) {
+        if (recommendations == null || recommendations.isEmpty()) {
+            return buildEmptyRecommendationHtml("No recommendations available until this job has applicants.");
+        }
+
+        StringBuilder html = new StringBuilder();
+        int rank = 1;
+        for (TARecommendation recommendation : recommendations) {
+            html.append("<article class=\"recommendation-item\">");
+            html.append("<div class=\"recommendation-item-head\">");
+            html.append("<div class=\"table-main\">");
+            html.append("<div class=\"recommendation-title-row\">");
+            html.append("<span class=\"status-pill ")
+                    .append(rank == 1 ? "tag-good" : "tag-neutral")
+                    .append("\">#")
+                    .append(rank)
+                    .append("</span>");
+            html.append("<strong>")
+                    .append(escapeHtml(recommendation.getTaName()))
+                    .append("</strong>");
+            html.append("</div>");
+            html.append("<span class=\"table-subtext\">")
+                    .append(escapeHtml(recommendation.getTaStudentId()))
+                    .append("</span>");
+            html.append("</div>");
+            html.append("<div class=\"recommendation-score\">");
+            html.append("<span class=\"label\">Final score</span>");
+            html.append("<span class=\"value\">")
+                    .append(formatScore(recommendation.getFinalScore()))
+                    .append("</span>");
+            html.append("</div>");
+            html.append("</div>");
+            html.append("<div class=\"recommendation-grid\">");
+            html.append(buildRecommendationMetric("Matched skills",
+                    fallbackText(recommendation.getMatchedSkillsText(), "None")));
+            html.append(buildRecommendationMetric("Missing skills",
+                    fallbackText(recommendation.getMissingSkillsText(), "None")));
+            html.append(buildRecommendationMetric("Accepted workload",
+                    recommendation.getCurrentWorkloadLabel()));
+            html.append(buildRecommendationMetric("Skill coverage",
+                    recommendation.getMatchedRequiredSkillCount()
+                            + "/"
+                            + recommendation.getTotalRequiredSkillCount()
+                            + " required skills"));
+            html.append("</div>");
+            html.append("<p class=\"recommendation-note\">")
+                    .append(escapeHtml(recommendation.getExplanation()))
+                    .append("</p>");
+            html.append("</article>");
+            rank++;
+        }
+        return html.toString();
+    }
+
+    private static String buildRecommendationMetric(String label, String value) {
+        return "<div class=\"recommendation-metric\"><span class=\"label\">"
+                + escapeHtml(label)
+                + "</span><span class=\"value\">"
+                + escapeHtml(value)
+                + "</span></div>";
+    }
+
+    private static String buildEmptyRecommendationHtml(String message) {
+        return "<div class=\"empty-state\">" + escapeHtml(message) + "</div>";
+    }
+
     private static String normalizeSortMode(String sortMode) {
         if ("status".equalsIgnoreCase(sortMode)) {
             return "status";
@@ -383,6 +463,17 @@ public class ManageApplicationsServlet extends HttpServlet {
             return "";
         }
         return value.trim().toLowerCase();
+    }
+
+    private static String fallbackText(String value, String fallback) {
+        if (value == null || value.isBlank()) {
+            return fallback;
+        }
+        return value;
+    }
+
+    private static String formatScore(double score) {
+        return String.format(Locale.ROOT, "%.1f%%", score * 100.0);
     }
 
     private Path resolveDataPath(String webRelativePath, String fallbackFileName) {
