@@ -29,6 +29,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -273,12 +274,13 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("<select id=\"status-")
                     .append(escapeHtml(applicant.getApplicationId()))
                     .append("\" name=\"status\">");
-            html.append(statusOption("SUBMITTED", applicant.getStatus()));
-            html.append(statusOption("IN_REVIEW", applicant.getStatus()));
-            html.append(statusOption("SHORTLISTED", applicant.getStatus()));
-            html.append(statusOption("ACCEPTED", applicant.getStatus()));
-            html.append(statusOption("REJECTED", applicant.getStatus()));
+            for (String allowedStatus : allowedStatuses(applicant.getStatus())) {
+                html.append(statusOption(allowedStatus, applicant.getStatus()));
+            }
             html.append("</select>");
+            html.append("<p class=\"table-subtext\">")
+                    .append(escapeHtml(buildStatusRuleHint(applicant.getStatus())))
+                    .append("</p>");
             html.append("<textarea name=\"decisionNote\" rows=\"3\" placeholder=\"Optional note\">")
                     .append(escapeHtml(applicant.getDecisionNote()))
                     .append("</textarea>");
@@ -330,6 +332,26 @@ public class ManageApplicationsServlet extends HttpServlet {
         return "<option value=\"" + escapeHtml(optionValue) + "\"" + (selected ? " selected" : "") + ">"
                 + escapeHtml(optionValue)
                 + "</option>";
+    }
+
+    private static List<String> allowedStatuses(String currentStatus) {
+        List<String> allowed = ApplicationService.getAllowedStatuses(currentStatus);
+        if (allowed.isEmpty()) {
+            allowed = new ArrayList<>();
+            allowed.add("SUBMITTED");
+        }
+        return allowed;
+    }
+
+    private static String buildStatusRuleHint(String currentStatus) {
+        String normalized = currentStatus == null ? "" : currentStatus.trim().toUpperCase(Locale.ROOT);
+        return switch (normalized) {
+            case "SUBMITTED" -> "Can move forward to IN_REVIEW, SHORTLISTED, ACCEPTED or REJECTED.";
+            case "IN_REVIEW" -> "Cannot return to SUBMITTED.";
+            case "SHORTLISTED" -> "Cannot return to SUBMITTED or IN_REVIEW.";
+            case "ACCEPTED", "REJECTED" -> "Final-stage decision. Cannot return to SUBMITTED, IN_REVIEW or SHORTLISTED.";
+            default -> "Workflow order: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
+        };
     }
 
     private static String buildEmptyRowsHtml(String message) {

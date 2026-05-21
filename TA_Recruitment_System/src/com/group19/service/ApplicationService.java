@@ -6,10 +6,19 @@ import com.group19.model.Application;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ApplicationService {
+    private static final List<String> VALID_STATUSES = Arrays.asList(
+            "SUBMITTED",
+            "IN_REVIEW",
+            "SHORTLISTED",
+            "ACCEPTED",
+            "REJECTED");
+
     private final ApplicationDao applicationDao;
     private final ApplicationTimelineRecorder timelineRecorder;
     private final TaStatusNotificationService taStatusNotificationService;
@@ -97,12 +106,8 @@ public class ApplicationService {
             return ServiceResult.failure("Status is required");
         }
 
-        String normalizedStatus = newStatus.trim().toUpperCase();
-        if (!"SUBMITTED".equals(normalizedStatus)
-                && !"IN_REVIEW".equals(normalizedStatus)
-                && !"SHORTLISTED".equals(normalizedStatus)
-                && !"ACCEPTED".equals(normalizedStatus)
-                && !"REJECTED".equals(normalizedStatus)) {
+        String normalizedStatus = normalizeStatus(newStatus);
+        if (!isValidStatus(normalizedStatus)) {
             return ServiceResult.failure("Invalid status");
         }
 
@@ -111,7 +116,11 @@ public class ApplicationService {
             return ServiceResult.failure("Application not found");
         }
 
-        String previousStatus = application.getStatus() == null ? "" : application.getStatus().trim().toUpperCase();
+        String previousStatus = normalizeStatus(application.getStatus());
+        if (!canTransition(previousStatus, normalizedStatus)) {
+            return ServiceResult.failure(buildInvalidTransitionMessage(previousStatus, normalizedStatus));
+        }
+
         String updateTime = LocalDateTime.now().toString();
         String trimmedNote = decisionNote == null ? "" : decisionNote.trim();
 
@@ -132,5 +141,54 @@ public class ApplicationService {
         }
 
         return ServiceResult.success(application, "Application status updated successfully");
+    }
+
+    public static boolean isValidStatus(String status) {
+        return VALID_STATUSES.contains(normalizeStatus(status));
+    }
+
+    public static boolean canTransition(String currentStatus, String nextStatus) {
+        String normalizedCurrent = normalizeStatus(currentStatus);
+        String normalizedNext = normalizeStatus(nextStatus);
+        if (!isValidStatus(normalizedCurrent) || !isValidStatus(normalizedNext)) {
+            return false;
+        }
+        return statusRank(normalizedNext) >= statusRank(normalizedCurrent);
+    }
+
+    public static List<String> getAllowedStatuses(String currentStatus) {
+        String normalizedCurrent = normalizeStatus(currentStatus);
+        List<String> allowed = new ArrayList<>();
+        for (String status : VALID_STATUSES) {
+            if (canTransition(normalizedCurrent, status)) {
+                allowed.add(status);
+            }
+        }
+        return allowed;
+    }
+
+    private static int statusRank(String status) {
+        return switch (normalizeStatus(status)) {
+            case "SUBMITTED" -> 0;
+            case "IN_REVIEW" -> 1;
+            case "SHORTLISTED" -> 2;
+            case "ACCEPTED", "REJECTED" -> 3;
+            default -> -1;
+        };
+    }
+
+    private static String normalizeStatus(String status) {
+        if (status == null || status.isBlank()) {
+            return "SUBMITTED";
+        }
+        return status.trim().toUpperCase(Locale.ROOT);
+    }
+
+    private static String buildInvalidTransitionMessage(String previousStatus, String nextStatus) {
+        return "Cannot change application status from "
+                + previousStatus
+                + " to "
+                + nextStatus
+                + ". Allowed workflow: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
     }
 }

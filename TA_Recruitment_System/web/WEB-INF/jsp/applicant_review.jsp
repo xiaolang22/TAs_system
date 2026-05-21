@@ -59,6 +59,9 @@
             </div>
         </div>
 
+        <p class="hint">
+            Status workflow: SUBMITTED -&gt; IN_REVIEW -&gt; SHORTLISTED -&gt; ACCEPTED/REJECTED. Once an application reaches a later stage, it cannot be moved back to an earlier one.
+        </p>
         <p class="alert success ${empty updated ? 'hidden' : ''}">Application status updated successfully.</p>
         <p class="alert error ${empty errorMsg ? 'hidden' : ''}">${errorMsg}</p>
     </section>
