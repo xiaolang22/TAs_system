@@ -75,20 +75,29 @@ public class JobService {
         LocalDate maxDate = today.plusDays(withinDays);
         List<Job> upcoming = new ArrayList<>();
         for (Job job : jobDao.findAll()) {
-            if (!isOpenForListing(job, today)) {
+            if (!isOpenStatus(job)) {
                 continue;
             }
             LocalDate deadlineDate = parseDeadlineDate(job.getDeadline());
             if (deadlineDate == null) {
                 continue;
             }
-            if (!deadlineDate.isBefore(today) && !deadlineDate.isAfter(maxDate)) {
-                upcoming.add(job);
+            if (deadlineDate.isBefore(today) || deadlineDate.isAfter(maxDate)) {
+                continue;
             }
+            upcoming.add(job);
         }
         upcoming.sort(Comparator.comparing(job -> parseDeadlineDate(job.getDeadline()),
                 Comparator.nullsLast(Comparator.naturalOrder())));
         return upcoming;
+    }
+
+    private static boolean isOpenStatus(Job job) {
+        if (job == null) {
+            return false;
+        }
+        String status = job.getStatus();
+        return status == null || status.isBlank() || "OPEN".equalsIgnoreCase(status.trim());
     }
 
     public List<Job> filterJobs(List<Job> jobs, String keyword, String category, String scheduleHint, String skillsHint) {

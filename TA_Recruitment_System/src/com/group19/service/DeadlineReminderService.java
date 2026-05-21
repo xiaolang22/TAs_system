@@ -31,9 +31,16 @@ public class DeadlineReminderService {
     }
 
     public List<DeadlineReminderView> buildRemindersForTa(String taStudentId, LocalDate today, String contextPath) {
+        List<Job> allUpcoming = jobService.findUpcomingDeadlineJobs(today, DEFAULT_WITHIN_DAYS);
         Set<String> relevantJobIds = collectTaRelevantJobIds(taStudentId);
-        List<Job> upcoming = filterJobsByIds(jobService.findUpcomingDeadlineJobs(today, DEFAULT_WITHIN_DAYS), relevantJobIds);
-        return buildReminderViews(upcoming, today, contextPath, true);
+        if (relevantJobIds.isEmpty()) {
+            return buildReminderViews(allUpcoming, today, contextPath, true);
+        }
+        List<Job> preferred = filterJobsByIds(allUpcoming, relevantJobIds);
+        if (!preferred.isEmpty()) {
+            return buildReminderViews(preferred, today, contextPath, true);
+        }
+        return buildReminderViews(allUpcoming, today, contextPath, true);
     }
 
     public List<DeadlineReminderView> buildRemindersForMo(LocalDate today, String contextPath) {
@@ -55,13 +62,19 @@ public class DeadlineReminderService {
     }
 
     private static List<Job> filterJobsByIds(List<Job> jobs, Set<String> jobIds) {
-        if (jobIds == null || jobIds.isEmpty()) {
-            return new ArrayList<>();
-        }
         List<Job> filtered = new ArrayList<>();
+        if (jobs == null || jobIds == null || jobIds.isEmpty()) {
+            return filtered;
+        }
         for (Job job : jobs) {
-            if (job != null && job.getJobId() != null && jobIds.contains(job.getJobId())) {
-                filtered.add(job);
+            if (job == null || job.getJobId() == null) {
+                continue;
+            }
+            for (String jobId : jobIds) {
+                if (jobId != null && jobId.equalsIgnoreCase(job.getJobId())) {
+                    filtered.add(job);
+                    break;
+                }
             }
         }
         return filtered;

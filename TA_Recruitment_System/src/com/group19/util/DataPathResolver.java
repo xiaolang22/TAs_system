@@ -16,6 +16,10 @@ public final class DataPathResolver {
         if (realPath != null && !realPath.isBlank()) {
             return Paths.get(realPath);
         }
+        String appRoot = context.getRealPath("/");
+        if (appRoot != null && !appRoot.isBlank()) {
+            return Paths.get(appRoot, "data", fallbackFileName);
+        }
         return Paths.get(System.getProperty("user.dir"), "data", fallbackFileName);
     }
 }

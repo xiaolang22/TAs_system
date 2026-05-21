@@ -19,7 +19,7 @@
     "requirements": "Reliable, punctual, able to maintain exam integrity",
     "hours": "3 hours",
     "schedule": "April 20th, 9-12am",
-    "deadline": "2026-06-15",
+    "deadline": "2026-06-01",
     "status": "OPEN",
     "createdAt": "2026-04-09T10:30:00"
   },
@@ -55,7 +55,7 @@
     "requirements": "Python, Jupyter, patience with beginners",
     "hours": "6 hours/week",
     "schedule": "Tuesday and Thursday 10am-1pm",
-    "deadline": "2026-07-01",
+    "deadline": "2026-06-03",
     "status": "OPEN",
     "createdAt": "2026-04-10T09:00:00"
   },
@@ -67,7 +67,7 @@
     "requirements": "Punctuality, attention to detail",
     "hours": "4 hours",
     "schedule": "Saturday 8am-12pm",
-    "deadline": "2026-05-20",
+    "deadline": "2026-05-28",
     "status": "OPEN",
     "createdAt": "2026-04-10T09:15:00"
   },

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class HomeServlet extends HttpServlet {
     private SavedJobService savedJobService;
@@ -31,12 +30,10 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     public void init() {
-        Path savedJobPath = resolveDataPath(
-                firstNonBlank(getServletContext().getInitParameter("savedJobDataFile"), "/data/saved_jobs.json"),
-                "saved_jobs.json");
-        Path jobPath = resolveDataPath(
-                firstNonBlank(getServletContext().getInitParameter("jobDataFile"), "/data/jobs.json"),
-                "jobs.json");
+        Path savedJobPath = DataPathResolver.resolve(
+                getServletContext(), "savedJobDataFile", "/data/saved_jobs.json", "saved_jobs.json");
+        Path jobPath = DataPathResolver.resolve(
+                getServletContext(), "jobDataFile", "/data/jobs.json", "jobs.json");
         Path notificationPath = DataPathResolver.resolve(
                 getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
 
@@ -100,21 +97,6 @@ public class HomeServlet extends HttpServlet {
                     deadlineReminderService.buildRemindersForMo(today, contextPath));
         }
         req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
-    }
-
-    private Path resolveDataPath(String webRelativePath, String fallbackFileName) {
-        String realPath = getServletContext().getRealPath(webRelativePath);
-        if (realPath != null && !realPath.isBlank()) {
-            return Paths.get(realPath);
-        }
-        return Paths.get(System.getProperty("user.dir"), "data", fallbackFileName);
-    }
-
-    private static String firstNonBlank(String preferred, String fallback) {
-        if (preferred != null && !preferred.isBlank()) {
-            return preferred;
-        }
-        return fallback;
     }
 
     private static void setSavedJobFeedback(HttpServletRequest req) {
