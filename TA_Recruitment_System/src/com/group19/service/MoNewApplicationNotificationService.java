@@ -74,7 +74,8 @@ public class MoNewApplicationNotificationService {
 
         String basePath = contextPath == null ? "" : contextPath;
         List<Notification> notifications = new ArrayList<>(notificationDao.findByRecipientUserId(moUserId));
-        notifications.removeIf(notification -> !TYPE_NEW_APPLICATION.equals(notification.getType()));
+        notifications.removeIf(notification ->
+                !TYPE_NEW_APPLICATION.equals(notification.getType()) || notification.isRead());
         notifications.sort(Comparator
                 .comparing((Notification n) -> parseDateTime(n.getCreatedAt()))
                 .reversed());
@@ -86,9 +87,16 @@ public class MoNewApplicationNotificationService {
             MoNotificationView view = new MoNotificationView();
             view.setMessage(HtmlEscape.escape(notification.getMessage()));
             view.setCreatedAtDisplay(formatDisplay(notification.getCreatedAt()));
-            view.setUnread(!notification.isRead());
+            view.setUnread(true);
             String jobId = notification.getJobId();
-            if (jobId != null && !jobId.isBlank()) {
+            String applicationId = notification.getApplicationId();
+            if (jobId != null && !jobId.isBlank() && applicationId != null && !applicationId.isBlank()) {
+                view.setActionUrl(basePath
+                        + "/mo/applications?jobId="
+                        + jobId
+                        + "&applicationId="
+                        + applicationId);
+            } else if (jobId != null && !jobId.isBlank()) {
                 view.setActionUrl(basePath + "/mo/applications?jobId=" + jobId);
             } else {
                 view.setActionUrl(basePath + "/mo/jobs");
@@ -96,6 +104,13 @@ public class MoNewApplicationNotificationService {
             views.add(view);
         }
         return views;
+    }
+
+    public void markApplicationAsViewed(String moUserId, String applicationId) {
+        if (moUserId == null || moUserId.isBlank() || applicationId == null || applicationId.isBlank()) {
+            return;
+        }
+        notificationDao.markAsReadByRecipientAndApplication(moUserId, applicationId, TYPE_NEW_APPLICATION);
     }
 
     public int countUnread(String moUserId) {

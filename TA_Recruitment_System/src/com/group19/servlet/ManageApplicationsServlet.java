@@ -6,16 +6,21 @@ import com.group19.dao.TADao;
 import com.group19.dto.ApplicantReviewPageData;
 import com.group19.dto.ApplicantReviewRow;
 import com.group19.dto.ServiceResult;
+import com.group19.dao.NotificationDao;
+import com.group19.dao.UserAccountDao;
 import com.group19.model.Application;
 import com.group19.model.Job;
+import com.group19.model.LoginUser;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
+import com.group19.service.MoNewApplicationNotificationService;
 import com.group19.util.ApplicationServiceFactory;
 import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -27,6 +32,7 @@ import java.util.List;
 public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
     private ApplicantReviewService applicantReviewService;
+    private MoNewApplicationNotificationService moNewApplicationNotificationService;
 
     @Override
     public void init() {
@@ -50,6 +56,15 @@ public class ManageApplicationsServlet extends HttpServlet {
         TADao taDao = new TADao(taFilePath);
 
         this.applicantReviewService = new ApplicantReviewService(applicationDao, taDao, jobDao);
+
+        Path notificationFilePath = DataPathResolver.resolve(
+                getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
+        Path userFilePath = DataPathResolver.resolve(
+                getServletContext(), "userDataFile", "/data/users.json", "users.json");
+        this.moNewApplicationNotificationService = new MoNewApplicationNotificationService(
+                new NotificationDao(notificationFilePath),
+                jobDao,
+                new UserAccountDao(userFilePath));
     }
 
     @Override
@@ -59,9 +74,12 @@ public class ManageApplicationsServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
 
         String jobId = trimToNull(req.getParameter("jobId"));
+        String applicationId = trimToNull(req.getParameter("applicationId"));
         String sortMode = normalizeSortMode(req.getParameter("sort"));
         String studentId = trimToNull(req.getParameter("studentId"));
         boolean detailMode = isTruthy(req.getParameter("detail")) || studentId != null;
+
+        markMoNotificationViewedIfNeeded(req, applicationId);
 
         req.setAttribute("jobId", jobId);
         req.setAttribute("sortMode", sortMode);
@@ -317,6 +335,21 @@ public class ManageApplicationsServlet extends HttpServlet {
         }
         String normalized = value.trim();
         return "1".equals(normalized) || "true".equalsIgnoreCase(normalized) || "yes".equalsIgnoreCase(normalized);
+    }
+
+    private void markMoNotificationViewedIfNeeded(HttpServletRequest req, String applicationId) {
+        if (applicationId == null || applicationId.isBlank()) {
+            return;
+        }
+        HttpSession session = req.getSession(false);
+        if (session == null) {
+            return;
+        }
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser == null || !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            return;
+        }
+        moNewApplicationNotificationService.markApplicationAsViewed(loginUser.getUserId(), applicationId);
     }
 
     private static String trimToNull(String value) {

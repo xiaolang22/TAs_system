@@ -135,7 +135,7 @@
     <section class="card notification-panel ${loginUser.role == 'MO' ? '' : 'hidden'}">
         <h2>New application notifications<% if (moUnreadCount > 0) { %> <span class="notification-badge"><%= moUnreadCount %> unread</span><% } %></h2>
         <% if (moNotifications == null || moNotifications.isEmpty()) { %>
-        <p class="hint">No new applications yet. When a TA submits an application, you will see a message here.</p>
+        <p class="hint">No pending new-application alerts. After you review an application once, it will not appear here again.</p>
         <% } else { %>
         <ul class="notification-list">
             <% for (MoNotificationView item : moNotifications) { %>
