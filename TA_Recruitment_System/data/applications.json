@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "applicationId": "c3195c08-bcb3-4aab-96cc-279b86c61deb",
+    "jobId": "job-001",
+    "taStudentId": "231221618",
+    "taName": "TA Test User",
+    "cvFilePath": "/uploads/cv_231221618.pdf",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-05-21T16:21:45.287220400",
+    "updatedAt": "2026-05-21T16:21:45.287220400",
+    "decisionNote": ""
+  },
+  {
+    "applicationId": "3e58cd72-5850-43c4-a44d-cb1dc979f67d",
+    "jobId": "job-002",
+    "taStudentId": "231221618",
+    "taName": "TA Test User",
+    "cvFilePath": "/uploads/cv_231221618.pdf",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-05-21T16:21:53.986716200",
+    "updatedAt": "2026-05-21T16:21:53.986716200",
+    "decisionNote": ""
+  },
+  {
+    "applicationId": "c3ccf309-0d34-4c28-babc-abf00bb7a452",
+    "jobId": "job-005",
+    "taStudentId": "231221618",
+    "taName": "TA Test User",
+    "cvFilePath": "/uploads/cv_231221618.pdf",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-05-21T16:22:05.324336",
+    "updatedAt": "2026-05-21T16:22:05.324336",
+    "decisionNote": ""
+  }
+]

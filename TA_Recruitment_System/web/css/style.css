@@ -543,6 +543,92 @@ button:hover {
     gap: 10px;
 }
 
+.recommendation-card {
+    display: grid;
+    gap: 14px;
+}
+
+.recommendation-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.recommendation-list {
+    display: grid;
+    gap: 14px;
+}
+
+.recommendation-item {
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    padding: 16px;
+    background: linear-gradient(180deg, #ffffff, #f8fbff);
+    display: grid;
+    gap: 14px;
+}
+
+.recommendation-item-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.recommendation-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.recommendation-score {
+    min-width: 140px;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    padding: 12px 14px;
+    background: #eff6ff;
+}
+
+.recommendation-score .label,
+.recommendation-metric .label {
+    display: block;
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.recommendation-score .value,
+.recommendation-metric .value {
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.recommendation-metric {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: #ffffff;
+}
+
+.recommendation-note {
+    margin: 0;
+    color: #334155;
+    line-height: 1.6;
+}
+
 .review-summary-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -654,6 +740,7 @@ button:hover {
 
 @media (max-width: 900px) {
     .review-summary-grid,
+    .recommendation-grid,
     .detail-layout,
     .detail-grid {
         grid-template-columns: 1fr;
