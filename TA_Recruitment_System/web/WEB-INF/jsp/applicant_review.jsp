@@ -63,6 +63,20 @@
         <p class="alert error ${empty errorMsg ? 'hidden' : ''}">${errorMsg}</p>
     </section>
 
+    <section class="card recommendation-card">
+        <div class="recommendation-head">
+            <div>
+                <h2 class="section-title">TA Recommendations</h2>
+                <p class="hint">
+                    Applicants are ranked for this job using 70% skill match and 30% accepted workload, so fairness is visible before decisions are updated.
+                </p>
+            </div>
+        </div>
+        <div class="recommendation-list">
+            ${recommendationCardsHtml}
+        </div>
+    </section>
+
     <section class="card table-card">
         <table>
             <thead>
