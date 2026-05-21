@@ -15,7 +15,7 @@ if exist "%CLASSES_DIR%" rmdir /s /q "%CLASSES_DIR%"
 mkdir "%CLASSES_DIR%"
 
 rem 设置 classpath：包含第三方 jar 和 servlet-api.jar
-set CLASSPATH=%LIB_DIR%\gson-2.10.1.jar;%CATALINA_HOME%\lib\servlet-api.jar
+set CLASSPATH=%LIB_DIR%\gson-2.10.1.jar;%LIB_DIR%\pdfbox-2.0.29.jar;%LIB_DIR%\fontbox-2.0.29.jar;%LIB_DIR%\commons-logging-1.2.jar;%CATALINA_HOME%\lib\servlet-api.jar
 
 rem 收集所有需要编译的 Java 文件（递归查找 src 下所有 .java）
 dir /s /b "%SRC_DIR%\*.java" > "%TEMP%\sources.txt"

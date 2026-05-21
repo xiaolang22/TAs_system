@@ -5,6 +5,7 @@ import com.group19.dto.ServiceResult;
 import com.group19.model.LoginUser;
 import com.group19.model.TA;
 import com.group19.service.ProfileService;
+import com.group19.util.FileUploadUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,6 +51,10 @@ public class ProfileServlet extends HttpServlet {
             req.setAttribute("success", "Profile saved successfully.");
         }
 
+        if ("true".equalsIgnoreCase(req.getParameter("cvSaved"))) {
+            req.setAttribute("success", "CV uploaded successfully.");
+        }
+
         if (req.getAttribute("profile") == null) {
             LoginUser loginUser = (LoginUser) req.getAttribute("loginUser");
             if (loginUser != null && "TA".equalsIgnoreCase(loginUser.getRole())) {
@@ -58,6 +63,11 @@ public class ProfileServlet extends HttpServlet {
                 draft.setStudentId(loginUser.getUserId());
                 req.setAttribute("profile", draft);
             }
+        }
+
+        TA profile = (TA) req.getAttribute("profile");
+        if (profile != null) {
+            req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profile.getCvFilePath()));
         }
 
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
@@ -75,10 +85,11 @@ public class ProfileServlet extends HttpServlet {
         String email = req.getParameter("email");
         String programme = req.getParameter("programme");
         String skills = req.getParameter("skills");
+        String experience = req.getParameter("experience");
         String availability = req.getParameter("availability");
 
         ServiceResult<TA> result =
-                profileService.saveProfile(name, studentId, email, programme, skills, availability);
+                profileService.saveProfile(name, studentId, email, programme, skills, experience, availability);
 
         if (result.isSuccess()) {
             String encodedId = URLEncoder.encode(studentId.trim(), StandardCharsets.UTF_8);
@@ -88,6 +99,7 @@ public class ProfileServlet extends HttpServlet {
         }
 
         TA draft = new TA(name, studentId, email, programme, skills, availability);
+        draft.setExperience(experience);
         req.setAttribute("profile", draft);
         req.setAttribute("error", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);

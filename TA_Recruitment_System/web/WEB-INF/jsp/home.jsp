@@ -1,4 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.group19.model.Job" %>
+<%!
+    private String attr(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;")
+                .replace("\"", "&quot;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
+    }
+%>
+<%
+    List<Job> savedJobs = (List<Job>) request.getAttribute("savedJobs");
+    String currentRequestPath = (String) request.getAttribute("currentRequestPath");
+    if (currentRequestPath == null || currentRequestPath.isBlank()) {
+        currentRequestPath = request.getContextPath() + "/home";
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +50,14 @@
         ${error}
     </p>
 
+    <p class="alert success ${empty savedJobMessage ? 'hidden' : ''}">
+        ${savedJobMessage}
+    </p>
+
+    <p class="alert error ${empty savedJobError ? 'hidden' : ''}">
+        ${savedJobError}
+    </p>
+
     <section class="card ${loginUser.role == 'TA' ? '' : 'hidden'}">
         <h2>TA Workspace</h2>
         <p>You can continue to create or edit your profile information.</p>
@@ -39,11 +67,58 @@
         <a class="link-btn" href="${pageContext.request.contextPath}/jobs">
             Browse Available Jobs
         </a>
+        <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">
+            My application status
+        </a>
+    </section>
+
+    <section class="card saved-jobs-panel ${loginUser.role == 'TA' ? '' : 'hidden'}">
+        <h2>Saved positions</h2>
+        <% if (savedJobs == null || savedJobs.isEmpty()) { %>
+        <p class="hint">No saved positions yet.</p>
+        <% } else { %>
+        <div class="saved-job-list">
+            <% for (Job job : savedJobs) { %>
+            <article class="saved-job-item">
+                <div>
+                    <h3><%= job.getTitle() == null ? "" : job.getTitle() %></h3>
+                    <p class="hint">
+                        <%= job.getCategory() == null ? "" : job.getCategory() %>
+                        <span aria-hidden="true"> &middot; </span>
+                        Deadline: <%= job.getDeadline() == null ? "" : job.getDeadline() %>
+                    </p>
+                </div>
+                <div class="saved-job-actions">
+                    <a class="link-btn" href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>">
+                        View details &amp; apply
+                    </a>
+                    <form method="post" action="${pageContext.request.contextPath}/ta/saved-jobs" class="save-job-form">
+                        <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
+                        <input type="hidden" name="action" value="remove">
+                        <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
+                        <button type="submit" class="secondary-btn save-toggle saved">Remove saved</button>
+                    </form>
+                </div>
+            </article>
+            <% } %>
+        </div>
+        <% } %>
     </section>
 
     <section class="card ${loginUser.role == 'MO' ? '' : 'hidden'}">
         <h2>MO Workspace</h2>
-        <p>Your role has been identified as MO. MO-specific functions can be added here next.</p>
+        <p>Review applicants with skill match score and missing-skill notes (US10).</p>
+        <a class="link-btn" href="${pageContext.request.contextPath}/mo/review">
+            Go to Candidate Review
+        </a>
+    </section>
+
+    <section class="card ${loginUser.role == 'ADMIN' ? '' : 'hidden'}">
+        <h2>Admin Workspace</h2>
+        <p>Monitor TA workload summaries and assigned hours across positions.</p>
+        <a class="link-btn" href="${pageContext.request.contextPath}/admin/workload">
+            View TA Workload
+        </a>
     </section>
 </main>
 </body>

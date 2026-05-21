@@ -1,6 +1,9 @@
 package com.group19.servlet;
 
+import com.group19.dao.JobDao;
+import com.group19.dao.SavedJobDao;
 import com.group19.model.LoginUser;
+import com.group19.service.SavedJobService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,8 +11,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class HomeServlet extends HttpServlet {
+    private SavedJobService savedJobService;
+
+    @Override
+    public void init() {
+        Path savedJobPath = resolveDataPath(
+                firstNonBlank(getServletContext().getInitParameter("savedJobDataFile"), "/data/saved_jobs.json"),
+                "saved_jobs.json");
+        Path jobPath = resolveDataPath(
+                firstNonBlank(getServletContext().getInitParameter("jobDataFile"), "/data/jobs.json"),
+                "jobs.json");
+
+        this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), new JobDao(jobPath));
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -30,6 +49,51 @@ public class HomeServlet extends HttpServlet {
         }
 
         req.setAttribute("loginUser", loginUser);
+        req.setAttribute("currentRequestPath", buildCurrentRequestPath(req));
+        setSavedJobFeedback(req);
+        if ("TA".equalsIgnoreCase(loginUser.getRole())) {
+            req.setAttribute("savedJobs", savedJobService.findSavedJobs(loginUser.getUserId()));
+        }
         req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+    }
+
+    private Path resolveDataPath(String webRelativePath, String fallbackFileName) {
+        String realPath = getServletContext().getRealPath(webRelativePath);
+        if (realPath != null && !realPath.isBlank()) {
+            return Paths.get(realPath);
+        }
+        return Paths.get(System.getProperty("user.dir"), "data", fallbackFileName);
+    }
+
+    private static String firstNonBlank(String preferred, String fallback) {
+        if (preferred != null && !preferred.isBlank()) {
+            return preferred;
+        }
+        return fallback;
+    }
+
+    private static void setSavedJobFeedback(HttpServletRequest req) {
+        String message = trimToNull(req.getParameter("savedJobMessage"));
+        String error = trimToNull(req.getParameter("savedJobError"));
+        if (message != null) {
+            req.setAttribute("savedJobMessage", message);
+        }
+        if (error != null) {
+            req.setAttribute("savedJobError", error);
+        }
+    }
+
+    private static String buildCurrentRequestPath(HttpServletRequest req) {
+        String query = req.getQueryString();
+        String path = req.getRequestURI();
+        return query == null || query.isBlank() ? path : path + "?" + query;
+    }
+
+    private static String trimToNull(String value) {
+        if (value == null) {
+            return null;
+        }
+        String t = value.trim();
+        return t.isEmpty() ? null : t;
     }
 }

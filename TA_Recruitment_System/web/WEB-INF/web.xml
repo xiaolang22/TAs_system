@@ -22,8 +22,18 @@
     </context-param>
 
     <context-param>
+        <param-name>savedJobDataFile</param-name>
+        <param-value>/data/saved_jobs.json</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>userDataFile</param-name>
         <param-value>/data/users.json</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>timelineDataFile</param-name>
+        <param-value>/data/timelines.json</param-value>
     </context-param>
 
     <filter>
@@ -48,6 +58,31 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/review</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/applications</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/saved-jobs</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/parse-cv</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
     </filter-mapping>
 
@@ -59,6 +94,16 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/applications</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/admin/workload</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/workload</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -102,6 +147,56 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>CandidateReviewServlet</servlet-name>
+        <servlet-class>com.group19.servlet.CandidateReviewServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CandidateReviewServlet</servlet-name>
+        <url-pattern>/mo/review</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.UploadCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadCVServlet</servlet-name>
+        <url-pattern>/ta/upload-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TaApplicationsServlet</servlet-name>
+        <servlet-class>com.group19.servlet.TaApplicationsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TaApplicationsServlet</servlet-name>
+        <url-pattern>/ta/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SavedJobServlet</servlet-name>
+        <servlet-class>com.group19.servlet.SavedJobServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SavedJobServlet</servlet-name>
+        <url-pattern>/ta/saved-jobs</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ParseCVServlet</servlet-name>
+        <servlet-class>com.group19.servlet.ParseCVServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ParseCVServlet</servlet-name>
+        <url-pattern>/ta/parse-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>PostJobServlet</servlet-name>
         <servlet-class>com.group19.servlet.PostJobServlet</servlet-class>
     </servlet>
@@ -129,6 +224,16 @@
     <servlet-mapping>
         <servlet-name>ManageApplicationsServlet</servlet-name>
         <url-pattern>/mo/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WorkloadServlet</servlet-name>
+        <servlet-class>com.group19.servlet.WorkloadServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WorkloadServlet</servlet-name>
+        <url-pattern>/admin/workload</url-pattern>
     </servlet-mapping>
 
     <servlet>

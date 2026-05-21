@@ -11,9 +11,11 @@ import java.util.UUID;
 
 public class ApplicationService {
     private final ApplicationDao applicationDao;
+    private final ApplicationTimelineRecorder timelineRecorder;
 
-    public ApplicationService(ApplicationDao applicationDao) {
+    public ApplicationService(ApplicationDao applicationDao, ApplicationTimelineRecorder timelineRecorder) {
         this.applicationDao = applicationDao;
+        this.timelineRecorder = timelineRecorder;
     }
 
     public ServiceResult<Application> applyForJob(String jobId, String taStudentId, String taName, String cvFilePath) {
@@ -51,6 +53,8 @@ public class ApplicationService {
             return ServiceResult.failure("Failed to submit application");
         }
 
+        timelineRecorder.recordSubmitted(application.getApplicationId(), application.getSubmittedAt());
+
         return ServiceResult.success(application, "Application submitted successfully");
     }
 
@@ -71,7 +75,9 @@ public class ApplicationService {
         }
 
         String normalizedStatus = newStatus.trim().toUpperCase();
-        if (!"SHORTLISTED".equals(normalizedStatus)
+        if (!"SUBMITTED".equals(normalizedStatus)
+                && !"IN_REVIEW".equals(normalizedStatus)
+                && !"SHORTLISTED".equals(normalizedStatus)
                 && !"ACCEPTED".equals(normalizedStatus)
                 && !"REJECTED".equals(normalizedStatus)) {
             return ServiceResult.failure("Invalid status");
@@ -82,13 +88,21 @@ public class ApplicationService {
             return ServiceResult.failure("Application not found");
         }
 
+        String previousStatus = application.getStatus() == null ? "" : application.getStatus().trim().toUpperCase();
+        String updateTime = LocalDateTime.now().toString();
+        String trimmedNote = decisionNote == null ? "" : decisionNote.trim();
+
         application.setStatus(normalizedStatus);
-        application.setDecisionNote(decisionNote == null ? "" : decisionNote.trim());
-        application.setUpdatedAt(LocalDateTime.now().toString());
+        application.setDecisionNote(trimmedNote);
+        application.setUpdatedAt(updateTime);
 
         boolean success = applicationDao.update(application);
         if (!success) {
             return ServiceResult.failure("Failed to update application");
+        }
+
+        if (!normalizedStatus.equals(previousStatus)) {
+            timelineRecorder.recordStatusChange(application.getApplicationId(), normalizedStatus, updateTime, trimmedNote);
         }
 
         return ServiceResult.success(application, "Application status updated successfully");

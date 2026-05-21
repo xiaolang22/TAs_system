@@ -41,6 +41,25 @@ public class AuthFilter implements Filter {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can access profile.");
             return;
         }
+        if ("/mo/review".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access candidate review.");
+            return;
+        }
+
+        if ("/ta/upload-cv".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can upload CV.");
+            return;
+        }
+
+        if ("/ta/applications".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can view application status.");
+            return;
+        }
+
+        if ("/ta/saved-jobs".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can save jobs.");
+            return;
+        }
 
         if ("/mo/post-job".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access post job.");
@@ -54,6 +73,20 @@ public class AuthFilter implements Filter {
 
         if ("/mo/applications".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can manage applications.");
+            return;
+        }
+
+        if ("/admin/workload".equals(servletPath) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access workload dashboard.");
+            return;
+        }
+
+        if ("/mo/workload".equals(servletPath)) {
+            if (!"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access workload dashboard.");
+                return;
+            }
+            resp.sendRedirect(req.getContextPath() + "/admin/workload");
             return;
         }
 
