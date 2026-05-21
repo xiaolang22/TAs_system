@@ -2,9 +2,7 @@ package com.group19.servlet;
 
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
-import com.group19.dao.NotificationDao;
 import com.group19.dao.TADao;
-import com.group19.dao.TimelineDao;
 import com.group19.dto.ApplicantReviewPageData;
 import com.group19.dto.ApplicantReviewRow;
 import com.group19.dto.ServiceResult;
@@ -12,8 +10,7 @@ import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
-import com.group19.service.ApplicationTimelineRecorder;
-import com.group19.service.TaStatusNotificationService;
+import com.group19.util.ApplicationServiceFactory;
 import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -39,22 +36,11 @@ public class ManageApplicationsServlet extends HttpServlet {
                 : appDataPath;
         Path appFilePath = resolveDataPath(appRelativePath, "applications.json");
         ApplicationDao applicationDao = new ApplicationDao(appFilePath);
-
-        String timelineDataPath = getServletContext().getInitParameter("timelineDataFile");
-        String timelineRelativePath = timelineDataPath == null || timelineDataPath.isBlank()
-                ? "/data/timelines.json"
-                : timelineDataPath;
-        Path timelineFilePath = resolveDataPath(timelineRelativePath, "timelines.json");
-        ApplicationTimelineRecorder timelineRecorder = new ApplicationTimelineRecorder(new TimelineDao(timelineFilePath));
+        this.applicationService = ApplicationServiceFactory.create(getServletContext());
 
         Path jobFilePath = DataPathResolver.resolve(
                 getServletContext(), "jobDataFile", "/data/jobs.json", "jobs.json");
         JobDao jobDao = new JobDao(jobFilePath);
-        Path notificationFilePath = DataPathResolver.resolve(
-                getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
-        TaStatusNotificationService taStatusNotificationService =
-                new TaStatusNotificationService(new NotificationDao(notificationFilePath), jobDao);
-        this.applicationService = new ApplicationService(applicationDao, timelineRecorder, taStatusNotificationService);
 
         String taDataPath = getServletContext().getInitParameter("taDataFile");
         String taRelativePath = taDataPath == null || taDataPath.isBlank()

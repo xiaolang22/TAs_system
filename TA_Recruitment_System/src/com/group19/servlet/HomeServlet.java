@@ -4,6 +4,8 @@ import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
 import com.group19.model.LoginUser;
+import com.group19.dao.UserAccountDao;
+import com.group19.service.MoNewApplicationNotificationService;
 import com.group19.service.SavedJobService;
 import com.group19.service.TaStatusNotificationService;
 import com.group19.util.DataPathResolver;
@@ -20,6 +22,7 @@ import java.nio.file.Paths;
 public class HomeServlet extends HttpServlet {
     private SavedJobService savedJobService;
     private TaStatusNotificationService taStatusNotificationService;
+    private MoNewApplicationNotificationService moNewApplicationNotificationService;
 
     @Override
     public void init() {
@@ -34,7 +37,12 @@ public class HomeServlet extends HttpServlet {
 
         JobDao jobDao = new JobDao(jobPath);
         this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), jobDao);
-        this.taStatusNotificationService = new TaStatusNotificationService(new NotificationDao(notificationPath), jobDao);
+        NotificationDao notificationDao = new NotificationDao(notificationPath);
+        Path userPath = DataPathResolver.resolve(
+                getServletContext(), "userDataFile", "/data/users.json", "users.json");
+        this.taStatusNotificationService = new TaStatusNotificationService(notificationDao, jobDao);
+        this.moNewApplicationNotificationService =
+                new MoNewApplicationNotificationService(notificationDao, jobDao, new UserAccountDao(userPath));
     }
 
     @Override
@@ -64,6 +72,12 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("savedJobs", savedJobService.findSavedJobs(taStudentId));
             req.setAttribute("taNotifications", taStatusNotificationService.loadForTaDashboard(taStudentId));
             req.setAttribute("unreadNotificationCount", taStatusNotificationService.countUnread(taStudentId));
+        } else if ("MO".equalsIgnoreCase(loginUser.getRole())) {
+            String moUserId = loginUser.getUserId();
+            req.setAttribute("moNotifications",
+                    moNewApplicationNotificationService.loadForMoDashboard(moUserId, req.getContextPath()));
+            req.setAttribute("moUnreadNotificationCount",
+                    moNewApplicationNotificationService.countUnread(moUserId));
         }
         req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
     }

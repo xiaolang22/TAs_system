@@ -1,17 +1,16 @@
 package com.group19.servlet;
 
-import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.TADao;
-import com.group19.dao.TimelineDao;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.model.TA;
 import com.group19.service.ApplicationService;
-import com.group19.service.ApplicationTimelineRecorder;
 import com.group19.service.JobService;
+import com.group19.util.ApplicationServiceFactory;
+import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +19,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 
 public class ApplyServlet extends HttpServlet {
@@ -30,32 +28,14 @@ public class ApplyServlet extends HttpServlet {
 
     @Override
     public void init() {
-        String taDataPath = getServletContext().getInitParameter("taDataFile");
-        String taRelativePath = taDataPath == null || taDataPath.isBlank()
-                ? "/data/tas.json"
-                : taDataPath;
-        Path taFilePath = resolveDataPath(taRelativePath);
+        Path taFilePath = DataPathResolver.resolve(
+                getServletContext(), "taDataFile", "/data/tas.json", "tas.json");
         this.taDao = new TADao(taFilePath);
 
-        String appDataPath = getServletContext().getInitParameter("applicationDataFile");
-        String appRelativePath = appDataPath == null || appDataPath.isBlank()
-                ? "/data/applications.json"
-                : appDataPath;
-        Path appFilePath = resolveDataPath(appRelativePath);
-        String timelineDataPath = getServletContext().getInitParameter("timelineDataFile");
-        String timelineRelativePath = timelineDataPath == null || timelineDataPath.isBlank()
-                ? "/data/timelines.json"
-                : timelineDataPath;
-        Path timelineFilePath = resolveTimelineDataPath(timelineRelativePath);
-        ApplicationDao applicationDao = new ApplicationDao(appFilePath);
-        ApplicationTimelineRecorder timelineRecorder = new ApplicationTimelineRecorder(new TimelineDao(timelineFilePath));
-        this.applicationService = new ApplicationService(applicationDao, timelineRecorder);
+        this.applicationService = ApplicationServiceFactory.create(getServletContext());
 
-        String jobDataPath = getServletContext().getInitParameter("jobDataFile");
-        String jobRelativePath = jobDataPath == null || jobDataPath.isBlank()
-                ? "/data/jobs.json"
-                : jobDataPath;
-        Path jobFilePath = resolveJobDataPath(jobRelativePath);
+        Path jobFilePath = DataPathResolver.resolve(
+                getServletContext(), "jobDataFile", "/data/jobs.json", "jobs.json");
         this.jobService = new JobService(new JobDao(jobFilePath));
     }
 
@@ -120,27 +100,4 @@ public class ApplyServlet extends HttpServlet {
         }
     }
 
-    private Path resolveDataPath(String webRelativePath) {
-        String realPath = getServletContext().getRealPath(webRelativePath);
-        if (realPath != null && !realPath.isBlank()) {
-            return Paths.get(realPath);
-        }
-        return Paths.get(System.getProperty("user.dir"), "data", "tas.json");
-    }
-
-    private Path resolveJobDataPath(String webRelativePath) {
-        String realPath = getServletContext().getRealPath(webRelativePath);
-        if (realPath != null && !realPath.isBlank()) {
-            return Paths.get(realPath);
-        }
-        return Paths.get(System.getProperty("user.dir"), "data", "jobs.json");
-    }
-
-    private Path resolveTimelineDataPath(String webRelativePath) {
-        String realPath = getServletContext().getRealPath(webRelativePath);
-        if (realPath != null && !realPath.isBlank()) {
-            return Paths.get(realPath);
-        }
-        return Paths.get(System.getProperty("user.dir"), "data", "timelines.json");
-    }
 }

@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.group19.model.Job" %>
 <%@ page import="com.group19.dto.TaNotificationView" %>
+<%@ page import="com.group19.dto.MoNotificationView" %>
 <%!
     private String attr(String value) {
         if (value == null) {
@@ -18,6 +19,9 @@
     List<TaNotificationView> taNotifications = (List<TaNotificationView>) request.getAttribute("taNotifications");
     Integer unreadNotificationCount = (Integer) request.getAttribute("unreadNotificationCount");
     int unreadCount = unreadNotificationCount == null ? 0 : unreadNotificationCount;
+    List<MoNotificationView> moNotifications = (List<MoNotificationView>) request.getAttribute("moNotifications");
+    Integer moUnreadNotificationCount = (Integer) request.getAttribute("moUnreadNotificationCount");
+    int moUnreadCount = moUnreadNotificationCount == null ? 0 : moUnreadNotificationCount;
     String currentRequestPath = (String) request.getAttribute("currentRequestPath");
     if (currentRequestPath == null || currentRequestPath.isBlank()) {
         currentRequestPath = request.getContextPath() + "/home";
@@ -128,10 +132,30 @@
         <% } %>
     </section>
 
+    <section class="card notification-panel ${loginUser.role == 'MO' ? '' : 'hidden'}">
+        <h2>New application notifications<% if (moUnreadCount > 0) { %> <span class="notification-badge"><%= moUnreadCount %> unread</span><% } %></h2>
+        <% if (moNotifications == null || moNotifications.isEmpty()) { %>
+        <p class="hint">No new applications yet. When a TA submits an application, you will see a message here.</p>
+        <% } else { %>
+        <ul class="notification-list">
+            <% for (MoNotificationView item : moNotifications) { %>
+            <li class="notification-item <%= item.isUnread() ? "notification-unread" : "" %>">
+                <p class="notification-message"><%= item.getMessage() %></p>
+                <p class="hint notification-time"><%= item.getCreatedAtDisplay() %></p>
+                <a class="link-btn secondary" href="<%= item.getActionUrl() %>">Review applicants</a>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </section>
+
     <section class="card ${loginUser.role == 'MO' ? '' : 'hidden'}">
         <h2>MO Workspace</h2>
         <p>Review applicants with skill match score and missing-skill notes (US10).</p>
-        <a class="link-btn" href="${pageContext.request.contextPath}/mo/review">
+        <a class="link-btn" href="${pageContext.request.contextPath}/mo/jobs">
+            View posted jobs
+        </a>
+        <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">
             Go to Candidate Review
         </a>
     </section>

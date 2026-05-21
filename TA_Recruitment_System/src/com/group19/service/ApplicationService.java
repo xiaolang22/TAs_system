@@ -13,18 +13,28 @@ public class ApplicationService {
     private final ApplicationDao applicationDao;
     private final ApplicationTimelineRecorder timelineRecorder;
     private final TaStatusNotificationService taStatusNotificationService;
+    private final MoNewApplicationNotificationService moNewApplicationNotificationService;
 
     public ApplicationService(ApplicationDao applicationDao, ApplicationTimelineRecorder timelineRecorder) {
-        this(applicationDao, timelineRecorder, null);
+        this(applicationDao, timelineRecorder, null, null);
     }
 
     public ApplicationService(
             ApplicationDao applicationDao,
             ApplicationTimelineRecorder timelineRecorder,
             TaStatusNotificationService taStatusNotificationService) {
+        this(applicationDao, timelineRecorder, taStatusNotificationService, null);
+    }
+
+    public ApplicationService(
+            ApplicationDao applicationDao,
+            ApplicationTimelineRecorder timelineRecorder,
+            TaStatusNotificationService taStatusNotificationService,
+            MoNewApplicationNotificationService moNewApplicationNotificationService) {
         this.applicationDao = applicationDao;
         this.timelineRecorder = timelineRecorder;
         this.taStatusNotificationService = taStatusNotificationService;
+        this.moNewApplicationNotificationService = moNewApplicationNotificationService;
     }
 
     public ServiceResult<Application> applyForJob(String jobId, String taStudentId, String taName, String cvFilePath) {
@@ -63,6 +73,10 @@ public class ApplicationService {
         }
 
         timelineRecorder.recordSubmitted(application.getApplicationId(), application.getSubmittedAt());
+
+        if (moNewApplicationNotificationService != null) {
+            moNewApplicationNotificationService.notifyNewApplication(application);
+        }
 
         return ServiceResult.success(application, "Application submitted successfully");
     }

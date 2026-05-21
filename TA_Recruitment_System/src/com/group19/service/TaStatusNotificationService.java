@@ -72,6 +72,7 @@ public class TaStatusNotificationService {
         }
 
         List<Notification> notifications = new ArrayList<>(notificationDao.findByRecipientUserId(taStudentId));
+        notifications.removeIf(notification -> !TYPE_STATUS_CHANGED.equals(notification.getType()));
         notifications.sort(Comparator
                 .comparing((Notification n) -> parseDateTime(n.getCreatedAt()))
                 .reversed());
@@ -95,7 +96,7 @@ public class TaStatusNotificationService {
         }
         int count = 0;
         for (Notification notification : notificationDao.findByRecipientUserId(taStudentId)) {
-            if (!notification.isRead()) {
+            if (!notification.isRead() && TYPE_STATUS_CHANGED.equals(notification.getType())) {
                 count++;
             }
         }
