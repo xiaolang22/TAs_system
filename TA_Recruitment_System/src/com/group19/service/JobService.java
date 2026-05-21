@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -63,6 +64,33 @@ public class JobService {
         return isOpenForListing(job, today);
     }
 
+    /**
+     * Open jobs whose application deadline is between today (inclusive) and today + withinDays (inclusive),
+     * sorted by deadline ascending.
+     */
+    public List<Job> findUpcomingDeadlineJobs(LocalDate today, int withinDays) {
+        if (today == null || withinDays < 0) {
+            return new ArrayList<>();
+        }
+        LocalDate maxDate = today.plusDays(withinDays);
+        List<Job> upcoming = new ArrayList<>();
+        for (Job job : jobDao.findAll()) {
+            if (!isOpenForListing(job, today)) {
+                continue;
+            }
+            LocalDate deadlineDate = parseDeadlineDate(job.getDeadline());
+            if (deadlineDate == null) {
+                continue;
+            }
+            if (!deadlineDate.isBefore(today) && !deadlineDate.isAfter(maxDate)) {
+                upcoming.add(job);
+            }
+        }
+        upcoming.sort(Comparator.comparing(job -> parseDeadlineDate(job.getDeadline()),
+                Comparator.nullsLast(Comparator.naturalOrder())));
+        return upcoming;
+    }
+
     public List<Job> filterJobs(List<Job> jobs, String keyword, String category, String scheduleHint, String skillsHint) {
         if (jobs == null || jobs.isEmpty()) {
             return new ArrayList<>();
@@ -110,7 +138,7 @@ public class JobService {
     /**
      * Parses application deadline; supports ISO date, ISO date-time, and leading yyyy-MM-dd in longer strings.
      */
-    private static LocalDate parseDeadlineDate(String raw) {
+    public static LocalDate parseDeadlineDate(String raw) {
         if (raw == null) {
             return null;
         }

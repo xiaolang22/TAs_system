@@ -3,6 +3,7 @@
 <%@ page import="com.group19.model.Job" %>
 <%@ page import="com.group19.dto.TaNotificationView" %>
 <%@ page import="com.group19.dto.MoNotificationView" %>
+<%@ page import="com.group19.dto.DeadlineReminderView" %>
 <%!
     private String attr(String value) {
         if (value == null) {
@@ -22,6 +23,7 @@
     List<MoNotificationView> moNotifications = (List<MoNotificationView>) request.getAttribute("moNotifications");
     Integer moUnreadNotificationCount = (Integer) request.getAttribute("moUnreadNotificationCount");
     int moUnreadCount = moUnreadNotificationCount == null ? 0 : moUnreadNotificationCount;
+    List<DeadlineReminderView> deadlineReminders = (List<DeadlineReminderView>) request.getAttribute("deadlineReminders");
     String currentRequestPath = (String) request.getAttribute("currentRequestPath");
     if (currentRequestPath == null || currentRequestPath.isBlank()) {
         currentRequestPath = request.getContextPath() + "/home";
@@ -82,6 +84,29 @@
         <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">
             View all applications
         </a>
+        <% } %>
+    </section>
+
+    <section class="card deadline-panel ${loginUser.role == 'TA' || loginUser.role == 'MO' ? '' : 'hidden'}">
+        <h2>Upcoming deadlines</h2>
+        <p class="hint">Open positions with application deadlines in the next 14 days.</p>
+        <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
+        <p class="hint">No upcoming deadlines in the reminder window.</p>
+        <% } else { %>
+        <ul class="deadline-list">
+            <% for (DeadlineReminderView reminder : deadlineReminders) { %>
+            <li class="deadline-item">
+                <div>
+                    <h3><%= reminder.getJobTitle() %></h3>
+                    <p class="hint">Deadline: <%= reminder.getDeadlineDisplay() %> &middot; <%= reminder.getDaysLabel() %></p>
+                </div>
+                <div class="deadline-actions">
+                    <span class="status-pill <%= reminder.getReminderClass() %>"><%= reminder.getDaysLabel() %></span>
+                    <a class="link-btn" href="<%= reminder.getActionUrl() %>">Open</a>
+                </div>
+            </li>
+            <% } %>
+        </ul>
         <% } %>
     </section>
 
