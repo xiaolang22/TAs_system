@@ -2,8 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.group19.model.Application" %>
-<%@ page import="com.group19.model.Job" %>
-<%@ page import="com.group19.dto.TARecommendation" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,73 +134,6 @@
             border-radius: 12px;
             color: #475569;
         }
-
-        .recommendation-section {
-            margin-bottom: 24px;
-        }
-
-        .recommendation-list {
-            display: grid;
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .recommendation-item {
-            border: 1px solid #dbe7ff;
-            border-radius: 16px;
-            background: #f8fbff;
-            padding: 18px;
-        }
-
-        .recommendation-header {
-            display: flex;
-            gap: 12px;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .recommendation-title {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .recommendation-rank {
-            display: inline-block;
-            margin-bottom: 8px;
-            background: #4763e4;
-            color: #ffffff;
-            border-radius: 999px;
-            padding: 6px 10px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .score-chip {
-            background: #ecfdf3;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-            border-radius: 999px;
-            padding: 6px 10px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .recommendation-meta {
-            margin: 0 0 8px;
-            color: #334155;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .recommendation-explanation {
-            margin: 0;
-            color: #475569;
-            font-size: 14px;
-            line-height: 1.6;
-        }
     </style>
 </head>
 <body>
@@ -213,13 +144,8 @@
     }
 
     String jobId = (String) request.getAttribute("jobId");
-    Job job = (Job) request.getAttribute("job");
     String errorMsg = (String) request.getAttribute("errorMsg");
     String updated = request.getParameter("updated");
-    List<TARecommendation> recommendations = (List<TARecommendation>) request.getAttribute("recommendations");
-    if (recommendations == null) {
-        recommendations = new ArrayList<>();
-    }
 %>
 
 <div class="page">
@@ -232,9 +158,6 @@
             <h1>Manage Applications</h1>
             <p class="subtitle">
                 Current Job ID: <strong><%= jobId == null ? "" : jobId %></strong>
-                <% if (job != null && job.getTitle() != null && !job.getTitle().trim().isEmpty()) { %>
-                | Job Title: <strong><%= job.getTitle() %></strong>
-                <% } %>
             </p>
 
             <% if ("true".equals(updated)) { %>
@@ -243,51 +166,6 @@
 
             <% if (errorMsg != null && !errorMsg.trim().isEmpty()) { %>
             <div class="message error"><%= errorMsg %></div>
-            <% } %>
-
-            <% if (!recommendations.isEmpty()) { %>
-            <section class="recommendation-section">
-                <h2>TA Recommendations</h2>
-                <p class="subtitle">
-                    Recommendations combine skill match and current accepted workload before the final decision is made.
-                </p>
-
-                <div class="recommendation-list">
-                    <% for (int i = 0; i < recommendations.size(); i++) {
-                        TARecommendation recommendation = recommendations.get(i);
-                    %>
-                    <div class="recommendation-item">
-                        <div class="recommendation-header">
-                            <div>
-                                <span class="recommendation-rank">Rank #<%= i + 1 %></span>
-                                <h3 class="recommendation-title">
-                                    <%= recommendation.getTaName() %> (<%= recommendation.getTaStudentId() %>)
-                                </h3>
-                            </div>
-                            <span class="score-chip">
-                                Final Score: <%= String.format("%.0f%%", recommendation.getFinalRecommendationScore() * 100) %>
-                            </span>
-                        </div>
-
-                        <p class="recommendation-meta">
-                            Skill Match: <strong><%= String.format("%.0f%%", recommendation.getSkillMatchScore() * 100) %></strong>
-                            |
-                            Workload Score: <strong><%= String.format("%.0f%%", recommendation.getWorkloadScore() * 100) %></strong>
-                            |
-                            Accepted Workload: <strong><%= recommendation.getAcceptedWorkloadCount() %></strong>
-                        </p>
-
-                        <p class="recommendation-meta">
-                            Matched Skills: <strong><%= recommendation.getMatchedSkills().isEmpty() ? "none" : String.join(", ", recommendation.getMatchedSkills()) %></strong>
-                            |
-                            Missing Skills: <strong><%= recommendation.getMissingSkills().isEmpty() ? "none" : String.join(", ", recommendation.getMissingSkills()) %></strong>
-                        </p>
-
-                        <p class="recommendation-explanation"><%= recommendation.getExplanation() %></p>
-                    </div>
-                    <% } %>
-                </div>
-            </section>
             <% } %>
 
             <% if (applications.isEmpty()) { %>

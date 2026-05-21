@@ -1,13 +1,1 @@
-[
-  {
-    "applicationId": "4c7330eb-0488-4e59-8b0a-7d087ee6fb9a",
-    "jobId": "job-001",
-    "taStudentId": "231221618",
-    "taName": "TA Test User",
-    "cvFilePath": "/uploads/cv_231221618.pdf",
-    "status": "SUBMITTED",
-    "submittedAt": "2026-05-21T13:31:45.101193900",
-    "updatedAt": "2026-05-21T13:31:45.102203300",
-    "decisionNote": ""
-  }
-]
+[]
