@@ -3,15 +3,12 @@ package com.group19.servlet;
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.TADao;
-import com.group19.dao.TimelineDao;
-import com.group19.dto.ApplicantReviewPageData;
-import com.group19.dto.ApplicantReviewRow;
+import com.group19.dto.TARecommendation;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Application;
 import com.group19.model.Job;
-import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
-import com.group19.service.ApplicationTimelineRecorder;
+import com.group19.service.RecommendationService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +23,8 @@ import java.util.List;
 
 public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
-    private ApplicantReviewService applicantReviewService;
+    private RecommendationService recommendationService;
+    private JobDao jobDao;
 
     @Override
     public void init() {
@@ -37,29 +35,23 @@ public class ManageApplicationsServlet extends HttpServlet {
         Path appFilePath = resolveDataPath(appRelativePath, "applications.json");
         ApplicationDao applicationDao = new ApplicationDao(appFilePath);
 
-        String timelineDataPath = getServletContext().getInitParameter("timelineDataFile");
-        String timelineRelativePath = timelineDataPath == null || timelineDataPath.isBlank()
-                ? "/data/timelines.json"
-                : timelineDataPath;
-        Path timelineFilePath = resolveDataPath(timelineRelativePath, "timelines.json");
-        ApplicationTimelineRecorder timelineRecorder = new ApplicationTimelineRecorder(new TimelineDao(timelineFilePath));
-        this.applicationService = new ApplicationService(applicationDao, timelineRecorder);
-
-        String taDataPath = getServletContext().getInitParameter("taDataFile");
-        String taRelativePath = taDataPath == null || taDataPath.isBlank()
-                ? "/data/tas.json"
-                : taDataPath;
-        Path taFilePath = resolveDataPath(taRelativePath, "tas.json");
-        TADao taDao = new TADao(taFilePath);
+        Path appFilePath = resolveDataPath(appRelativePath);
+        ApplicationDao applicationDao = new ApplicationDao(appFilePath);
+        this.applicationService = new ApplicationService(applicationDao);
 
         String jobDataPath = getServletContext().getInitParameter("jobDataFile");
         String jobRelativePath = jobDataPath == null || jobDataPath.isBlank()
                 ? "/data/jobs.json"
                 : jobDataPath;
-        Path jobFilePath = resolveDataPath(jobRelativePath, "jobs.json");
-        JobDao jobDao = new JobDao(jobFilePath);
+        Path jobFilePath = resolveDataPath(jobRelativePath);
+        this.jobDao = new JobDao(jobFilePath);
 
-        this.applicantReviewService = new ApplicantReviewService(applicationDao, taDao, jobDao);
+        String taDataPath = getServletContext().getInitParameter("taDataFile");
+        String taRelativePath = taDataPath == null || taDataPath.isBlank()
+                ? "/data/tas.json"
+                : taDataPath;
+        Path taFilePath = resolveDataPath(taRelativePath);
+        this.recommendationService = new RecommendationService(new TADao(taFilePath), applicationDao);
     }
 
     @Override
@@ -68,57 +60,28 @@ public class ManageApplicationsServlet extends HttpServlet {
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         resp.setContentType("text/html; charset=UTF-8");
 
-        String jobId = trimToNull(req.getParameter("jobId"));
-        String sortMode = normalizeSortMode(req.getParameter("sort"));
-        String studentId = trimToNull(req.getParameter("studentId"));
-        boolean detailMode = isTruthy(req.getParameter("detail")) || studentId != null;
+        String jobId = req.getParameter("jobId");
+        List<Application> applications = new ArrayList<>();
+        List<TARecommendation> recommendations = new ArrayList<>();
+        Job job = null;
+
+        if (jobId == null || jobId.isBlank()) {
+            req.setAttribute("errorMsg", "Job ID is required");
+        } else {
+            applications = applicationService.getApplicationsByJobId(jobId);
+            job = findJobById(jobId);
+            if (job == null) {
+                req.setAttribute("errorMsg", "Job not found");
+            } else {
+                recommendations = recommendationService.recommendApplicants(job, applications);
+            }
+        }
 
         req.setAttribute("jobId", jobId);
-        req.setAttribute("sortMode", sortMode);
-        req.setAttribute("updated", req.getParameter("updated"));
-
-        if (jobId == null) {
-            req.setAttribute("errorMsg", "Job ID is required.");
-            req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Job ID is required."));
-            req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
-            return;
-        }
-
-        ServiceResult<ApplicantReviewPageData> result = applicantReviewService.loadApplicantsForJob(jobId, sortMode);
-        if (!result.isSuccess()) {
-            req.setAttribute("errorMsg", result.getMessage());
-            req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(result.getMessage()));
-            req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
-            return;
-        }
-
-        ApplicantReviewPageData pageData = result.getData();
-        Job job = pageData.getJob();
-        List<ApplicantReviewRow> applicants = pageData.getApplicants();
         req.setAttribute("job", job);
-        req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
-        req.setAttribute("sortLabel", pageData.getSortLabel());
-        req.setAttribute("applicantCount", applicants.size());
-
-        if (detailMode) {
-            ApplicantReviewRow applicant = findApplicant(applicants, studentId);
-            if (applicant == null) {
-                req.setAttribute("errorMsg", "Applicant not found for this job.");
-                req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
-                req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Applicant not found."));
-                req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
-                return;
-            }
-
-            prepareDetailAttributes(req, job, applicant, jobId, sortMode);
-            req.getRequestDispatcher("/WEB-INF/jsp/applicant_profile.jsp").forward(req, resp);
-            return;
-        }
-
-        req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, applicants, jobId, sortMode));
-        req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
+        req.setAttribute("applications", applications);
+        req.setAttribute("recommendations", recommendations);
+        req.getRequestDispatcher("/WEB-INF/jsp/manage_applications.jsp").forward(req, resp);
     }
 
     @Override
@@ -151,21 +114,15 @@ public class ManageApplicationsServlet extends HttpServlet {
             return;
         }
 
-        ServiceResult<ApplicantReviewPageData> pageResult = applicantReviewService.loadApplicantsForJob(jobId, sortMode);
-        if (pageResult.isSuccess()) {
-            ApplicantReviewPageData pageData = pageResult.getData();
-            req.setAttribute("job", pageData.getJob());
-            req.setAttribute("jobTitle", pageData.getJob() == null ? "" : pageData.getJob().getTitle());
-            req.setAttribute("applicantCount", pageData.getApplicants().size());
-            req.setAttribute("sortLabel", pageData.getSortLabel());
-            req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, pageData.getApplicants(), jobId, sortMode));
-        } else {
-            req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(pageResult.getMessage()));
-        }
-
+        List<Application> applications = applicationService.getApplicationsByJobId(jobId);
+        Job job = findJobById(jobId);
+        List<TARecommendation> recommendations = job == null
+                ? new ArrayList<>()
+                : recommendationService.recommendApplicants(job, applications);
         req.setAttribute("jobId", jobId);
-        req.setAttribute("sortMode", sortMode);
+        req.setAttribute("job", job);
+        req.setAttribute("applications", applications);
+        req.setAttribute("recommendations", recommendations);
         req.setAttribute("errorMsg", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
     }
@@ -362,7 +319,20 @@ public class ManageApplicationsServlet extends HttpServlet {
         return value.trim().toLowerCase();
     }
 
-    private Path resolveDataPath(String webRelativePath, String fallbackFileName) {
+    private Job findJobById(String jobId) {
+        if (jobId == null || jobId.isBlank()) {
+            return null;
+        }
+
+        for (Job job : jobDao.findAll()) {
+            if (jobId.equalsIgnoreCase(job.getJobId())) {
+                return job;
+            }
+        }
+        return null;
+    }
+
+    private Path resolveDataPath(String webRelativePath) {
         String realPath = getServletContext().getRealPath(webRelativePath);
         if (realPath != null && !realPath.isBlank()) {
             return Paths.get(realPath);
