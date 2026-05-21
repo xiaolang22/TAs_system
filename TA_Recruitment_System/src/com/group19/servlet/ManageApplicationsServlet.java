@@ -2,6 +2,7 @@ package com.group19.servlet;
 
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
+import com.group19.dao.NotificationDao;
 import com.group19.dao.TADao;
 import com.group19.dao.TimelineDao;
 import com.group19.dto.ApplicantReviewPageData;
@@ -12,6 +13,8 @@ import com.group19.model.Job;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
 import com.group19.service.ApplicationTimelineRecorder;
+import com.group19.service.TaStatusNotificationService;
+import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +46,15 @@ public class ManageApplicationsServlet extends HttpServlet {
                 : timelineDataPath;
         Path timelineFilePath = resolveDataPath(timelineRelativePath, "timelines.json");
         ApplicationTimelineRecorder timelineRecorder = new ApplicationTimelineRecorder(new TimelineDao(timelineFilePath));
-        this.applicationService = new ApplicationService(applicationDao, timelineRecorder);
+
+        Path jobFilePath = DataPathResolver.resolve(
+                getServletContext(), "jobDataFile", "/data/jobs.json", "jobs.json");
+        JobDao jobDao = new JobDao(jobFilePath);
+        Path notificationFilePath = DataPathResolver.resolve(
+                getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
+        TaStatusNotificationService taStatusNotificationService =
+                new TaStatusNotificationService(new NotificationDao(notificationFilePath), jobDao);
+        this.applicationService = new ApplicationService(applicationDao, timelineRecorder, taStatusNotificationService);
 
         String taDataPath = getServletContext().getInitParameter("taDataFile");
         String taRelativePath = taDataPath == null || taDataPath.isBlank()
@@ -51,13 +62,6 @@ public class ManageApplicationsServlet extends HttpServlet {
                 : taDataPath;
         Path taFilePath = resolveDataPath(taRelativePath, "tas.json");
         TADao taDao = new TADao(taFilePath);
-
-        String jobDataPath = getServletContext().getInitParameter("jobDataFile");
-        String jobRelativePath = jobDataPath == null || jobDataPath.isBlank()
-                ? "/data/jobs.json"
-                : jobDataPath;
-        Path jobFilePath = resolveDataPath(jobRelativePath, "jobs.json");
-        JobDao jobDao = new JobDao(jobFilePath);
 
         this.applicantReviewService = new ApplicantReviewService(applicationDao, taDao, jobDao);
     }

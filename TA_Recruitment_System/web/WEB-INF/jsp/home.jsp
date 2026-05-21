@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.group19.model.Job" %>
+<%@ page import="com.group19.dto.TaNotificationView" %>
 <%!
     private String attr(String value) {
         if (value == null) {
@@ -14,6 +15,9 @@
 %>
 <%
     List<Job> savedJobs = (List<Job>) request.getAttribute("savedJobs");
+    List<TaNotificationView> taNotifications = (List<TaNotificationView>) request.getAttribute("taNotifications");
+    Integer unreadNotificationCount = (Integer) request.getAttribute("unreadNotificationCount");
+    int unreadCount = unreadNotificationCount == null ? 0 : unreadNotificationCount;
     String currentRequestPath = (String) request.getAttribute("currentRequestPath");
     if (currentRequestPath == null || currentRequestPath.isBlank()) {
         currentRequestPath = request.getContextPath() + "/home";
@@ -57,6 +61,25 @@
     <p class="alert error ${empty savedJobError ? 'hidden' : ''}">
         ${savedJobError}
     </p>
+
+    <section class="card notification-panel ${loginUser.role == 'TA' ? '' : 'hidden'}">
+        <h2>Application notifications<% if (unreadCount > 0) { %> <span class="notification-badge"><%= unreadCount %> unread</span><% } %></h2>
+        <% if (taNotifications == null || taNotifications.isEmpty()) { %>
+        <p class="hint">No status updates yet. When a module officer changes your application status, you will see a message here.</p>
+        <% } else { %>
+        <ul class="notification-list">
+            <% for (TaNotificationView item : taNotifications) { %>
+            <li class="notification-item <%= item.isUnread() ? "notification-unread" : "" %>">
+                <p class="notification-message"><%= item.getMessage() %></p>
+                <p class="hint notification-time"><%= item.getCreatedAtDisplay() %></p>
+            </li>
+            <% } %>
+        </ul>
+        <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">
+            View all applications
+        </a>
+        <% } %>
+    </section>
 
     <section class="card ${loginUser.role == 'TA' ? '' : 'hidden'}">
         <h2>TA Workspace</h2>

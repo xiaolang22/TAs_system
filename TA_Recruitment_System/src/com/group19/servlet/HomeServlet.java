@@ -1,9 +1,12 @@
 package com.group19.servlet;
 
 import com.group19.dao.JobDao;
+import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
 import com.group19.model.LoginUser;
 import com.group19.service.SavedJobService;
+import com.group19.service.TaStatusNotificationService;
+import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +19,7 @@ import java.nio.file.Paths;
 
 public class HomeServlet extends HttpServlet {
     private SavedJobService savedJobService;
+    private TaStatusNotificationService taStatusNotificationService;
 
     @Override
     public void init() {
@@ -25,8 +29,12 @@ public class HomeServlet extends HttpServlet {
         Path jobPath = resolveDataPath(
                 firstNonBlank(getServletContext().getInitParameter("jobDataFile"), "/data/jobs.json"),
                 "jobs.json");
+        Path notificationPath = DataPathResolver.resolve(
+                getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
 
-        this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), new JobDao(jobPath));
+        JobDao jobDao = new JobDao(jobPath);
+        this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), jobDao);
+        this.taStatusNotificationService = new TaStatusNotificationService(new NotificationDao(notificationPath), jobDao);
     }
 
     @Override
@@ -52,7 +60,10 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("currentRequestPath", buildCurrentRequestPath(req));
         setSavedJobFeedback(req);
         if ("TA".equalsIgnoreCase(loginUser.getRole())) {
-            req.setAttribute("savedJobs", savedJobService.findSavedJobs(loginUser.getUserId()));
+            String taStudentId = loginUser.getUserId();
+            req.setAttribute("savedJobs", savedJobService.findSavedJobs(taStudentId));
+            req.setAttribute("taNotifications", taStatusNotificationService.loadForTaDashboard(taStudentId));
+            req.setAttribute("unreadNotificationCount", taStatusNotificationService.countUnread(taStudentId));
         }
         req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
     }

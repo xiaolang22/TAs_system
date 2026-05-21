@@ -12,10 +12,19 @@ import java.util.UUID;
 public class ApplicationService {
     private final ApplicationDao applicationDao;
     private final ApplicationTimelineRecorder timelineRecorder;
+    private final TaStatusNotificationService taStatusNotificationService;
 
     public ApplicationService(ApplicationDao applicationDao, ApplicationTimelineRecorder timelineRecorder) {
+        this(applicationDao, timelineRecorder, null);
+    }
+
+    public ApplicationService(
+            ApplicationDao applicationDao,
+            ApplicationTimelineRecorder timelineRecorder,
+            TaStatusNotificationService taStatusNotificationService) {
         this.applicationDao = applicationDao;
         this.timelineRecorder = timelineRecorder;
+        this.taStatusNotificationService = taStatusNotificationService;
     }
 
     public ServiceResult<Application> applyForJob(String jobId, String taStudentId, String taName, String cvFilePath) {
@@ -103,6 +112,9 @@ public class ApplicationService {
 
         if (!normalizedStatus.equals(previousStatus)) {
             timelineRecorder.recordStatusChange(application.getApplicationId(), normalizedStatus, updateTime, trimmedNote);
+            if (taStatusNotificationService != null) {
+                taStatusNotificationService.notifyStatusChanged(application, previousStatus, normalizedStatus);
+            }
         }
 
         return ServiceResult.success(application, "Application status updated successfully");
