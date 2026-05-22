@@ -3,33 +3,40 @@ package com.group19.servlet;
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.TADao;
-import com.group19.dao.TimelineDao;
 import com.group19.dto.ApplicantReviewPageData;
 import com.group19.dto.ApplicantReviewRow;
 import com.group19.dto.ServiceResult;
+import com.group19.dao.NotificationDao;
+import com.group19.dao.UserAccountDao;
 import com.group19.dto.TARecommendation;
 import com.group19.model.Application;
 import com.group19.model.Job;
+import com.group19.model.LoginUser;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
-import com.group19.service.ApplicationTimelineRecorder;
+import com.group19.service.MoNewApplicationNotificationService;
 import com.group19.service.RecommendationService;
+import com.group19.util.ApplicationServiceFactory;
+import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
     private ApplicantReviewService applicantReviewService;
+    private MoNewApplicationNotificationService moNewApplicationNotificationService;
     private RecommendationService recommendationService;
 
     @Override
@@ -40,14 +47,11 @@ public class ManageApplicationsServlet extends HttpServlet {
                 : appDataPath;
         Path appFilePath = resolveDataPath(appRelativePath, "applications.json");
         ApplicationDao applicationDao = new ApplicationDao(appFilePath);
+        this.applicationService = ApplicationServiceFactory.create(getServletContext());
 
-        String timelineDataPath = getServletContext().getInitParameter("timelineDataFile");
-        String timelineRelativePath = timelineDataPath == null || timelineDataPath.isBlank()
-                ? "/data/timelines.json"
-                : timelineDataPath;
-        Path timelineFilePath = resolveDataPath(timelineRelativePath, "timelines.json");
-        ApplicationTimelineRecorder timelineRecorder = new ApplicationTimelineRecorder(new TimelineDao(timelineFilePath));
-        this.applicationService = new ApplicationService(applicationDao, timelineRecorder);
+        Path jobFilePath = DataPathResolver.resolve(
+                getServletContext(), "jobDataFile", "/data/jobs.json", "jobs.json");
+        JobDao jobDao = new JobDao(jobFilePath);
 
         String taDataPath = getServletContext().getInitParameter("taDataFile");
         String taRelativePath = taDataPath == null || taDataPath.isBlank()
@@ -56,14 +60,16 @@ public class ManageApplicationsServlet extends HttpServlet {
         Path taFilePath = resolveDataPath(taRelativePath, "tas.json");
         TADao taDao = new TADao(taFilePath);
 
-        String jobDataPath = getServletContext().getInitParameter("jobDataFile");
-        String jobRelativePath = jobDataPath == null || jobDataPath.isBlank()
-                ? "/data/jobs.json"
-                : jobDataPath;
-        Path jobFilePath = resolveDataPath(jobRelativePath, "jobs.json");
-        JobDao jobDao = new JobDao(jobFilePath);
-
         this.applicantReviewService = new ApplicantReviewService(applicationDao, taDao, jobDao);
+
+        Path notificationFilePath = DataPathResolver.resolve(
+                getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
+        Path userFilePath = DataPathResolver.resolve(
+                getServletContext(), "userDataFile", "/data/users.json", "users.json");
+        this.moNewApplicationNotificationService = new MoNewApplicationNotificationService(
+                new NotificationDao(notificationFilePath),
+                jobDao,
+                new UserAccountDao(userFilePath));
         this.recommendationService = new RecommendationService(applicationDao);
     }
 
@@ -74,9 +80,12 @@ public class ManageApplicationsServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
 
         String jobId = trimToNull(req.getParameter("jobId"));
+        String applicationId = trimToNull(req.getParameter("applicationId"));
         String sortMode = normalizeSortMode(req.getParameter("sort"));
         String studentId = trimToNull(req.getParameter("studentId"));
         boolean detailMode = isTruthy(req.getParameter("detail")) || studentId != null;
+
+        markMoNotificationViewedIfNeeded(req, applicationId);
 
         req.setAttribute("jobId", jobId);
         req.setAttribute("sortMode", sortMode);
@@ -265,12 +274,13 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("<select id=\"status-")
                     .append(escapeHtml(applicant.getApplicationId()))
                     .append("\" name=\"status\">");
-            html.append(statusOption("SUBMITTED", applicant.getStatus()));
-            html.append(statusOption("IN_REVIEW", applicant.getStatus()));
-            html.append(statusOption("SHORTLISTED", applicant.getStatus()));
-            html.append(statusOption("ACCEPTED", applicant.getStatus()));
-            html.append(statusOption("REJECTED", applicant.getStatus()));
+            for (String allowedStatus : allowedStatuses(applicant.getStatus())) {
+                html.append(statusOption(allowedStatus, applicant.getStatus()));
+            }
             html.append("</select>");
+            html.append("<p class=\"table-subtext\">")
+                    .append(escapeHtml(buildStatusRuleHint(applicant.getStatus())))
+                    .append("</p>");
             html.append("<textarea name=\"decisionNote\" rows=\"3\" placeholder=\"Optional note\">")
                     .append(escapeHtml(applicant.getDecisionNote()))
                     .append("</textarea>");
@@ -322,6 +332,26 @@ public class ManageApplicationsServlet extends HttpServlet {
         return "<option value=\"" + escapeHtml(optionValue) + "\"" + (selected ? " selected" : "") + ">"
                 + escapeHtml(optionValue)
                 + "</option>";
+    }
+
+    private static List<String> allowedStatuses(String currentStatus) {
+        List<String> allowed = ApplicationService.getAllowedStatuses(currentStatus);
+        if (allowed.isEmpty()) {
+            allowed = new ArrayList<>();
+            allowed.add("SUBMITTED");
+        }
+        return allowed;
+    }
+
+    private static String buildStatusRuleHint(String currentStatus) {
+        String normalized = currentStatus == null ? "" : currentStatus.trim().toUpperCase(Locale.ROOT);
+        return switch (normalized) {
+            case "SUBMITTED" -> "Can move forward to IN_REVIEW, SHORTLISTED, ACCEPTED or REJECTED.";
+            case "IN_REVIEW" -> "Cannot return to SUBMITTED.";
+            case "SHORTLISTED" -> "Cannot return to SUBMITTED or IN_REVIEW.";
+            case "ACCEPTED", "REJECTED" -> "Final-stage decision. Cannot return to SUBMITTED, IN_REVIEW or SHORTLISTED.";
+            default -> "Workflow order: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
+        };
     }
 
     private static String buildEmptyRowsHtml(String message) {
@@ -407,6 +437,21 @@ public class ManageApplicationsServlet extends HttpServlet {
         }
         String normalized = value.trim();
         return "1".equals(normalized) || "true".equalsIgnoreCase(normalized) || "yes".equalsIgnoreCase(normalized);
+    }
+
+    private void markMoNotificationViewedIfNeeded(HttpServletRequest req, String applicationId) {
+        if (applicationId == null || applicationId.isBlank()) {
+            return;
+        }
+        HttpSession session = req.getSession(false);
+        if (session == null) {
+            return;
+        }
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser == null || !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            return;
+        }
+        moNewApplicationNotificationService.markApplicationAsViewed(loginUser.getUserId(), applicationId);
     }
 
     private static String trimToNull(String value) {

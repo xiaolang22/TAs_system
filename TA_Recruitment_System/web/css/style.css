@@ -964,6 +964,86 @@ button:hover {
     color: #0f172a;
 }
 
+.notification-panel h2 {
+    margin-top: 0;
+}
+
+.notification-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.notification-list {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.notification-item {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.notification-unread {
+    border-color: #93c5fd;
+    background: #eff6ff;
+}
+
+.notification-message {
+    margin: 0 0 6px;
+    font-weight: 600;
+}
+
+.notification-time {
+    margin-bottom: 0;
+}
+
+.deadline-panel h2 {
+    margin-top: 0;
+}
+
+.deadline-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.deadline-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.deadline-item h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.deadline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
 @media (max-width: 900px) {
     .workload-filter-form {
         grid-template-columns: 1fr;

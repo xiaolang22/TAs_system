@@ -36,6 +36,11 @@
         <param-value>/data/timelines.json</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>notificationDataFile</param-name>
+        <param-value>/data/notifications.json</param-value>
+    </context-param>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.group19.filter.AuthFilter</filter-class>

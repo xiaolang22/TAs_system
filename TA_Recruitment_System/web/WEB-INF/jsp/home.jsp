@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.group19.model.Job" %>
+<%@ page import="com.group19.dto.TaNotificationView" %>
+<%@ page import="com.group19.dto.MoNotificationView" %>
+<%@ page import="com.group19.dto.DeadlineReminderView" %>
 <%!
     private String attr(String value) {
         if (value == null) {
@@ -14,6 +17,13 @@
 %>
 <%
     List<Job> savedJobs = (List<Job>) request.getAttribute("savedJobs");
+    List<TaNotificationView> taNotifications = (List<TaNotificationView>) request.getAttribute("taNotifications");
+    Integer unreadNotificationCount = (Integer) request.getAttribute("unreadNotificationCount");
+    int unreadCount = unreadNotificationCount == null ? 0 : unreadNotificationCount;
+    List<MoNotificationView> moNotifications = (List<MoNotificationView>) request.getAttribute("moNotifications");
+    Integer moUnreadNotificationCount = (Integer) request.getAttribute("moUnreadNotificationCount");
+    int moUnreadCount = moUnreadNotificationCount == null ? 0 : moUnreadNotificationCount;
+    List<DeadlineReminderView> deadlineReminders = (List<DeadlineReminderView>) request.getAttribute("deadlineReminders");
     String currentRequestPath = (String) request.getAttribute("currentRequestPath");
     if (currentRequestPath == null || currentRequestPath.isBlank()) {
         currentRequestPath = request.getContextPath() + "/home";
@@ -57,6 +67,48 @@
     <p class="alert error ${empty savedJobError ? 'hidden' : ''}">
         ${savedJobError}
     </p>
+
+    <section class="card notification-panel ${loginUser.role == 'TA' ? '' : 'hidden'}">
+        <h2>Application notifications<% if (unreadCount > 0) { %> <span class="notification-badge"><%= unreadCount %> unread</span><% } %></h2>
+        <% if (taNotifications == null || taNotifications.isEmpty()) { %>
+        <p class="hint">No status updates yet. When a module officer changes your application status, you will see a message here.</p>
+        <% } else { %>
+        <ul class="notification-list">
+            <% for (TaNotificationView item : taNotifications) { %>
+            <li class="notification-item <%= item.isUnread() ? "notification-unread" : "" %>">
+                <p class="notification-message"><%= item.getMessage() %></p>
+                <p class="hint notification-time"><%= item.getCreatedAtDisplay() %></p>
+            </li>
+            <% } %>
+        </ul>
+        <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">
+            View all applications
+        </a>
+        <% } %>
+    </section>
+
+    <section class="card deadline-panel ${loginUser.role == 'TA' || loginUser.role == 'MO' ? '' : 'hidden'}">
+        <h2>Upcoming deadlines</h2>
+        <p class="hint">Open positions with application deadlines in the next 14 days.</p>
+        <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
+        <p class="hint">No upcoming deadlines in the reminder window.</p>
+        <% } else { %>
+        <ul class="deadline-list">
+            <% for (DeadlineReminderView reminder : deadlineReminders) { %>
+            <li class="deadline-item">
+                <div>
+                    <h3><%= reminder.getJobTitle() %></h3>
+                    <p class="hint">Deadline: <%= reminder.getDeadlineDisplay() %> &middot; <%= reminder.getDaysLabel() %></p>
+                </div>
+                <div class="deadline-actions">
+                    <span class="status-pill <%= reminder.getReminderClass() %>"><%= reminder.getDaysLabel() %></span>
+                    <a class="link-btn" href="<%= reminder.getActionUrl() %>">Open</a>
+                </div>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </section>
 
     <section class="card ${loginUser.role == 'TA' ? '' : 'hidden'}">
         <h2>TA Workspace</h2>
@@ -105,10 +157,30 @@
         <% } %>
     </section>
 
+    <section class="card notification-panel ${loginUser.role == 'MO' ? '' : 'hidden'}">
+        <h2>New application notifications<% if (moUnreadCount > 0) { %> <span class="notification-badge"><%= moUnreadCount %> unread</span><% } %></h2>
+        <% if (moNotifications == null || moNotifications.isEmpty()) { %>
+        <p class="hint">No pending new-application alerts. After you review an application once, it will not appear here again.</p>
+        <% } else { %>
+        <ul class="notification-list">
+            <% for (MoNotificationView item : moNotifications) { %>
+            <li class="notification-item <%= item.isUnread() ? "notification-unread" : "" %>">
+                <p class="notification-message"><%= item.getMessage() %></p>
+                <p class="hint notification-time"><%= item.getCreatedAtDisplay() %></p>
+                <a class="link-btn secondary" href="<%= item.getActionUrl() %>">Review applicants</a>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </section>
+
     <section class="card ${loginUser.role == 'MO' ? '' : 'hidden'}">
         <h2>MO Workspace</h2>
         <p>Review applicants with skill match score and missing-skill notes (US10).</p>
-        <a class="link-btn" href="${pageContext.request.contextPath}/mo/review">
+        <a class="link-btn" href="${pageContext.request.contextPath}/mo/jobs">
+            View posted jobs
+        </a>
+        <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">
             Go to Candidate Review
         </a>
     </section>
