@@ -122,7 +122,7 @@ public class MoTaDirectoryService {
 
         matchedCards.sort(Comparator
                 .comparingInt(MoTaCandidateCard::getMatchScore).reversed()
-                .thenComparing(MoTaCandidateCard::isProfileCompleted).reversed()
+                .thenComparing(Comparator.comparing(MoTaCandidateCard::isProfileCompleted).reversed())
                 .thenComparing(card -> normalizeText(card.getDisplayName())));
         return ServiceResult.success(matchedCards, "匹配结果已更新。");
     }

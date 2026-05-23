@@ -45,6 +45,8 @@ public class MoTaProfileServlet extends HttpServlet {
         }
 
         String studentId = trimToNull(req.getParameter("studentId"));
+        req.setAttribute("backUrl", resolveBackUrl(req));
+        req.setAttribute("backLabel", resolveBackLabel(req));
         ServiceResult<MoTaCandidateCard> result = moTaDirectoryService.loadCandidateByStudentId(studentId);
         if (!result.isSuccess()) {
             req.setAttribute("error", result.getMessage());
@@ -58,6 +60,36 @@ public class MoTaProfileServlet extends HttpServlet {
         req.setAttribute("loginUser", loginUser);
         req.setAttribute("candidate", candidate);
         req.getRequestDispatcher("/WEB-INF/jsp/mo_ta_profile.jsp").forward(req, resp);
+    }
+
+    private String resolveBackUrl(HttpServletRequest req) {
+        String fallback = req.getContextPath() + "/mo/home";
+        String raw = trimToNull(req.getParameter("backUrl"));
+        if (raw == null) {
+            return fallback;
+        }
+        String contextPath = req.getContextPath();
+        if (raw.startsWith(contextPath + "/mo/applications")
+                || raw.startsWith(contextPath + "/mo/home")
+                || raw.startsWith(contextPath + "/mo/jobs")) {
+            return raw;
+        }
+        return fallback;
+    }
+
+    private String resolveBackLabel(HttpServletRequest req) {
+        String backUrl = resolveBackUrl(req);
+        String rawLabel = trimToNull(req.getParameter("backLabel"));
+        if (rawLabel != null) {
+            return rawLabel;
+        }
+        if (backUrl.contains("/mo/applications")) {
+            return "返回申请人列表";
+        }
+        if (backUrl.contains("/mo/jobs")) {
+            return "返回岗位列表";
+        }
+        return "返回首页";
     }
 
     private void attachCandidateAssets(HttpServletRequest req, MoTaCandidateCard candidate) {

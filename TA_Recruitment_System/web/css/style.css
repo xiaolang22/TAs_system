@@ -512,6 +512,11 @@ button:hover {
     min-width: 190px;
 }
 
+.review-action-form {
+    min-width: 170px;
+    gap: 6px;
+}
+
 .inline-form select,
 .inline-form textarea {
     width: 100%;
@@ -552,6 +557,43 @@ button:hover {
 .review-summary {
     display: grid;
     gap: 10px;
+}
+
+.review-summary-compact {
+    padding: 14px 18px;
+}
+
+.review-sort-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.review-sort-meta {
+    color: #475569;
+    font-size: 0.96rem;
+}
+
+.review-sort-chips {
+    margin-top: 0;
+    padding: 2px;
+    gap: 2px;
+}
+
+.review-sort-chips .choice-chip {
+    min-height: 30px;
+    padding: 5px 12px;
+    text-decoration: none;
+}
+
+.review-process-note {
+    line-height: 1.5;
+}
+
+.review-profile-cell {
+    white-space: nowrap;
 }
 
 .recommendation-card {

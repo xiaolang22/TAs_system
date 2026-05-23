@@ -32,7 +32,7 @@
             <p class="hint">默认展示该 TA 的个人档案；若系统中存在已上传简历，可继续查看简历。</p>
         </div>
         <div class="review-badges">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">返回首页</a>
+            <a class="link-btn secondary" href="${backUrl}">${backLabel}</a>
             <% if (candidate != null && candidate.hasCv()) { %>
             <a class="link-btn" href="<%= attr(candidate.getCvUrl()) %>" target="_blank" rel="noopener">查看简历</a>
             <% } %>

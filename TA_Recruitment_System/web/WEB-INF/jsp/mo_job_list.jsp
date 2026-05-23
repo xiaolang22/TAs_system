@@ -51,7 +51,6 @@
     <header class="page-header">
         <div>
             <h1>岗位列表</h1>
-            <p class="hint">默认显示我发布的岗位，可切换查看全部岗位。</p>
         </div>
         <div class="header-actions">
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">返回首页</a>
