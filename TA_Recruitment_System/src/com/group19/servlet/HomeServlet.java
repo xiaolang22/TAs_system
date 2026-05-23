@@ -17,6 +17,7 @@ import com.group19.service.MoNewApplicationNotificationService;
 import com.group19.service.MoTaDirectoryService;
 import com.group19.service.SavedJobService;
 import com.group19.service.TaStatusNotificationService;
+import com.group19.service.WorkloadService;
 import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -33,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeServlet extends HttpServlet {
+    private JobDao jobDao;
+    private ApplicationDao applicationDao;
+    private TADao taDao;
     private JobService jobService;
     private SavedJobService savedJobService;
     private TaStatusNotificationService taStatusNotificationService;
@@ -56,12 +60,13 @@ public class HomeServlet extends HttpServlet {
         Path userPath = DataPathResolver.resolve(
                 getServletContext(), "userDataFile", "/data/users.json", "users.json");
 
-        JobDao jobDao = new JobDao(jobPath);
+        this.jobDao = new JobDao(jobPath);
+        this.applicationDao = new ApplicationDao(applicationPath);
         this.jobService = new JobService(jobDao);
         this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), jobDao);
         this.deadlineReminderService = new DeadlineReminderService(
                 this.jobService,
-                new ApplicationDao(applicationPath),
+                applicationDao,
                 savedJobService);
         NotificationDao notificationDao = new NotificationDao(notificationPath);
         this.taStatusNotificationService = new TaStatusNotificationService(notificationDao, jobDao);
@@ -145,6 +150,7 @@ public class HomeServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
                 return;
             }
+            prepareAdminDashboardStats(req);
             req.getRequestDispatcher("/WEB-INF/jsp/admin_home.jsp").forward(req, resp);
             return;
         }

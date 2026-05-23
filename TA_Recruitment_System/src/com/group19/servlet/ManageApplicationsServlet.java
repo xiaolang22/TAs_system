@@ -274,7 +274,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             case "shortlisted" -> "tag-warning";
             case "accepted" -> "tag-good";
             case "rejected" -> "tag-alert";
-            case "in_review" -> "tag-neutral";
+            case "in_review" -> "tag-info";
             default -> "tag-neutral";
         };
     }
