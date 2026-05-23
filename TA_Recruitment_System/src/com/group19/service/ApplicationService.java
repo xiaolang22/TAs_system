@@ -48,21 +48,21 @@ public class ApplicationService {
 
     public ServiceResult<Application> applyForJob(String jobId, String taStudentId, String taName, String cvFilePath) {
         if (jobId == null || jobId.isBlank()) {
-            return ServiceResult.failure("Job ID is required");
+            return ServiceResult.failure("Job ID is required.");
         }
         if (taStudentId == null || taStudentId.isBlank()) {
-            return ServiceResult.failure("TA student ID is required");
+            return ServiceResult.failure("TA student ID is required.");
         }
         if (taName == null || taName.isBlank()) {
-            return ServiceResult.failure("TA name is required");
+            return ServiceResult.failure("TA name is required.");
         }
 
         if (applicationDao.hasApplied(jobId, taStudentId)) {
-            return ServiceResult.failure("You have already applied for this job");
+            return ServiceResult.failure("You have already applied for this job.");
         }
 
         if (cvFilePath == null || cvFilePath.isBlank()) {
-            return ServiceResult.failure("Please upload your CV before applying");
+            return ServiceResult.failure("Please upload your resume before applying.");
         }
 
         Application application = new Application();
@@ -78,7 +78,7 @@ public class ApplicationService {
 
         boolean success = applicationDao.save(application);
         if (!success) {
-            return ServiceResult.failure("Failed to submit application");
+            return ServiceResult.failure("Failed to submit the application.");
         }
 
         timelineRecorder.recordSubmitted(application.getApplicationId(), application.getSubmittedAt());
@@ -87,7 +87,7 @@ public class ApplicationService {
             moNewApplicationNotificationService.notifyNewApplication(application);
         }
 
-        return ServiceResult.success(application, "Application submitted successfully");
+        return ServiceResult.success(application, "Application submitted successfully.");
     }
 
     public List<Application> getApplicationsByJobId(String jobId) {
@@ -99,21 +99,21 @@ public class ApplicationService {
 
     public ServiceResult<Application> updateApplicationStatus(String applicationId, String newStatus, String decisionNote) {
         if (applicationId == null || applicationId.isBlank()) {
-            return ServiceResult.failure("Application ID is required");
+            return ServiceResult.failure("Application ID is required.");
         }
 
         if (newStatus == null || newStatus.isBlank()) {
-            return ServiceResult.failure("Status is required");
+            return ServiceResult.failure("Please choose an application status.");
         }
 
         String normalizedStatus = normalizeStatus(newStatus);
         if (!isValidStatus(normalizedStatus)) {
-            return ServiceResult.failure("Invalid status");
+            return ServiceResult.failure("The application status is invalid.");
         }
 
         Application application = applicationDao.findByApplicationId(applicationId);
         if (application == null) {
-            return ServiceResult.failure("Application not found");
+            return ServiceResult.failure("Application not found.");
         }
 
         String previousStatus = normalizeStatus(application.getStatus());
@@ -130,7 +130,7 @@ public class ApplicationService {
 
         boolean success = applicationDao.update(application);
         if (!success) {
-            return ServiceResult.failure("Failed to update application");
+            return ServiceResult.failure("Failed to update the application status.");
         }
 
         if (!normalizedStatus.equals(previousStatus)) {
@@ -140,7 +140,7 @@ public class ApplicationService {
             }
         }
 
-        return ServiceResult.success(application, "Application status updated successfully");
+        return ServiceResult.success(application, "Application status updated successfully.");
     }
 
     public static boolean isValidStatus(String status) {
@@ -168,13 +168,20 @@ public class ApplicationService {
     }
 
     private static int statusRank(String status) {
-        return switch (normalizeStatus(status)) {
-            case "SUBMITTED" -> 0;
-            case "IN_REVIEW" -> 1;
-            case "SHORTLISTED" -> 2;
-            case "ACCEPTED", "REJECTED" -> 3;
-            default -> -1;
-        };
+        String normalized = normalizeStatus(status);
+        if ("SUBMITTED".equals(normalized)) {
+            return 0;
+        }
+        if ("IN_REVIEW".equals(normalized)) {
+            return 1;
+        }
+        if ("SHORTLISTED".equals(normalized)) {
+            return 2;
+        }
+        if ("ACCEPTED".equals(normalized) || "REJECTED".equals(normalized)) {
+            return 3;
+        }
+        return -1;
     }
 
     private static String normalizeStatus(String status) {
@@ -185,10 +192,10 @@ public class ApplicationService {
     }
 
     private static String buildInvalidTransitionMessage(String previousStatus, String nextStatus) {
-        return "Cannot change application status from "
+        return "The current application status cannot move from "
                 + previousStatus
                 + " to "
                 + nextStatus
-                + ". Allowed workflow: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
+                + ". Allowed flow: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
     }
 }

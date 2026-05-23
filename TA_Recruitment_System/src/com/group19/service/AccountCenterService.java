@@ -21,31 +21,31 @@ public class AccountCenterService {
 
     public ServiceResult<UserAccount> loadAccount(String userId) {
         if (isBlank(userId)) {
-            return ServiceResult.failure("无法加载账号信息。");
+            return ServiceResult.failure("Unable to load account information.");
         }
         try {
             UserAccount account = userAccountDao.findByUserId(userId.trim());
             if (account == null) {
-                return ServiceResult.failure("未找到当前账号。");
+                return ServiceResult.failure("The current account could not be found.");
             }
-            return ServiceResult.success(account, "账号信息加载成功。");
+            return ServiceResult.success(account, "Account information loaded successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("读取账号信息失败。");
+            return ServiceResult.failure("Failed to read account information.");
         }
     }
 
     public ServiceResult<LoginUser> updateProfile(String currentUserId, String displayName, String username) {
         if (isBlank(currentUserId)) {
-            return ServiceResult.failure("当前登录信息无效，请重新登录。");
+            return ServiceResult.failure("The current login session is invalid. Please sign in again.");
         }
         if (isBlank(displayName) || isBlank(username)) {
-            return ServiceResult.failure("姓名和账号不能为空。");
+            return ServiceResult.failure("Name and username are required.");
         }
 
         try {
             UserAccount existing = userAccountDao.findByUserId(currentUserId.trim());
             if (existing == null) {
-                return ServiceResult.failure("未找到需要更新的账号。");
+                return ServiceResult.failure("The account to update could not be found.");
             }
 
             String normalizedUsername = username.trim();
@@ -53,7 +53,7 @@ public class AccountCenterService {
             if (sameUsername != null
                     && sameUsername.getUserId() != null
                     && !currentUserId.trim().equalsIgnoreCase(sameUsername.getUserId().trim())) {
-                return ServiceResult.failure("该账号已被其他用户使用。");
+                return ServiceResult.failure("This username is already in use by another account.");
             }
 
             UserAccount updated = new UserAccount(
@@ -62,32 +62,33 @@ public class AccountCenterService {
                     existing.getRole(),
                     displayName.trim(),
                     existing.getUserId(),
-                    firstNonBlank(existing.getAvatarPath(), ""));
+                    firstNonBlank(existing.getAvatarPath(), ""),
+                    existing.isFrozen());
 
-            return persistAccount(updated, "个人信息已更新。");
+            return persistAccount(updated, "Profile information updated successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("保存个人信息失败。");
+            return ServiceResult.failure("Failed to save profile information.");
         }
     }
 
     public ServiceResult<LoginUser> updatePassword(String currentUserId, String newPassword, String confirmPassword) {
         if (isBlank(currentUserId)) {
-            return ServiceResult.failure("当前登录信息无效，请重新登录。");
+            return ServiceResult.failure("The current login session is invalid. Please sign in again.");
         }
         if (isBlank(newPassword) || isBlank(confirmPassword)) {
-            return ServiceResult.failure("请完整填写新密码和确认密码。");
+            return ServiceResult.failure("Please complete both the new password and confirm password fields.");
         }
         if (!newPassword.trim().equals(confirmPassword.trim())) {
-            return ServiceResult.failure("两次输入的密码不一致。");
+            return ServiceResult.failure("The two password entries do not match.");
         }
         if (newPassword.trim().length() < 6) {
-            return ServiceResult.failure("密码长度不能少于 6 位。");
+            return ServiceResult.failure("The password must be at least 6 characters long.");
         }
 
         try {
             UserAccount existing = userAccountDao.findByUserId(currentUserId.trim());
             if (existing == null) {
-                return ServiceResult.failure("未找到需要更新的账号。");
+                return ServiceResult.failure("The account to update could not be found.");
             }
 
             UserAccount updated = new UserAccount(
@@ -96,34 +97,35 @@ public class AccountCenterService {
                     existing.getRole(),
                     existing.getDisplayName(),
                     existing.getUserId(),
-                    firstNonBlank(existing.getAvatarPath(), ""));
+                    firstNonBlank(existing.getAvatarPath(), ""),
+                    existing.isFrozen());
 
-            return persistAccount(updated, "密码已更新。");
+            return persistAccount(updated, "Password updated successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("保存密码失败。");
+            return ServiceResult.failure("Failed to save the password.");
         }
     }
 
     public ServiceResult<LoginUser> updateAvatar(String currentUserId, Part avatarPart, Path avatarUploadDir) {
         if (isBlank(currentUserId)) {
-            return ServiceResult.failure("当前登录信息无效，请重新登录。");
+            return ServiceResult.failure("The current login session is invalid. Please sign in again.");
         }
         if (avatarPart == null || avatarPart.getSize() <= 0) {
-            return ServiceResult.failure("请选择要上传的头像图片。");
+            return ServiceResult.failure("Please choose an avatar image to upload.");
         }
         if (avatarUploadDir == null) {
-            return ServiceResult.failure("头像上传目录不可用。");
+            return ServiceResult.failure("The avatar upload directory is unavailable.");
         }
 
         String submittedFileName = avatarPart.getSubmittedFileName();
         if (!FileUploadUtil.isAllowedImageFile(submittedFileName)) {
-            return ServiceResult.failure("头像仅支持 PNG、JPG、JPEG、GIF 或 WEBP 格式。");
+            return ServiceResult.failure("Avatar files must be PNG, JPG, JPEG, GIF, or WEBP.");
         }
 
         try {
             UserAccount existing = userAccountDao.findByUserId(currentUserId.trim());
             if (existing == null) {
-                return ServiceResult.failure("未找到需要更新的账号。");
+                return ServiceResult.failure("The account to update could not be found.");
             }
 
             String storedFileName = FileUploadUtil.buildStoredAvatarFileName(currentUserId.trim(), submittedFileName);
@@ -137,18 +139,19 @@ public class AccountCenterService {
                     existing.getRole(),
                     existing.getDisplayName(),
                     existing.getUserId(),
-                    "/uploads/avatars/" + storedFileName);
+                    "/uploads/avatars/" + storedFileName,
+                    existing.isFrozen());
 
-            return persistAccount(updated, "头像已更新。");
+            return persistAccount(updated, "Avatar updated successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("保存头像失败。");
+            return ServiceResult.failure("Failed to save the avatar.");
         }
     }
 
     private ServiceResult<LoginUser> persistAccount(UserAccount updated, String successMessage) throws IOException {
         UserAccount saved = userAccountDao.updateByUserId(updated);
         if (saved == null) {
-            return ServiceResult.failure("保存账号信息失败。");
+            return ServiceResult.failure("Failed to save account information.");
         }
         return ServiceResult.success(toLoginUser(saved), successMessage);
     }

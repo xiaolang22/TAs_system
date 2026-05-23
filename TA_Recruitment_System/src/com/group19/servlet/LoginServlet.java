@@ -166,7 +166,7 @@ public class LoginServlet extends HttpServlet {
         setPresetAttributes(req, "mo", moPreset);
         setPresetAttributes(req, "admin", adminPreset);
         if (!adminView && "true".equalsIgnoreCase(req.getParameter("registered"))) {
-            req.setAttribute("success", "注册成功，请登录。");
+            req.setAttribute("success", "Registration successful. Please sign in.");
         }
 
         if (!adminView) {

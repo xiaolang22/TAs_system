@@ -25,17 +25,17 @@ public class ProfileService {
 
     public ServiceResult<TA> getProfileByStudentId(String studentId) {
         if (studentId == null || studentId.isBlank()) {
-            return ServiceResult.failure("学号不能为空。");
+            return ServiceResult.failure("Student ID cannot be empty.");
         }
 
         try {
             TA found = taDao.findByStudentId(studentId.trim());
             if (found == null) {
-                return ServiceResult.failure("未找到个人档案。");
+                return ServiceResult.failure("Profile not found.");
             }
-            return ServiceResult.success(found, "个人档案加载成功。");
+            return ServiceResult.success(found, "Profile loaded successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("读取个人档案失败。");
+            return ServiceResult.failure("Failed to read the profile.");
         }
     }
 
@@ -78,9 +78,9 @@ public class ProfileService {
 
         try {
             TA saved = taDao.saveOrUpdate(profile);
-            return ServiceResult.success(saved, "个人档案已保存。");
+            return ServiceResult.success(saved, "Profile saved successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("保存个人档案失败。");
+            return ServiceResult.failure("Failed to save the profile.");
         }
     }
 
@@ -94,24 +94,24 @@ public class ProfileService {
         List<String> errors = new ArrayList<>();
 
         if (isBlank(name)) {
-            errors.add("姓名不能为空。");
+            errors.add("Name cannot be empty.");
         }
         if (isBlank(studentId)) {
-            errors.add("学号不能为空。");
+            errors.add("Student ID cannot be empty.");
         }
         if (isBlank(email)) {
-            errors.add("邮箱不能为空。");
+            errors.add("Email cannot be empty.");
         } else if (!EMAIL_PATTERN.matcher(normalize(email)).matches()) {
-            errors.add("邮箱格式不正确。");
+            errors.add("Email format is invalid.");
         }
         if (isBlank(programme)) {
-            errors.add("专业不能为空。");
+            errors.add("Programme cannot be empty.");
         }
         if (isBlank(skills)) {
-            errors.add("技能不能为空。");
+            errors.add("Skills cannot be empty.");
         }
         if (isBlank(availability)) {
-            errors.add("可工作时间不能为空。");
+            errors.add("Availability cannot be empty.");
         }
         return errors;
     }

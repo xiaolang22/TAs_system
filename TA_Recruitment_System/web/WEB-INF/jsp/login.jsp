@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录/注册 - TA Recruitment System</title>
+    <title>Sign In / Register - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="auth-page">
@@ -18,7 +18,7 @@
             data-ta-password="${empty taPresetPassword ? 'ta123456' : taPresetPassword}"
             data-mo-username="${empty moPresetUsername ? 'mo001' : moPresetUsername}"
             data-mo-password="${empty moPresetPassword ? 'mo123456' : moPresetPassword}">
-        <a class="admin-entry" href="${pageContext.request.contextPath}/login?view=admin">管理员入口</a>
+        <a class="admin-entry" href="${pageContext.request.contextPath}/login?view=admin">Admin Entry</a>
 
         <section class="auth-brand">
             <div class="auth-brand-mark" aria-hidden="true">
@@ -54,7 +54,7 @@
         </section>
 
         <div class="auth-accent"></div>
-        <h1 class="auth-title-fixed">登录/注册</h1>
+        <h1 class="auth-title-fixed">Sign In / Register</h1>
 
         <p class="alert success ${empty success ? 'hidden' : ''}">${success}</p>
         <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
@@ -64,54 +64,54 @@
             <input type="hidden" name="role" id="userRoleInput" value="${empty selectedRole ? 'TA' : selectedRole}">
             <input type="hidden" name="actionType" id="userActionTypeInput" value="${empty selectedMode ? 'LOGIN' : selectedMode}">
 
-            <div class="choice-group choice-group-soft" aria-label="身份">
-                <button type="button" class="choice-chip choice-chip-role" data-role-option="TA">我是TA</button>
-                <button type="button" class="choice-chip choice-chip-role" data-role-option="MO">我是MO</button>
+            <div class="choice-group choice-group-soft" aria-label="Role">
+                <button type="button" class="choice-chip choice-chip-role" data-role-option="TA">I am a TA</button>
+                <button type="button" class="choice-chip choice-chip-role" data-role-option="MO">I am an MO</button>
             </div>
 
-            <div class="choice-group choice-group-simple" aria-label="模式">
-                <button type="button" class="choice-chip choice-chip-mode" data-mode-option="LOGIN">登录</button>
-                <button type="button" class="choice-chip choice-chip-mode" data-mode-option="REGISTER">注册</button>
+            <div class="choice-group choice-group-simple" aria-label="Mode">
+                <button type="button" class="choice-chip choice-chip-mode" data-mode-option="LOGIN">Sign In</button>
+                <button type="button" class="choice-chip choice-chip-mode" data-mode-option="REGISTER">Register</button>
             </div>
 
             <div class="auth-fields">
                 <div class="auth-field ${selectedMode eq 'REGISTER' ? '' : 'hidden'}" data-register-only="true">
-                    <label class="sr-only" for="displayName">姓名</label>
-                    <input id="displayName" name="displayName" type="text" placeholder="姓名" value="${displayName}">
+                    <label class="sr-only" for="displayName">Name</label>
+                    <input id="displayName" name="displayName" type="text" placeholder="Name" value="${displayName}">
                 </div>
 
                 <div class="auth-field ${selectedMode eq 'REGISTER' ? '' : 'hidden'}" data-register-only="true">
-                    <label class="sr-only" for="userId" id="userIdLabel">编号</label>
-                    <input id="userId" name="userId" type="text" placeholder="学号" value="${userId}">
+                    <label class="sr-only" for="userId" id="userIdLabel">ID</label>
+                    <input id="userId" name="userId" type="text" placeholder="Student ID" value="${userId}">
                 </div>
 
                 <div class="auth-field">
-                    <label class="sr-only" for="username">账号</label>
-                    <input id="username" name="username" type="text" placeholder="账号" value="${username}" required>
+                    <label class="sr-only" for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Username" value="${username}" required>
                 </div>
 
                 <div class="auth-field">
-                    <label class="sr-only" for="password">密码</label>
-                    <input id="password" name="password" type="password" placeholder="密码" required>
+                    <label class="sr-only" for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Password" required>
                 </div>
 
                 <div class="auth-field ${selectedMode eq 'REGISTER' ? '' : 'hidden'}" data-register-only="true">
-                    <label class="sr-only" for="confirmPassword">确认密码</label>
-                    <input id="confirmPassword" name="confirmPassword" type="password" placeholder="确认密码">
+                    <label class="sr-only" for="confirmPassword">Confirm Password</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password">
                 </div>
             </div>
 
             <button type="submit" class="auth-submit auth-submit-main" id="userSubmitButton">
-                ${selectedMode eq 'REGISTER' ? '注册' : '登录'}
+                ${selectedMode eq 'REGISTER' ? 'Register' : 'Sign In'}
             </button>
         </form>
 
         <section class="preset-panel">
             <details class="preset-card preset-card-current" id="userPresetCard">
-                <summary id="userPresetSummary">TA 预设账号</summary>
+                <summary id="userPresetSummary">TA Preset Credentials</summary>
                 <div class="preset-body">
-                    <p>账号：<code id="userPresetUsername">${empty taPresetUsername ? 'ta001' : taPresetUsername}</code></p>
-                    <p>密码：<code id="userPresetPassword">${empty taPresetPassword ? 'ta123456' : taPresetPassword}</code></p>
+                    <p>Username: <code id="userPresetUsername">${empty taPresetUsername ? 'ta001' : taPresetUsername}</code></p>
+                    <p>Password: <code id="userPresetPassword">${empty taPresetPassword ? 'ta123456' : taPresetPassword}</code></p>
                 </div>
             </details>
         </section>
@@ -148,7 +148,7 @@
             var username = readPreset(role, "username");
             var password = readPreset(role, "password");
 
-            presetSummary.textContent = role === "TA" ? "TA 预设账号" : "MO 预设账号";
+            presetSummary.textContent = role === "TA" ? "TA Preset Credentials" : "MO Preset Credentials";
             presetUsername.textContent = username || (role === "TA" ? "ta001" : "mo001");
             presetPassword.textContent = password || (role === "TA" ? "ta123456" : "mo123456");
         }
@@ -156,8 +156,8 @@
         function setRole(role) {
             currentRole = role === "MO" ? "MO" : "TA";
             roleInput.value = currentRole;
-            userIdInput.placeholder = currentRole === "TA" ? "学号" : "工号";
-            userIdLabel.textContent = currentRole === "TA" ? "学号" : "工号";
+            userIdInput.placeholder = currentRole === "TA" ? "Student ID" : "Staff ID";
+            userIdLabel.textContent = currentRole === "TA" ? "Student ID" : "Staff ID";
             syncPreset(currentRole);
 
             roleButtons.forEach(function (button) {
@@ -172,7 +172,7 @@
             actionTypeInput.value = currentMode;
 
             var isRegister = currentMode === "REGISTER";
-            submitButton.textContent = isRegister ? "注册" : "登录";
+            submitButton.textContent = isRegister ? "Register" : "Sign In";
 
             registerFields.forEach(function (field) {
                 field.classList.toggle("hidden", !isRegister);

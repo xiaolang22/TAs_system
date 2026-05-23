@@ -68,7 +68,17 @@ public class AuthFilter implements Filter {
         }
 
         if ("/ta/account".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can access account center.");
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can access TA account center.");
+            return;
+        }
+
+        if ("/mo/account".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access MO account center.");
+            return;
+        }
+
+        if ("/admin/account".equals(servletPath) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access admin account center.");
             return;
         }
 
@@ -94,6 +104,11 @@ public class AuthFilter implements Filter {
 
         if ("/mo/applications".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can manage applications.");
+            return;
+        }
+
+        if ("/mo/ta-profile".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can view TA profiles.");
             return;
         }
 

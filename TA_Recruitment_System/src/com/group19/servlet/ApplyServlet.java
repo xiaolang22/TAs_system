@@ -61,20 +61,20 @@ public class ApplyServlet extends HttpServlet {
 
         String jobId = req.getParameter("jobId");
         if (jobId == null || jobId.isBlank()) {
-            resp.sendRedirect(buildHomeErrorUrl(req, "缺少岗位编号。"));
+            resp.sendRedirect(buildHomeErrorUrl(req, "Job ID is required."));
             return;
         }
 
         Job job = jobService.findById(jobId.trim());
         if (job == null || !jobService.isOpenForApplication(job, LocalDate.now())) {
-            resp.sendRedirect(buildHomeErrorUrl(req, "该岗位当前不可申请。"));
+            resp.sendRedirect(buildHomeErrorUrl(req, "This job is not currently available for application."));
             return;
         }
 
         String taStudentId = loginUser.getUserId();
         TA taProfile = taDao.findByStudentId(taStudentId);
         if (taProfile == null) {
-            resp.sendRedirect(buildHomeErrorUrl(req, "请先完善申请资料后再投递。"));
+            resp.sendRedirect(buildHomeErrorUrl(req, "Please complete your application materials before applying."));
             return;
         }
 

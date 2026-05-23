@@ -58,7 +58,7 @@ public class CandidateReviewServlet extends HttpServlet {
 
         if (!hasSearched) {
             req.setAttribute("reviewResultsJson", "[]");
-            req.setAttribute("resultMessage", "Input job-required skills, then click Calculate Match Score.");
+            req.setAttribute("resultMessage", "Enter required job skills to calculate candidate match scores.");
         } else {
             ServiceResult<List<CandidateMatchResult>> result = matchingService.evaluateCandidates(requiredSkills);
             if (result.isSuccess()) {

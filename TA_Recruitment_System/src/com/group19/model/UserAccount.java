@@ -7,6 +7,7 @@ public class UserAccount {
     private String displayName;
     private String userId;
     private String avatarPath;
+    private boolean frozen;
 
     public UserAccount() {
     }
@@ -17,7 +18,7 @@ public class UserAccount {
             String role,
             String displayName,
             String userId) {
-        this(username, password, role, displayName, userId, "");
+        this(username, password, role, displayName, userId, "", false);
     }
 
     public UserAccount(
@@ -27,12 +28,24 @@ public class UserAccount {
             String displayName,
             String userId,
             String avatarPath) {
+        this(username, password, role, displayName, userId, avatarPath, false);
+    }
+
+    public UserAccount(
+            String username,
+            String password,
+            String role,
+            String displayName,
+            String userId,
+            String avatarPath,
+            boolean frozen) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.displayName = displayName;
         this.userId = userId;
         this.avatarPath = avatarPath;
+        this.frozen = frozen;
     }
 
     public String getUsername() {
@@ -81,5 +94,13 @@ public class UserAccount {
 
     public void setAvatarPath(String avatarPath) {
         this.avatarPath = avatarPath;
+    }
+
+    public boolean isFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
     }
 }

@@ -2,20 +2,16 @@ package com.group19.servlet;
 
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
+import com.group19.dao.NotificationDao;
 import com.group19.dao.TADao;
 import com.group19.dto.ApplicantReviewPageData;
 import com.group19.dto.ApplicantReviewRow;
 import com.group19.dto.ServiceResult;
-import com.group19.dao.NotificationDao;
-import com.group19.dao.UserAccountDao;
-import com.group19.dto.TARecommendation;
 import com.group19.model.Application;
-import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.ApplicantReviewService;
 import com.group19.service.ApplicationService;
 import com.group19.service.MoNewApplicationNotificationService;
-import com.group19.service.RecommendationService;
 import com.group19.util.ApplicationServiceFactory;
 import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
@@ -37,7 +33,6 @@ public class ManageApplicationsServlet extends HttpServlet {
     private ApplicationService applicationService;
     private ApplicantReviewService applicantReviewService;
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
-    private RecommendationService recommendationService;
 
     @Override
     public void init() {
@@ -64,13 +59,9 @@ public class ManageApplicationsServlet extends HttpServlet {
 
         Path notificationFilePath = DataPathResolver.resolve(
                 getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
-        Path userFilePath = DataPathResolver.resolve(
-                getServletContext(), "userDataFile", "/data/users.json", "users.json");
         this.moNewApplicationNotificationService = new MoNewApplicationNotificationService(
                 new NotificationDao(notificationFilePath),
-                jobDao,
-                new UserAccountDao(userFilePath));
-        this.recommendationService = new RecommendationService(applicationDao);
+                jobDao);
     }
 
     @Override
@@ -89,13 +80,13 @@ public class ManageApplicationsServlet extends HttpServlet {
 
         req.setAttribute("jobId", jobId);
         req.setAttribute("sortMode", sortMode);
+        req.setAttribute("showMatchColumn", "match".equals(sortMode));
         req.setAttribute("updated", req.getParameter("updated"));
 
         if (jobId == null) {
             req.setAttribute("errorMsg", "Job ID is required.");
             req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Job ID is required."));
-            req.setAttribute("recommendationCardsHtml", buildEmptyRecommendationHtml("Job ID is required."));
+            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Job ID is required.", "match".equals(sortMode)));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
         }
@@ -104,29 +95,26 @@ public class ManageApplicationsServlet extends HttpServlet {
         if (!result.isSuccess()) {
             req.setAttribute("errorMsg", result.getMessage());
             req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(result.getMessage()));
-            req.setAttribute("recommendationCardsHtml", buildEmptyRecommendationHtml(result.getMessage()));
+            req.setAttribute("applicantRowsHtml",
+                    buildEmptyRowsHtml(result.getMessage(), "match".equals(sortMode)));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
         }
 
         ApplicantReviewPageData pageData = result.getData();
-        Job job = pageData.getJob();
         List<ApplicantReviewRow> applicants = pageData.getApplicants();
-        List<TARecommendation> recommendations = recommendationService.recommend(job, applicants);
-        applyReviewPageAttributes(req, pageData, applicants, recommendations, jobId, sortMode);
+        applyReviewPageAttributes(req, pageData, applicants, jobId, sortMode);
 
         if (detailMode) {
             ApplicantReviewRow applicant = findApplicant(applicants, studentId);
             if (applicant == null) {
-                req.setAttribute("errorMsg", "Applicant not found for this job.");
-                req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Applicant not found."));
+                req.setAttribute("errorMsg", "No applicants were found for this job.");
+                req.setAttribute("applicantRowsHtml",
+                        buildEmptyRowsHtml("No applicants were found for this job.", "match".equals(sortMode)));
                 req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
                 return;
             }
-
-            prepareDetailAttributes(req, job, applicant, jobId, sortMode);
-            req.getRequestDispatcher("/WEB-INF/jsp/applicant_profile.jsp").forward(req, resp);
+            resp.sendRedirect(buildCandidateProfileUrl(req.getContextPath(), jobId, applicant.getTaStudentId(), sortMode));
             return;
         }
 
@@ -166,12 +154,12 @@ public class ManageApplicationsServlet extends HttpServlet {
         ServiceResult<ApplicantReviewPageData> pageResult = applicantReviewService.loadApplicantsForJob(jobId, sortMode);
         if (pageResult.isSuccess()) {
             ApplicantReviewPageData pageData = pageResult.getData();
-            applyReviewPageAttributes(req, pageData, pageData.getApplicants(),
-                    recommendationService.recommend(pageData.getJob(), pageData.getApplicants()), jobId, sortMode);
+            applyReviewPageAttributes(req, pageData, pageData.getApplicants(), jobId, sortMode);
         } else {
             req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml(pageResult.getMessage()));
-            req.setAttribute("recommendationCardsHtml", buildEmptyRecommendationHtml(pageResult.getMessage()));
+            req.setAttribute("showMatchColumn", "match".equals(sortMode));
+            req.setAttribute("applicantRowsHtml",
+                    buildEmptyRowsHtml(pageResult.getMessage(), "match".equals(sortMode)));
         }
 
         req.setAttribute("jobId", jobId);
@@ -182,15 +170,13 @@ public class ManageApplicationsServlet extends HttpServlet {
 
     private void applyReviewPageAttributes(HttpServletRequest req, ApplicantReviewPageData pageData,
                                            List<ApplicantReviewRow> applicants,
-                                           List<TARecommendation> recommendations,
                                            String jobId, String sortMode) {
-        Job job = pageData.getJob();
-        req.setAttribute("job", job);
-        req.setAttribute("jobTitle", job == null ? "" : job.getTitle());
+        req.setAttribute("job", pageData.getJob());
+        req.setAttribute("jobTitle", pageData.getJob() == null ? "" : pageData.getJob().getTitle());
         req.setAttribute("sortLabel", pageData.getSortLabel());
         req.setAttribute("applicantCount", applicants == null ? 0 : applicants.size());
+        req.setAttribute("showMatchColumn", "match".equals(sortMode));
         req.setAttribute("applicantRowsHtml", buildApplicantRowsHtml(req, applicants, jobId, sortMode));
-        req.setAttribute("recommendationCardsHtml", buildRecommendationCardsHtml(recommendations));
     }
 
     private static ApplicantReviewRow findApplicant(List<ApplicantReviewRow> applicants, String studentId) {
@@ -205,27 +191,11 @@ public class ManageApplicationsServlet extends HttpServlet {
         return null;
     }
 
-    private void prepareDetailAttributes(HttpServletRequest req, Job job, ApplicantReviewRow applicant,
-                                         String jobId, String sortMode) {
-        req.setAttribute("job", job);
-        req.setAttribute("applicant", applicant);
-        req.setAttribute("sortMode", sortMode);
-        req.setAttribute("sortLabel", "status".equals(sortMode) ? "Status" : "Match degree");
-        req.setAttribute("backUrl", req.getContextPath()
-                + "/mo/applications?jobId="
-                + encode(jobId)
-                + "&sort="
-                + encode(sortMode));
-        req.setAttribute("resumeHref", buildResumeHref(req, applicant.getCvFilePath()));
-        boolean resumeAvailable = applicant.getCvFilePath() != null && !applicant.getCvFilePath().isBlank();
-        req.setAttribute("resumeAvailableClass", resumeAvailable ? "" : "hidden");
-        req.setAttribute("resumeMissingClass", resumeAvailable ? "hidden" : "");
-    }
-
     private static String buildApplicantRowsHtml(HttpServletRequest req, List<ApplicantReviewRow> applicants,
                                                  String jobId, String sortMode) {
+        boolean showMatchColumn = "match".equals(sortMode);
         if (applicants == null || applicants.isEmpty()) {
-            return buildEmptyRowsHtml("No applications found for this job.");
+            return buildEmptyRowsHtml("There are no applications for this job yet.", showMatchColumn);
         }
 
         String contextPath = req.getContextPath();
@@ -234,31 +204,28 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("<tr>");
             html.append("<td><div class=\"table-main\"><strong>")
                     .append(escapeHtml(applicant.getTaName()))
-                    .append("</strong><span class=\"table-subtext\">")
-                    .append(escapeHtml(applicant.getTaStudentId()))
-                    .append("</span></div></td>");
+                    .append("</strong></div></td>");
             html.append("<td><div class=\"skill-cloud\">")
                     .append(applicant.getCoreSkillsHtml())
                     .append("</div></td>");
-            html.append("<td><span class=\"status-pill tag-neutral\">")
-                    .append(applicant.getMatchScore())
-                    .append("%</span></td>");
+            if (showMatchColumn) {
+                html.append("<td><span class=\"status-pill tag-neutral\">")
+                        .append(applicant.getMatchScore())
+                        .append("%</span></td>");
+            }
             html.append("<td>").append(escapeHtml(applicant.getCurrentWorkloadLabel())).append("</td>");
             html.append("<td><span class=\"status-pill ")
                     .append(statusClass(applicant.getStatus()))
                     .append("\">")
-                    .append(escapeHtml(applicant.getStatus()))
+                    .append(escapeHtml(statusLabel(applicant.getStatus())))
                     .append("</span></td>");
-            html.append("<td>")
+            html.append("<td class=\"review-profile-cell\">")
                     .append(buildProfileLink(contextPath, jobId, applicant.getTaStudentId(), sortMode))
-                    .append("</td>");
-            html.append("<td>")
-                    .append(buildResumeLink(contextPath, applicant.getCvFilePath()))
                     .append("</td>");
             html.append("<td>");
             html.append("<form method=\"post\" action=\"")
                     .append(escapeHtml(contextPath))
-                    .append("/mo/applications\" class=\"inline-form\">");
+                    .append("/mo/applications\" class=\"inline-form review-action-form\">");
             html.append("<input type=\"hidden\" name=\"jobId\" value=\"")
                     .append(escapeHtml(jobId))
                     .append("\">");
@@ -270,7 +237,7 @@ public class ManageApplicationsServlet extends HttpServlet {
                     .append("\">");
             html.append("<label class=\"sr-only\" for=\"status-")
                     .append(escapeHtml(applicant.getApplicationId()))
-                    .append("\">Status</label>");
+                    .append("\">Application Status</label>");
             html.append("<select id=\"status-")
                     .append(escapeHtml(applicant.getApplicationId()))
                     .append("\" name=\"status\">");
@@ -278,13 +245,10 @@ public class ManageApplicationsServlet extends HttpServlet {
                 html.append(statusOption(allowedStatus, applicant.getStatus()));
             }
             html.append("</select>");
-            html.append("<p class=\"table-subtext\">")
-                    .append(escapeHtml(buildStatusRuleHint(applicant.getStatus())))
+            html.append("<p class=\"table-subtext review-process-note\">")
+                    .append(escapeHtml(buildStatusRuleHint()))
                     .append("</p>");
-            html.append("<textarea name=\"decisionNote\" rows=\"3\" placeholder=\"Optional note\">")
-                    .append(escapeHtml(applicant.getDecisionNote()))
-                    .append("</textarea>");
-            html.append("<button type=\"submit\">Update Decision</button>");
+            html.append("<button type=\"submit\">Update Status</button>");
             html.append("</form>");
             html.append("</td>");
             html.append("</tr>");
@@ -293,27 +257,15 @@ public class ManageApplicationsServlet extends HttpServlet {
     }
 
     private static String buildProfileLink(String contextPath, String jobId, String studentId, String sortMode) {
-        String href = contextPath + "/mo/applications?jobId=" + encode(jobId)
-                + "&studentId=" + encode(studentId)
-                + "&detail=1"
-                + "&sort=" + encode(sortMode);
-        return "<a class=\"link-btn secondary\" href=\"" + escapeHtml(href) + "\">View Profile</a>";
+        String href = buildCandidateProfileUrl(contextPath, jobId, studentId, sortMode);
+        return "<a class=\"link-btn secondary\" href=\"" + escapeHtml(href) + "\">View Profile / Resume</a>";
     }
 
-    private static String buildResumeLink(String contextPath, String cvFilePath) {
-        if (cvFilePath == null || cvFilePath.isBlank()) {
-            return "<span class=\"muted\">No CV uploaded</span>";
-        }
-        return "<a class=\"link-btn\" href=\""
-                + escapeHtml(contextPath + cvFilePath)
-                + "\" target=\"_blank\" rel=\"noopener\">View CV</a>";
-    }
-
-    private static String buildResumeHref(HttpServletRequest req, String cvFilePath) {
-        if (cvFilePath == null || cvFilePath.isBlank()) {
-            return "";
-        }
-        return req.getContextPath() + cvFilePath;
+    private static String buildCandidateProfileUrl(String contextPath, String jobId, String studentId, String sortMode) {
+        String backUrl = contextPath + "/mo/applications?jobId=" + encode(jobId) + "&sort=" + encode(sortMode);
+        return contextPath + "/mo/ta-profile?studentId=" + encode(studentId)
+                + "&backUrl=" + encode(backUrl)
+                + "&backLabel=" + encode("Back to Applicant List");
     }
 
     private static String statusClass(String status) {
@@ -330,7 +282,7 @@ public class ManageApplicationsServlet extends HttpServlet {
     private static String statusOption(String optionValue, String currentValue) {
         boolean selected = optionValue != null && optionValue.equalsIgnoreCase(currentValue);
         return "<option value=\"" + escapeHtml(optionValue) + "\"" + (selected ? " selected" : "") + ">"
-                + escapeHtml(optionValue)
+                + escapeHtml(statusLabel(optionValue))
                 + "</option>";
     }
 
@@ -343,85 +295,26 @@ public class ManageApplicationsServlet extends HttpServlet {
         return allowed;
     }
 
-    private static String buildStatusRuleHint(String currentStatus) {
-        String normalized = currentStatus == null ? "" : currentStatus.trim().toUpperCase(Locale.ROOT);
+    private static String buildStatusRuleHint() {
+        return "Flow: Submitted -> In Review -> Shortlisted -> Accepted / Rejected.";
+    }
+
+    private static String buildEmptyRowsHtml(String message, boolean showMatchColumn) {
+        int columnCount = showMatchColumn ? 7 : 6;
+        return "<tr><td colspan=\"" + columnCount + "\"><div class=\"empty-state\">"
+                + escapeHtml(message) + "</div></td></tr>";
+    }
+
+    private static String statusLabel(String status) {
+        String normalized = status == null ? "" : status.trim().toUpperCase(Locale.ROOT);
         return switch (normalized) {
-            case "SUBMITTED" -> "Can move forward to IN_REVIEW, SHORTLISTED, ACCEPTED or REJECTED.";
-            case "IN_REVIEW" -> "Cannot return to SUBMITTED.";
-            case "SHORTLISTED" -> "Cannot return to SUBMITTED or IN_REVIEW.";
-            case "ACCEPTED", "REJECTED" -> "Final-stage decision. Cannot return to SUBMITTED, IN_REVIEW or SHORTLISTED.";
-            default -> "Workflow order: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
+            case "SUBMITTED" -> "Submitted";
+            case "IN_REVIEW" -> "In Review";
+            case "SHORTLISTED" -> "Shortlisted";
+            case "ACCEPTED" -> "Accepted";
+            case "REJECTED" -> "Rejected";
+            default -> normalized.isEmpty() ? "-" : normalized;
         };
-    }
-
-    private static String buildEmptyRowsHtml(String message) {
-        return "<tr><td colspan=\"8\"><div class=\"empty-state\">" + escapeHtml(message) + "</div></td></tr>";
-    }
-
-    private static String buildRecommendationCardsHtml(List<TARecommendation> recommendations) {
-        if (recommendations == null || recommendations.isEmpty()) {
-            return buildEmptyRecommendationHtml("No recommendations available until this job has applicants.");
-        }
-
-        StringBuilder html = new StringBuilder();
-        int rank = 1;
-        for (TARecommendation recommendation : recommendations) {
-            html.append("<article class=\"recommendation-item\">");
-            html.append("<div class=\"recommendation-item-head\">");
-            html.append("<div class=\"table-main\">");
-            html.append("<div class=\"recommendation-title-row\">");
-            html.append("<span class=\"status-pill ")
-                    .append(rank == 1 ? "tag-good" : "tag-neutral")
-                    .append("\">#")
-                    .append(rank)
-                    .append("</span>");
-            html.append("<strong>")
-                    .append(escapeHtml(recommendation.getTaName()))
-                    .append("</strong>");
-            html.append("</div>");
-            html.append("<span class=\"table-subtext\">")
-                    .append(escapeHtml(recommendation.getTaStudentId()))
-                    .append("</span>");
-            html.append("</div>");
-            html.append("<div class=\"recommendation-score\">");
-            html.append("<span class=\"label\">Final score</span>");
-            html.append("<span class=\"value\">")
-                    .append(formatScore(recommendation.getFinalScore()))
-                    .append("</span>");
-            html.append("</div>");
-            html.append("</div>");
-            html.append("<div class=\"recommendation-grid\">");
-            html.append(buildRecommendationMetric("Matched skills",
-                    fallbackText(recommendation.getMatchedSkillsText(), "None")));
-            html.append(buildRecommendationMetric("Missing skills",
-                    fallbackText(recommendation.getMissingSkillsText(), "None")));
-            html.append(buildRecommendationMetric("Accepted workload",
-                    recommendation.getCurrentWorkloadLabel()));
-            html.append(buildRecommendationMetric("Skill coverage",
-                    recommendation.getMatchedRequiredSkillCount()
-                            + "/"
-                            + recommendation.getTotalRequiredSkillCount()
-                            + " required skills"));
-            html.append("</div>");
-            html.append("<p class=\"recommendation-note\">")
-                    .append(escapeHtml(recommendation.getExplanation()))
-                    .append("</p>");
-            html.append("</article>");
-            rank++;
-        }
-        return html.toString();
-    }
-
-    private static String buildRecommendationMetric(String label, String value) {
-        return "<div class=\"recommendation-metric\"><span class=\"label\">"
-                + escapeHtml(label)
-                + "</span><span class=\"value\">"
-                + escapeHtml(value)
-                + "</span></div>";
-    }
-
-    private static String buildEmptyRecommendationHtml(String message) {
-        return "<div class=\"empty-state\">" + escapeHtml(message) + "</div>";
     }
 
     private static String normalizeSortMode(String sortMode) {
@@ -484,18 +377,7 @@ public class ManageApplicationsServlet extends HttpServlet {
         if (value == null) {
             return "";
         }
-        return value.trim().toLowerCase();
-    }
-
-    private static String fallbackText(String value, String fallback) {
-        if (value == null || value.isBlank()) {
-            return fallback;
-        }
-        return value;
-    }
-
-    private static String formatScore(double score) {
-        return String.format(Locale.ROOT, "%.1f%%", score * 100.0);
+        return value.trim().toLowerCase(Locale.ROOT);
     }
 
     private Path resolveDataPath(String webRelativePath, String fallbackFileName) {

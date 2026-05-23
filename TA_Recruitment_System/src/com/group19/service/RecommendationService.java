@@ -90,14 +90,14 @@ public class RecommendationService {
 
     private static String buildExplanation(int matchedSkillCount, int totalRequiredSkillCount, String workloadLabel) {
         if (totalRequiredSkillCount <= 0) {
-            return "No required skills were extracted for this job, so this ranking is driven by accepted workload.";
+            return "No valid job requirements were extracted, so ranking is mainly based on accepted workload.";
         }
         if (matchedSkillCount == totalRequiredSkillCount) {
-            return "Matches all " + totalRequiredSkillCount + " required skills and currently holds "
-                    + workloadLabel + ".";
+            return "All " + totalRequiredSkillCount
+                    + " required skills are matched, with a current workload of " + workloadLabel + ".";
         }
-        return "Matches " + matchedSkillCount + " of " + totalRequiredSkillCount
-                + " required skills and currently holds " + workloadLabel + ".";
+        return "Matched " + matchedSkillCount + " of " + totalRequiredSkillCount
+                + " required skills, with a current workload of " + workloadLabel + ".";
     }
 
     private static int countSkills(String skillsText) {
@@ -119,7 +119,7 @@ public class RecommendationService {
     }
 
     private static String buildWorkloadLabel(int workloadCount) {
-        return workloadCount + (workloadCount == 1 ? " accepted job" : " accepted jobs");
+        return workloadCount + " accepted jobs";
     }
 
     private static String normalizeKey(String value) {

@@ -4,6 +4,7 @@ import com.group19.dao.TADao;
 import com.group19.dto.CandidateMatchResult;
 import com.group19.dto.ServiceResult;
 import com.group19.model.TA;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,7 +25,7 @@ public class MatchingService {
         LinkedHashMap<String, String> requiredSkillsMap = parseSkillMap(requiredSkillsText);
         if (requiredSkillsMap.isEmpty()) {
             return ServiceResult.failure(
-                    "Please enter at least one required skill (split by comma, semicolon, slash, or new line).");
+                    "Please enter at least one required skill, separated by commas, semicolons, slashes, or line breaks.");
         }
 
         try {
@@ -37,13 +38,13 @@ public class MatchingService {
 
             if (reviewList.isEmpty()) {
                 return ServiceResult.failure(
-                        "No TA profiles found. Ask TA users to fill profile skills first.");
+                        "There are no TA profiles ready for review yet. Ask TAs to complete their profiles first.");
             }
 
             reviewList.sort((a, b) -> Integer.compare(b.getMatchScore(), a.getMatchScore()));
-            return ServiceResult.success(reviewList, "Match score calculated.");
+            return ServiceResult.success(reviewList, "Match score calculation completed.");
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to load TA profile data.");
+            return ServiceResult.failure("Failed to read TA profiles.");
         }
     }
 
@@ -68,7 +69,7 @@ public class MatchingService {
         int score = (int) Math.round((matched.size() * 100.0) / totalRequired);
 
         String note = missing.isEmpty()
-                ? "Fully matched all required skills."
+                ? "All required skills have been matched."
                 : "Missing skills: " + String.join(", ", missing) + ".";
 
         return new CandidateMatchResult(
@@ -117,7 +118,7 @@ public class MatchingService {
     }
 
     private static String[] splitSkills(String rawSkills) {
-        return rawSkills.split("[,，;；/\\\\\\n\\r]+");
+        return rawSkills.split("[,\\uFF0C;\\uFF1B/\\\\\\n\\r]+");
     }
 
     private static String cleanSkillToken(String token) {

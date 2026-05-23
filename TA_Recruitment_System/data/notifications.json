@@ -1,1 +1,3512 @@
-[]
+[
+  {
+    "notificationId": "b032a353-ce8f-4171-8ef5-d6ca05ec44e3",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "TA Test User submitted a new application for \"Java Programming Teaching Assistant\".",
+    "applicationId": "47c12199-d9aa-407d-9947-e8a5e2dc0825",
+    "jobId": "job-001",
+    "read": true,
+    "createdAt": "2026-05-01T09:00:00"
+  },
+  {
+    "notificationId": "111a6c64-d357-4e7a-ae3c-783a0b48eaa1",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "TA Test User submitted a new application for \"Front-End Development Workshop Teaching Assistant\".",
+    "applicationId": "9eb404cf-6cca-4ff5-bf39-87b2b57f3aee",
+    "jobId": "job-008",
+    "read": false,
+    "createdAt": "2026-05-01T16:00:00"
+  },
+  {
+    "notificationId": "3bbff872-fff6-45f1-ad84-8eef8123a4dc",
+    "recipientUserId": "231221618",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Front-End Development Workshop Teaching Assistant\" is now In Review.",
+    "applicationId": "9eb404cf-6cca-4ff5-bf39-87b2b57f3aee",
+    "jobId": "job-008",
+    "read": false,
+    "createdAt": "2026-05-02T20:00:00"
+  },
+  {
+    "notificationId": "3fc8a87e-6ae0-4617-a7d0-046975a0000e",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "TA Test User submitted a new application for \"Computer Organization Evening Support Teaching Assistant\".",
+    "applicationId": "8e050586-8118-4993-a63a-0c87aed41176",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-05-01T23:00:00"
+  },
+  {
+    "notificationId": "21e9a7f8-8c4d-41c7-a4d6-76301090eb0e",
+    "recipientUserId": "231221618",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Organization Evening Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "8e050586-8118-4993-a63a-0c87aed41176",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-05-05T01:00:00"
+  },
+  {
+    "notificationId": "3ee462d6-9516-438c-bd71-1ad5a8bf3c06",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "TA Test User submitted a new application for \"Computer Graphics Lab Teaching Assistant\".",
+    "applicationId": "c230b068-fc16-410f-94a2-f2e1a4e2eda2",
+    "jobId": "job-022",
+    "read": false,
+    "createdAt": "2026-05-02T06:00:00"
+  },
+  {
+    "notificationId": "5ebfc24a-46a3-4448-af12-0a71d53ec850",
+    "recipientUserId": "231221618",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Graphics Lab Teaching Assistant\" is now Accepted.",
+    "applicationId": "c230b068-fc16-410f-94a2-f2e1a4e2eda2",
+    "jobId": "job-022",
+    "read": true,
+    "createdAt": "2026-05-07T07:00:00"
+  },
+  {
+    "notificationId": "464d17ac-8ef0-4d3d-a11d-66da2474724c",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "TA Test User submitted a new application for \"Project Management Support Teaching Assistant\".",
+    "applicationId": "f703a532-ad9c-4a6a-854e-6b02d16e4933",
+    "jobId": "job-029",
+    "read": true,
+    "createdAt": "2026-05-02T13:00:00"
+  },
+  {
+    "notificationId": "ab16293a-7223-4e2a-9ffa-0645926a6435",
+    "recipientUserId": "231221618",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Project Management Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "f703a532-ad9c-4a6a-854e-6b02d16e4933",
+    "jobId": "job-029",
+    "read": false,
+    "createdAt": "2026-05-06T16:00:00"
+  },
+  {
+    "notificationId": "3753defa-1d75-4954-9763-df7d8ad59e17",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester1 submitted a new application for \"Python Programming Evening Support Teaching Assistant\".",
+    "applicationId": "38145245-f81c-4b8f-96ad-b858dac3bdb3",
+    "jobId": "job-004",
+    "read": false,
+    "createdAt": "2026-05-02T20:00:00"
+  },
+  {
+    "notificationId": "68cc333f-5e39-4ba9-b4ed-2ef75c2fe04f",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester1 submitted a new application for \"Machine Learning Foundations Teaching Assistant\".",
+    "applicationId": "6cd74599-f0cd-45bb-a1cf-81214d14843e",
+    "jobId": "job-011",
+    "read": false,
+    "createdAt": "2026-05-03T03:00:00"
+  },
+  {
+    "notificationId": "66c9aef5-ea9b-47d1-8de9-1e9b6cbcb9b8",
+    "recipientUserId": "231221619",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Machine Learning Foundations Teaching Assistant\" is now In Review.",
+    "applicationId": "6cd74599-f0cd-45bb-a1cf-81214d14843e",
+    "jobId": "job-011",
+    "read": true,
+    "createdAt": "2026-05-04T07:00:00"
+  },
+  {
+    "notificationId": "469aa779-e251-4acf-a3f5-f3cf3940ccba",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester1 submitted a new application for \"Object-Oriented Analysis Workshop Teaching Assistant\".",
+    "applicationId": "eb230c14-c9e7-45e1-9334-df4a3151e34b",
+    "jobId": "job-018",
+    "read": false,
+    "createdAt": "2026-05-03T10:00:00"
+  },
+  {
+    "notificationId": "2f1a48d4-21f4-4816-9e9f-b41f4b5b3cd6",
+    "recipientUserId": "231221619",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Object-Oriented Analysis Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "eb230c14-c9e7-45e1-9334-df4a3151e34b",
+    "jobId": "job-018",
+    "read": false,
+    "createdAt": "2026-05-08T11:00:00"
+  },
+  {
+    "notificationId": "02ce131b-9da2-44fe-b45d-83e134cdb8fd",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester1 submitted a new application for \"Blockchain Technology Evening Support Teaching Assistant\".",
+    "applicationId": "4cb3a779-d4b9-4f8e-8b17-92529e2b45c6",
+    "jobId": "job-025",
+    "read": true,
+    "createdAt": "2026-05-03T17:00:00"
+  },
+  {
+    "notificationId": "3dbbb599-4a73-4bd3-8774-daabe95f5fba",
+    "recipientUserId": "231221619",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Blockchain Technology Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "4cb3a779-d4b9-4f8e-8b17-92529e2b45c6",
+    "jobId": "job-025",
+    "read": false,
+    "createdAt": "2026-05-07T20:00:00"
+  },
+  {
+    "notificationId": "1032e82f-0ed2-4846-959f-90b830cc2e62",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester1 submitted a new application for \"Advanced Mathematics Practice Teaching Assistant\".",
+    "applicationId": "b15dec55-4533-41b4-85ce-d2659611945a",
+    "jobId": "job-032",
+    "read": false,
+    "createdAt": "2026-05-04T00:00:00"
+  },
+  {
+    "notificationId": "15cd90dd-4063-441c-a72c-da30a99566d4",
+    "recipientUserId": "231221619",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Advanced Mathematics Practice Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "b15dec55-4533-41b4-85ce-d2659611945a",
+    "jobId": "job-032",
+    "read": true,
+    "createdAt": "2026-05-07T02:00:00"
+  },
+  {
+    "notificationId": "a04db70c-f808-40fb-bb2b-021122aa09f2",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester2 submitted a new application for \"Database Systems Grading Teaching Assistant\".",
+    "applicationId": "a2aa99c0-9097-4c83-84ca-5a68c30f69b1",
+    "jobId": "job-007",
+    "read": false,
+    "createdAt": "2026-05-04T07:00:00"
+  },
+  {
+    "notificationId": "23c14297-1041-430c-a657-4a9052765785",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester2 submitted a new application for \"Digital Logic Discussion Teaching Assistant\".",
+    "applicationId": "db53285b-c3c7-4d3d-be70-48387d03f240",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-05-04T14:00:00"
+  },
+  {
+    "notificationId": "7e81a965-d72b-4eaf-bb40-baaab9a69770",
+    "recipientUserId": "231221620",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Digital Logic Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "db53285b-c3c7-4d3d-be70-48387d03f240",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-05-05T18:00:00"
+  },
+  {
+    "notificationId": "4c8202d3-1128-442e-8c3c-cc77d586f441",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester2 submitted a new application for \"Human-Computer Interaction Teaching Assistant\".",
+    "applicationId": "32ac4f8c-d5d2-43f9-a560-bd792dec6fdb",
+    "jobId": "job-021",
+    "read": true,
+    "createdAt": "2026-05-04T21:00:00"
+  },
+  {
+    "notificationId": "f8d1af15-e21f-4443-a65f-c6d44f3ea45b",
+    "recipientUserId": "231221620",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Human-Computer Interaction Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "32ac4f8c-d5d2-43f9-a560-bd792dec6fdb",
+    "jobId": "job-021",
+    "read": true,
+    "createdAt": "2026-05-07T23:00:00"
+  },
+  {
+    "notificationId": "b4723092-12cf-49e7-b987-fbd23e4df6c5",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester2 submitted a new application for \"Numerical Computing Workshop Teaching Assistant\".",
+    "applicationId": "df3e7514-b07b-47b2-8c15-2b5243acc501",
+    "jobId": "job-028",
+    "read": false,
+    "createdAt": "2026-05-05T04:00:00"
+  },
+  {
+    "notificationId": "6bad26ae-0715-4e9e-8de7-b349ad1b1913",
+    "recipientUserId": "231221620",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Numerical Computing Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "df3e7514-b07b-47b2-8c15-2b5243acc501",
+    "jobId": "job-028",
+    "read": false,
+    "createdAt": "2026-05-10T05:00:00"
+  },
+  {
+    "notificationId": "2b348047-ea76-4e4d-95ed-f881e73e0292",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "US09 tester2 submitted a new application for \"Data Visualization Evening Support Teaching Assistant\".",
+    "applicationId": "b049cc6b-d99a-43ce-abe5-2f22ff3b7fe5",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-05-05T11:00:00"
+  },
+  {
+    "notificationId": "59c36f0d-d04d-4191-aa93-47286ccd1e9a",
+    "recipientUserId": "231221620",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Visualization Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "b049cc6b-d99a-43ce-abe5-2f22ff3b7fe5",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-05-09T14:00:00"
+  },
+  {
+    "notificationId": "a322b910-2922-459b-b695-8abd3f0c6dd4",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Liang Chen submitted a new application for \"Introduction to AI Presentation Coaching Teaching Assistant\".",
+    "applicationId": "6771db19-d6bd-468e-b0cd-b2c2cbb022f9",
+    "jobId": "job-010",
+    "read": false,
+    "createdAt": "2026-05-05T18:00:00"
+  },
+  {
+    "notificationId": "c49c2c12-82cc-4e82-8fc5-5269b5e94263",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Liang Chen submitted a new application for \"Information Security Lab Duty Teaching Assistant\".",
+    "applicationId": "90df5c9a-82a9-43e2-98b1-392e3ce9e70a",
+    "jobId": "job-017",
+    "read": true,
+    "createdAt": "2026-05-06T01:00:00"
+  },
+  {
+    "notificationId": "4a0ffed6-51d3-4d78-b09b-7e66ed548aab",
+    "recipientUserId": "231221621",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Security Lab Duty Teaching Assistant\" is now In Review.",
+    "applicationId": "90df5c9a-82a9-43e2-98b1-392e3ce9e70a",
+    "jobId": "job-017",
+    "read": false,
+    "createdAt": "2026-05-07T05:00:00"
+  },
+  {
+    "notificationId": "56984afb-f4b7-44b9-b288-5694f679faaa",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Liang Chen submitted a new application for \"Big Data Analytics Discussion Teaching Assistant\".",
+    "applicationId": "3a0009fd-216a-4aed-8d32-dba1411ffbde",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-05-06T08:00:00"
+  },
+  {
+    "notificationId": "f1b1f77f-abf2-4119-a464-29e228da0d98",
+    "recipientUserId": "231221621",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Big Data Analytics Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "3a0009fd-216a-4aed-8d32-dba1411ffbde",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-05-11T09:00:00"
+  },
+  {
+    "notificationId": "f1e097bd-12e6-4f3c-a90f-8ff4215d1031",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Liang Chen submitted a new application for \"Calculus Teaching Assistant\".",
+    "applicationId": "3b400997-b9b6-4c86-81a0-87c667b724a4",
+    "jobId": "job-031",
+    "read": false,
+    "createdAt": "2026-05-06T15:00:00"
+  },
+  {
+    "notificationId": "22bc2ec5-b32d-48cf-8896-2f50f1648f9b",
+    "recipientUserId": "231221621",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Calculus Teaching Assistant\" is now Rejected.",
+    "applicationId": "3b400997-b9b6-4c86-81a0-87c667b724a4",
+    "jobId": "job-031",
+    "read": true,
+    "createdAt": "2026-05-10T18:00:00"
+  },
+  {
+    "notificationId": "7e721ee0-1157-4d4d-aa7d-68e2b756f408",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Liang Chen submitted a new application for \"Educational Technology Practice Workshop Teaching Assistant\".",
+    "applicationId": "7f493a76-b0e8-4ee5-95d2-b1224953bb41",
+    "jobId": "job-038",
+    "read": false,
+    "createdAt": "2026-05-06T22:00:00"
+  },
+  {
+    "notificationId": "0ba783bc-06e4-42d7-a560-87d6aeeaa853",
+    "recipientUserId": "231221621",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Educational Technology Practice Workshop Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "7f493a76-b0e8-4ee5-95d2-b1224953bb41",
+    "jobId": "job-038",
+    "read": false,
+    "createdAt": "2026-05-10T00:00:00"
+  },
+  {
+    "notificationId": "e8d7b9d3-3b1e-4b07-bc6c-038c2bcc7ef0",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Yutong Zhao submitted a new application for \"Probability and Statistics Grading Teaching Assistant\".",
+    "applicationId": "74ea3fbc-04dd-47bc-8560-4dda4b358218",
+    "jobId": "job-013",
+    "read": true,
+    "createdAt": "2026-05-07T05:00:00"
+  },
+  {
+    "notificationId": "23536f16-159d-4d94-9841-ce5e66fc2ad3",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Yutong Zhao submitted a new application for \"Cloud Computing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "d631f716-a2b3-41a2-8957-cd7b3ffe5c37",
+    "jobId": "job-020",
+    "read": false,
+    "createdAt": "2026-05-07T12:00:00"
+  },
+  {
+    "notificationId": "a7828e0c-f8c2-4170-9f54-158e01d58e70",
+    "recipientUserId": "231221622",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Cloud Computing Presentation Coaching Teaching Assistant\" is now In Review.",
+    "applicationId": "d631f716-a2b3-41a2-8957-cd7b3ffe5c37",
+    "jobId": "job-020",
+    "read": true,
+    "createdAt": "2026-05-08T16:00:00"
+  },
+  {
+    "notificationId": "9ab94442-ad2f-405f-88d5-028339944619",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Yutong Zhao submitted a new application for \"Compiler Principles Lab Duty Teaching Assistant\".",
+    "applicationId": "1fc26891-dffd-4cbe-a7a7-bd4c7f795f95",
+    "jobId": "job-027",
+    "read": false,
+    "createdAt": "2026-05-07T19:00:00"
+  },
+  {
+    "notificationId": "42911f26-5555-474e-ac86-9758515d6256",
+    "recipientUserId": "231221622",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Compiler Principles Lab Duty Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "1fc26891-dffd-4cbe-a7a7-bd4c7f795f95",
+    "jobId": "job-027",
+    "read": false,
+    "createdAt": "2026-05-10T21:00:00"
+  },
+  {
+    "notificationId": "70b67e50-c53e-408c-a859-cc7b313de235",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Yutong Zhao submitted a new application for \"Information Retrieval Discussion Teaching Assistant\".",
+    "applicationId": "8adebde3-4965-4970-8d9a-cfe7584d318d",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-05-08T02:00:00"
+  },
+  {
+    "notificationId": "4e19afac-5448-479b-ab11-6a09a0886354",
+    "recipientUserId": "231221622",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Retrieval Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "8adebde3-4965-4970-8d9a-cfe7584d318d",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-05-13T03:00:00"
+  },
+  {
+    "notificationId": "14d86c87-8316-40a4-a6f4-0b7b249a402e",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Yutong Zhao submitted a new application for \"International Mathematics Teaching Assistant\".",
+    "applicationId": "8851ed93-7254-49dd-a4cd-3d84e6f6e046",
+    "jobId": "job-041",
+    "read": true,
+    "createdAt": "2026-05-08T09:00:00"
+  },
+  {
+    "notificationId": "72f657ab-4b97-46ca-b77e-9825bf2ff484",
+    "recipientUserId": "231221622",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Mathematics Teaching Assistant\" is now Rejected.",
+    "applicationId": "8851ed93-7254-49dd-a4cd-3d84e6f6e046",
+    "jobId": "job-041",
+    "read": true,
+    "createdAt": "2026-05-12T12:00:00"
+  },
+  {
+    "notificationId": "733d0890-cb6b-4f66-b1d4-9b8270ceb9c7",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Mia Sun submitted a new application for \"Algorithm Design Project Teaching Assistant\".",
+    "applicationId": "ff4f797c-391a-4bdd-b383-6dd5f0792b0d",
+    "jobId": "job-016",
+    "read": false,
+    "createdAt": "2026-05-08T16:00:00"
+  },
+  {
+    "notificationId": "65996f46-92c9-4375-bb89-e15ba0667e03",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Mia Sun submitted a new application for \"Natural Language Processing Grading Teaching Assistant\".",
+    "applicationId": "f1bcdbac-4d78-4145-8552-65e47db8955b",
+    "jobId": "job-023",
+    "read": false,
+    "createdAt": "2026-05-08T23:00:00"
+  },
+  {
+    "notificationId": "0b613591-092c-4107-b360-659f23661724",
+    "recipientUserId": "231221623",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Natural Language Processing Grading Teaching Assistant\" is now In Review.",
+    "applicationId": "f1bcdbac-4d78-4145-8552-65e47db8955b",
+    "jobId": "job-023",
+    "read": false,
+    "createdAt": "2026-05-10T03:00:00"
+  },
+  {
+    "notificationId": "902d5477-7558-4fbe-9ebe-df47ec12553e",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Mia Sun submitted a new application for \"Academic English Presentation Coaching Teaching Assistant\".",
+    "applicationId": "81e2043c-e1fa-404b-8a9e-247227e1ccc0",
+    "jobId": "job-030",
+    "read": false,
+    "createdAt": "2026-05-09T06:00:00"
+  },
+  {
+    "notificationId": "008f8ae4-96a8-41ea-91d2-12bd63056a1b",
+    "recipientUserId": "231221623",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic English Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "81e2043c-e1fa-404b-8a9e-247227e1ccc0",
+    "jobId": "job-030",
+    "read": true,
+    "createdAt": "2026-05-14T07:00:00"
+  },
+  {
+    "notificationId": "9594dee8-3aa5-48ca-8ed1-c7d9aa838bf7",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Mia Sun submitted a new application for \"Interactive Media Production Lab Duty Teaching Assistant\".",
+    "applicationId": "bc4bba06-a7e2-4369-8f60-46902d790622",
+    "jobId": "job-037",
+    "read": true,
+    "createdAt": "2026-05-09T13:00:00"
+  },
+  {
+    "notificationId": "cb5b5928-e103-4db7-8026-41ed32ce4c09",
+    "recipientUserId": "231221623",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Interactive Media Production Lab Duty Teaching Assistant\" is now Rejected.",
+    "applicationId": "bc4bba06-a7e2-4369-8f60-46902d790622",
+    "jobId": "job-037",
+    "read": false,
+    "createdAt": "2026-05-13T16:00:00"
+  },
+  {
+    "notificationId": "c59cf842-18c1-4774-b1ea-2324500fed4f",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Mia Sun submitted a new application for \"International Economics Discussion Teaching Assistant\".",
+    "applicationId": "31af54ba-f66a-4efd-9bf0-a57a09b3225e",
+    "jobId": "job-044",
+    "read": false,
+    "createdAt": "2026-05-09T20:00:00"
+  },
+  {
+    "notificationId": "f5f03d4a-d19b-410d-832e-f1901523bcd8",
+    "recipientUserId": "231221623",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Economics Discussion Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "31af54ba-f66a-4efd-9bf0-a57a09b3225e",
+    "jobId": "job-044",
+    "read": false,
+    "createdAt": "2026-05-12T22:00:00"
+  },
+  {
+    "notificationId": "03b6bfbe-61d9-4db7-a3cc-bcd4dd20e99d",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Haoran Wu submitted a new application for \"Mobile App Development Support Teaching Assistant\".",
+    "applicationId": "50957a58-9386-46bc-a1e5-0581cee9ba28",
+    "jobId": "job-019",
+    "read": false,
+    "createdAt": "2026-05-10T03:00:00"
+  },
+  {
+    "notificationId": "f8817728-439c-437d-bdbc-346a9e7086e7",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Haoran Wu submitted a new application for \"Embedded Systems Project Teaching Assistant\".",
+    "applicationId": "39f53b95-9e0b-4012-b254-3c7fa3f5cbb1",
+    "jobId": "job-026",
+    "read": false,
+    "createdAt": "2026-05-10T10:00:00"
+  },
+  {
+    "notificationId": "93d3cab7-36da-408c-8df1-3234efe56c4e",
+    "recipientUserId": "231221624",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Embedded Systems Project Teaching Assistant\" is now In Review.",
+    "applicationId": "39f53b95-9e0b-4012-b254-3c7fa3f5cbb1",
+    "jobId": "job-026",
+    "read": false,
+    "createdAt": "2026-05-11T14:00:00"
+  },
+  {
+    "notificationId": "e2de00d4-4196-4e9d-b4e3-d2485e01af3a",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Haoran Wu submitted a new application for \"Programming Contest Training Grading Teaching Assistant\".",
+    "applicationId": "45fe40f7-7ace-4889-a1fb-cb841fc9529c",
+    "jobId": "job-033",
+    "read": true,
+    "createdAt": "2026-05-10T17:00:00"
+  },
+  {
+    "notificationId": "d2075b97-fca4-4152-8553-40642f7f364f",
+    "recipientUserId": "231221624",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Programming Contest Training Grading Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "45fe40f7-7ace-4889-a1fb-cb841fc9529c",
+    "jobId": "job-033",
+    "read": false,
+    "createdAt": "2026-05-13T19:00:00"
+  },
+  {
+    "notificationId": "f826115b-d337-4481-9285-a2cb59558ce0",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Haoran Wu submitted a new application for \"Academic Writing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "89e44260-a1f3-42bd-b446-a58eccd79836",
+    "jobId": "job-040",
+    "read": false,
+    "createdAt": "2026-05-11T00:00:00"
+  },
+  {
+    "notificationId": "747cc330-d1af-4448-abb8-fc3c0c655fc7",
+    "recipientUserId": "231221624",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic Writing Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "89e44260-a1f3-42bd-b446-a58eccd79836",
+    "jobId": "job-040",
+    "read": true,
+    "createdAt": "2026-05-16T01:00:00"
+  },
+  {
+    "notificationId": "dbde67ed-937c-46d9-a974-5bcd8deab3e9",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Haoran Wu submitted a new application for \"International Statistics Lab Duty Teaching Assistant\".",
+    "applicationId": "eb9a07ba-7485-47b0-9f9b-cfe47cd13d33",
+    "jobId": "job-047",
+    "read": false,
+    "createdAt": "2026-05-11T07:00:00"
+  },
+  {
+    "notificationId": "ab6114ff-142f-42d4-9efe-7dbebd120f2b",
+    "recipientUserId": "231221624",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Statistics Lab Duty Teaching Assistant\" is now Rejected.",
+    "applicationId": "eb9a07ba-7485-47b0-9f9b-cfe47cd13d33",
+    "jobId": "job-047",
+    "read": false,
+    "createdAt": "2026-05-15T10:00:00"
+  },
+  {
+    "notificationId": "e796899e-3e4c-4608-8e27-4190b46f69b7",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Iris Gao submitted a new application for \"Computer Graphics Lab Teaching Assistant\".",
+    "applicationId": "d3e710d8-648a-4e35-a854-43995d085e7e",
+    "jobId": "job-022",
+    "read": false,
+    "createdAt": "2026-05-11T14:00:00"
+  },
+  {
+    "notificationId": "94fd7091-e38f-4042-a919-528c713871fb",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Iris Gao submitted a new application for \"Project Management Support Teaching Assistant\".",
+    "applicationId": "7a0304fc-8712-462f-a0eb-b2ebaf3ddbb3",
+    "jobId": "job-029",
+    "read": true,
+    "createdAt": "2026-05-11T21:00:00"
+  },
+  {
+    "notificationId": "32060494-40cc-4921-a2f0-aaa33036bbe0",
+    "recipientUserId": "231221625",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Project Management Support Teaching Assistant\" is now In Review.",
+    "applicationId": "7a0304fc-8712-462f-a0eb-b2ebaf3ddbb3",
+    "jobId": "job-029",
+    "read": true,
+    "createdAt": "2026-05-13T01:00:00"
+  },
+  {
+    "notificationId": "7c8dc6a3-2e84-4c8b-a5b6-edbdbd91e1c9",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Iris Gao submitted a new application for \"Product Prototyping Project Teaching Assistant\".",
+    "applicationId": "55f450dd-6b3f-4713-9e05-3dc94b4a4363",
+    "jobId": "job-036",
+    "read": false,
+    "createdAt": "2026-05-12T04:00:00"
+  },
+  {
+    "notificationId": "3df864e1-9188-4d9c-b492-c3b9394598ff",
+    "recipientUserId": "231221625",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Product Prototyping Project Teaching Assistant\" is now Accepted.",
+    "applicationId": "55f450dd-6b3f-4713-9e05-3dc94b4a4363",
+    "jobId": "job-036",
+    "read": false,
+    "createdAt": "2026-05-17T05:00:00"
+  },
+  {
+    "notificationId": "2382e360-c16b-492d-952e-fe97fff0c526",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Iris Gao submitted a new application for \"International Chemistry Grading Teaching Assistant\".",
+    "applicationId": "00985211-1e52-4ab6-a7ca-cd0948fda664",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-05-12T11:00:00"
+  },
+  {
+    "notificationId": "d5934b37-bf2c-4c8b-b053-3043640cd248",
+    "recipientUserId": "231221625",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Chemistry Grading Teaching Assistant\" is now Rejected.",
+    "applicationId": "00985211-1e52-4ab6-a7ca-cd0948fda664",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-05-16T14:00:00"
+  },
+  {
+    "notificationId": "7a305b7c-cdc4-4381-9ba9-37f8353e4902",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Iris Gao submitted a new application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\".",
+    "applicationId": "daf671d1-861d-4c58-b63e-d81012ce60a8",
+    "jobId": "job-050",
+    "read": false,
+    "createdAt": "2026-05-12T18:00:00"
+  },
+  {
+    "notificationId": "fe673886-e432-4eba-bfde-7e31a21b2d0f",
+    "recipientUserId": "231221625",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "daf671d1-861d-4c58-b63e-d81012ce60a8",
+    "jobId": "job-050",
+    "read": true,
+    "createdAt": "2026-05-15T20:00:00"
+  },
+  {
+    "notificationId": "0d29c485-a945-4f2a-bb75-11ee691567a9",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Zexin Hu submitted a new application for \"Blockchain Technology Evening Support Teaching Assistant\".",
+    "applicationId": "b60a920d-ed1f-488a-8470-34749ca4c55e",
+    "jobId": "job-025",
+    "read": true,
+    "createdAt": "2026-05-13T01:00:00"
+  },
+  {
+    "notificationId": "38f4a42b-d833-4945-8f10-58c3df5854ce",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Zexin Hu submitted a new application for \"Advanced Mathematics Practice Teaching Assistant\".",
+    "applicationId": "e0c18ba0-c5d1-45b1-be54-999fddc6e1ef",
+    "jobId": "job-032",
+    "read": false,
+    "createdAt": "2026-05-13T08:00:00"
+  },
+  {
+    "notificationId": "24aba4a5-c5a9-4ff9-86d6-fc7bdd3d5a6f",
+    "recipientUserId": "231221626",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Advanced Mathematics Practice Teaching Assistant\" is now In Review.",
+    "applicationId": "e0c18ba0-c5d1-45b1-be54-999fddc6e1ef",
+    "jobId": "job-032",
+    "read": false,
+    "createdAt": "2026-05-14T12:00:00"
+  },
+  {
+    "notificationId": "7aa801f4-ce67-4e44-84f4-ad531518724b",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Zexin Hu submitted a new application for \"Innovation and Entrepreneurship Support Teaching Assistant\".",
+    "applicationId": "481062c3-e9b0-45bf-81cf-dc641908561a",
+    "jobId": "job-039",
+    "read": false,
+    "createdAt": "2026-05-13T15:00:00"
+  },
+  {
+    "notificationId": "881f7d60-7710-45fa-b0bd-39dd9346667b",
+    "recipientUserId": "231221626",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Innovation and Entrepreneurship Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "481062c3-e9b0-45bf-81cf-dc641908561a",
+    "jobId": "job-039",
+    "read": true,
+    "createdAt": "2026-05-16T17:00:00"
+  },
+  {
+    "notificationId": "52b65816-95a2-4841-a9f1-6e99cc5ecba5",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Zexin Hu submitted a new application for \"International Computer Science Project Teaching Assistant\".",
+    "applicationId": "340445f2-87df-40c1-a1c7-10e4ebfc2291",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-05-13T22:00:00"
+  },
+  {
+    "notificationId": "ef547a9f-4282-41b8-baea-7bf49075b7e8",
+    "recipientUserId": "231221626",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Computer Science Project Teaching Assistant\" is now Accepted.",
+    "applicationId": "340445f2-87df-40c1-a1c7-10e4ebfc2291",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-05-18T23:00:00"
+  },
+  {
+    "notificationId": "1c316732-549c-49f4-9dfd-423d3635e09d",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Zexin Hu submitted a new application for \"Discrete Mathematics Discussion Teaching Assistant\".",
+    "applicationId": "8f1a0ded-cd6a-49eb-b3a9-3a278323d887",
+    "jobId": "job-003",
+    "read": true,
+    "createdAt": "2026-05-14T05:00:00"
+  },
+  {
+    "notificationId": "2c1da7d8-ed7e-467d-8d62-f0bf12b85fc2",
+    "recipientUserId": "231221626",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Discrete Mathematics Discussion Teaching Assistant\" is now Rejected.",
+    "applicationId": "8f1a0ded-cd6a-49eb-b3a9-3a278323d887",
+    "jobId": "job-003",
+    "read": false,
+    "createdAt": "2026-05-18T08:00:00"
+  },
+  {
+    "notificationId": "15a0f0d8-3dbc-405d-8f5f-c1fdf2b5e950",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Cindy Wang submitted a new application for \"Numerical Computing Workshop Teaching Assistant\".",
+    "applicationId": "ab339dbc-6781-44d1-9157-20fdf7c4cead",
+    "jobId": "job-028",
+    "read": false,
+    "createdAt": "2026-05-14T12:00:00"
+  },
+  {
+    "notificationId": "5f71f655-8695-48ea-aee9-78037dd1a900",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Cindy Wang submitted a new application for \"Data Visualization Evening Support Teaching Assistant\".",
+    "applicationId": "23582ab9-7cda-4cae-b7f6-783d58443d42",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-05-14T19:00:00"
+  },
+  {
+    "notificationId": "42aad2cd-a887-4d91-a140-3100f4f8d5cb",
+    "recipientUserId": "231221627",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Visualization Evening Support Teaching Assistant\" is now In Review.",
+    "applicationId": "23582ab9-7cda-4cae-b7f6-783d58443d42",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-05-15T23:00:00"
+  },
+  {
+    "notificationId": "8a1a03a9-9aca-4486-a66e-398d2471463d",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Cindy Wang submitted a new application for \"International Physics Lab Teaching Assistant\".",
+    "applicationId": "b71871b8-4e20-4676-8395-ab01ef6bed99",
+    "jobId": "job-042",
+    "read": false,
+    "createdAt": "2026-05-15T02:00:00"
+  },
+  {
+    "notificationId": "7512648b-8fab-4a7a-91e6-8002a5f48cf3",
+    "recipientUserId": "231221627",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Physics Lab Teaching Assistant\" is now Accepted.",
+    "applicationId": "b71871b8-4e20-4676-8395-ab01ef6bed99",
+    "jobId": "job-042",
+    "read": false,
+    "createdAt": "2026-05-20T03:00:00"
+  },
+  {
+    "notificationId": "eccd4d80-af72-484b-83cb-a81e37165265",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Cindy Wang submitted a new application for \"International Academic Communication Support Teaching Assistant\".",
+    "applicationId": "e372fe51-fd5f-498f-abc6-da9d9719bb64",
+    "jobId": "job-049",
+    "read": true,
+    "createdAt": "2026-05-15T09:00:00"
+  },
+  {
+    "notificationId": "aa60ec62-ff1e-4dc8-a7ad-67e1b77ac4ea",
+    "recipientUserId": "231221627",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Academic Communication Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "e372fe51-fd5f-498f-abc6-da9d9719bb64",
+    "jobId": "job-049",
+    "read": true,
+    "createdAt": "2026-05-19T12:00:00"
+  },
+  {
+    "notificationId": "ed109ef3-eeba-4678-9272-538e5530f3c4",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Cindy Wang submitted a new application for \"Computer Networks Lab Duty Teaching Assistant\".",
+    "applicationId": "70dedad2-5a55-4992-8584-908975c81e0b",
+    "jobId": "job-006",
+    "read": false,
+    "createdAt": "2026-05-15T16:00:00"
+  },
+  {
+    "notificationId": "15f7ab6c-afae-44ed-a692-0d22d9301dd4",
+    "recipientUserId": "231221627",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Networks Lab Duty Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "70dedad2-5a55-4992-8584-908975c81e0b",
+    "jobId": "job-006",
+    "read": false,
+    "createdAt": "2026-05-18T18:00:00"
+  },
+  {
+    "notificationId": "abc2f249-0939-43ee-a299-70618cfdc16d",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Leo Qian submitted a new application for \"Calculus Teaching Assistant\".",
+    "applicationId": "a659fabe-414b-4a67-8c93-c68259e16edf",
+    "jobId": "job-031",
+    "read": false,
+    "createdAt": "2026-05-15T23:00:00"
+  },
+  {
+    "notificationId": "d625fdcf-aeb3-482c-87b7-6ca7de2883b6",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Leo Qian submitted a new application for \"Educational Technology Practice Workshop Teaching Assistant\".",
+    "applicationId": "32b8cbb2-aeab-4453-9c0e-a99fa45d7d28",
+    "jobId": "job-038",
+    "read": false,
+    "createdAt": "2026-05-16T06:00:00"
+  },
+  {
+    "notificationId": "20afd26b-1231-48c8-888e-6ba56a2303e1",
+    "recipientUserId": "231221628",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Educational Technology Practice Workshop Teaching Assistant\" is now In Review.",
+    "applicationId": "32b8cbb2-aeab-4453-9c0e-a99fa45d7d28",
+    "jobId": "job-038",
+    "read": true,
+    "createdAt": "2026-05-17T10:00:00"
+  },
+  {
+    "notificationId": "c23a4580-cd63-4eaf-baba-ca4635f9071f",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Leo Qian submitted a new application for \"International Biology Evening Support Teaching Assistant\".",
+    "applicationId": "ba53e9d4-1f04-4690-8582-300dcc384afd",
+    "jobId": "job-045",
+    "read": true,
+    "createdAt": "2026-05-16T13:00:00"
+  },
+  {
+    "notificationId": "67f64ef8-f886-4732-ab83-fd465f6a4845",
+    "recipientUserId": "231221628",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Biology Evening Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "ba53e9d4-1f04-4690-8582-300dcc384afd",
+    "jobId": "job-045",
+    "read": false,
+    "createdAt": "2026-05-19T15:00:00"
+  },
+  {
+    "notificationId": "cb04677e-c9ac-4678-98ee-60aaa16e8822",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Joy Xu submitted a new application for \"Information Retrieval Discussion Teaching Assistant\".",
+    "applicationId": "6572b345-c952-4a32-ad44-eb96c9b10109",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-05-16T20:00:00"
+  },
+  {
+    "notificationId": "2fa7782c-05cb-4463-a181-93df6b46af2d",
+    "recipientUserId": "231221629",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Retrieval Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "6572b345-c952-4a32-ad44-eb96c9b10109",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-05-21T21:00:00"
+  },
+  {
+    "notificationId": "6459623a-638a-4857-86dc-6408d90cdac2",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Joy Xu submitted a new application for \"International Mathematics Teaching Assistant\".",
+    "applicationId": "d80f6f96-bacf-4b18-8f3b-75698864693f",
+    "jobId": "job-041",
+    "read": false,
+    "createdAt": "2026-05-17T03:00:00"
+  },
+  {
+    "notificationId": "831d99b6-b088-4f22-811f-39b487814fee",
+    "recipientUserId": "231221629",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Mathematics Teaching Assistant\" is now Rejected.",
+    "applicationId": "d80f6f96-bacf-4b18-8f3b-75698864693f",
+    "jobId": "job-041",
+    "read": true,
+    "createdAt": "2026-05-21T06:00:00"
+  },
+  {
+    "notificationId": "98b8f3f5-652d-45da-8f4f-4ade36779c27",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Joy Xu submitted a new application for \"International Research Methods Workshop Teaching Assistant\".",
+    "applicationId": "0919253c-e409-47cd-9fe1-6e8f9faaa09c",
+    "jobId": "job-048",
+    "read": false,
+    "createdAt": "2026-05-17T10:00:00"
+  },
+  {
+    "notificationId": "487259d1-6f1a-4f97-9537-359ffba6f85c",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Victor He submitted a new application for \"Interactive Media Production Lab Duty Teaching Assistant\".",
+    "applicationId": "cb56db2f-4e0c-4be8-8d2b-02eb4fa3717d",
+    "jobId": "job-037",
+    "read": true,
+    "createdAt": "2026-05-17T17:00:00"
+  },
+  {
+    "notificationId": "710e8bdf-9002-4ff1-a227-b0eea8e4a2df",
+    "recipientUserId": "231221630",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Interactive Media Production Lab Duty Teaching Assistant\" is now In Review.",
+    "applicationId": "cb56db2f-4e0c-4be8-8d2b-02eb4fa3717d",
+    "jobId": "job-037",
+    "read": false,
+    "createdAt": "2026-05-18T21:00:00"
+  },
+  {
+    "notificationId": "854d7243-787a-45ae-add5-c90373c70ec5",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Victor He submitted a new application for \"International Economics Discussion Teaching Assistant\".",
+    "applicationId": "7f207051-e5e3-48eb-ba80-331fd693eb4c",
+    "jobId": "job-044",
+    "read": false,
+    "createdAt": "2026-05-18T00:00:00"
+  },
+  {
+    "notificationId": "defa96e5-5548-4e7a-82b9-d6b72fb9af4f",
+    "recipientUserId": "231221630",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Economics Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "7f207051-e5e3-48eb-ba80-331fd693eb4c",
+    "jobId": "job-044",
+    "read": true,
+    "createdAt": "2026-05-23T01:00:00"
+  },
+  {
+    "notificationId": "4a4c79e5-2513-4800-a953-363bb6d94311",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Victor He submitted a new application for \"Java Programming Teaching Assistant\".",
+    "applicationId": "c5952a21-fb0b-4fb6-89f0-279b21de6194",
+    "jobId": "job-001",
+    "read": false,
+    "createdAt": "2026-05-18T07:00:00"
+  },
+  {
+    "notificationId": "8f60f7b0-e499-4337-80cd-df3b340183ae",
+    "recipientUserId": "231221630",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Java Programming Teaching Assistant\" is now Rejected.",
+    "applicationId": "c5952a21-fb0b-4fb6-89f0-279b21de6194",
+    "jobId": "job-001",
+    "read": false,
+    "createdAt": "2026-05-22T10:00:00"
+  },
+  {
+    "notificationId": "f8617859-6cf9-4e0a-85dc-b6f3e5682f2d",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Fiona Lin submitted a new application for \"Academic Writing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "896137ce-f288-456b-b0d2-3c89b56597c1",
+    "jobId": "job-040",
+    "read": false,
+    "createdAt": "2026-05-18T14:00:00"
+  },
+  {
+    "notificationId": "7ae9d208-0fa7-42da-89c6-19e5d8df8660",
+    "recipientUserId": "231221631",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic Writing Presentation Coaching Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "896137ce-f288-456b-b0d2-3c89b56597c1",
+    "jobId": "job-040",
+    "read": false,
+    "createdAt": "2026-05-21T16:00:00"
+  },
+  {
+    "notificationId": "4f193733-fb25-49b3-80a5-b552ec48ebcc",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Fiona Lin submitted a new application for \"International Statistics Lab Duty Teaching Assistant\".",
+    "applicationId": "76e9975b-9b2d-4fb9-ae59-31563ef3fec2",
+    "jobId": "job-047",
+    "read": true,
+    "createdAt": "2026-05-18T21:00:00"
+  },
+  {
+    "notificationId": "39f67087-4872-4c84-8087-30589d4424e5",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Fiona Lin submitted a new application for \"Python Programming Evening Support Teaching Assistant\".",
+    "applicationId": "59932087-a128-4f56-ae4b-9252deaa7a18",
+    "jobId": "job-004",
+    "read": false,
+    "createdAt": "2026-05-19T04:00:00"
+  },
+  {
+    "notificationId": "3833c51e-faaf-42cc-85d4-2ad0b0e1f8b2",
+    "recipientUserId": "231221631",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Python Programming Evening Support Teaching Assistant\" is now In Review.",
+    "applicationId": "59932087-a128-4f56-ae4b-9252deaa7a18",
+    "jobId": "job-004",
+    "read": false,
+    "createdAt": "2026-05-20T08:00:00"
+  },
+  {
+    "notificationId": "2aec344a-42d9-4e4e-82d9-c5eb7670ea05",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Owen Yu submitted a new application for \"International Chemistry Grading Teaching Assistant\".",
+    "applicationId": "d1c0bc18-f09e-4714-af3f-5ff97f82b46b",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-05-19T11:00:00"
+  },
+  {
+    "notificationId": "3e9a1610-7338-406c-95ad-7fd99904594d",
+    "recipientUserId": "231221632",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Chemistry Grading Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "d1c0bc18-f09e-4714-af3f-5ff97f82b46b",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-05-22T13:00:00"
+  },
+  {
+    "notificationId": "72015844-b167-4513-af6f-7e5a8e65e464",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Owen Yu submitted a new application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\".",
+    "applicationId": "a0869c06-4046-4af5-95d7-947a80625c2f",
+    "jobId": "job-050",
+    "read": false,
+    "createdAt": "2026-05-19T18:00:00"
+  },
+  {
+    "notificationId": "4484e61f-876d-48ad-8889-f61ff5c10f3a",
+    "recipientUserId": "231221632",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "a0869c06-4046-4af5-95d7-947a80625c2f",
+    "jobId": "job-050",
+    "read": true,
+    "createdAt": "2026-05-24T19:00:00"
+  },
+  {
+    "notificationId": "4f9c2374-5fd2-4074-81d4-8bf82423db32",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Owen Yu submitted a new application for \"Database Systems Grading Teaching Assistant\".",
+    "applicationId": "d080355c-7473-48ba-b574-7d2c5bdbaeca",
+    "jobId": "job-007",
+    "read": true,
+    "createdAt": "2026-05-20T01:00:00"
+  },
+  {
+    "notificationId": "f1035409-e755-4a7b-9ea5-7c35083f2da9",
+    "recipientUserId": "231221632",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Database Systems Grading Teaching Assistant\" is now Rejected.",
+    "applicationId": "d080355c-7473-48ba-b574-7d2c5bdbaeca",
+    "jobId": "job-007",
+    "read": false,
+    "createdAt": "2026-05-24T04:00:00"
+  },
+  {
+    "notificationId": "332c2807-e74e-4740-8988-ad668ff1b3d2",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Nina Deng submitted a new application for \"International Computer Science Project Teaching Assistant\".",
+    "applicationId": "6add56e5-a322-4d69-a150-9a3c8713a997",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-05-20T08:00:00"
+  },
+  {
+    "notificationId": "3a23b505-4376-4880-9a86-d44f5dc8d0ee",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Nina Deng submitted a new application for \"Discrete Mathematics Discussion Teaching Assistant\".",
+    "applicationId": "15834817-0587-4e72-ad2e-854cf10b4ad7",
+    "jobId": "job-003",
+    "read": false,
+    "createdAt": "2026-05-20T15:00:00"
+  },
+  {
+    "notificationId": "f5808828-9dca-40ab-8ba8-595377df478b",
+    "recipientUserId": "231221633",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Discrete Mathematics Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "15834817-0587-4e72-ad2e-854cf10b4ad7",
+    "jobId": "job-003",
+    "read": true,
+    "createdAt": "2026-05-21T19:00:00"
+  },
+  {
+    "notificationId": "2ef8eab1-f701-429e-8319-5508634df2a0",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Nina Deng submitted a new application for \"Introduction to AI Presentation Coaching Teaching Assistant\".",
+    "applicationId": "aa4cd7fe-d1fa-412f-970e-3050bcfb274f",
+    "jobId": "job-010",
+    "read": false,
+    "createdAt": "2026-05-20T22:00:00"
+  },
+  {
+    "notificationId": "b9b26fb8-e8d0-4632-bd94-340f968db0d5",
+    "recipientUserId": "231221633",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Introduction to AI Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "aa4cd7fe-d1fa-412f-970e-3050bcfb274f",
+    "jobId": "job-010",
+    "read": false,
+    "createdAt": "2026-05-25T23:00:00"
+  },
+  {
+    "notificationId": "68ff7052-7b8d-4503-a6b3-4c3480168280",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Kevin Luo submitted a new application for \"International Academic Communication Support Teaching Assistant\".",
+    "applicationId": "fab3e53f-fcc0-4cd0-a4bf-fd5e29ee9d79",
+    "jobId": "job-049",
+    "read": true,
+    "createdAt": "2026-05-21T05:00:00"
+  },
+  {
+    "notificationId": "1242092d-faf1-459b-9346-ee8f135ba5a0",
+    "recipientUserId": "231221634",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Academic Communication Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "fab3e53f-fcc0-4cd0-a4bf-fd5e29ee9d79",
+    "jobId": "job-049",
+    "read": false,
+    "createdAt": "2026-05-25T08:00:00"
+  },
+  {
+    "notificationId": "b3d68d54-8ceb-465e-a11d-e9d081bf948a",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Kevin Luo submitted a new application for \"Computer Networks Lab Duty Teaching Assistant\".",
+    "applicationId": "a85df51a-8eb9-4ca0-aa1e-315e33578eac",
+    "jobId": "job-006",
+    "read": false,
+    "createdAt": "2026-05-21T12:00:00"
+  },
+  {
+    "notificationId": "a5e5ebeb-5c2f-41c3-8012-6562d8e747bc",
+    "recipientUserId": "231221634",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Networks Lab Duty Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "a85df51a-8eb9-4ca0-aa1e-315e33578eac",
+    "jobId": "job-006",
+    "read": true,
+    "createdAt": "2026-05-24T14:00:00"
+  },
+  {
+    "notificationId": "7f8c9a94-35e9-430a-a88e-2231d7489bed",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Kevin Luo submitted a new application for \"Probability and Statistics Grading Teaching Assistant\".",
+    "applicationId": "6893ac7a-f23e-4de7-a474-e92662b94174",
+    "jobId": "job-013",
+    "read": false,
+    "createdAt": "2026-05-21T19:00:00"
+  },
+  {
+    "notificationId": "0251b49a-252f-499b-8c29-0dd27302d5ff",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Alice Zhou submitted a new application for \"Data Structures Lab Teaching Assistant\".",
+    "applicationId": "80be0fd1-3dc5-4335-a1ad-49c6d870702e",
+    "jobId": "job-002",
+    "read": false,
+    "createdAt": "2026-05-22T02:00:00"
+  },
+  {
+    "notificationId": "c9dcdafb-0883-4fd9-bff8-b8b46369aa5d",
+    "recipientUserId": "231221635",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Structures Lab Teaching Assistant\" is now In Review.",
+    "applicationId": "80be0fd1-3dc5-4335-a1ad-49c6d870702e",
+    "jobId": "job-002",
+    "read": false,
+    "createdAt": "2026-05-23T06:00:00"
+  },
+  {
+    "notificationId": "60b61169-b767-4c6d-90fd-7f55d57172e8",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Alice Zhou submitted a new application for \"Software Engineering Learning Support Teaching Assistant\".",
+    "applicationId": "c8b22efe-f390-4a6f-acd0-ab909c4e1150",
+    "jobId": "job-009",
+    "read": true,
+    "createdAt": "2026-05-22T09:00:00"
+  },
+  {
+    "notificationId": "938520bb-0ceb-465a-8d87-488d4d83921b",
+    "recipientUserId": "231221635",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Software Engineering Learning Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "c8b22efe-f390-4a6f-acd0-ab909c4e1150",
+    "jobId": "job-009",
+    "read": true,
+    "createdAt": "2026-05-25T11:00:00"
+  },
+  {
+    "notificationId": "48e0ca6d-d5a4-4b3e-a1b4-bf924363509e",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Alice Zhou submitted a new application for \"Algorithm Design Project Teaching Assistant\".",
+    "applicationId": "3566543d-e52e-4095-a470-535693a5be77",
+    "jobId": "job-016",
+    "read": false,
+    "createdAt": "2026-05-22T16:00:00"
+  },
+  {
+    "notificationId": "d7e9583d-1d8a-4d32-899b-1633c0abde7b",
+    "recipientUserId": "231221635",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Algorithm Design Project Teaching Assistant\" is now Accepted.",
+    "applicationId": "3566543d-e52e-4095-a470-535693a5be77",
+    "jobId": "job-016",
+    "read": false,
+    "createdAt": "2026-05-27T17:00:00"
+  },
+  {
+    "notificationId": "fac33955-5543-4275-9b0c-1eea68155f8f",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Martin Peng submitted a new application for \"Operating Systems Project Teaching Assistant\".",
+    "applicationId": "c9a11ecd-f466-40b3-be35-445f73cd0fda",
+    "jobId": "job-005",
+    "read": false,
+    "createdAt": "2026-05-22T23:00:00"
+  },
+  {
+    "notificationId": "7949f624-c620-416c-ba41-cb29f1a64652",
+    "recipientUserId": "231221636",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Operating Systems Project Teaching Assistant\" is now Rejected.",
+    "applicationId": "c9a11ecd-f466-40b3-be35-445f73cd0fda",
+    "jobId": "job-005",
+    "read": false,
+    "createdAt": "2026-05-27T02:00:00"
+  },
+  {
+    "notificationId": "4e0a4167-3065-45b8-98b8-5d6fe069be75",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Martin Peng submitted a new application for \"Linear Algebra Lab Teaching Assistant\".",
+    "applicationId": "76435693-71d2-47d6-9a4a-386103d442db",
+    "jobId": "job-012",
+    "read": false,
+    "createdAt": "2026-05-23T06:00:00"
+  },
+  {
+    "notificationId": "c820e3a5-d961-416d-ba4a-74b44e85044c",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Martin Peng submitted a new application for \"Mobile App Development Support Teaching Assistant\".",
+    "applicationId": "03b2fc74-f74e-4f15-8f6e-c279efc28e4c",
+    "jobId": "job-019",
+    "read": true,
+    "createdAt": "2026-05-23T13:00:00"
+  },
+  {
+    "notificationId": "46a2632b-d4ba-4994-8bc4-79568e818d77",
+    "recipientUserId": "231221636",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Mobile App Development Support Teaching Assistant\" is now In Review.",
+    "applicationId": "03b2fc74-f74e-4f15-8f6e-c279efc28e4c",
+    "jobId": "job-019",
+    "read": false,
+    "createdAt": "2026-05-24T17:00:00"
+  },
+  {
+    "notificationId": "63d223d5-bb88-4277-87cf-f77d88db5e3a",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Grace Shen submitted a new application for \"Front-End Development Workshop Teaching Assistant\".",
+    "applicationId": "091a1f22-1a8a-4112-8afb-c8d5f02bce74",
+    "jobId": "job-008",
+    "read": false,
+    "createdAt": "2026-05-23T20:00:00"
+  },
+  {
+    "notificationId": "9a486839-2e7f-4e6a-bd6a-a618e1b3dec4",
+    "recipientUserId": "231221637",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Front-End Development Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "091a1f22-1a8a-4112-8afb-c8d5f02bce74",
+    "jobId": "job-008",
+    "read": false,
+    "createdAt": "2026-05-28T21:00:00"
+  },
+  {
+    "notificationId": "6c6ee265-a69b-4302-befb-976ec557e1b3",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Grace Shen submitted a new application for \"Computer Organization Evening Support Teaching Assistant\".",
+    "applicationId": "8477fa46-9a2e-4912-a687-20580ee7dc42",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-05-24T03:00:00"
+  },
+  {
+    "notificationId": "64750818-5643-4667-b8ec-848f9a1da918",
+    "recipientUserId": "231221637",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Organization Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "8477fa46-9a2e-4912-a687-20580ee7dc42",
+    "jobId": "job-015",
+    "read": true,
+    "createdAt": "2026-05-28T06:00:00"
+  },
+  {
+    "notificationId": "59246437-e406-45da-b347-826077dac65b",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Grace Shen submitted a new application for \"Computer Graphics Lab Teaching Assistant\".",
+    "applicationId": "35b92159-3605-492f-b6b3-8e66525cb452",
+    "jobId": "job-022",
+    "read": false,
+    "createdAt": "2026-05-24T10:00:00"
+  },
+  {
+    "notificationId": "bb7e21c0-8cea-4e6b-bb8e-3a1f0bf19ac9",
+    "recipientUserId": "231221637",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Graphics Lab Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "35b92159-3605-492f-b6b3-8e66525cb452",
+    "jobId": "job-022",
+    "read": false,
+    "createdAt": "2026-05-27T12:00:00"
+  },
+  {
+    "notificationId": "c5794c2d-393d-4676-aacc-cf7ca488d5fa",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ethan Xie submitted a new application for \"Machine Learning Foundations Teaching Assistant\".",
+    "applicationId": "c4cddbd5-60f1-4dba-894e-004a78c39130",
+    "jobId": "job-011",
+    "read": true,
+    "createdAt": "2026-05-24T17:00:00"
+  },
+  {
+    "notificationId": "87bdb90d-4345-426b-9340-5f4748ed1945",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ethan Xie submitted a new application for \"Object-Oriented Analysis Workshop Teaching Assistant\".",
+    "applicationId": "6de4c598-2f37-4416-b783-5e2857699c0a",
+    "jobId": "job-018",
+    "read": false,
+    "createdAt": "2026-05-25T00:00:00"
+  },
+  {
+    "notificationId": "eaa1c2fc-e3ae-4802-9736-76542ae0be52",
+    "recipientUserId": "231221638",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Object-Oriented Analysis Workshop Teaching Assistant\" is now In Review.",
+    "applicationId": "6de4c598-2f37-4416-b783-5e2857699c0a",
+    "jobId": "job-018",
+    "read": true,
+    "createdAt": "2026-05-26T04:00:00"
+  },
+  {
+    "notificationId": "61dc741e-6c50-4af7-902b-0cce0cd29199",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ethan Xie submitted a new application for \"Blockchain Technology Evening Support Teaching Assistant\".",
+    "applicationId": "626d0704-14a0-40cc-8669-b19fec305d4f",
+    "jobId": "job-025",
+    "read": false,
+    "createdAt": "2026-05-25T07:00:00"
+  },
+  {
+    "notificationId": "a28b486e-72aa-42a7-99d0-c52161d0621a",
+    "recipientUserId": "231221638",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Blockchain Technology Evening Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "626d0704-14a0-40cc-8669-b19fec305d4f",
+    "jobId": "job-025",
+    "read": false,
+    "createdAt": "2026-05-28T09:00:00"
+  },
+  {
+    "notificationId": "fd2aa0e0-4f8e-40ef-972b-0da68a6c2de4",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Sophie Tang submitted a new application for \"Digital Logic Discussion Teaching Assistant\".",
+    "applicationId": "07c9210c-916b-4971-b127-8aaaa60aef78",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-05-25T14:00:00"
+  },
+  {
+    "notificationId": "cad3a82b-0816-4d80-ac72-9b937fc06501",
+    "recipientUserId": "231221639",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Digital Logic Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "07c9210c-916b-4971-b127-8aaaa60aef78",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-05-30T15:00:00"
+  },
+  {
+    "notificationId": "16bc5be6-189a-4012-9d2b-0146889e3fd0",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Sophie Tang submitted a new application for \"Human-Computer Interaction Teaching Assistant\".",
+    "applicationId": "cb974ed5-4b56-4f82-bd74-219e16298f5b",
+    "jobId": "job-021",
+    "read": true,
+    "createdAt": "2026-05-25T21:00:00"
+  },
+  {
+    "notificationId": "8d519b3a-0ebb-409f-bbc6-e9bdf1ed1da6",
+    "recipientUserId": "231221639",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Human-Computer Interaction Teaching Assistant\" is now Rejected.",
+    "applicationId": "cb974ed5-4b56-4f82-bd74-219e16298f5b",
+    "jobId": "job-021",
+    "read": true,
+    "createdAt": "2026-05-30T00:00:00"
+  },
+  {
+    "notificationId": "328d20e4-47f5-4466-9228-8203219da650",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Sophie Tang submitted a new application for \"Numerical Computing Workshop Teaching Assistant\".",
+    "applicationId": "652e33a7-ada6-4de0-a725-3681508155ff",
+    "jobId": "job-028",
+    "read": false,
+    "createdAt": "2026-05-26T04:00:00"
+  },
+  {
+    "notificationId": "e3e94797-4815-4c3c-a6cc-0be772d3fee1",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Daniel Ma submitted a new application for \"Information Security Lab Duty Teaching Assistant\".",
+    "applicationId": "01bb1586-bd5f-4416-97a3-565a646561fb",
+    "jobId": "job-017",
+    "read": false,
+    "createdAt": "2026-05-26T11:00:00"
+  },
+  {
+    "notificationId": "588ae949-e511-4b18-8364-e6476d47519d",
+    "recipientUserId": "231221640",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Security Lab Duty Teaching Assistant\" is now In Review.",
+    "applicationId": "01bb1586-bd5f-4416-97a3-565a646561fb",
+    "jobId": "job-017",
+    "read": false,
+    "createdAt": "2026-05-27T15:00:00"
+  },
+  {
+    "notificationId": "768bbc3d-36f8-4925-af50-43509573375a",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Daniel Ma submitted a new application for \"Big Data Analytics Discussion Teaching Assistant\".",
+    "applicationId": "1242d69c-d8e2-4901-aaca-1c541f087722",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-05-26T18:00:00"
+  },
+  {
+    "notificationId": "fbb4acd0-c25b-4e7f-827a-6d578df4fd9f",
+    "recipientUserId": "231221640",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Big Data Analytics Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "1242d69c-d8e2-4901-aaca-1c541f087722",
+    "jobId": "job-024",
+    "read": true,
+    "createdAt": "2026-05-31T19:00:00"
+  },
+  {
+    "notificationId": "7b03cec0-c1f1-4d7b-a722-166559c1baa3",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Daniel Ma submitted a new application for \"Calculus Teaching Assistant\".",
+    "applicationId": "7a13937d-2e1d-4b98-9348-5842e59f1a2c",
+    "jobId": "job-031",
+    "read": true,
+    "createdAt": "2026-05-27T01:00:00"
+  },
+  {
+    "notificationId": "d959603c-441a-4c57-9c5d-22125b1d8573",
+    "recipientUserId": "231221640",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Calculus Teaching Assistant\" is now Rejected.",
+    "applicationId": "7a13937d-2e1d-4b98-9348-5842e59f1a2c",
+    "jobId": "job-031",
+    "read": false,
+    "createdAt": "2026-05-31T04:00:00"
+  },
+  {
+    "notificationId": "c2c59d64-289d-471b-9ca3-59d1faf1d321",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Clara Jiang submitted a new application for \"Cloud Computing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "fa685a3a-3c75-4669-802b-46373c1d50a2",
+    "jobId": "job-020",
+    "read": false,
+    "createdAt": "2026-05-27T08:00:00"
+  },
+  {
+    "notificationId": "dc78429e-e873-4093-8650-ccd96e9f427c",
+    "recipientUserId": "231221641",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Cloud Computing Presentation Coaching Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "fa685a3a-3c75-4669-802b-46373c1d50a2",
+    "jobId": "job-020",
+    "read": false,
+    "createdAt": "2026-05-30T10:00:00"
+  },
+  {
+    "notificationId": "1e3712d3-5e14-49e7-8cda-8b86ee27bfaf",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Clara Jiang submitted a new application for \"Compiler Principles Lab Duty Teaching Assistant\".",
+    "applicationId": "39b4e83f-23c3-47ef-95c6-b350aaa29cec",
+    "jobId": "job-027",
+    "read": false,
+    "createdAt": "2026-05-27T15:00:00"
+  },
+  {
+    "notificationId": "fe155360-bc75-4206-868d-58c39728da55",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Clara Jiang submitted a new application for \"Information Retrieval Discussion Teaching Assistant\".",
+    "applicationId": "ee43f6f4-6e5c-470d-94de-97aec01b7e92",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-05-27T22:00:00"
+  },
+  {
+    "notificationId": "09e4fe6d-5a5b-4109-9d3a-aa1bc9054955",
+    "recipientUserId": "231221641",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Retrieval Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "ee43f6f4-6e5c-470d-94de-97aec01b7e92",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-05-29T02:00:00"
+  },
+  {
+    "notificationId": "1d3bdfa3-baea-4c60-b2a8-29bad9de0d6d",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ryan Cai submitted a new application for \"Natural Language Processing Grading Teaching Assistant\".",
+    "applicationId": "b2ac1ed5-350b-4620-b051-ce96ec941b3b",
+    "jobId": "job-023",
+    "read": true,
+    "createdAt": "2026-05-28T05:00:00"
+  },
+  {
+    "notificationId": "ee68c07f-c1ed-4c83-9b91-21fbd76705e0",
+    "recipientUserId": "231221642",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Natural Language Processing Grading Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "b2ac1ed5-350b-4620-b051-ce96ec941b3b",
+    "jobId": "job-023",
+    "read": false,
+    "createdAt": "2026-05-31T07:00:00"
+  },
+  {
+    "notificationId": "58066b3c-4ba0-4e2e-8324-de07baf585a1",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ryan Cai submitted a new application for \"Academic English Presentation Coaching Teaching Assistant\".",
+    "applicationId": "ee9959f7-5bee-42cd-8675-155a95f44cd8",
+    "jobId": "job-030",
+    "read": false,
+    "createdAt": "2026-05-28T12:00:00"
+  },
+  {
+    "notificationId": "c9052101-fb43-4819-9146-072c4828c11e",
+    "recipientUserId": "231221642",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic English Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "ee9959f7-5bee-42cd-8675-155a95f44cd8",
+    "jobId": "job-030",
+    "read": true,
+    "createdAt": "2026-06-02T13:00:00"
+  },
+  {
+    "notificationId": "d5b5e6e4-fba4-4041-af32-e81cd76ce7f6",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ryan Cai submitted a new application for \"Interactive Media Production Lab Duty Teaching Assistant\".",
+    "applicationId": "4c2319b8-80a1-4b0a-a19c-930c99489ecf",
+    "jobId": "job-037",
+    "read": false,
+    "createdAt": "2026-05-28T19:00:00"
+  },
+  {
+    "notificationId": "17a67f33-9b3e-44fd-b7fe-e44df7757408",
+    "recipientUserId": "231221642",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Interactive Media Production Lab Duty Teaching Assistant\" is now Rejected.",
+    "applicationId": "4c2319b8-80a1-4b0a-a19c-930c99489ecf",
+    "jobId": "job-037",
+    "read": false,
+    "createdAt": "2026-06-01T22:00:00"
+  },
+  {
+    "notificationId": "754b6221-51e1-4e38-ad29-1790b2b110df",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Selina Yao submitted a new application for \"Embedded Systems Project Teaching Assistant\".",
+    "applicationId": "f21f3c1c-9585-402c-9ab4-f826858a4049",
+    "jobId": "job-026",
+    "read": false,
+    "createdAt": "2026-05-29T02:00:00"
+  },
+  {
+    "notificationId": "3a475425-71f8-45d5-9263-7437e16e28b9",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Selina Yao submitted a new application for \"Programming Contest Training Grading Teaching Assistant\".",
+    "applicationId": "6b2113df-5d5b-48c9-8b3c-466dd1147262",
+    "jobId": "job-033",
+    "read": true,
+    "createdAt": "2026-05-29T09:00:00"
+  },
+  {
+    "notificationId": "7f4b6f43-ffee-4b7d-ab7f-d462fb1f1d9c",
+    "recipientUserId": "231221643",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Programming Contest Training Grading Teaching Assistant\" is now In Review.",
+    "applicationId": "6b2113df-5d5b-48c9-8b3c-466dd1147262",
+    "jobId": "job-033",
+    "read": true,
+    "createdAt": "2026-05-30T13:00:00"
+  },
+  {
+    "notificationId": "16d491fa-c494-40c6-a11a-cb5d8be039ad",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Selina Yao submitted a new application for \"Academic Writing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "3f2466b1-2c72-4344-9d34-03ceda209535",
+    "jobId": "job-040",
+    "read": false,
+    "createdAt": "2026-05-29T16:00:00"
+  },
+  {
+    "notificationId": "60c75ee7-7a53-447b-b46f-f7e0bad99f16",
+    "recipientUserId": "231221643",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic Writing Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "3f2466b1-2c72-4344-9d34-03ceda209535",
+    "jobId": "job-040",
+    "read": false,
+    "createdAt": "2026-06-03T17:00:00"
+  },
+  {
+    "notificationId": "dfee4a59-74a8-4e2f-ae6f-e7ca8b9e358a",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Jason Guo submitted a new application for \"Project Management Support Teaching Assistant\".",
+    "applicationId": "52029fb9-29b3-420b-9e28-6583ec9ced62",
+    "jobId": "job-029",
+    "read": false,
+    "createdAt": "2026-05-29T23:00:00"
+  },
+  {
+    "notificationId": "4d556df1-bfcc-462c-8d88-0abbcf440295",
+    "recipientUserId": "231221644",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Project Management Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "52029fb9-29b3-420b-9e28-6583ec9ced62",
+    "jobId": "job-029",
+    "read": false,
+    "createdAt": "2026-06-03T02:00:00"
+  },
+  {
+    "notificationId": "20819bd5-0be7-4791-a6bf-8800ff6ec6ad",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Jason Guo submitted a new application for \"Product Prototyping Project Teaching Assistant\".",
+    "applicationId": "e1484f52-1cf7-41da-aff1-ba55af840bb8",
+    "jobId": "job-036",
+    "read": false,
+    "createdAt": "2026-05-30T06:00:00"
+  },
+  {
+    "notificationId": "35c492cb-49cc-4c8b-8003-2e5c39413423",
+    "recipientUserId": "231221644",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Product Prototyping Project Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "e1484f52-1cf7-41da-aff1-ba55af840bb8",
+    "jobId": "job-036",
+    "read": true,
+    "createdAt": "2026-06-02T08:00:00"
+  },
+  {
+    "notificationId": "17eb226a-ac29-4611-8272-d663cd4568cb",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Jason Guo submitted a new application for \"International Chemistry Grading Teaching Assistant\".",
+    "applicationId": "9555dd1c-e5b4-45af-8a6a-adc225282418",
+    "jobId": "job-043",
+    "read": true,
+    "createdAt": "2026-05-30T13:00:00"
+  },
+  {
+    "notificationId": "448d97f8-3855-4a6b-8cb3-9830729fecca",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Amber Fan submitted a new application for \"Advanced Mathematics Practice Teaching Assistant\".",
+    "applicationId": "74e013e7-66ee-4bdd-aa24-ec10a000ed5b",
+    "jobId": "job-032",
+    "read": false,
+    "createdAt": "2026-05-30T20:00:00"
+  },
+  {
+    "notificationId": "1982d3a5-b5ae-4afb-8b7b-49546a66afdc",
+    "recipientUserId": "231221645",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Advanced Mathematics Practice Teaching Assistant\" is now In Review.",
+    "applicationId": "74e013e7-66ee-4bdd-aa24-ec10a000ed5b",
+    "jobId": "job-032",
+    "read": false,
+    "createdAt": "2026-06-01T00:00:00"
+  },
+  {
+    "notificationId": "3679bca9-a12c-4a4d-87ce-cf16e9e0a84a",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Amber Fan submitted a new application for \"Innovation and Entrepreneurship Support Teaching Assistant\".",
+    "applicationId": "713d634d-88ca-4990-8824-2a3ee7d6a6ef",
+    "jobId": "job-039",
+    "read": false,
+    "createdAt": "2026-05-31T03:00:00"
+  },
+  {
+    "notificationId": "b0ee3715-6228-4024-a77f-37eb07dbc339",
+    "recipientUserId": "231221645",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Innovation and Entrepreneurship Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "713d634d-88ca-4990-8824-2a3ee7d6a6ef",
+    "jobId": "job-039",
+    "read": true,
+    "createdAt": "2026-06-03T05:00:00"
+  },
+  {
+    "notificationId": "102b2e1d-7e06-4bc9-b5ec-5ace4e0dca85",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Amber Fan submitted a new application for \"International Computer Science Project Teaching Assistant\".",
+    "applicationId": "a0039c04-3e01-47f1-802d-878c0e632bec",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-05-31T10:00:00"
+  },
+  {
+    "notificationId": "72957254-b983-494d-99ff-d1738fc83a54",
+    "recipientUserId": "231221645",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Computer Science Project Teaching Assistant\" is now Accepted.",
+    "applicationId": "a0039c04-3e01-47f1-802d-878c0e632bec",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-06-05T11:00:00"
+  },
+  {
+    "notificationId": "cc826189-1cff-4106-bd2f-c06d5a3c24e5",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Felix Dai submitted a new application for \"Data Visualization Evening Support Teaching Assistant\".",
+    "applicationId": "11641c8f-a400-494b-8daf-d526bfe0b643",
+    "jobId": "job-035",
+    "read": true,
+    "createdAt": "2026-05-31T17:00:00"
+  },
+  {
+    "notificationId": "3180c775-13b6-4087-856a-9a131a8efc02",
+    "recipientUserId": "231221646",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Visualization Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "11641c8f-a400-494b-8daf-d526bfe0b643",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-06-04T20:00:00"
+  },
+  {
+    "notificationId": "5b04210e-7fe6-48ab-b1ba-22074811b742",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Felix Dai submitted a new application for \"International Physics Lab Teaching Assistant\".",
+    "applicationId": "3b7b8e3c-4822-469d-a584-bb2dd39df70a",
+    "jobId": "job-042",
+    "read": false,
+    "createdAt": "2026-06-01T00:00:00"
+  },
+  {
+    "notificationId": "519a32f9-0e90-4c0f-851c-7c1e7fd5241f",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Felix Dai submitted a new application for \"International Academic Communication Support Teaching Assistant\".",
+    "applicationId": "8027cec9-afc1-4085-9640-9de12becf133",
+    "jobId": "job-049",
+    "read": false,
+    "createdAt": "2026-06-01T07:00:00"
+  },
+  {
+    "notificationId": "73123a5a-40ce-4736-a94b-3518b36388fa",
+    "recipientUserId": "231221646",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Academic Communication Support Teaching Assistant\" is now In Review.",
+    "applicationId": "8027cec9-afc1-4085-9640-9de12becf133",
+    "jobId": "job-049",
+    "read": false,
+    "createdAt": "2026-06-02T11:00:00"
+  },
+  {
+    "notificationId": "5233216b-ae28-4308-9569-3980ba525e9c",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Stella Mo submitted a new application for \"Educational Technology Practice Workshop Teaching Assistant\".",
+    "applicationId": "6222a842-3b59-4587-a59b-ddc5efc30838",
+    "jobId": "job-038",
+    "read": false,
+    "createdAt": "2026-06-01T14:00:00"
+  },
+  {
+    "notificationId": "c5967562-b8f3-4ee8-a01a-f9ab5cff83c2",
+    "recipientUserId": "231221647",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Educational Technology Practice Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "6222a842-3b59-4587-a59b-ddc5efc30838",
+    "jobId": "job-038",
+    "read": false,
+    "createdAt": "2026-06-06T15:00:00"
+  },
+  {
+    "notificationId": "2aff663a-7d97-4963-a28e-9eac42ca0702",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Stella Mo submitted a new application for \"International Biology Evening Support Teaching Assistant\".",
+    "applicationId": "61a92ccc-043b-4f3c-9043-acc8b1fb99fb",
+    "jobId": "job-045",
+    "read": true,
+    "createdAt": "2026-06-01T21:00:00"
+  },
+  {
+    "notificationId": "41462b29-139d-4989-81a1-7f3a30969158",
+    "recipientUserId": "231221647",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Biology Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "61a92ccc-043b-4f3c-9043-acc8b1fb99fb",
+    "jobId": "job-045",
+    "read": true,
+    "createdAt": "2026-06-06T00:00:00"
+  },
+  {
+    "notificationId": "3a6436e7-d908-4950-b534-1b6b390274c6",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Stella Mo submitted a new application for \"Data Structures Lab Teaching Assistant\".",
+    "applicationId": "6755dbba-11a0-4225-a315-ac8e98ba5f10",
+    "jobId": "job-002",
+    "read": false,
+    "createdAt": "2026-06-02T04:00:00"
+  },
+  {
+    "notificationId": "a8465f6b-f096-4ee8-8932-8608a551dfe3",
+    "recipientUserId": "231221647",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Structures Lab Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "6755dbba-11a0-4225-a315-ac8e98ba5f10",
+    "jobId": "job-002",
+    "read": false,
+    "createdAt": "2026-06-05T06:00:00"
+  },
+  {
+    "notificationId": "33ae0f83-0f5c-4095-8d40-49c62f878ec1",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Aaron Hou submitted a new application for \"International Mathematics Teaching Assistant\".",
+    "applicationId": "a586ca6e-0589-4998-954f-1de398a28c81",
+    "jobId": "job-041",
+    "read": false,
+    "createdAt": "2026-06-02T11:00:00"
+  },
+  {
+    "notificationId": "7c5b45d7-1263-45bb-9758-4ca2c9d3587a",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Vivian Nie submitted a new application for \"International Economics Discussion Teaching Assistant\".",
+    "applicationId": "6c9121a2-f89a-46e2-a999-181279289b77",
+    "jobId": "job-044",
+    "read": false,
+    "createdAt": "2026-06-02T18:00:00"
+  },
+  {
+    "notificationId": "ab460be3-3d6f-4bc1-96f8-9f64ce8cd3f1",
+    "recipientUserId": "231221649",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Economics Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "6c9121a2-f89a-46e2-a999-181279289b77",
+    "jobId": "job-044",
+    "read": true,
+    "createdAt": "2026-06-03T22:00:00"
+  },
+  {
+    "notificationId": "b0f9f46a-26aa-4780-b23a-4f3f348fd6af",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Vivian Nie submitted a new application for \"Java Programming Teaching Assistant\".",
+    "applicationId": "088e2c96-7b5c-43a2-8081-334fa96854f5",
+    "jobId": "job-001",
+    "read": true,
+    "createdAt": "2026-06-03T01:00:00"
+  },
+  {
+    "notificationId": "cd7b6f05-f0d8-4da5-a548-2004b96ff6ce",
+    "recipientUserId": "231221649",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Java Programming Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "088e2c96-7b5c-43a2-8081-334fa96854f5",
+    "jobId": "job-001",
+    "read": false,
+    "createdAt": "2026-06-06T03:00:00"
+  },
+  {
+    "notificationId": "f418614e-2824-4fc9-94f6-b64890c41863",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Oscar Ren submitted a new application for \"International Statistics Lab Duty Teaching Assistant\".",
+    "applicationId": "f5d14232-f910-41fb-a5ba-dde3c9a6d0a7",
+    "jobId": "job-047",
+    "read": false,
+    "createdAt": "2026-06-03T08:00:00"
+  },
+  {
+    "notificationId": "ed5741f5-bd3e-466e-add5-cd17a6b6782c",
+    "recipientUserId": "231221650",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Statistics Lab Duty Teaching Assistant\" is now Accepted.",
+    "applicationId": "f5d14232-f910-41fb-a5ba-dde3c9a6d0a7",
+    "jobId": "job-047",
+    "read": false,
+    "createdAt": "2026-06-08T09:00:00"
+  },
+  {
+    "notificationId": "60419a01-6440-45df-b50a-1de635633326",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bella Kong submitted a new application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\".",
+    "applicationId": "4a3620c2-cb42-441f-b414-c7b6551dc484",
+    "jobId": "job-050",
+    "read": false,
+    "createdAt": "2026-06-03T15:00:00"
+  },
+  {
+    "notificationId": "d3d8780a-2291-41db-b3ba-630ade75c56f",
+    "recipientUserId": "231221651",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\" is now Rejected.",
+    "applicationId": "4a3620c2-cb42-441f-b414-c7b6551dc484",
+    "jobId": "job-050",
+    "read": true,
+    "createdAt": "2026-06-07T18:00:00"
+  },
+  {
+    "notificationId": "b25513a0-2d83-4a46-97dd-b8a5c9fa5855",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bella Kong submitted a new application for \"Database Systems Grading Teaching Assistant\".",
+    "applicationId": "3cb61c69-e159-449b-b2f8-1d5a356b042f",
+    "jobId": "job-007",
+    "read": false,
+    "createdAt": "2026-06-03T22:00:00"
+  },
+  {
+    "notificationId": "63e30d46-ff36-48b2-a257-0d5c7e71fd67",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Ian Song submitted a new application for \"Discrete Mathematics Discussion Teaching Assistant\".",
+    "applicationId": "019b42ee-83a5-48ac-b404-c6211d0f1538",
+    "jobId": "job-003",
+    "read": true,
+    "createdAt": "2026-06-04T05:00:00"
+  },
+  {
+    "notificationId": "44edf72d-5749-4e70-a025-f6ec48a49037",
+    "recipientUserId": "231221652",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Discrete Mathematics Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "019b42ee-83a5-48ac-b404-c6211d0f1538",
+    "jobId": "job-003",
+    "read": false,
+    "createdAt": "2026-06-05T09:00:00"
+  },
+  {
+    "notificationId": "0e8756be-68ac-440f-a6bd-ccf9c1526f0d",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Chloe Lu submitted a new application for \"Computer Networks Lab Duty Teaching Assistant\".",
+    "applicationId": "50c6b8ae-83ce-4328-9719-e7c55bbc79b0",
+    "jobId": "job-006",
+    "read": false,
+    "createdAt": "2026-06-04T12:00:00"
+  },
+  {
+    "notificationId": "19cb61ca-ebe7-4d82-86b0-62a41f4cf1a5",
+    "recipientUserId": "231221653",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Networks Lab Duty Teaching Assistant\" is now Accepted.",
+    "applicationId": "50c6b8ae-83ce-4328-9719-e7c55bbc79b0",
+    "jobId": "job-006",
+    "read": true,
+    "createdAt": "2026-06-09T13:00:00"
+  },
+  {
+    "notificationId": "e4df567f-14b3-49e5-98ae-9091e2593fbf",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Chloe Lu submitted a new application for \"Probability and Statistics Grading Teaching Assistant\".",
+    "applicationId": "8652201f-ad0b-459e-89e0-f4eba7b65482",
+    "jobId": "job-013",
+    "read": false,
+    "createdAt": "2026-06-04T19:00:00"
+  },
+  {
+    "notificationId": "0c4bd7ca-7dac-4a33-9678-4b10fa32921d",
+    "recipientUserId": "231221653",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Probability and Statistics Grading Teaching Assistant\" is now Rejected.",
+    "applicationId": "8652201f-ad0b-459e-89e0-f4eba7b65482",
+    "jobId": "job-013",
+    "read": false,
+    "createdAt": "2026-06-08T22:00:00"
+  },
+  {
+    "notificationId": "904b13de-fe3e-461b-a293-2d4c040fb9e6",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Mason Jin submitted a new application for \"Software Engineering Learning Support Teaching Assistant\".",
+    "applicationId": "d0379ddb-9417-4b7a-82ab-c748b918c4e7",
+    "jobId": "job-009",
+    "read": false,
+    "createdAt": "2026-06-05T02:00:00"
+  },
+  {
+    "notificationId": "7447915b-2515-4699-9140-f74270da0df1",
+    "recipientUserId": "231221654",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Software Engineering Learning Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "d0379ddb-9417-4b7a-82ab-c748b918c4e7",
+    "jobId": "job-009",
+    "read": false,
+    "createdAt": "2026-06-08T04:00:00"
+  },
+  {
+    "notificationId": "bc3a04dc-7c70-4ed8-a809-3cd5e978cedd",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Tina Bai submitted a new application for \"Linear Algebra Lab Teaching Assistant\".",
+    "applicationId": "7df5d676-2598-417c-a7b0-de1f2cce21d3",
+    "jobId": "job-012",
+    "read": true,
+    "createdAt": "2026-06-05T09:00:00"
+  },
+  {
+    "notificationId": "c7adc549-72b0-4a98-98ac-1851ceea7d58",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Tina Bai submitted a new application for \"Mobile App Development Support Teaching Assistant\".",
+    "applicationId": "1991b739-6c66-412d-9984-ab6d234ff788",
+    "jobId": "job-019",
+    "read": false,
+    "createdAt": "2026-06-05T16:00:00"
+  },
+  {
+    "notificationId": "4a8c21e6-30db-498d-9b43-7a76c86a316b",
+    "recipientUserId": "231221655",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Mobile App Development Support Teaching Assistant\" is now In Review.",
+    "applicationId": "1991b739-6c66-412d-9984-ab6d234ff788",
+    "jobId": "job-019",
+    "read": false,
+    "createdAt": "2026-06-06T20:00:00"
+  },
+  {
+    "notificationId": "dff0d3bc-96f6-4459-8767-fc571fe9094c",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Eric Su submitted a new application for \"Computer Organization Evening Support Teaching Assistant\".",
+    "applicationId": "359137ca-8d67-4312-a012-e00eab9c7417",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-06-05T23:00:00"
+  },
+  {
+    "notificationId": "27340cf0-14f5-4904-8434-45b77002c3a4",
+    "recipientUserId": "231221656",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Organization Evening Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "359137ca-8d67-4312-a012-e00eab9c7417",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-06-09T01:00:00"
+  },
+  {
+    "notificationId": "1c99f7cd-72dc-4f5b-8c16-ac33fa426383",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Helen Zou submitted a new application for \"Object-Oriented Analysis Workshop Teaching Assistant\".",
+    "applicationId": "2751e4d9-f438-4502-9c82-1635dd5d2984",
+    "jobId": "job-018",
+    "read": false,
+    "createdAt": "2026-06-06T06:00:00"
+  },
+  {
+    "notificationId": "7e13f735-3ab8-4870-b175-fefb2ed089f0",
+    "recipientUserId": "231221657",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Object-Oriented Analysis Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "2751e4d9-f438-4502-9c82-1635dd5d2984",
+    "jobId": "job-018",
+    "read": true,
+    "createdAt": "2026-06-11T07:00:00"
+  },
+  {
+    "notificationId": "663948df-ee46-40fa-867a-c84c1191ad92",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Helen Zou submitted a new application for \"Blockchain Technology Evening Support Teaching Assistant\".",
+    "applicationId": "f54ad8fc-1f1a-4b48-a93b-6eaf87bdd106",
+    "jobId": "job-025",
+    "read": true,
+    "createdAt": "2026-06-06T13:00:00"
+  },
+  {
+    "notificationId": "af89b512-ff9a-4d64-8bc4-aa8f7ff2a128",
+    "recipientUserId": "231221657",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Blockchain Technology Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "f54ad8fc-1f1a-4b48-a93b-6eaf87bdd106",
+    "jobId": "job-025",
+    "read": false,
+    "createdAt": "2026-06-10T16:00:00"
+  },
+  {
+    "notificationId": "3f5badd1-b5c2-4220-af2d-9c0f13da1159",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Noah Fang submitted a new application for \"Human-Computer Interaction Teaching Assistant\".",
+    "applicationId": "0bf0cb15-5243-451e-a19d-00b8cfdfe378",
+    "jobId": "job-021",
+    "read": false,
+    "createdAt": "2026-06-06T20:00:00"
+  },
+  {
+    "notificationId": "ce020f8e-d266-4cd7-8528-f5c62e96c46d",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Doris Yan submitted a new application for \"Big Data Analytics Discussion Teaching Assistant\".",
+    "applicationId": "ed8cbf6d-0704-4d3a-8468-6537a96169b1",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-06-07T03:00:00"
+  },
+  {
+    "notificationId": "9e74553e-2827-49be-bcfa-6a3bd809317a",
+    "recipientUserId": "231221659",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Big Data Analytics Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "ed8cbf6d-0704-4d3a-8468-6537a96169b1",
+    "jobId": "job-024",
+    "read": true,
+    "createdAt": "2026-06-08T07:00:00"
+  },
+  {
+    "notificationId": "8d385102-6dfc-41de-9bb5-936e924be080",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Doris Yan submitted a new application for \"Calculus Teaching Assistant\".",
+    "applicationId": "d1cea066-0233-49ca-830c-d4d63f89b813",
+    "jobId": "job-031",
+    "read": false,
+    "createdAt": "2026-06-07T10:00:00"
+  },
+  {
+    "notificationId": "9c0b373d-3bf3-4368-a6cc-af8ca696afd6",
+    "recipientUserId": "231221659",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Calculus Teaching Assistant\" is now Accepted.",
+    "applicationId": "d1cea066-0233-49ca-830c-d4d63f89b813",
+    "jobId": "job-031",
+    "read": false,
+    "createdAt": "2026-06-12T11:00:00"
+  },
+  {
+    "notificationId": "fd700dc4-8718-422a-8c62-6f658352d1da",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Simon Qu submitted a new application for \"Compiler Principles Lab Duty Teaching Assistant\".",
+    "applicationId": "decb6f72-0a35-4baa-a600-1ae17eeee5d7",
+    "jobId": "job-027",
+    "read": true,
+    "createdAt": "2026-06-07T17:00:00"
+  },
+  {
+    "notificationId": "ec453a1e-d3ed-4000-bcb2-ce6a19c8afb6",
+    "recipientUserId": "231221660",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Compiler Principles Lab Duty Teaching Assistant\" is now Rejected.",
+    "applicationId": "decb6f72-0a35-4baa-a600-1ae17eeee5d7",
+    "jobId": "job-027",
+    "read": false,
+    "createdAt": "2026-06-11T20:00:00"
+  },
+  {
+    "notificationId": "a65971ce-2ed3-4546-8b93-1bc7f9c6d177",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Elsa Tao submitted a new application for \"Academic English Presentation Coaching Teaching Assistant\".",
+    "applicationId": "59726489-7ffa-46a7-a007-fa251ccfc859",
+    "jobId": "job-030",
+    "read": false,
+    "createdAt": "2026-06-08T00:00:00"
+  },
+  {
+    "notificationId": "da2c2b6b-cd33-45c2-8988-67a968e91dce",
+    "recipientUserId": "231221661",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic English Presentation Coaching Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "59726489-7ffa-46a7-a007-fa251ccfc859",
+    "jobId": "job-030",
+    "read": true,
+    "createdAt": "2026-06-11T02:00:00"
+  },
+  {
+    "notificationId": "b67f154d-e24b-4aee-86d0-08f287e32568",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Elsa Tao submitted a new application for \"Interactive Media Production Lab Duty Teaching Assistant\".",
+    "applicationId": "0336ea4d-662d-41f1-bc93-dd1b373a653d",
+    "jobId": "job-037",
+    "read": false,
+    "createdAt": "2026-06-08T07:00:00"
+  },
+  {
+    "notificationId": "de3a1c37-31b2-4b62-b1ca-9a61eeee8421",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Gavin Liao submitted a new application for \"Programming Contest Training Grading Teaching Assistant\".",
+    "applicationId": "5edc0085-401a-4ee3-8319-2929f2c37d26",
+    "jobId": "job-033",
+    "read": false,
+    "createdAt": "2026-06-08T14:00:00"
+  },
+  {
+    "notificationId": "3e349de1-51d5-467c-93b5-b5f13bd91a77",
+    "recipientUserId": "231221662",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Programming Contest Training Grading Teaching Assistant\" is now In Review.",
+    "applicationId": "5edc0085-401a-4ee3-8319-2929f2c37d26",
+    "jobId": "job-033",
+    "read": false,
+    "createdAt": "2026-06-09T18:00:00"
+  },
+  {
+    "notificationId": "59894684-0905-4b3e-84ab-b5e8f91ee9c5",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Maggie Pei submitted a new application for \"Product Prototyping Project Teaching Assistant\".",
+    "applicationId": "c0837827-4b14-4acd-9c42-4da74bb89590",
+    "jobId": "job-036",
+    "read": true,
+    "createdAt": "2026-06-08T21:00:00"
+  },
+  {
+    "notificationId": "95482e03-472a-4b0a-8037-b9a1961d7bf4",
+    "recipientUserId": "231221663",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Product Prototyping Project Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "c0837827-4b14-4acd-9c42-4da74bb89590",
+    "jobId": "job-036",
+    "read": true,
+    "createdAt": "2026-06-11T23:00:00"
+  },
+  {
+    "notificationId": "23834285-1528-4ed3-beee-c949f4fc11a0",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Maggie Pei submitted a new application for \"International Chemistry Grading Teaching Assistant\".",
+    "applicationId": "83386d5a-759c-4917-b512-e20c1b24c64e",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-06-09T04:00:00"
+  },
+  {
+    "notificationId": "dfc295c5-6963-4396-bae5-8394e4b46bff",
+    "recipientUserId": "231221663",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Chemistry Grading Teaching Assistant\" is now Accepted.",
+    "applicationId": "83386d5a-759c-4917-b512-e20c1b24c64e",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-06-14T05:00:00"
+  },
+  {
+    "notificationId": "82a8c98e-9ea7-42b4-a874-bc494223b374",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Harvey Zhu submitted a new application for \"Innovation and Entrepreneurship Support Teaching Assistant\".",
+    "applicationId": "9dfd0926-99a4-4eae-a676-0d27bef4a6d3",
+    "jobId": "job-039",
+    "read": false,
+    "createdAt": "2026-06-09T11:00:00"
+  },
+  {
+    "notificationId": "f3d1f17d-8e9a-4dff-b371-fc94dd331b62",
+    "recipientUserId": "231221664",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Innovation and Entrepreneurship Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "9dfd0926-99a4-4eae-a676-0d27bef4a6d3",
+    "jobId": "job-039",
+    "read": false,
+    "createdAt": "2026-06-13T14:00:00"
+  },
+  {
+    "notificationId": "a6d8430d-7d12-407c-a6e0-473065eaf187",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Janice Ke submitted a new application for \"International Physics Lab Teaching Assistant\".",
+    "applicationId": "64d4d473-95f9-408e-8a75-090207285a6e",
+    "jobId": "job-042",
+    "read": false,
+    "createdAt": "2026-06-09T18:00:00"
+  },
+  {
+    "notificationId": "970a5e16-4946-48b1-b99f-fd250d368b58",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Janice Ke submitted a new application for \"International Academic Communication Support Teaching Assistant\".",
+    "applicationId": "5da230e6-79e0-475a-838e-2f6226fab462",
+    "jobId": "job-049",
+    "read": true,
+    "createdAt": "2026-06-10T01:00:00"
+  },
+  {
+    "notificationId": "f440ba8f-7cc6-48fc-8505-b7774e3892fa",
+    "recipientUserId": "231221665",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Academic Communication Support Teaching Assistant\" is now In Review.",
+    "applicationId": "5da230e6-79e0-475a-838e-2f6226fab462",
+    "jobId": "job-049",
+    "read": false,
+    "createdAt": "2026-06-11T05:00:00"
+  },
+  {
+    "notificationId": "15294a15-0a03-488e-b409-5d21e3c0bce9",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Tristan Han submitted a new application for \"International Biology Evening Support Teaching Assistant\".",
+    "applicationId": "37b1cdec-162f-4159-9fd0-0c64ab687eea",
+    "jobId": "job-045",
+    "read": false,
+    "createdAt": "2026-06-10T08:00:00"
+  },
+  {
+    "notificationId": "b2ec91c1-56b7-4560-9f02-537c7ed740b9",
+    "recipientUserId": "231221666",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Biology Evening Support Teaching Assistant\" is now Accepted.",
+    "applicationId": "37b1cdec-162f-4159-9fd0-0c64ab687eea",
+    "jobId": "job-045",
+    "read": false,
+    "createdAt": "2026-06-15T09:00:00"
+  },
+  {
+    "notificationId": "a7f24bc0-e519-4ae0-a923-6bb87c4d05e5",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Wendy Shi submitted a new application for \"International Research Methods Workshop Teaching Assistant\".",
+    "applicationId": "4ad0e612-0268-4494-9bdd-1d4e89a84193",
+    "jobId": "job-048",
+    "read": false,
+    "createdAt": "2026-06-10T15:00:00"
+  },
+  {
+    "notificationId": "5268dad4-bb01-4b6e-89e5-bd685fb023d0",
+    "recipientUserId": "231221667",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Research Methods Workshop Teaching Assistant\" is now Rejected.",
+    "applicationId": "4ad0e612-0268-4494-9bdd-1d4e89a84193",
+    "jobId": "job-048",
+    "read": true,
+    "createdAt": "2026-06-14T18:00:00"
+  },
+  {
+    "notificationId": "40e5fa46-fdba-4715-80e4-21fd9c2fcc5e",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Wendy Shi submitted a new application for \"Operating Systems Project Teaching Assistant\".",
+    "applicationId": "a39ab42c-0562-4ebd-aef1-df924bbbc84b",
+    "jobId": "job-005",
+    "read": false,
+    "createdAt": "2026-06-10T22:00:00"
+  },
+  {
+    "notificationId": "e630e88e-5855-4808-8e94-9b2137e7d7ab",
+    "recipientUserId": "231221667",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Operating Systems Project Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "a39ab42c-0562-4ebd-aef1-df924bbbc84b",
+    "jobId": "job-005",
+    "read": false,
+    "createdAt": "2026-06-14T00:00:00"
+  },
+  {
+    "notificationId": "50dd19ae-e256-46dc-acd8-ecd44540bdbb",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Java Programming Teaching Assistant\".",
+    "applicationId": "7eb05ad3-b605-40fc-aebc-90699126e878",
+    "jobId": "job-001",
+    "read": true,
+    "createdAt": "2026-06-11T05:00:00"
+  },
+  {
+    "notificationId": "30239025-dd1d-4f77-ac46-dbffb49ab336",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Front-End Development Workshop Teaching Assistant\".",
+    "applicationId": "cd57b697-14c4-44a2-bfc2-90208d0e4eb5",
+    "jobId": "job-008",
+    "read": false,
+    "createdAt": "2026-06-11T12:00:00"
+  },
+  {
+    "notificationId": "66ee667f-534a-491d-a1a5-4ce045336d89",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Front-End Development Workshop Teaching Assistant\" is now In Review.",
+    "applicationId": "cd57b697-14c4-44a2-bfc2-90208d0e4eb5",
+    "jobId": "job-008",
+    "read": true,
+    "createdAt": "2026-06-12T16:00:00"
+  },
+  {
+    "notificationId": "3f57d521-c913-448d-a39d-6bd6364ff0b8",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Computer Organization Evening Support Teaching Assistant\".",
+    "applicationId": "ac0b4e6e-68b4-4d86-a940-a38a68a615f5",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-06-11T19:00:00"
+  },
+  {
+    "notificationId": "86a77937-e628-4605-a79d-180a647033ce",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Organization Evening Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "ac0b4e6e-68b4-4d86-a940-a38a68a615f5",
+    "jobId": "job-015",
+    "read": false,
+    "createdAt": "2026-06-14T21:00:00"
+  },
+  {
+    "notificationId": "1cefdf0c-4c42-4a8f-afd3-8c13d9a71dba",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Computer Graphics Lab Teaching Assistant\".",
+    "applicationId": "b98d84a7-ca38-4f8d-bac7-08f156453bc0",
+    "jobId": "job-022",
+    "read": false,
+    "createdAt": "2026-06-12T02:00:00"
+  },
+  {
+    "notificationId": "c29a6b61-47ad-46f1-aa04-5cf1631f5539",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Graphics Lab Teaching Assistant\" is now Accepted.",
+    "applicationId": "b98d84a7-ca38-4f8d-bac7-08f156453bc0",
+    "jobId": "job-022",
+    "read": false,
+    "createdAt": "2026-06-17T03:00:00"
+  },
+  {
+    "notificationId": "dde9a6a9-406a-4758-80ce-3bc0069c7489",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Project Management Support Teaching Assistant\".",
+    "applicationId": "8eaa0871-46ca-4e4e-a728-3a9a1eb67062",
+    "jobId": "job-029",
+    "read": true,
+    "createdAt": "2026-06-12T09:00:00"
+  },
+  {
+    "notificationId": "79063a59-327a-4fd6-98fb-8f336ec830f2",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Project Management Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "8eaa0871-46ca-4e4e-a728-3a9a1eb67062",
+    "jobId": "job-029",
+    "read": true,
+    "createdAt": "2026-06-16T12:00:00"
+  },
+  {
+    "notificationId": "3e63f154-4bc8-43d8-847e-bbd5e5853470",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Product Prototyping Project Teaching Assistant\".",
+    "applicationId": "f3162935-0660-4b6b-95e3-576c4ec1d2c8",
+    "jobId": "job-036",
+    "read": false,
+    "createdAt": "2026-06-12T16:00:00"
+  },
+  {
+    "notificationId": "a7e00174-e510-4369-bb61-293bed090840",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"International Chemistry Grading Teaching Assistant\".",
+    "applicationId": "f6513d7e-32e9-4f21-818a-0f76f717988e",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-06-12T23:00:00"
+  },
+  {
+    "notificationId": "90b63fae-21b5-4d7f-8aff-4bf69249dfc3",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Chemistry Grading Teaching Assistant\" is now In Review.",
+    "applicationId": "f6513d7e-32e9-4f21-818a-0f76f717988e",
+    "jobId": "job-043",
+    "read": false,
+    "createdAt": "2026-06-14T03:00:00"
+  },
+  {
+    "notificationId": "b09ddaa4-0442-4333-8714-4446031f5205",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\".",
+    "applicationId": "0648b9ff-cf15-4e3e-98bd-04c523e281c1",
+    "jobId": "job-050",
+    "read": false,
+    "createdAt": "2026-06-13T06:00:00"
+  },
+  {
+    "notificationId": "498855c9-1daf-45e8-86c7-98694cfd0965",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Project-Based Learning Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "0648b9ff-cf15-4e3e-98bd-04c523e281c1",
+    "jobId": "job-050",
+    "read": true,
+    "createdAt": "2026-06-18T07:00:00"
+  },
+  {
+    "notificationId": "93b25ca6-429d-4727-8356-8a3687fb37bf",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Database Systems Grading Teaching Assistant\".",
+    "applicationId": "5a543502-dc8a-4f24-b9d5-1031c5d46092",
+    "jobId": "job-007",
+    "read": true,
+    "createdAt": "2026-06-13T13:00:00"
+  },
+  {
+    "notificationId": "27a7df17-1ec0-46ce-8cd7-035e5c7ecaa0",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Database Systems Grading Teaching Assistant\" is now Rejected.",
+    "applicationId": "5a543502-dc8a-4f24-b9d5-1031c5d46092",
+    "jobId": "job-007",
+    "read": false,
+    "createdAt": "2026-06-17T16:00:00"
+  },
+  {
+    "notificationId": "0bba27aa-171d-45bb-b116-ef766bb1cfd1",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Digital Logic Discussion Teaching Assistant\".",
+    "applicationId": "12bf7ae0-61b6-4508-83a0-2fcdf239b20f",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-06-13T20:00:00"
+  },
+  {
+    "notificationId": "139b643b-04e9-4e1c-8dff-ade85fb44cd7",
+    "recipientUserId": "231221668",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Digital Logic Discussion Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "12bf7ae0-61b6-4508-83a0-2fcdf239b20f",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-06-16T22:00:00"
+  },
+  {
+    "notificationId": "cc996b8f-f960-4ae0-ab32-b5a56d848646",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Colin Fu submitted a new application for \"Human-Computer Interaction Teaching Assistant\".",
+    "applicationId": "2ee02ec1-232c-4d6d-be0c-aebc0f1cd7b8",
+    "jobId": "job-021",
+    "read": false,
+    "createdAt": "2026-06-14T03:00:00"
+  },
+  {
+    "notificationId": "e01e83ea-2e0f-4e90-8c7b-c5609064386a",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Python Programming Evening Support Teaching Assistant\".",
+    "applicationId": "b22709b0-0702-4a80-a101-a7d1818433d4",
+    "jobId": "job-004",
+    "read": false,
+    "createdAt": "2026-06-14T10:00:00"
+  },
+  {
+    "notificationId": "9d2fc350-bd0e-40a7-85a3-984e55169c14",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Python Programming Evening Support Teaching Assistant\" is now In Review.",
+    "applicationId": "b22709b0-0702-4a80-a101-a7d1818433d4",
+    "jobId": "job-004",
+    "read": false,
+    "createdAt": "2026-06-15T14:00:00"
+  },
+  {
+    "notificationId": "79d42dc4-e422-416c-b46f-b558758d889d",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Machine Learning Foundations Teaching Assistant\".",
+    "applicationId": "aa78e92a-7ff9-4e01-b1ab-45eb104f33c5",
+    "jobId": "job-011",
+    "read": true,
+    "createdAt": "2026-06-14T17:00:00"
+  },
+  {
+    "notificationId": "dc1304d1-abd6-4917-b80d-e0de66db7e55",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Machine Learning Foundations Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "aa78e92a-7ff9-4e01-b1ab-45eb104f33c5",
+    "jobId": "job-011",
+    "read": false,
+    "createdAt": "2026-06-17T19:00:00"
+  },
+  {
+    "notificationId": "2419ff2e-ada8-4c35-a04e-511062ffcc26",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Object-Oriented Analysis Workshop Teaching Assistant\".",
+    "applicationId": "5331b9c5-fedb-45f3-8e00-cbc0422795f4",
+    "jobId": "job-018",
+    "read": false,
+    "createdAt": "2026-06-15T00:00:00"
+  },
+  {
+    "notificationId": "ef7c5f45-cd97-4ff7-b87f-0588a55500ec",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Object-Oriented Analysis Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "5331b9c5-fedb-45f3-8e00-cbc0422795f4",
+    "jobId": "job-018",
+    "read": true,
+    "createdAt": "2026-06-20T01:00:00"
+  },
+  {
+    "notificationId": "9f8bd6c3-717a-47d3-923f-8588773527aa",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Blockchain Technology Evening Support Teaching Assistant\".",
+    "applicationId": "ee56c189-1bc1-4f8f-a433-cd00084d0c7b",
+    "jobId": "job-025",
+    "read": false,
+    "createdAt": "2026-06-15T07:00:00"
+  },
+  {
+    "notificationId": "e4e7e666-06c1-40f7-9284-b19f2397528e",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Blockchain Technology Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "ee56c189-1bc1-4f8f-a433-cd00084d0c7b",
+    "jobId": "job-025",
+    "read": false,
+    "createdAt": "2026-06-19T10:00:00"
+  },
+  {
+    "notificationId": "4e714c8a-a64a-4fb8-a27e-6be39bc4b4b5",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Advanced Mathematics Practice Teaching Assistant\".",
+    "applicationId": "49eb17dd-420e-41f6-b60f-7c1e26a92ec7",
+    "jobId": "job-032",
+    "read": false,
+    "createdAt": "2026-06-15T14:00:00"
+  },
+  {
+    "notificationId": "3f79a84d-a7dd-4fae-800c-2aee821a3848",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Innovation and Entrepreneurship Support Teaching Assistant\".",
+    "applicationId": "3d3a503d-ebf7-4634-adf0-62747767846e",
+    "jobId": "job-039",
+    "read": true,
+    "createdAt": "2026-06-15T21:00:00"
+  },
+  {
+    "notificationId": "70e8caa4-e9ed-47d0-b9ff-86274602d0df",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Innovation and Entrepreneurship Support Teaching Assistant\" is now In Review.",
+    "applicationId": "3d3a503d-ebf7-4634-adf0-62747767846e",
+    "jobId": "job-039",
+    "read": true,
+    "createdAt": "2026-06-17T01:00:00"
+  },
+  {
+    "notificationId": "e5c5fe54-6e2f-4b16-9938-4667e0e4242b",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"International Computer Science Project Teaching Assistant\".",
+    "applicationId": "c7bbd3c4-8ede-4bd8-80a8-10e6b83602d0",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-06-16T04:00:00"
+  },
+  {
+    "notificationId": "d82fd9de-6666-412e-905a-676b11e8c946",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Computer Science Project Teaching Assistant\" is now Accepted.",
+    "applicationId": "c7bbd3c4-8ede-4bd8-80a8-10e6b83602d0",
+    "jobId": "job-046",
+    "read": false,
+    "createdAt": "2026-06-21T05:00:00"
+  },
+  {
+    "notificationId": "5d7f8dd6-8484-40e9-828a-1d92e1c5ace0",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Discrete Mathematics Discussion Teaching Assistant\".",
+    "applicationId": "ad94fc18-e573-4041-8c61-1740c8fe2d54",
+    "jobId": "job-003",
+    "read": false,
+    "createdAt": "2026-06-16T11:00:00"
+  },
+  {
+    "notificationId": "c34ecea1-b777-43ae-bc16-c81c3aefd427",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Discrete Mathematics Discussion Teaching Assistant\" is now Rejected.",
+    "applicationId": "ad94fc18-e573-4041-8c61-1740c8fe2d54",
+    "jobId": "job-003",
+    "read": false,
+    "createdAt": "2026-06-20T14:00:00"
+  },
+  {
+    "notificationId": "f065f1b3-1d11-488d-a03c-5ae0c8cfd383",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Introduction to AI Presentation Coaching Teaching Assistant\".",
+    "applicationId": "c7c16287-dcc6-43d6-946b-831184c4647d",
+    "jobId": "job-010",
+    "read": false,
+    "createdAt": "2026-06-16T18:00:00"
+  },
+  {
+    "notificationId": "9258769f-cc5e-4ba4-9276-28fa649ace82",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Introduction to AI Presentation Coaching Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "c7c16287-dcc6-43d6-946b-831184c4647d",
+    "jobId": "job-010",
+    "read": true,
+    "createdAt": "2026-06-19T20:00:00"
+  },
+  {
+    "notificationId": "5b739e68-313e-4a0e-9c77-f68985300da9",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Information Security Lab Duty Teaching Assistant\".",
+    "applicationId": "352b5316-1a5f-4570-a005-bf83269fb594",
+    "jobId": "job-017",
+    "read": true,
+    "createdAt": "2026-06-17T01:00:00"
+  },
+  {
+    "notificationId": "7c311ae2-3462-4f0f-9185-d67687ed44ac",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Queenie Ruan submitted a new application for \"Big Data Analytics Discussion Teaching Assistant\".",
+    "applicationId": "736c472b-4f07-4aa3-9680-d6043bec1a5b",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-06-17T08:00:00"
+  },
+  {
+    "notificationId": "29418371-b12c-4d71-b461-2cb9589a5381",
+    "recipientUserId": "231221669",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Big Data Analytics Discussion Teaching Assistant\" is now In Review.",
+    "applicationId": "736c472b-4f07-4aa3-9680-d6043bec1a5b",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-06-18T12:00:00"
+  },
+  {
+    "notificationId": "36830d9b-4f3f-4533-8ee9-c3bb16f43465",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Database Systems Grading Teaching Assistant\".",
+    "applicationId": "ba8f2613-968f-4404-8404-436f63388673",
+    "jobId": "job-007",
+    "read": false,
+    "createdAt": "2026-06-17T15:00:00"
+  },
+  {
+    "notificationId": "3100f381-d59b-4161-9d2c-588924305671",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Database Systems Grading Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "ba8f2613-968f-4404-8404-436f63388673",
+    "jobId": "job-007",
+    "read": true,
+    "createdAt": "2026-06-20T17:00:00"
+  },
+  {
+    "notificationId": "764bf355-589e-4716-b1db-65fb3fb8a3ad",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Digital Logic Discussion Teaching Assistant\".",
+    "applicationId": "dde508d2-1a11-4a81-934c-70c4e10c5638",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-06-17T22:00:00"
+  },
+  {
+    "notificationId": "44f4c808-2858-47c1-bccb-c13e9346e9bc",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Digital Logic Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "dde508d2-1a11-4a81-934c-70c4e10c5638",
+    "jobId": "job-014",
+    "read": false,
+    "createdAt": "2026-06-22T23:00:00"
+  },
+  {
+    "notificationId": "9189d9df-b14d-4320-b1d0-ee3b1c420c6b",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Human-Computer Interaction Teaching Assistant\".",
+    "applicationId": "45ecff2d-b448-46b0-a171-0eadac379768",
+    "jobId": "job-021",
+    "read": true,
+    "createdAt": "2026-06-18T05:00:00"
+  },
+  {
+    "notificationId": "877c2819-5dd6-4411-b50c-c7627d95cb4a",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Human-Computer Interaction Teaching Assistant\" is now Rejected.",
+    "applicationId": "45ecff2d-b448-46b0-a171-0eadac379768",
+    "jobId": "job-021",
+    "read": false,
+    "createdAt": "2026-06-22T08:00:00"
+  },
+  {
+    "notificationId": "222ff0b7-d656-4d04-8025-7a6fd2ef05cf",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Numerical Computing Workshop Teaching Assistant\".",
+    "applicationId": "b606a1d5-eb57-4a88-906b-a2a5a57409f3",
+    "jobId": "job-028",
+    "read": false,
+    "createdAt": "2026-06-18T12:00:00"
+  },
+  {
+    "notificationId": "ac29d7bd-de75-4754-94cf-58b0be4088bf",
+    "recipientUserId": "MO1015",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Data Visualization Evening Support Teaching Assistant\".",
+    "applicationId": "2397571a-e64f-42a8-8b44-a2176ee5982a",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-06-18T19:00:00"
+  },
+  {
+    "notificationId": "d8649d52-a281-4d6d-9ae7-3941057d4cc6",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Visualization Evening Support Teaching Assistant\" is now In Review.",
+    "applicationId": "2397571a-e64f-42a8-8b44-a2176ee5982a",
+    "jobId": "job-035",
+    "read": false,
+    "createdAt": "2026-06-19T23:00:00"
+  },
+  {
+    "notificationId": "68110f4a-137e-46d1-9e66-d86e5781dafe",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"International Physics Lab Teaching Assistant\".",
+    "applicationId": "5ef2a0bb-a613-4b54-90a3-91cde9636ba2",
+    "jobId": "job-042",
+    "read": false,
+    "createdAt": "2026-06-19T02:00:00"
+  },
+  {
+    "notificationId": "d6febcb5-297e-42fa-ae5e-9e84e8eb3327",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Physics Lab Teaching Assistant\" is now Accepted.",
+    "applicationId": "5ef2a0bb-a613-4b54-90a3-91cde9636ba2",
+    "jobId": "job-042",
+    "read": false,
+    "createdAt": "2026-06-24T03:00:00"
+  },
+  {
+    "notificationId": "04143688-733c-4239-8d08-2babbdaedc4e",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"International Academic Communication Support Teaching Assistant\".",
+    "applicationId": "9d67c369-6582-4e60-8359-8ebe689810ed",
+    "jobId": "job-049",
+    "read": true,
+    "createdAt": "2026-06-19T09:00:00"
+  },
+  {
+    "notificationId": "e72ab4bc-36fb-4e76-8b36-23b4409fe502",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Academic Communication Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "9d67c369-6582-4e60-8359-8ebe689810ed",
+    "jobId": "job-049",
+    "read": true,
+    "createdAt": "2026-06-23T12:00:00"
+  },
+  {
+    "notificationId": "42becec8-0a90-40f1-b2be-6a46dd74900c",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Computer Networks Lab Duty Teaching Assistant\".",
+    "applicationId": "c8745b25-a57d-4188-bdc8-179a788bf130",
+    "jobId": "job-006",
+    "read": false,
+    "createdAt": "2026-06-19T16:00:00"
+  },
+  {
+    "notificationId": "0cf26afd-8f3a-49b2-affa-0b027de8cca0",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Computer Networks Lab Duty Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "c8745b25-a57d-4188-bdc8-179a788bf130",
+    "jobId": "job-006",
+    "read": false,
+    "createdAt": "2026-06-22T18:00:00"
+  },
+  {
+    "notificationId": "e227fed4-4590-49a3-b252-c99390777d65",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Probability and Statistics Grading Teaching Assistant\".",
+    "applicationId": "53445344-5785-488c-87ff-bb3a19f4c853",
+    "jobId": "job-013",
+    "read": false,
+    "createdAt": "2026-06-19T23:00:00"
+  },
+  {
+    "notificationId": "a404b993-90ef-4149-a6dd-9012ba7260aa",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Cloud Computing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "b379545e-f215-4b03-acaa-81c5a7add4c1",
+    "jobId": "job-020",
+    "read": false,
+    "createdAt": "2026-06-20T06:00:00"
+  },
+  {
+    "notificationId": "75422308-ce82-4fcd-8bfb-6d5445199f92",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Cloud Computing Presentation Coaching Teaching Assistant\" is now In Review.",
+    "applicationId": "b379545e-f215-4b03-acaa-81c5a7add4c1",
+    "jobId": "job-020",
+    "read": true,
+    "createdAt": "2026-06-21T10:00:00"
+  },
+  {
+    "notificationId": "aaa2a8a6-ecb2-478e-b4f0-7480792a8786",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Shawn Lei submitted a new application for \"Compiler Principles Lab Duty Teaching Assistant\".",
+    "applicationId": "11b3ef6d-4db2-499e-bbe1-8c7ade1d9d1e",
+    "jobId": "job-027",
+    "read": true,
+    "createdAt": "2026-06-20T13:00:00"
+  },
+  {
+    "notificationId": "f2079669-9c42-4ee8-a501-43dd29fe82f1",
+    "recipientUserId": "231221670",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Compiler Principles Lab Duty Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "11b3ef6d-4db2-499e-bbe1-8c7ade1d9d1e",
+    "jobId": "job-027",
+    "read": false,
+    "createdAt": "2026-06-23T15:00:00"
+  },
+  {
+    "notificationId": "e5f854b0-7d8a-41a4-9f56-b2acbd7aec5d",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Introduction to AI Presentation Coaching Teaching Assistant\".",
+    "applicationId": "4ded33f7-24d9-48dc-99ae-8430fdce1f08",
+    "jobId": "job-010",
+    "read": false,
+    "createdAt": "2026-06-20T20:00:00"
+  },
+  {
+    "notificationId": "6afd5fa5-5c36-4254-ba65-a219849ecec7",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Introduction to AI Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "4ded33f7-24d9-48dc-99ae-8430fdce1f08",
+    "jobId": "job-010",
+    "read": false,
+    "createdAt": "2026-06-25T21:00:00"
+  },
+  {
+    "notificationId": "b60d61c1-b68e-494d-9c5d-dba618755157",
+    "recipientUserId": "MO1017",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Information Security Lab Duty Teaching Assistant\".",
+    "applicationId": "21c8c113-48f6-4463-aafa-2eea2c707f39",
+    "jobId": "job-017",
+    "read": false,
+    "createdAt": "2026-06-21T03:00:00"
+  },
+  {
+    "notificationId": "0bbbef37-a28a-4678-b176-5c767ef168cb",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Security Lab Duty Teaching Assistant\" is now Rejected.",
+    "applicationId": "21c8c113-48f6-4463-aafa-2eea2c707f39",
+    "jobId": "job-017",
+    "read": true,
+    "createdAt": "2026-06-25T06:00:00"
+  },
+  {
+    "notificationId": "6f016552-0f08-4ea2-b3c6-e2bd893b53a4",
+    "recipientUserId": "MO1004",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Big Data Analytics Discussion Teaching Assistant\".",
+    "applicationId": "f4cf5c51-532d-4e55-a981-0e99541899b8",
+    "jobId": "job-024",
+    "read": false,
+    "createdAt": "2026-06-21T10:00:00"
+  },
+  {
+    "notificationId": "82082c0b-a42f-45f1-9182-39ab086a7346",
+    "recipientUserId": "MO1011",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Calculus Teaching Assistant\".",
+    "applicationId": "396fe039-59b8-4559-a0b7-1b5bf8ee0d8f",
+    "jobId": "job-031",
+    "read": true,
+    "createdAt": "2026-06-21T17:00:00"
+  },
+  {
+    "notificationId": "3c869227-f1f8-4438-960e-a1d785c4f499",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Calculus Teaching Assistant\" is now In Review.",
+    "applicationId": "396fe039-59b8-4559-a0b7-1b5bf8ee0d8f",
+    "jobId": "job-031",
+    "read": false,
+    "createdAt": "2026-06-22T21:00:00"
+  },
+  {
+    "notificationId": "4d500b22-8064-4a02-9297-849f8f16fc90",
+    "recipientUserId": "MO1018",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Educational Technology Practice Workshop Teaching Assistant\".",
+    "applicationId": "9cbc703e-9e25-410c-88bb-f06156acd6bc",
+    "jobId": "job-038",
+    "read": false,
+    "createdAt": "2026-06-22T00:00:00"
+  },
+  {
+    "notificationId": "27a9c33a-befc-4885-9fbf-a938a360a61b",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Educational Technology Practice Workshop Teaching Assistant\" is now Accepted.",
+    "applicationId": "9cbc703e-9e25-410c-88bb-f06156acd6bc",
+    "jobId": "job-038",
+    "read": true,
+    "createdAt": "2026-06-27T01:00:00"
+  },
+  {
+    "notificationId": "35ebf77a-3847-45cf-bdf6-1b1d8a2647c7",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"International Biology Evening Support Teaching Assistant\".",
+    "applicationId": "9620400f-e8af-43cc-9424-3b39a4b5d075",
+    "jobId": "job-045",
+    "read": false,
+    "createdAt": "2026-06-22T07:00:00"
+  },
+  {
+    "notificationId": "07966a63-b6e1-4cba-b6bb-5c2e23fec57c",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Biology Evening Support Teaching Assistant\" is now Rejected.",
+    "applicationId": "9620400f-e8af-43cc-9424-3b39a4b5d075",
+    "jobId": "job-045",
+    "read": false,
+    "createdAt": "2026-06-26T10:00:00"
+  },
+  {
+    "notificationId": "6cc1ea95-fc66-4525-aa44-3b401bf65be0",
+    "recipientUserId": "MO1002",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Data Structures Lab Teaching Assistant\".",
+    "applicationId": "920b640c-4b89-461d-8934-e8d305dfef2d",
+    "jobId": "job-002",
+    "read": false,
+    "createdAt": "2026-06-22T14:00:00"
+  },
+  {
+    "notificationId": "9361d24c-e22a-4442-8538-7aa9544e7337",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Data Structures Lab Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "920b640c-4b89-461d-8934-e8d305dfef2d",
+    "jobId": "job-002",
+    "read": false,
+    "createdAt": "2026-06-25T16:00:00"
+  },
+  {
+    "notificationId": "00337163-025b-4b43-a4ec-dccf34040549",
+    "recipientUserId": "MO1009",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Software Engineering Learning Support Teaching Assistant\".",
+    "applicationId": "8d6cafe5-9ddd-416f-8339-b9d8b52b825e",
+    "jobId": "job-009",
+    "read": true,
+    "createdAt": "2026-06-22T21:00:00"
+  },
+  {
+    "notificationId": "38af80cb-0c36-4f29-8b76-cb1d864fe761",
+    "recipientUserId": "MO1016",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Algorithm Design Project Teaching Assistant\".",
+    "applicationId": "8092ac7d-77a7-4f14-a3a4-1a9087ab6478",
+    "jobId": "job-016",
+    "read": false,
+    "createdAt": "2026-06-23T04:00:00"
+  },
+  {
+    "notificationId": "d2f5e434-b583-499b-beab-e1ee62785e0c",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Algorithm Design Project Teaching Assistant\" is now In Review.",
+    "applicationId": "8092ac7d-77a7-4f14-a3a4-1a9087ab6478",
+    "jobId": "job-016",
+    "read": false,
+    "createdAt": "2026-06-24T08:00:00"
+  },
+  {
+    "notificationId": "97c1826f-9d66-4794-8eb5-83675e9277d4",
+    "recipientUserId": "MO1003",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Natural Language Processing Grading Teaching Assistant\".",
+    "applicationId": "e807ce52-ea24-4507-a050-b89ec4c99df4",
+    "jobId": "job-023",
+    "read": false,
+    "createdAt": "2026-06-23T11:00:00"
+  },
+  {
+    "notificationId": "3a6ac26f-2227-43ad-8a1b-ac7811369c7e",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Natural Language Processing Grading Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "e807ce52-ea24-4507-a050-b89ec4c99df4",
+    "jobId": "job-023",
+    "read": false,
+    "createdAt": "2026-06-26T13:00:00"
+  },
+  {
+    "notificationId": "24a3d12a-2a58-488c-9c15-d92c7d4aff64",
+    "recipientUserId": "MO1010",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Theresa Du submitted a new application for \"Academic English Presentation Coaching Teaching Assistant\".",
+    "applicationId": "302cea83-a68b-455b-8850-703460e7ee87",
+    "jobId": "job-030",
+    "read": false,
+    "createdAt": "2026-06-23T18:00:00"
+  },
+  {
+    "notificationId": "27ddce17-5533-451d-b1ec-b3c9154e4144",
+    "recipientUserId": "231221671",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Academic English Presentation Coaching Teaching Assistant\" is now Accepted.",
+    "applicationId": "302cea83-a68b-455b-8850-703460e7ee87",
+    "jobId": "job-030",
+    "read": true,
+    "createdAt": "2026-06-28T19:00:00"
+  },
+  {
+    "notificationId": "5b497a5a-f330-4f0d-8bdf-c67ea799ac2c",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Probability and Statistics Grading Teaching Assistant\".",
+    "applicationId": "ca381154-7965-40ed-93ee-80c5dcd0db87",
+    "jobId": "job-013",
+    "read": true,
+    "createdAt": "2026-06-24T01:00:00"
+  },
+  {
+    "notificationId": "4f5782f6-5561-4e4a-b5cd-dc50d0d288eb",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Probability and Statistics Grading Teaching Assistant\" is now Rejected.",
+    "applicationId": "ca381154-7965-40ed-93ee-80c5dcd0db87",
+    "jobId": "job-013",
+    "read": false,
+    "createdAt": "2026-06-28T04:00:00"
+  },
+  {
+    "notificationId": "23f8e170-5d7d-4dc7-98a2-6118e04aee17",
+    "recipientUserId": "MO1020",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Cloud Computing Presentation Coaching Teaching Assistant\".",
+    "applicationId": "7e11279c-d10f-46ba-a45b-cb7d268c84e4",
+    "jobId": "job-020",
+    "read": false,
+    "createdAt": "2026-06-24T08:00:00"
+  },
+  {
+    "notificationId": "5f7194d9-0a11-4eb0-b3f3-8ae51c203d95",
+    "recipientUserId": "MO1007",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Compiler Principles Lab Duty Teaching Assistant\".",
+    "applicationId": "1bc2c661-0011-4b2a-92d4-c36493cf268b",
+    "jobId": "job-027",
+    "read": false,
+    "createdAt": "2026-06-24T15:00:00"
+  },
+  {
+    "notificationId": "dddf792c-75b7-45e5-bd4e-94fec3e32742",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Compiler Principles Lab Duty Teaching Assistant\" is now In Review.",
+    "applicationId": "1bc2c661-0011-4b2a-92d4-c36493cf268b",
+    "jobId": "job-027",
+    "read": true,
+    "createdAt": "2026-06-25T19:00:00"
+  },
+  {
+    "notificationId": "3da88115-cb44-418d-94c4-34f6a8e2b3c4",
+    "recipientUserId": "MO1014",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Information Retrieval Discussion Teaching Assistant\".",
+    "applicationId": "f8106541-07ee-4460-8a7e-50bcec3239d2",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-06-24T22:00:00"
+  },
+  {
+    "notificationId": "76c59ff5-0bd2-44ea-8984-aba722232977",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Information Retrieval Discussion Teaching Assistant\" is now Accepted.",
+    "applicationId": "f8106541-07ee-4460-8a7e-50bcec3239d2",
+    "jobId": "job-034",
+    "read": false,
+    "createdAt": "2026-06-29T23:00:00"
+  },
+  {
+    "notificationId": "3ef87d61-e062-411e-b06c-ec8cd6e9ad03",
+    "recipientUserId": "MO1001",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"International Mathematics Teaching Assistant\".",
+    "applicationId": "41cca7b2-7677-4938-b93e-4a19f0ea1281",
+    "jobId": "job-041",
+    "read": true,
+    "createdAt": "2026-06-25T05:00:00"
+  },
+  {
+    "notificationId": "f117968b-55c9-4031-9543-e1cb1f192c18",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Mathematics Teaching Assistant\" is now Rejected.",
+    "applicationId": "41cca7b2-7677-4938-b93e-4a19f0ea1281",
+    "jobId": "job-041",
+    "read": false,
+    "createdAt": "2026-06-29T08:00:00"
+  },
+  {
+    "notificationId": "2d8a7ab5-1121-4c0a-9544-620bf74eeb55",
+    "recipientUserId": "MO1008",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"International Research Methods Workshop Teaching Assistant\".",
+    "applicationId": "0eb89b20-2968-4dcc-a4b3-22e2f2aba90d",
+    "jobId": "job-048",
+    "read": false,
+    "createdAt": "2026-06-25T12:00:00"
+  },
+  {
+    "notificationId": "0dc2d874-29e2-40ee-bb4d-2f41126cdb7c",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"International Research Methods Workshop Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "0eb89b20-2968-4dcc-a4b3-22e2f2aba90d",
+    "jobId": "job-048",
+    "read": true,
+    "createdAt": "2026-06-28T14:00:00"
+  },
+  {
+    "notificationId": "5ed7c49d-89c3-4362-bf57-e05e4fd1724a",
+    "recipientUserId": "MO1005",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Operating Systems Project Teaching Assistant\".",
+    "applicationId": "7a90cbb3-345e-4532-b196-89312ce1f7a2",
+    "jobId": "job-005",
+    "read": false,
+    "createdAt": "2026-06-25T19:00:00"
+  },
+  {
+    "notificationId": "ab8defc8-def7-49c4-b8b9-bdf1d99ba0d8",
+    "recipientUserId": "MO1012",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Linear Algebra Lab Teaching Assistant\".",
+    "applicationId": "452f6fbd-65d7-46d8-9218-23b395a05d85",
+    "jobId": "job-012",
+    "read": false,
+    "createdAt": "2026-06-26T02:00:00"
+  },
+  {
+    "notificationId": "d91794f1-978d-4e49-9a27-e0159e9f6901",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Linear Algebra Lab Teaching Assistant\" is now In Review.",
+    "applicationId": "452f6fbd-65d7-46d8-9218-23b395a05d85",
+    "jobId": "job-012",
+    "read": false,
+    "createdAt": "2026-06-27T06:00:00"
+  },
+  {
+    "notificationId": "c271fd85-7db5-4caa-8b0e-f24b7d8ed226",
+    "recipientUserId": "MO1019",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Mobile App Development Support Teaching Assistant\".",
+    "applicationId": "81af39a7-16e1-48ba-b97b-3291755787f4",
+    "jobId": "job-019",
+    "read": true,
+    "createdAt": "2026-06-26T09:00:00"
+  },
+  {
+    "notificationId": "5630291a-2896-41fd-83f5-c07b1ca47b08",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Mobile App Development Support Teaching Assistant\" is now Shortlisted.",
+    "applicationId": "81af39a7-16e1-48ba-b97b-3291755787f4",
+    "jobId": "job-019",
+    "read": true,
+    "createdAt": "2026-06-29T11:00:00"
+  },
+  {
+    "notificationId": "1d352f68-7d9c-483f-95d7-1cc6519fedcd",
+    "recipientUserId": "MO1006",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Embedded Systems Project Teaching Assistant\".",
+    "applicationId": "db4b2d32-797e-44ea-ae82-4b10a744a8a2",
+    "jobId": "job-026",
+    "read": false,
+    "createdAt": "2026-06-26T16:00:00"
+  },
+  {
+    "notificationId": "abcdad70-ebb9-45a2-b776-40cd8d0524b1",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Embedded Systems Project Teaching Assistant\" is now Accepted.",
+    "applicationId": "db4b2d32-797e-44ea-ae82-4b10a744a8a2",
+    "jobId": "job-026",
+    "read": false,
+    "createdAt": "2026-07-01T17:00:00"
+  },
+  {
+    "notificationId": "e650b245-61b9-4a5e-b439-141287a457ef",
+    "recipientUserId": "MO1013",
+    "type": "NEW_APPLICATION_SUBMITTED",
+    "message": "Bruce Wen submitted a new application for \"Programming Contest Training Grading Teaching Assistant\".",
+    "applicationId": "7955cf16-5649-4334-96f5-e1b1c22ccd64",
+    "jobId": "job-033",
+    "read": false,
+    "createdAt": "2026-06-26T23:00:00"
+  },
+  {
+    "notificationId": "a6487139-dc6a-4864-a9d2-563c8d5ede0b",
+    "recipientUserId": "231221672",
+    "type": "APPLICATION_STATUS_CHANGED",
+    "message": "Your application for \"Programming Contest Training Grading Teaching Assistant\" is now Rejected.",
+    "applicationId": "7955cf16-5649-4334-96f5-e1b1c22ccd64",
+    "jobId": "job-033",
+    "read": false,
+    "createdAt": "2026-07-01T02:00:00"
+  }
+]

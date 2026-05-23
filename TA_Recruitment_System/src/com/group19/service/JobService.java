@@ -27,6 +27,10 @@ public class JobService {
         return jobDao.findById(jobId);
     }
 
+    public List<Job> findAllJobs() {
+        return new ArrayList<>(jobDao.findAll());
+    }
+
     /**
      * Jobs that are open for listing: status OPEN (or missing) and deadline not passed.
      */
@@ -111,6 +115,31 @@ public class JobService {
                 .collect(Collectors.toList());
     }
 
+    public List<Job> filterJobsByOwner(List<Job> jobs, String ownerMoUserId) {
+        if (jobs == null || jobs.isEmpty()) {
+            return new ArrayList<>();
+        }
+        if (ownerMoUserId == null || ownerMoUserId.isBlank()) {
+            return new ArrayList<>();
+        }
+        String normalizedOwner = ownerMoUserId.trim();
+        return jobs.stream()
+                .filter(job -> isOwnedBy(job, normalizedOwner))
+                .collect(Collectors.toList());
+    }
+
+    public List<Job> findJobsOwnedBy(String ownerMoUserId) {
+        return filterJobsByOwner(jobDao.findAll(), ownerMoUserId);
+    }
+
+    public boolean isOwnedBy(Job job, String ownerMoUserId) {
+        if (job == null || ownerMoUserId == null || ownerMoUserId.isBlank()) {
+            return false;
+        }
+        String jobOwner = job.getOwnerMoUserId();
+        return jobOwner != null && ownerMoUserId.trim().equalsIgnoreCase(jobOwner.trim());
+    }
+
     private static boolean matchesKeyword(Job job, String keyword) {
         if (keyword == null || keyword.isBlank()) {
             return true;
@@ -166,23 +195,9 @@ public class JobService {
     }
 
     public ServiceResult<Job> createJob(Job job) {
-        if (job.getTitle() == null || job.getTitle().trim().isEmpty()) {
-            return ServiceResult.failure("Title is required");
-        }
-        if (job.getDescription() == null || job.getDescription().trim().isEmpty()) {
-            return ServiceResult.failure("Description is required");
-        }
-        if (job.getRequirements() == null || job.getRequirements().trim().isEmpty()) {
-            return ServiceResult.failure("Requirements are required");
-        }
-        if (job.getHours() == null || job.getHours().trim().isEmpty()) {
-            return ServiceResult.failure("Hours are required");
-        }
-        if (job.getSchedule() == null || job.getSchedule().trim().isEmpty()) {
-            return ServiceResult.failure("Schedule is required");
-        }
-        if (job.getDeadline() == null || job.getDeadline().trim().isEmpty()) {
-            return ServiceResult.failure("Deadline is required");
+        ServiceResult<Job> validation = validateDraft(job);
+        if (!validation.isSuccess()) {
+            return validation;
         }
 
         job.setJobId(UUID.randomUUID().toString());
@@ -191,9 +206,130 @@ public class JobService {
 
         boolean success = jobDao.save(job);
         if (!success) {
-            return ServiceResult.failure("Failed to save job");
+            return ServiceResult.failure("Failed to save the job.");
         }
 
-        return ServiceResult.success(job, "Job posted successfully");
+        return ServiceResult.success(job, "Job posted successfully.");
+    }
+
+    public ServiceResult<Job> updateJob(Job job, String moUserId) {
+        if (job == null || job.getJobId() == null || job.getJobId().trim().isEmpty()) {
+            return ServiceResult.failure("Job ID is required.");
+        }
+        Job existing = jobDao.findById(job.getJobId().trim());
+        if (existing == null) {
+            return ServiceResult.failure("Job not found.");
+        }
+        if (!isOwnedBy(existing, moUserId)) {
+            return ServiceResult.failure("You can only edit jobs that you posted.");
+        }
+
+        ServiceResult<Job> validation = validateDraft(job);
+        if (!validation.isSuccess()) {
+            return validation;
+        }
+
+        job.setOwnerMoUserId(existing.getOwnerMoUserId());
+        job.setCreatedAt(existing.getCreatedAt());
+        job.setStatus(normalizeStatus(existing.getStatus()));
+
+        boolean updated = jobDao.update(job);
+        if (!updated) {
+            return ServiceResult.failure("Failed to update the job.");
+        }
+        return ServiceResult.success(job, "Job information updated successfully.");
+    }
+
+    public ServiceResult<Job> updateJobAsAdmin(Job job) {
+        if (job == null || job.getJobId() == null || job.getJobId().trim().isEmpty()) {
+            return ServiceResult.failure("Job ID is required.");
+        }
+        Job existing = jobDao.findById(job.getJobId().trim());
+        if (existing == null) {
+            return ServiceResult.failure("Job not found.");
+        }
+
+        ServiceResult<Job> validation = validateDraft(job);
+        if (!validation.isSuccess()) {
+            return validation;
+        }
+
+        job.setOwnerMoUserId(existing.getOwnerMoUserId());
+        job.setCreatedAt(existing.getCreatedAt());
+        job.setStatus(normalizeStatus(job.getStatus()));
+
+        boolean updated = jobDao.update(job);
+        if (!updated) {
+            return ServiceResult.failure("Failed to update the job.");
+        }
+        return ServiceResult.success(job, "Job information updated successfully.");
+    }
+
+    public ServiceResult<Void> deleteJob(String jobId, String moUserId) {
+        if (jobId == null || jobId.trim().isEmpty()) {
+            return ServiceResult.failure("Job ID is required.");
+        }
+        Job existing = jobDao.findById(jobId.trim());
+        if (existing == null) {
+            return ServiceResult.failure("Job not found.");
+        }
+        if (!isOwnedBy(existing, moUserId)) {
+            return ServiceResult.failure("You can only delete jobs that you posted.");
+        }
+        boolean deleted = jobDao.delete(jobId.trim());
+        if (!deleted) {
+            return ServiceResult.failure("Failed to delete the job.");
+        }
+        return ServiceResult.success(null, "Job deleted.");
+    }
+
+    public ServiceResult<Void> deleteJobAsAdmin(String jobId) {
+        if (jobId == null || jobId.trim().isEmpty()) {
+            return ServiceResult.failure("Job ID is required.");
+        }
+        Job existing = jobDao.findById(jobId.trim());
+        if (existing == null) {
+            return ServiceResult.failure("Job not found.");
+        }
+        boolean deleted = jobDao.delete(jobId.trim());
+        if (!deleted) {
+            return ServiceResult.failure("Failed to delete the job.");
+        }
+        return ServiceResult.success(null, "Job deleted.");
+    }
+
+    private ServiceResult<Job> validateDraft(Job job) {
+        if (job == null) {
+            return ServiceResult.failure("Job information cannot be empty.");
+        }
+        if (job.getTitle() == null || job.getTitle().trim().isEmpty()) {
+            return ServiceResult.failure("Job title cannot be empty.");
+        }
+        if (job.getDescription() == null || job.getDescription().trim().isEmpty()) {
+            return ServiceResult.failure("Job description cannot be empty.");
+        }
+        if (job.getRequirements() == null || job.getRequirements().trim().isEmpty()) {
+            return ServiceResult.failure("Requirements cannot be empty.");
+        }
+        if (job.getHours() == null || job.getHours().trim().isEmpty()) {
+            return ServiceResult.failure("Workload cannot be empty.");
+        }
+        if (job.getSchedule() == null || job.getSchedule().trim().isEmpty()) {
+            return ServiceResult.failure("Schedule cannot be empty.");
+        }
+        if (job.getDeadline() == null || job.getDeadline().trim().isEmpty()) {
+            return ServiceResult.failure("Deadline cannot be empty.");
+        }
+        if (job.getOwnerMoUserId() == null || job.getOwnerMoUserId().trim().isEmpty()) {
+            return ServiceResult.failure("Job owner cannot be empty.");
+        }
+        return ServiceResult.success(job, "");
+    }
+
+    private static String normalizeStatus(String status) {
+        if (status == null || status.isBlank()) {
+            return "OPEN";
+        }
+        return status.trim().toUpperCase(Locale.ROOT);
     }
 }

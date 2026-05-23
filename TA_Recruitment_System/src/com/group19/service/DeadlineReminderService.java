@@ -43,8 +43,12 @@ public class DeadlineReminderService {
         return buildReminderViews(allUpcoming, today, contextPath, true);
     }
 
-    public List<DeadlineReminderView> buildRemindersForMo(LocalDate today, String contextPath) {
-        return buildReminderViews(jobService.findUpcomingDeadlineJobs(today, DEFAULT_WITHIN_DAYS), today, contextPath, false);
+    public List<DeadlineReminderView> buildRemindersForMo(String moUserId, LocalDate today, String contextPath) {
+        List<Job> upcoming = jobService.findUpcomingDeadlineJobs(today, DEFAULT_WITHIN_DAYS);
+        if (moUserId == null || moUserId.isBlank()) {
+            return new ArrayList<>();
+        }
+        return buildReminderViews(jobService.filterJobsByOwner(upcoming, moUserId), today, contextPath, false);
     }
 
     private Set<String> collectTaRelevantJobIds(String taStudentId) {
@@ -101,7 +105,7 @@ public class DeadlineReminderService {
 
             long daysUntil = ChronoUnit.DAYS.between(today, deadline);
             DeadlineReminderView view = new DeadlineReminderView();
-            String title = job.getTitle() == null || job.getTitle().isBlank() ? "未命名岗位" : job.getTitle().trim();
+            String title = job.getTitle() == null || job.getTitle().isBlank() ? "Untitled job" : job.getTitle().trim();
             view.setJobTitle(HtmlEscape.escape(title));
             view.setDeadlineDisplay(deadline.format(dateFormatter));
             view.setDaysLabel(buildDaysLabel(daysUntil));
@@ -118,12 +122,12 @@ public class DeadlineReminderService {
 
     private static String buildDaysLabel(long daysUntil) {
         if (daysUntil <= 0) {
-            return "今天截止";
+            return "Due today";
         }
         if (daysUntil == 1) {
-            return "1 天后截止";
+            return "Due in 1 day";
         }
-        return daysUntil + " 天后截止";
+        return daysUntil + " days until deadline";
     }
 
     private static String reminderClass(long daysUntil) {

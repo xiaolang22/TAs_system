@@ -37,18 +37,18 @@ public class AccountCenterServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
 
         LoginUser loginUser = currentLoginUser(req);
-        if (loginUser == null || !"TA".equalsIgnoreCase(loginUser.getRole())) {
+        if (!isAllowedRole(loginUser)) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
         populateAccountPage(req, loginUser);
         if ("profile".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "个人信息已更新。");
+            req.setAttribute("success", "Profile information updated successfully.");
         } else if ("password".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "密码已更新。");
+            req.setAttribute("success", "Password updated successfully.");
         } else if ("avatar".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "头像已更新。");
+            req.setAttribute("success", "Avatar updated successfully.");
         }
         req.getRequestDispatcher("/WEB-INF/jsp/account_center.jsp").forward(req, resp);
     }
@@ -60,7 +60,7 @@ public class AccountCenterServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
 
         LoginUser loginUser = currentLoginUser(req);
-        if (loginUser == null || !"TA".equalsIgnoreCase(loginUser.getRole())) {
+        if (!isAllowedRole(loginUser)) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
@@ -91,7 +91,7 @@ public class AccountCenterServlet extends HttpServlet {
                 result = accountCenterService.updateAvatar(loginUser.getUserId(), avatarPart, resolveAvatarUploadDir());
                 break;
             default:
-                result = ServiceResult.failure("无法识别当前操作。");
+                result = ServiceResult.failure("Unable to recognize the current action.");
                 break;
         }
 
@@ -100,7 +100,7 @@ public class AccountCenterServlet extends HttpServlet {
             if (session != null) {
                 session.setAttribute("loginUser", result.getData());
             }
-            resp.sendRedirect(req.getContextPath() + "/ta/account?updated=" + action);
+            resp.sendRedirect(req.getContextPath() + accountPath(result.getData()) + "?updated=" + action);
             return;
         }
 
@@ -122,6 +122,9 @@ public class AccountCenterServlet extends HttpServlet {
 
     private void populateAccountPage(HttpServletRequest req, LoginUser loginUser) {
         req.setAttribute("loginUser", loginUser);
+        req.setAttribute("accountPath", accountPath(loginUser));
+        req.setAttribute("homePath", homePath(loginUser));
+        req.setAttribute("roleLabel", roleLabel(loginUser));
         ServiceResult<UserAccount> result = accountCenterService.loadAccount(loginUser.getUserId());
         if (result.isSuccess()) {
             req.setAttribute("account", result.getData());
@@ -168,9 +171,47 @@ public class AccountCenterServlet extends HttpServlet {
 
     private String buildAvatarInitial(String displayName) {
         if (displayName == null || displayName.isBlank()) {
-            return "TA";
+            return "U";
         }
         return displayName.trim().substring(0, 1);
+    }
+
+    private static boolean isAllowedRole(LoginUser loginUser) {
+        if (loginUser == null || loginUser.getRole() == null) {
+            return false;
+        }
+        String role = loginUser.getRole().trim();
+        return "TA".equalsIgnoreCase(role) || "MO".equalsIgnoreCase(role) || "ADMIN".equalsIgnoreCase(role);
+    }
+
+    private static String accountPath(LoginUser loginUser) {
+        if (loginUser != null && "ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            return "/admin/account";
+        }
+        if (loginUser != null && "MO".equalsIgnoreCase(loginUser.getRole())) {
+            return "/mo/account";
+        }
+        return "/ta/account";
+    }
+
+    private static String homePath(LoginUser loginUser) {
+        if (loginUser != null && "ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            return "/admin/home";
+        }
+        if (loginUser != null && "MO".equalsIgnoreCase(loginUser.getRole())) {
+            return "/mo/home";
+        }
+        return "/ta/home";
+    }
+
+    private static String roleLabel(LoginUser loginUser) {
+        if (loginUser != null && "ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            return "ADMIN";
+        }
+        if (loginUser != null && "MO".equalsIgnoreCase(loginUser.getRole())) {
+            return "MO";
+        }
+        return "TA";
     }
 
     private String trimToEmpty(String value) {

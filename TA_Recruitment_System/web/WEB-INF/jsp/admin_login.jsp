@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理员登录 - TA Recruitment System</title>
+    <title>Admin Sign In - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="auth-page">
 <main class="auth-shell">
     <section class="auth-card auth-card-admin">
-        <a class="admin-entry" href="${pageContext.request.contextPath}/login">返回用户入口</a>
+        <a class="admin-entry" href="${pageContext.request.contextPath}/login">Back to User Access</a>
 
         <section class="auth-brand auth-brand-compact">
             <div class="auth-brand-mark" aria-hidden="true">
@@ -42,7 +42,7 @@
         </section>
 
         <div class="auth-accent"></div>
-        <h1 class="auth-title-fixed">管理员登录</h1>
+        <h1 class="auth-title-fixed">Admin Sign In</h1>
 
         <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
@@ -51,25 +51,25 @@
 
             <div class="auth-fields">
                 <div class="auth-field">
-                    <label class="sr-only" for="adminUsername">账号</label>
-                    <input id="adminUsername" name="username" type="text" placeholder="账号" value="${username}" required>
+                    <label class="sr-only" for="adminUsername">Username</label>
+                    <input id="adminUsername" name="username" type="text" placeholder="Username" value="${username}" required>
                 </div>
 
                 <div class="auth-field">
-                    <label class="sr-only" for="adminPassword">密码</label>
-                    <input id="adminPassword" name="password" type="password" placeholder="密码" required>
+                    <label class="sr-only" for="adminPassword">Password</label>
+                    <input id="adminPassword" name="password" type="password" placeholder="Password" required>
                 </div>
             </div>
 
-            <button type="submit" class="auth-submit auth-submit-main">登录</button>
+            <button type="submit" class="auth-submit auth-submit-main">Sign In</button>
         </form>
 
         <section class="preset-panel preset-panel-single">
             <details class="preset-card">
-                <summary>管理员预设账号</summary>
+                <summary>Admin Preset Credentials</summary>
                 <div class="preset-body">
-                    <p>账号：<code>${empty adminPresetUsername ? 'admin001' : adminPresetUsername}</code></p>
-                    <p>密码：<code>${empty adminPresetPassword ? 'admin123456' : adminPresetPassword}</code></p>
+                    <p>Username: <code>${empty adminPresetUsername ? 'admin001' : adminPresetUsername}</code></p>
+                    <p>Password: <code>${empty adminPresetPassword ? 'admin123456' : adminPresetPassword}</code></p>
                 </div>
             </details>
         </section>

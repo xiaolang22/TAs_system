@@ -47,9 +47,9 @@ public class ProfileServlet extends HttpServlet {
         loadProfileForCurrentUser(req, loginUser);
 
         if ("true".equalsIgnoreCase(req.getParameter("saved"))) {
-            req.setAttribute("success", "个人档案已保存。");
+            req.setAttribute("success", "Profile saved successfully.");
         } else if ("true".equalsIgnoreCase(req.getParameter("cvSaved"))) {
-            req.setAttribute("success", "简历已上传。");
+            req.setAttribute("success", "Resume uploaded successfully.");
         }
 
         TA profile = (TA) req.getAttribute("profile");
@@ -116,7 +116,7 @@ public class ProfileServlet extends HttpServlet {
         draft.setStudentId(loginUser.getUserId());
         req.setAttribute("profile", draft);
 
-        if (!"未找到个人档案。".equals(result.getMessage())) {
+        if (!"Profile not found.".equals(result.getMessage())) {
             req.setAttribute("error", result.getMessage());
         }
     }

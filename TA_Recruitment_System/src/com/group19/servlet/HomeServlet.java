@@ -6,15 +6,15 @@ import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
 import com.group19.dao.TADao;
 import com.group19.dao.UserAccountDao;
+import com.group19.dto.MoTaCandidateCard;
 import com.group19.dto.MoNotificationView;
 import com.group19.dto.ServiceResult;
-import com.group19.dto.TaWorkloadRow;
-import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.DeadlineReminderService;
 import com.group19.service.JobService;
 import com.group19.service.MoNewApplicationNotificationService;
+import com.group19.service.MoTaDirectoryService;
 import com.group19.service.SavedJobService;
 import com.group19.service.TaStatusNotificationService;
 import com.group19.service.WorkloadService;
@@ -26,8 +26,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class HomeServlet extends HttpServlet {
     private TaStatusNotificationService taStatusNotificationService;
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
     private DeadlineReminderService deadlineReminderService;
-    private WorkloadService workloadService;
+    private MoTaDirectoryService moTaDirectoryService;
 
     @Override
     public void init() {
@@ -53,6 +55,10 @@ public class HomeServlet extends HttpServlet {
 
         Path applicationPath = DataPathResolver.resolve(
                 getServletContext(), "applicationDataFile", "/data/applications.json", "applications.json");
+        Path taPath = DataPathResolver.resolve(
+                getServletContext(), "taDataFile", "/data/tas.json", "tas.json");
+        Path userPath = DataPathResolver.resolve(
+                getServletContext(), "userDataFile", "/data/users.json", "users.json");
 
         this.jobDao = new JobDao(jobPath);
         this.applicationDao = new ApplicationDao(applicationPath);
@@ -63,15 +69,10 @@ public class HomeServlet extends HttpServlet {
                 applicationDao,
                 savedJobService);
         NotificationDao notificationDao = new NotificationDao(notificationPath);
-        Path userPath = DataPathResolver.resolve(
-                getServletContext(), "userDataFile", "/data/users.json", "users.json");
-        Path taPath = DataPathResolver.resolve(
-                getServletContext(), "taDataFile", "/data/tas.json", "tas.json");
-        this.taDao = new TADao(taPath);
-        this.workloadService = new WorkloadService(taDao, applicationDao, jobDao);
         this.taStatusNotificationService = new TaStatusNotificationService(notificationDao, jobDao);
         this.moNewApplicationNotificationService =
-                new MoNewApplicationNotificationService(notificationDao, jobDao, new UserAccountDao(userPath));
+                new MoNewApplicationNotificationService(notificationDao, jobDao);
+        this.moTaDirectoryService = new MoTaDirectoryService(new TADao(taPath), new UserAccountDao(userPath));
     }
 
     @Override
@@ -135,9 +136,11 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("moUnreadNotificationCount",
                     moNewApplicationNotificationService.countUnread(moUserId));
             req.setAttribute("deadlineReminders",
-                    deadlineReminderService.buildRemindersForMo(today, contextPath));
+                    deadlineReminderService.buildRemindersForMo(moUserId, today, contextPath));
             req.setAttribute("moNotificationPreviewCount", moNotifications.size());
-            prepareMoDashboardStats(req, today);
+            req.setAttribute("moOwnedJobCount", jobService.findJobsOwnedBy(moUserId).size());
+            req.setAttribute("moAllJobCount", jobService.findAllJobs().size());
+            prepareMoCandidates(req);
             req.getRequestDispatcher("/WEB-INF/jsp/mo_home.jsp").forward(req, resp);
             return;
         }
@@ -180,70 +183,84 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("taUserId", taStudentId);
     }
 
-    private void prepareMoDashboardStats(HttpServletRequest req, LocalDate today) {
-        List<Job> allJobs = jobDao.findAll();
-        List<Application> allApplications = applicationDao.findAll();
-        req.setAttribute("moPostedJobsCount", allJobs.size());
-        req.setAttribute("moPendingApplicationsCount",
-                countApplicationsByStatus(allApplications, "SUBMITTED", "IN_REVIEW"));
-        req.setAttribute("moShortlistedCandidatesCount",
-                countApplicationsByStatus(allApplications, "SHORTLISTED"));
-        req.setAttribute("moClosedJobsCount", jobService.findHiddenFromOpenJobs(today).size());
-    }
+    private void prepareMoCandidates(HttpServletRequest req) {
+        String filterMode = normalizeMoFilterMode(req.getParameter("mode"));
+        String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
+        String programme = trimToNull(req.getParameter("programme"));
+        String availability = trimToNull(req.getParameter("availability"));
+        String requiredSkills = trimToNull(req.getParameter("requiredSkills"));
 
-    private void prepareAdminDashboardStats(HttpServletRequest req) {
-        List<Job> allJobs = jobDao.findAll();
-        List<Application> allApplications = applicationDao.findAll();
-        req.setAttribute("adminTotalJobs", allJobs.size());
-        req.setAttribute("adminActiveApplications",
-                countApplicationsByStatus(allApplications, "SUBMITTED", "IN_REVIEW", "SHORTLISTED"));
-        req.setAttribute("adminAcceptedApplications",
-                countApplicationsByStatus(allApplications, "ACCEPTED"));
-        req.setAttribute("adminTotalTAs", countTas());
-        req.setAttribute("adminOverloadedTAs", countOverloadedTas());
-    }
+        ServiceResult<List<MoTaCandidateCard>> allResult = moTaDirectoryService.loadAllCandidates();
+        List<MoTaCandidateCard> allCandidates = allResult.isSuccess() ? allResult.getData() : new ArrayList<>();
+        attachMoCandidateUrls(req, allCandidates);
 
-    private int countTas() {
-        try {
-            List<?> tas = taDao.findAll();
-            return tas == null ? 0 : tas.size();
-        } catch (IOException e) {
-            return 0;
-        }
-    }
+        List<MoTaCandidateCard> visibleCandidates = allCandidates;
+        boolean showMatchDetails = false;
 
-    private int countOverloadedTas() {
-        ServiceResult<List<TaWorkloadRow>> result = workloadService.loadWorkloadRows("", "all");
-        if (!result.isSuccess() || result.getData() == null) {
-            return 0;
-        }
-        int count = 0;
-        for (TaWorkloadRow row : result.getData()) {
-            if (row.isHasWorkloadWarning()) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private static int countApplicationsByStatus(List<Application> applications, String... statuses) {
-        if (applications == null || statuses == null || statuses.length == 0) {
-            return 0;
-        }
-        int count = 0;
-        for (Application application : applications) {
-            if (application == null || application.getStatus() == null) {
-                continue;
-            }
-            String status = application.getStatus().trim();
-            for (String accepted : statuses) {
-                if (accepted != null && accepted.equalsIgnoreCase(status)) {
-                    count++;
-                    break;
+        if (!allResult.isSuccess()) {
+            req.setAttribute("moCandidateError", allResult.getMessage());
+        } else if ("match".equals(filterMode)) {
+            if (requiredSkills == null) {
+                req.setAttribute("moCandidateInfo", "Enter required job skills to rank TAs by match score.");
+            } else {
+                ServiceResult<List<MoTaCandidateCard>> matchResult =
+                        moTaDirectoryService.matchCandidates(allCandidates, requiredSkills);
+                if (matchResult.isSuccess()) {
+                    visibleCandidates = matchResult.getData();
+                    attachMoCandidateUrls(req, visibleCandidates);
+                    showMatchDetails = true;
+                } else {
+                    visibleCandidates = new ArrayList<>();
+                    req.setAttribute("moCandidateError", matchResult.getMessage());
                 }
             }
+        } else {
+            visibleCandidates = moTaDirectoryService.filterCandidates(allCandidates, keyword, programme, availability);
         }
-        return count;
+
+        req.setAttribute("moCandidates", visibleCandidates);
+        req.setAttribute("moFilterMode", filterMode);
+        req.setAttribute("moFilterKeyword", nullToEmpty(keyword));
+        req.setAttribute("moFilterProgramme", nullToEmpty(programme));
+        req.setAttribute("moFilterAvailability", nullToEmpty(availability));
+        req.setAttribute("moRequiredSkills", nullToEmpty(requiredSkills));
+        req.setAttribute("moCandidateTotalCount", allCandidates.size());
+        req.setAttribute("moCandidateFilteredCount", visibleCandidates.size());
+        req.setAttribute("moShowMatchDetails", showMatchDetails);
+    }
+
+    private static void attachMoCandidateUrls(HttpServletRequest req, List<MoTaCandidateCard> candidates) {
+        if (candidates == null) {
+            return;
+        }
+        String contextPath = req.getContextPath();
+        for (MoTaCandidateCard candidate : candidates) {
+            if (candidate == null) {
+                continue;
+            }
+            String avatarPath = candidate.getAvatarPath();
+            candidate.setAvatarUrl(avatarPath == null || avatarPath.isBlank() ? "" : contextPath + avatarPath);
+            String cvFilePath = candidate.getCvFilePath();
+            boolean resumeAvailable = hasUploadedResume(req, cvFilePath);
+            candidate.setResumeAvailable(resumeAvailable);
+            candidate.setCvUrl(resumeAvailable ? contextPath + cvFilePath : "");
+        }
+    }
+
+    private static boolean hasUploadedResume(HttpServletRequest req, String cvFilePath) {
+        if (cvFilePath == null || cvFilePath.isBlank()) {
+            return false;
+        }
+        String normalized = cvFilePath.trim().replace("/", java.io.File.separator);
+        if (normalized.startsWith(java.io.File.separator)) {
+            normalized = normalized.substring(1);
+        }
+        String webRelative = "/" + normalized.replace(java.io.File.separatorChar, '/');
+        String realPath = req.getServletContext().getRealPath(webRelative);
+        if (realPath != null && !realPath.isBlank()) {
+            return Files.exists(Paths.get(realPath));
+        }
+        return Files.exists(Paths.get(System.getProperty("user.dir"), "web", normalized));
     }
 
     private static void setSavedJobFeedback(HttpServletRequest req) {
@@ -327,6 +344,10 @@ public class HomeServlet extends HttpServlet {
             return preferred;
         }
         return fallback;
+    }
+
+    private static String normalizeMoFilterMode(String mode) {
+        return "match".equalsIgnoreCase(mode) ? "match" : "keyword";
     }
 
     private static String trimToNull(String value) {

@@ -2,15 +2,12 @@ package com.group19.service;
 
 import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
-import com.group19.dao.UserAccountDao;
 import com.group19.dto.MoNotificationView;
 import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.model.Notification;
-import com.group19.model.UserAccount;
 import com.group19.util.HtmlEscape;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -23,19 +20,14 @@ public class MoNewApplicationNotificationService {
     public static final String TYPE_NEW_APPLICATION = "NEW_APPLICATION_SUBMITTED";
     private static final int DASHBOARD_LIMIT = 10;
     private static final DateTimeFormatter DISPLAY_FORMAT =
-            DateTimeFormatter.ofPattern("MMM d, yyyy HH:mm", java.util.Locale.ENGLISH);
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private final NotificationDao notificationDao;
     private final JobDao jobDao;
-    private final UserAccountDao userAccountDao;
 
-    public MoNewApplicationNotificationService(
-            NotificationDao notificationDao,
-            JobDao jobDao,
-            UserAccountDao userAccountDao) {
+    public MoNewApplicationNotificationService(NotificationDao notificationDao, JobDao jobDao) {
         this.notificationDao = notificationDao;
         this.jobDao = jobDao;
-        this.userAccountDao = userAccountDao;
     }
 
     public void notifyNewApplication(Application application) {
@@ -43,28 +35,27 @@ public class MoNewApplicationNotificationService {
             return;
         }
 
+        Job job = jobDao.findById(application.getJobId());
+        if (job == null || job.getOwnerMoUserId() == null || job.getOwnerMoUserId().isBlank()) {
+            return;
+        }
+
         String jobTitle = resolveJobTitle(application.getJobId());
         String taName = application.getTaName() == null || application.getTaName().isBlank()
                 ? application.getTaStudentId()
                 : application.getTaName().trim();
-        String message = "New application from "
-                + taName
-                + " for \""
-                + jobTitle
-                + "\".";
+        String message = taName + " submitted a new application for \"" + jobTitle + "\".";
 
-        for (UserAccount officer : findModuleOfficers()) {
-            Notification notification = new Notification();
-            notification.setNotificationId(UUID.randomUUID().toString());
-            notification.setRecipientUserId(officer.getUserId());
-            notification.setType(TYPE_NEW_APPLICATION);
-            notification.setMessage(message);
-            notification.setApplicationId(application.getApplicationId());
-            notification.setJobId(application.getJobId());
-            notification.setRead(false);
-            notification.setCreatedAt(LocalDateTime.now().toString());
-            notificationDao.save(notification);
-        }
+        Notification notification = new Notification();
+        notification.setNotificationId(UUID.randomUUID().toString());
+        notification.setRecipientUserId(job.getOwnerMoUserId().trim());
+        notification.setType(TYPE_NEW_APPLICATION);
+        notification.setMessage(message);
+        notification.setApplicationId(application.getApplicationId());
+        notification.setJobId(application.getJobId());
+        notification.setRead(false);
+        notification.setCreatedAt(LocalDateTime.now().toString());
+        notificationDao.save(notification);
     }
 
     public List<MoNotificationView> loadForMoDashboard(String moUserId, String contextPath) {
@@ -75,7 +66,9 @@ public class MoNewApplicationNotificationService {
         String basePath = contextPath == null ? "" : contextPath;
         List<Notification> notifications = new ArrayList<>(notificationDao.findByRecipientUserId(moUserId));
         notifications.removeIf(notification ->
-                !TYPE_NEW_APPLICATION.equals(notification.getType()) || notification.isRead());
+                !TYPE_NEW_APPLICATION.equals(notification.getType())
+                        || notification.isRead()
+                        || !isMoOwnedJob(notification.getJobId(), moUserId));
         notifications.sort(Comparator
                 .comparing((Notification n) -> parseDateTime(n.getCreatedAt()))
                 .reversed());
@@ -119,25 +112,13 @@ public class MoNewApplicationNotificationService {
         }
         int count = 0;
         for (Notification notification : notificationDao.findByRecipientUserId(moUserId)) {
-            if (!notification.isRead() && TYPE_NEW_APPLICATION.equals(notification.getType())) {
+            if (!notification.isRead()
+                    && TYPE_NEW_APPLICATION.equals(notification.getType())
+                    && isMoOwnedJob(notification.getJobId(), moUserId)) {
                 count++;
             }
         }
         return count;
-    }
-
-    private List<UserAccount> findModuleOfficers() {
-        List<UserAccount> officers = new ArrayList<>();
-        try {
-            for (UserAccount account : userAccountDao.findAll()) {
-                if (account.getRole() != null && "MO".equalsIgnoreCase(account.getRole().trim())) {
-                    officers.add(account);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return officers;
     }
 
     private String resolveJobTitle(String jobId) {
@@ -149,6 +130,17 @@ public class MoNewApplicationNotificationService {
             return "Unknown position";
         }
         return job.getTitle().trim();
+    }
+
+    private boolean isMoOwnedJob(String jobId, String moUserId) {
+        if (jobId == null || jobId.isBlank() || moUserId == null || moUserId.isBlank()) {
+            return false;
+        }
+        Job job = jobDao.findById(jobId);
+        if (job == null || job.getOwnerMoUserId() == null) {
+            return false;
+        }
+        return moUserId.trim().equalsIgnoreCase(job.getOwnerMoUserId().trim());
     }
 
     private static String formatDisplay(String iso) {

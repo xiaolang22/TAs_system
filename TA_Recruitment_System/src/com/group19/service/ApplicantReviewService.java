@@ -66,8 +66,8 @@ public class ApplicantReviewService {
         pageData.setJob(job);
         pageData.setApplicants(rows);
         pageData.setSortMode(normalizedSortMode);
-        pageData.setSortLabel("status".equals(normalizedSortMode) ? "Status" : "Match degree");
-        return ServiceResult.success(pageData, "Applicant review data loaded.");
+        pageData.setSortLabel("status".equals(normalizedSortMode) ? "Application Status" : "Match Score");
+        return ServiceResult.success(pageData, "Applicant review data loaded successfully.");
     }
 
     private ApplicantReviewRow buildRow(
@@ -90,7 +90,7 @@ public class ApplicantReviewService {
         row.setExperience(valueOrEmpty(profile == null ? null : profile.getExperience()));
         row.setAvailability(valueOrEmpty(profile == null ? null : profile.getAvailability()));
         row.setCurrentWorkload(workloadCount);
-        row.setCurrentWorkloadLabel(workloadCount + (workloadCount == 1 ? " active application" : " active applications"));
+        row.setCurrentWorkloadLabel(workloadCount + " active applications");
 
         List<String> skillTokens = tokenize(row.getSkills());
         int score = calculateMatchScore(requirementTokens, skillTokens);
@@ -158,14 +158,22 @@ public class ApplicantReviewService {
 
     private static int statusRank(String status) {
         String normalized = normalizeKey(status);
-        return switch (normalized) {
-            case "submitted" -> 0;
-            case "in_review" -> 1;
-            case "shortlisted" -> 2;
-            case "accepted" -> 3;
-            case "rejected" -> 4;
-            default -> 5;
-        };
+        if ("submitted".equals(normalized)) {
+            return 0;
+        }
+        if ("in_review".equals(normalized)) {
+            return 1;
+        }
+        if ("shortlisted".equals(normalized)) {
+            return 2;
+        }
+        if ("accepted".equals(normalized)) {
+            return 3;
+        }
+        if ("rejected".equals(normalized)) {
+            return 4;
+        }
+        return 5;
     }
 
     private static boolean isActiveStatus(String status) {
@@ -175,11 +183,11 @@ public class ApplicantReviewService {
 
     private static void applySkillStatus(ApplicantReviewRow row, TA profile, int score) {
         if (profile == null || row.getSkills().isBlank()) {
-            row.setCoreSkillStatusLabel("No core skills provided");
+            row.setCoreSkillStatusLabel("Core skills not provided");
             row.setCoreSkillStatusClass("tag-neutral");
             return;
         }
-        row.setCoreSkillStatusLabel("Core skills listed");
+        row.setCoreSkillStatusLabel("Core skills provided");
         row.setCoreSkillStatusClass("tag-neutral");
     }
 
