@@ -181,35 +181,35 @@ public class MoTaCandidateCard {
     }
 
     public String getEmailDisplay() {
-        return displayOrFallback(email, "未填写");
+        return displayOrFallback(email, "Not provided");
     }
 
     public String getProgrammeDisplay() {
-        return displayOrFallback(programme, "未填写");
+        return displayOrFallback(programme, "Not provided");
     }
 
     public String getSkillsDisplay() {
-        return displayOrFallback(skills, "未填写");
+        return displayOrFallback(skills, "Not provided");
     }
 
     public String getAvailabilityDisplay() {
-        return displayOrFallback(availability, "未填写");
+        return displayOrFallback(availability, "Not provided");
     }
 
     public String getExperienceDisplay() {
-        return displayOrFallback(experience, "未填写");
+        return displayOrFallback(experience, "Not provided");
     }
 
     public String getUpdatedAtDisplay() {
-        return displayOrFallback(updatedAt, "未更新档案");
+        return displayOrFallback(updatedAt, "Profile not updated");
     }
 
     public String getMatchedSkillsDisplay() {
-        return displayOrFallback(matchedSkillsText, "暂无");
+        return displayOrFallback(matchedSkillsText, "None");
     }
 
     public String getMissingSkillsDisplay() {
-        return displayOrFallback(missingSkillsText, "暂无");
+        return displayOrFallback(missingSkillsText, "None");
     }
 
     public boolean hasCv() {
@@ -218,12 +218,12 @@ public class MoTaCandidateCard {
 
     public String getArchiveStatusLabel() {
         if (profileCompleted && resumeAvailable) {
-            return "档案与简历已完善";
+            return "Profile and resume completed";
         }
         if (profileCompleted) {
-            return "已完善档案";
+            return "Profile completed";
         }
-        return "待完善档案";
+        return "Profile incomplete";
     }
 
     private static boolean hasText(String value) {

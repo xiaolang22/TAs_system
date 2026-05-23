@@ -41,12 +41,12 @@ public class ApplicantReviewService {
 
     public ServiceResult<ApplicantReviewPageData> loadApplicantsForJob(String jobId, String sortMode) {
         if (jobId == null || jobId.isBlank()) {
-            return ServiceResult.failure("缺少岗位编号。");
+            return ServiceResult.failure("Job ID is required.");
         }
 
         Job job = jobDao.findById(jobId.trim());
         if (job == null) {
-            return ServiceResult.failure("未找到对应岗位。");
+            return ServiceResult.failure("Job not found.");
         }
 
         String normalizedSortMode = normalizeSortMode(sortMode);
@@ -66,8 +66,8 @@ public class ApplicantReviewService {
         pageData.setJob(job);
         pageData.setApplicants(rows);
         pageData.setSortMode(normalizedSortMode);
-        pageData.setSortLabel("status".equals(normalizedSortMode) ? "申请状态" : "匹配度");
-        return ServiceResult.success(pageData, "候选人评审数据加载成功。");
+        pageData.setSortLabel("status".equals(normalizedSortMode) ? "Application Status" : "Match Score");
+        return ServiceResult.success(pageData, "Applicant review data loaded successfully.");
     }
 
     private ApplicantReviewRow buildRow(
@@ -90,7 +90,7 @@ public class ApplicantReviewService {
         row.setExperience(valueOrEmpty(profile == null ? null : profile.getExperience()));
         row.setAvailability(valueOrEmpty(profile == null ? null : profile.getAvailability()));
         row.setCurrentWorkload(workloadCount);
-        row.setCurrentWorkloadLabel(workloadCount + " 个进行中的申请");
+        row.setCurrentWorkloadLabel(workloadCount + " active applications");
 
         List<String> skillTokens = tokenize(row.getSkills());
         int score = calculateMatchScore(requirementTokens, skillTokens);
@@ -158,14 +158,22 @@ public class ApplicantReviewService {
 
     private static int statusRank(String status) {
         String normalized = normalizeKey(status);
-        return switch (normalized) {
-            case "submitted" -> 0;
-            case "in_review" -> 1;
-            case "shortlisted" -> 2;
-            case "accepted" -> 3;
-            case "rejected" -> 4;
-            default -> 5;
-        };
+        if ("submitted".equals(normalized)) {
+            return 0;
+        }
+        if ("in_review".equals(normalized)) {
+            return 1;
+        }
+        if ("shortlisted".equals(normalized)) {
+            return 2;
+        }
+        if ("accepted".equals(normalized)) {
+            return 3;
+        }
+        if ("rejected".equals(normalized)) {
+            return 4;
+        }
+        return 5;
     }
 
     private static boolean isActiveStatus(String status) {
@@ -175,18 +183,18 @@ public class ApplicantReviewService {
 
     private static void applySkillStatus(ApplicantReviewRow row, TA profile, int score) {
         if (profile == null || row.getSkills().isBlank()) {
-            row.setCoreSkillStatusLabel("未填写核心技能");
+            row.setCoreSkillStatusLabel("Core skills not provided");
             row.setCoreSkillStatusClass("tag-neutral");
             return;
         }
-        row.setCoreSkillStatusLabel("已填写核心技能");
+        row.setCoreSkillStatusLabel("Core skills provided");
         row.setCoreSkillStatusClass("tag-neutral");
     }
 
     private static String buildCoreSkillsHtml(String rawSkills, List<String> requirementTokens) {
         List<String> skills = splitSkills(rawSkills);
         if (skills.isEmpty()) {
-            return "<span class=\"muted\">未填写</span>";
+            return "<span class=\"muted\">Not provided</span>";
         }
 
         Set<String> requirementSet = new LinkedHashSet<>(requirementTokens);

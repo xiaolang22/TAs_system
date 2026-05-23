@@ -51,15 +51,15 @@ public class MoTaDirectoryService {
                     .comparing(MoTaCandidateCard::isProfileCompleted).reversed()
                     .thenComparing(card -> normalizeText(card.getDisplayName()))
                     .thenComparing(card -> normalizeText(card.getStudentId())));
-            return ServiceResult.success(cards, "TA 列表加载成功。");
+            return ServiceResult.success(cards, "TA list loaded successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("读取 TA 列表失败。");
+            return ServiceResult.failure("Failed to read the TA list.");
         }
     }
 
     public ServiceResult<MoTaCandidateCard> loadCandidateByStudentId(String studentId) {
         if (!hasText(studentId)) {
-            return ServiceResult.failure("缺少 TA 学号。");
+            return ServiceResult.failure("TA student ID is required.");
         }
         ServiceResult<List<MoTaCandidateCard>> listResult = loadAllCandidates();
         if (!listResult.isSuccess()) {
@@ -68,10 +68,10 @@ public class MoTaDirectoryService {
         String normalizedStudentId = studentId.trim();
         for (MoTaCandidateCard candidate : listResult.getData()) {
             if (candidate != null && normalizedStudentId.equalsIgnoreCase(candidate.getStudentId())) {
-                return ServiceResult.success(candidate, "TA 档案加载成功。");
+                return ServiceResult.success(candidate, "TA profile loaded successfully.");
             }
         }
-        return ServiceResult.failure("未找到对应 TA。");
+        return ServiceResult.failure("TA not found.");
     }
 
     public List<MoTaCandidateCard> filterCandidates(
@@ -107,7 +107,7 @@ public class MoTaDirectoryService {
             String requiredSkillsText) {
         LinkedHashMap<String, String> requiredSkillMap = parseSkillMap(requiredSkillsText);
         if (requiredSkillMap.isEmpty()) {
-            return ServiceResult.failure("请至少输入一个候选人技能匹配关键词。");
+            return ServiceResult.failure("Please enter at least one candidate skill-matching keyword.");
         }
 
         List<MoTaCandidateCard> matchedCards = new ArrayList<>();
@@ -124,7 +124,7 @@ public class MoTaDirectoryService {
                 .comparingInt(MoTaCandidateCard::getMatchScore).reversed()
                 .thenComparing(Comparator.comparing(MoTaCandidateCard::isProfileCompleted).reversed())
                 .thenComparing(card -> normalizeText(card.getDisplayName())));
-        return ServiceResult.success(matchedCards, "匹配结果已更新。");
+        return ServiceResult.success(matchedCards, "Matching results updated.");
     }
 
     private static MoTaCandidateCard buildCard(UserAccount account, TA profile) {
@@ -149,7 +149,9 @@ public class MoTaDirectoryService {
         card.setMatchScore(0);
         card.setMatchedSkillsText("");
         card.setMissingSkillsText("");
-        card.setMatchNote(profile == null ? "该 TA 尚未完善个人档案。" : "可切换到技能匹配模式进行推荐。");
+        card.setMatchNote(profile == null
+                ? "This TA has not completed their profile yet."
+                : "Switch to skill matching mode to generate recommendations.");
         return card;
     }
 
@@ -188,14 +190,14 @@ public class MoTaDirectoryService {
                 ? 0
                 : (int) Math.round((matchedSkills.size() * 100.0) / requiredSkillMap.size());
         copy.setMatchScore(score);
-        copy.setMatchedSkillsText(matchedSkills.isEmpty() ? "" : String.join("、", matchedSkills));
-        copy.setMissingSkillsText(missingSkills.isEmpty() ? "" : String.join("、", missingSkills));
+        copy.setMatchedSkillsText(matchedSkills.isEmpty() ? "" : String.join(", ", matchedSkills));
+        copy.setMissingSkillsText(missingSkills.isEmpty() ? "" : String.join(", ", missingSkills));
         if (requiredSkillMap.isEmpty()) {
-            copy.setMatchNote("当前没有有效的匹配关键词。");
+            copy.setMatchNote("There are no valid matching keywords right now.");
         } else if (missingSkills.isEmpty()) {
-            copy.setMatchNote("已满足全部匹配技能要求。");
+            copy.setMatchNote("All matching skill requirements have been met.");
         } else {
-            copy.setMatchNote("缺少技能：" + String.join("、", missingSkills) + "。");
+            copy.setMatchNote("Missing skills: " + String.join(", ", missingSkills) + ".");
         }
         return copy;
     }
@@ -276,7 +278,7 @@ public class MoTaDirectoryService {
     }
 
     private static String[] splitSkills(String rawSkills) {
-        return rawSkills.split("[,，;；/\\\\\\n\\r]+");
+        return rawSkills.split("[,\\uFF0C;\\uFF1B/\\\\\\n\\r]+");
     }
 
     private static String cleanSkillToken(String token) {

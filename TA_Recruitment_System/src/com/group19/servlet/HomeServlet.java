@@ -195,7 +195,7 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("moCandidateError", allResult.getMessage());
         } else if ("match".equals(filterMode)) {
             if (requiredSkills == null) {
-                req.setAttribute("moCandidateInfo", "输入岗位所需技能后，可按匹配度查看 TA。");
+                req.setAttribute("moCandidateInfo", "Enter required job skills to rank TAs by match score.");
             } else {
                 ServiceResult<List<MoTaCandidateCard>> matchResult =
                         moTaDirectoryService.matchCandidates(allCandidates, requiredSkills);

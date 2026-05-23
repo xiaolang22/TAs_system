@@ -39,21 +39,21 @@
     }
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>岗位列表 - TA 招聘系统</title>
+    <title>Job List - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <main class="container wide ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1>岗位列表</h1>
+            <h1>Job List</h1>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">返回首页</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">Back to Home</a>
         </div>
     </header>
 
@@ -62,8 +62,8 @@
 
     <section class="card">
         <div class="ta-job-toolbar-actions">
-            <a class="ta-tab-btn <%= showAll ? "" : "is-active" %>" href="${pageContext.request.contextPath}/mo/jobs">我发布的岗位</a>
-            <a class="ta-tab-btn <%= showAll ? "is-active" : "" %>" href="${pageContext.request.contextPath}/mo/jobs?showAll=1">全部岗位</a>
+            <a class="ta-tab-btn <%= showAll ? "" : "is-active" %>" href="${pageContext.request.contextPath}/mo/jobs">My Jobs</a>
+            <a class="ta-tab-btn <%= showAll ? "is-active" : "" %>" href="${pageContext.request.contextPath}/mo/jobs?showAll=1">All Jobs</a>
         </div>
     </section>
 
@@ -77,26 +77,26 @@
             <% } %>
             <div class="ta-filter-topbar">
                 <div class="ta-filter-copy">
-                    <h1><%= showAll ? "全部岗位" : "我发布的岗位" %></h1>
+                    <h1><%= showAll ? "All Jobs" : "My Jobs" %></h1>
                 </div>
             </div>
             <div class="ta-filter-grid">
                 <div class="ta-filter-field">
-                    <label for="keyword">关键词</label>
-                    <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="岗位名称、描述、时间">
+                    <label for="keyword">Keyword</label>
+                    <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="Job title, description, or schedule">
                 </div>
                 <div class="ta-filter-field">
-                    <label for="schedule">时间安排</label>
-                    <input id="schedule" name="schedule" type="text" value="${filterSchedule}" placeholder="如：周三下午">
+                    <label for="schedule">Schedule</label>
+                    <input id="schedule" name="schedule" type="text" value="${filterSchedule}" placeholder="For example: Wednesday afternoon">
                 </div>
                 <div class="ta-filter-field">
-                    <label for="skills">技能要求</label>
-                    <input id="skills" name="skills" type="text" value="${filterSkills}" placeholder="如：Java / Python">
+                    <label for="skills">Requirements</label>
+                    <input id="skills" name="skills" type="text" value="${filterSkills}" placeholder="For example: Java / Python">
                 </div>
             </div>
             <div class="ta-filter-actions">
-                <button type="submit">筛选岗位</button>
-                <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs<%= showAll ? (showingHidden ? "?showAll=1&amp;showHidden=1" : "?showAll=1") : "" %>">重置</a>
+                <button type="submit">Filter Jobs</button>
+                <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs<%= showAll ? (showingHidden ? "?showAll=1&amp;showHidden=1" : "?showAll=1") : "" %>">Reset</a>
             </div>
         </form>
     </section>
@@ -104,18 +104,18 @@
     <div class="ta-job-summary role-home-summary">
         <% if (showAll) { %>
             <% if (showingHidden) { %>
-            当前显示 <strong><%= filteredCount %></strong> / <strong><%= hiddenPoolCount %></strong> 个已关闭岗位。
-            <a class="ta-summary-link" href="${viewOpenJobsUrl}">返回开放中岗位</a>
+            Currently showing <strong><%= filteredCount %></strong> / <strong><%= hiddenPoolCount %></strong> closed jobs.
+            <a class="ta-summary-link" href="${viewOpenJobsUrl}">Back to Open Jobs</a>
             <% } else { %>
-            当前显示 <strong><%= filteredCount %></strong> / <strong><%= openJobCount %></strong> 个开放中岗位。
+            Currently showing <strong><%= filteredCount %></strong> / <strong><%= openJobCount %></strong> open jobs.
             <% if (hiddenFromOpenCount > 0) { %>
-            另有 <strong><%= hiddenFromOpenCount %></strong> 个已关闭岗位。
-            <a class="ta-summary-link" href="${viewHiddenJobsUrl}">查看已关闭岗位</a>
+            There are also <strong><%= hiddenFromOpenCount %></strong> closed jobs.
+            <a class="ta-summary-link" href="${viewHiddenJobsUrl}">View Closed Jobs</a>
             <% } %>
             <% } %>
         <% } else { %>
-        当前显示 <strong><%= filteredCount %></strong> / <strong><%= ownedJobCount %></strong> 个我发布的岗位。
-        <span>系统共 <strong><%= allJobCount %></strong> 个岗位。</span>
+        Currently showing <strong><%= filteredCount %></strong> / <strong><%= ownedJobCount %></strong> of my posted jobs.
+        <span>Total jobs in the system: <strong><%= allJobCount %></strong>.</span>
         <% } %>
     </div>
 
@@ -123,7 +123,7 @@
         <div class="ta-job-list">
             <% if (jobs.isEmpty()) { %>
             <div class="empty-state">
-                <%= showAll ? "当前筛选条件下没有可查看的岗位。" : "当前筛选条件下没有你发布的岗位。" %>
+                <%= showAll ? "No jobs are available under the current filters." : "No jobs posted by you match the current filters." %>
             </div>
             <% } else { %>
             <% for (Job job : jobs) { %>
@@ -132,15 +132,15 @@
                     <h2><%= attr(job.getTitle()) %></h2>
                     <p class="ta-job-badges">
                         <% if (showAll) { %>
-                        <span class="status-pill tag-warning">截止：<%= attr(job.getDeadline()) %></span>
-                        <span class="status-pill tag-info">工作时长：<%= attr(job.getHours()) %></span>
+                        <span class="status-pill tag-warning">Deadline: <%= attr(job.getDeadline()) %></span>
+                        <span class="status-pill tag-info">Workload: <%= attr(job.getHours()) %></span>
                         <% if (showingHidden || "CLOSED".equalsIgnoreCase(job.getStatus())) { %>
-                        <span class="status-pill tag-neutral">已关闭</span>
+                        <span class="status-pill tag-neutral">Closed</span>
                         <% } %>
                         <% } else { %>
-                        <span class="status-pill tag-neutral">岗位编号：<%= attr(job.getJobId()) %></span>
+                        <span class="status-pill tag-neutral">Job ID: <%= attr(job.getJobId()) %></span>
                         <span class="status-pill <%= "OPEN".equalsIgnoreCase(job.getStatus()) || job.getStatus() == null ? "tag-good" : "tag-neutral" %>">
-                            <%= "OPEN".equalsIgnoreCase(job.getStatus()) || job.getStatus() == null ? "开放中" : "已关闭" %>
+                            <%= "OPEN".equalsIgnoreCase(job.getStatus()) || job.getStatus() == null ? "Open" : "Closed" %>
                         </span>
                         <% } %>
                     </p>
@@ -149,39 +149,39 @@
                 <% if (showAll) { %>
                 <dl class="ta-job-meta-grid">
                     <div>
-                        <dt>岗位描述</dt>
+                        <dt>Job Description</dt>
                         <dd><%= attr(job.getDescription()) %></dd>
                     </div>
                     <div>
-                        <dt>技能要求</dt>
+                        <dt>Requirements</dt>
                         <dd><%= attr(job.getRequirements()) %></dd>
                     </div>
                 </dl>
                 <div class="ta-job-actions">
-                    <a class="link-btn" href="<%= attr(detailLinkPrefix) %><%= enc(job.getJobId()) %>">查看详情</a>
+                    <a class="link-btn" href="<%= attr(detailLinkPrefix) %><%= enc(job.getJobId()) %>">View Details</a>
                 </div>
                 <% } else { %>
                 <dl class="ta-job-meta-grid ta-job-meta-grid-owned">
                     <div>
-                        <dt>岗位描述</dt>
+                        <dt>Job Description</dt>
                         <dd><%= attr(job.getDescription()) %></dd>
                     </div>
                     <div>
-                        <dt>时间安排</dt>
+                        <dt>Schedule</dt>
                         <dd><%= attr(job.getSchedule()) %></dd>
                     </div>
                 </dl>
                 <div class="ta-job-actions">
-                    <a class="link-btn" href="${pageContext.request.contextPath}/mo/applications?jobId=<%= enc(job.getJobId()) %>">查看申请</a>
-                    <a class="link-btn secondary" href="<%= attr(detailLinkPrefix) %><%= enc(job.getJobId()) %>">查看详情</a>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/post-job?jobId=<%= enc(job.getJobId()) %>">修改信息</a>
-                    <form method="post" action="${pageContext.request.contextPath}/mo/jobs" class="save-job-form" onsubmit="return confirm('确认删除该岗位吗？');">
+                    <a class="link-btn" href="${pageContext.request.contextPath}/mo/applications?jobId=<%= enc(job.getJobId()) %>">View Applications</a>
+                    <a class="link-btn secondary" href="<%= attr(detailLinkPrefix) %><%= enc(job.getJobId()) %>">View Details</a>
+                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/post-job?jobId=<%= enc(job.getJobId()) %>">Edit Job</a>
+                    <form method="post" action="${pageContext.request.contextPath}/mo/jobs" class="save-job-form" onsubmit="return confirm('Delete this job?');">
                         <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
                         <input type="hidden" name="keyword" value="${filterKeyword}">
                         <input type="hidden" name="schedule" value="${filterSchedule}">
                         <input type="hidden" name="skills" value="${filterSkills}">
-                        <button type="submit" class="secondary-btn">删除岗位</button>
+                        <button type="submit" class="secondary-btn">Delete Job</button>
                     </form>
                 </div>
                 <% } %>

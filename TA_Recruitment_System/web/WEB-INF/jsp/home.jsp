@@ -47,18 +47,18 @@
     String displayName = loginUser == null ? "" : loginUser.getDisplayName();
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TA 工作台 - TA 招聘系统</title>
+    <title>TA Dashboard - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <% if (isTa) { %>
 <div class="ta-app-shell">
     <header class="ta-topbar">
-        <a class="ta-brand-link" href="${pageContext.request.contextPath}/ta/home" aria-label="返回 TA 首页">
+        <a class="ta-brand-link" href="${pageContext.request.contextPath}/ta/home" aria-label="Back to TA Home">
             <span class="ta-brand-logo" aria-hidden="true">
                 <img src="${pageContext.request.contextPath}/assets/logo_1.jpg" alt="TA Recruitment System Logo">
             </span>
@@ -67,26 +67,26 @@
         <div class="ta-topbar-actions">
             <div class="ta-welcome-chip">Welcome! <%= attr(displayName) %></div>
 
-            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/ta/account" aria-label="进入个人中心">
+            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/ta/account" aria-label="Open account center">
                 <span class="ta-avatar <%= avatarUrl.isEmpty() ? "ta-avatar-fallback" : "" %>">
                     <% if (!avatarUrl.isEmpty()) { %>
-                    <img src="<%= attr(avatarUrl) %>" alt="用户头像">
+                    <img src="<%= attr(avatarUrl) %>" alt="User avatar">
                     <% } else { %>
                     <span><%= firstChar(displayName, "T") %></span>
                     <% } %>
                 </span>
             </a>
 
-            <a class="ta-message-btn" href="${pageContext.request.contextPath}/ta/applications#notification-center" aria-label="查看申请通知">
+            <a class="ta-message-btn" href="${pageContext.request.contextPath}/ta/applications#notification-center" aria-label="View application notifications">
                 <span class="ta-message-icon" aria-hidden="true">&#128276;</span>
-                <span>消息</span>
+                <span>Messages</span>
                 <% if (unreadCount > 0) { %>
                 <span class="ta-notification-dot"></span>
                 <% } %>
             </a>
 
             <form method="post" action="${pageContext.request.contextPath}/logout" class="ta-logout-form">
-                <button type="submit" class="ta-logout-btn">退出登录</button>
+                <button type="submit" class="ta-logout-btn">Sign Out</button>
             </form>
         </div>
     </header>
@@ -94,7 +94,7 @@
     <main class="ta-home-layout">
         <section class="ta-jobs-pane">
             <div class="ta-alert-stack" id="taAlertStack">
-                <p class="alert ta-transient-alert success ${empty param.applySuccess ? 'hidden' : ''}">申请提交成功。</p>
+                <p class="alert ta-transient-alert success ${empty param.applySuccess ? 'hidden' : ''}">Application submitted successfully.</p>
                 <p class="alert ta-transient-alert success ${empty savedJobMessage ? 'hidden' : ''}">${savedJobMessage}</p>
                 <p class="alert ta-transient-alert error ${empty savedJobError ? 'hidden' : ''}">${savedJobError}</p>
                 <p class="alert ta-transient-alert error ${empty error ? 'hidden' : ''}">${error}</p>
@@ -108,40 +108,40 @@
                         <% } %>
                         <div class="ta-filter-topbar">
                             <div class="ta-filter-copy">
-                                <h1>职位信息</h1>
+                                <h1>Job Board</h1>
                             </div>
                         </div>
                         <div class="ta-filter-grid">
                             <div class="ta-filter-field">
-                                <label for="keyword">关键词</label>
-                                <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="岗位名、描述、时间">
+                                <label for="keyword">Keyword</label>
+                                <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="Job title, description, or schedule">
                             </div>
                             <div class="ta-filter-field">
-                                <label for="schedule">时间安排</label>
-                                <input id="schedule" name="schedule" type="text" value="${filterSchedule}" placeholder="如：周三下午">
+                                <label for="schedule">Schedule</label>
+                                <input id="schedule" name="schedule" type="text" value="${filterSchedule}" placeholder="For example: Wednesday afternoon">
                             </div>
                             <div class="ta-filter-field">
-                                <label for="skills">技能要求</label>
-                                <input id="skills" name="skills" type="text" value="${filterSkills}" placeholder="如：Java / Python">
+                                <label for="skills">Requirements</label>
+                                <input id="skills" name="skills" type="text" value="${filterSkills}" placeholder="For example: Java / Python">
                             </div>
                         </div>
                         <div class="ta-filter-actions">
-                            <button type="submit">筛选职位</button>
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
+                            <button type="submit">Filter Jobs</button>
+                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/home${showingHidden ? '?showHidden=1' : ''}">Reset</a>
                         </div>
                     </form>
                 </section>
 
                 <div class="ta-job-summary">
                     <% if (!Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
-                    当前显示 <strong>${filteredCount}</strong> / <strong>${openJobCount}</strong> 个开放职位。
+                    Currently showing <strong>${filteredCount}</strong> / <strong>${openJobCount}</strong> open jobs.
                     <% if ((Integer) request.getAttribute("hiddenFromOpenCount") > 0) { %>
-                    另有 <strong>${hiddenFromOpenCount}</strong> 个已结束或关闭职位。
-                    <a class="ta-summary-link" href="${viewHiddenJobsUrl}">查看已结束或关闭职位</a>
+                    There are also <strong>${hiddenFromOpenCount}</strong> closed or archived jobs.
+                    <a class="ta-summary-link" href="${viewHiddenJobsUrl}">View Closed or Archived Jobs</a>
                     <% } %>
                     <% } else { %>
-                    当前显示 <strong>${filteredCount}</strong> / <strong>${hiddenPoolCount}</strong> 个历史职位。
-                    <a class="ta-summary-link" href="${pageContext.request.contextPath}/ta/home">返回开放职位</a>
+                    Currently showing <strong>${filteredCount}</strong> / <strong>${hiddenPoolCount}</strong> archived jobs.
+                    <a class="ta-summary-link" href="${pageContext.request.contextPath}/ta/home">Back to Open Jobs</a>
                     <% } %>
                 </div>
 
@@ -155,56 +155,56 @@
                             <div class="ta-job-card-head">
                                 <h2><%= job.getTitle() == null ? "" : job.getTitle() %></h2>
                                 <p class="ta-job-badges">
-                                    <span class="status-pill tag-warning">截止：<%= job.getDeadline() == null ? "" : job.getDeadline() %></span>
-                                    <span class="status-pill tag-info">工作时长：<%= job.getHours() == null ? "" : job.getHours() %></span>
+                                    <span class="status-pill tag-warning">Deadline: <%= job.getDeadline() == null ? "" : job.getDeadline() %></span>
+                                    <span class="status-pill tag-info">Workload: <%= job.getHours() == null ? "" : job.getHours() %></span>
                                 </p>
                             </div>
                             <dl class="ta-job-meta-grid">
                                 <div>
-                                    <dt>岗位描述</dt>
+                                    <dt>Job Description</dt>
                                     <dd><%= job.getDescription() == null ? "" : job.getDescription() %></dd>
                                 </div>
                                 <div>
-                                    <dt>技能要求</dt>
+                                    <dt>Requirements</dt>
                                     <dd><%= job.getRequirements() == null ? "" : job.getRequirements() %></dd>
                                 </div>
                             </dl>
                             <div class="ta-job-actions">
-                                <a class="link-btn" href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>">查看详情 / 申请</a>
+                                <a class="link-btn" href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>">View Details / Apply</a>
                                 <form method="post" action="${pageContext.request.contextPath}/ta/saved-jobs" class="save-job-form">
                                     <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
                                     <input type="hidden" name="action" value="<%= saved ? "remove" : "save" %>">
                                     <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
                                     <button type="submit" class="<%= saved ? "secondary-btn save-toggle saved" : "save-toggle" %>">
-                                        <%= saved ? "取消收藏" : "收藏职位" %>
+                                        <%= saved ? "Remove Bookmark" : "Save Job" %>
                                     </button>
                                 </form>
                             </div>
                         </article>
                         <% }
                         } else { %>
-                        <div class="empty-state">当前筛选条件下没有找到职位。</div>
+                        <div class="empty-state">No jobs match the current filters.</div>
                         <% } %>
                     </div>
                 </div>
             </div>
-            <button type="button" class="ta-scroll-top-btn" id="taScrollTopBtn" aria-label="返回职位信息顶部">返回顶部</button>
+            <button type="button" class="ta-scroll-top-btn" id="taScrollTopBtn" aria-label="Back to the top of the job board">Back to Top</button>
         </section>
 
         <aside class="ta-dashboard-pane">
             <section class="ta-dashboard-card">
-                <h2>工作台</h2>
+                <h2>Dashboard</h2>
                 <div class="ta-quick-links">
-                    <a class="link-btn" href="${pageContext.request.contextPath}/profile">个人档案与简历</a>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/account">个人中心</a>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">申请进度</a>
+                    <a class="link-btn" href="${pageContext.request.contextPath}/profile">Profile and Resume</a>
+                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/account">Account Center</a>
+                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">Application Progress</a>
                 </div>
             </section>
 
             <section class="ta-dashboard-card">
-                <h2>申请通知</h2>
+                <h2>Application Notifications</h2>
                 <% if (taNotifications == null || taNotifications.isEmpty()) { %>
-                <p class="hint">暂时没有新的申请通知。</p>
+                <p class="hint">No new application notifications right now.</p>
                 <% } else { %>
                 <ul class="ta-mini-list is-scrollable">
                     <% for (TaNotificationView item : taNotifications) { %>
@@ -214,20 +214,20 @@
                     </li>
                     <% } %>
                 </ul>
-                <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications#notification-center">查看全部通知</a>
+                <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications#notification-center">View All Notifications</a>
                 <% } %>
             </section>
 
             <section class="ta-dashboard-card">
-                <h2>截止提醒</h2>
+                <h2>Deadline Reminders</h2>
                 <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
-                <p class="hint">未来 14 天内暂无新的截止提醒。</p>
+                <p class="hint">No upcoming deadlines within the next 14 days.</p>
                 <% } else { %>
                 <ul class="ta-mini-list is-scrollable">
                     <% for (DeadlineReminderView reminder : deadlineReminders) { %>
                     <li class="ta-mini-list-item">
                         <p><%= reminder.getJobTitle() %></p>
-                        <span><%= reminder.getDeadlineDisplay() %> · <%= reminder.getDaysLabel() %></span>
+                        <span><%= reminder.getDeadlineDisplay() %> | <%= reminder.getDaysLabel() %></span>
                     </li>
                     <% } %>
                 </ul>
@@ -235,15 +235,15 @@
             </section>
 
             <section class="ta-dashboard-card">
-                <h2>已收藏职位</h2>
+                <h2>Saved Jobs</h2>
                 <% if (savedJobs == null || savedJobs.isEmpty()) { %>
-                <p class="hint">你还没有收藏任何职位。</p>
+                <p class="hint">You have not saved any jobs yet.</p>
                 <% } else { %>
                 <ul class="ta-mini-list is-scrollable">
                     <% for (Job savedJob : savedJobs) { %>
                     <li class="ta-mini-list-item">
                         <p><%= savedJob.getTitle() == null ? "" : savedJob.getTitle() %></p>
-                        <span>截止：<%= savedJob.getDeadline() == null ? "" : savedJob.getDeadline() %></span>
+                        <span>Deadline: <%= savedJob.getDeadline() == null ? "" : savedJob.getDeadline() %></span>
                     </li>
                     <% } %>
                 </ul>
@@ -256,11 +256,11 @@
 <main class="container">
     <header class="page-header">
         <div>
-            <h1>首页</h1>
-            <p class="hint">当前页面已保留，TA 主界面改版仅作用于 TA 角色。</p>
+            <h1>Home</h1>
+            <p class="hint">This page remains available. The redesigned main interface only applies to the TA role.</p>
         </div>
         <form method="post" action="${pageContext.request.contextPath}/logout">
-            <button type="submit" class="secondary-btn">退出登录</button>
+            <button type="submit" class="secondary-btn">Sign Out</button>
         </form>
     </header>
 </main>

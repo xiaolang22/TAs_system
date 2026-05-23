@@ -48,11 +48,7 @@ public class TaStatusNotificationService {
 
         String jobTitle = resolveJobTitle(application.getJobId());
         String displayStatus = TaApplicationStatusService.toDisplayStatus(current);
-        String message = "你申请的岗位“"
-                + jobTitle
-                + "”状态已更新为："
-                + displayStatus
-                + "。";
+        String message = "Your application for \"" + jobTitle + "\" is now " + displayStatus + ".";
 
         Notification notification = new Notification();
         notification.setNotificationId(UUID.randomUUID().toString());

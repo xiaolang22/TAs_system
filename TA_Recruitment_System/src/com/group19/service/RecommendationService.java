@@ -90,13 +90,14 @@ public class RecommendationService {
 
     private static String buildExplanation(int matchedSkillCount, int totalRequiredSkillCount, String workloadLabel) {
         if (totalRequiredSkillCount <= 0) {
-            return "当前岗位未提取到有效技能要求，因此排序主要依据已录用工作量。";
+            return "No valid job requirements were extracted, so ranking is mainly based on accepted workload.";
         }
         if (matchedSkillCount == totalRequiredSkillCount) {
-            return "已满足全部 " + totalRequiredSkillCount + " 项岗位技能要求，当前" + workloadLabel + "。";
+            return "All " + totalRequiredSkillCount
+                    + " required skills are matched, with a current workload of " + workloadLabel + ".";
         }
-        return "已满足 " + totalRequiredSkillCount + " 项要求中的 " + matchedSkillCount
-                + " 项，当前" + workloadLabel + "。";
+        return "Matched " + matchedSkillCount + " of " + totalRequiredSkillCount
+                + " required skills, with a current workload of " + workloadLabel + ".";
     }
 
     private static int countSkills(String skillsText) {
@@ -118,7 +119,7 @@ public class RecommendationService {
     }
 
     private static String buildWorkloadLabel(int workloadCount) {
-        return workloadCount + " 个已录用岗位";
+        return workloadCount + " accepted jobs";
     }
 
     private static String normalizeKey(String value) {

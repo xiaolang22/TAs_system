@@ -52,17 +52,17 @@
     boolean showMatchDetails = Boolean.TRUE.equals(request.getAttribute("moShowMatchDetails"));
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MO 首页 - TA 招聘系统</title>
+    <title>MO Home - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <div class="ta-app-shell">
     <header class="ta-topbar">
-        <a class="ta-brand-link" href="${pageContext.request.contextPath}/mo/home" aria-label="返回 MO 首页">
+        <a class="ta-brand-link" href="${pageContext.request.contextPath}/mo/home" aria-label="Back to MO Home">
             <span class="ta-brand-logo" aria-hidden="true">
                 <img src="${pageContext.request.contextPath}/assets/logo_1.jpg" alt="TA Recruitment System Logo">
             </span>
@@ -71,26 +71,26 @@
         <div class="ta-topbar-actions">
             <div class="ta-welcome-chip">Welcome! <%= attr(displayName) %></div>
 
-            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/mo/account" aria-label="进入个人中心">
+            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/mo/account" aria-label="Open account center">
                 <span class="ta-avatar <%= avatarUrl.isEmpty() ? "ta-avatar-fallback" : "" %>">
                     <% if (!avatarUrl.isEmpty()) { %>
-                    <img src="<%= attr(avatarUrl) %>" alt="用户头像">
+                    <img src="<%= attr(avatarUrl) %>" alt="User avatar">
                     <% } else { %>
                     <span><%= firstChar(displayName, "M") %></span>
                     <% } %>
                 </span>
             </a>
 
-            <a class="ta-message-btn" href="#moNotificationCenter" aria-label="查看新申请通知">
+            <a class="ta-message-btn" href="#moNotificationCenter" aria-label="View New Application Notifications">
                 <span class="ta-message-icon" aria-hidden="true">&#128276;</span>
-                <span>新申请</span>
+                <span>New Applications</span>
                 <% if (unreadCount > 0) { %>
                 <span class="ta-notification-dot"></span>
                 <% } %>
             </a>
 
             <form method="post" action="${pageContext.request.contextPath}/logout" class="ta-logout-form">
-                <button type="submit" class="ta-logout-btn">退出登录</button>
+                <button type="submit" class="ta-logout-btn">Sign Out</button>
             </form>
         </div>
     </header>
@@ -106,11 +106,11 @@
                 <section class="ta-filter-card ta-filter-card-compact">
                     <div class="ta-filter-topbar">
                         <div class="ta-filter-copy">
-                            <h1>TA信息栏</h1>
+                            <h1>TA Directory</h1>
                         </div>
                         <div class="choice-group choice-group-simple ta-mode-switch">
-                            <a class="choice-chip choice-chip-mode <%= matchMode ? "" : "is-active" %>" href="${pageContext.request.contextPath}/mo/home">关键词筛选</a>
-                            <a class="choice-chip choice-chip-mode <%= matchMode ? "is-active" : "" %>" href="${pageContext.request.contextPath}/mo/home?mode=match">候选人技能匹配</a>
+                            <a class="choice-chip choice-chip-mode <%= matchMode ? "" : "is-active" %>" href="${pageContext.request.contextPath}/mo/home">Keyword Filter</a>
+                            <a class="choice-chip choice-chip-mode <%= matchMode ? "is-active" : "" %>" href="${pageContext.request.contextPath}/mo/home?mode=match">Candidate Skill Matching</a>
                         </div>
                     </div>
 
@@ -119,39 +119,39 @@
                         <% if (matchMode) { %>
                         <div class="ta-filter-grid ta-filter-grid-single">
                             <div class="ta-filter-field">
-                                <label for="requiredSkills">技能关键词</label>
-                                <input id="requiredSkills" name="requiredSkills" type="text" value="${moRequiredSkills}" placeholder="如：Java，沟通能力，数据结构">
+                                <label for="requiredSkills">Skill Keywords</label>
+                                <input id="requiredSkills" name="requiredSkills" type="text" value="${moRequiredSkills}" placeholder="For example: Java, communication, data structures">
                             </div>
                         </div>
                         <% } else { %>
                         <div class="ta-filter-grid">
                             <div class="ta-filter-field">
-                                <label for="keyword">关键词</label>
-                                <input id="keyword" name="keyword" type="text" value="${moFilterKeyword}" placeholder="姓名、学号、技能">
+                                <label for="keyword">Keyword</label>
+                                <input id="keyword" name="keyword" type="text" value="${moFilterKeyword}" placeholder="Name, student ID, or skills">
                             </div>
                             <div class="ta-filter-field">
-                                <label for="programme">专业</label>
-                                <input id="programme" name="programme" type="text" value="${moFilterProgramme}" placeholder="如：Computer Science">
+                                <label for="programme">Programme</label>
+                                <input id="programme" name="programme" type="text" value="${moFilterProgramme}" placeholder="For example: Computer Science">
                             </div>
                             <div class="ta-filter-field">
-                                <label for="availability">可工作时间</label>
-                                <input id="availability" name="availability" type="text" value="${moFilterAvailability}" placeholder="如：周三下午 / Monday">
+                                <label for="availability">Availability</label>
+                                <input id="availability" name="availability" type="text" value="${moFilterAvailability}" placeholder="For example: Wednesday afternoon / Monday">
                             </div>
                         </div>
                         <% } %>
                         <div class="ta-filter-actions">
-                            <button type="submit"><%= matchMode ? "开始匹配" : "筛选" %></button>
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home<%= matchMode ? "?mode=match" : "" %>">重置</a>
+                            <button type="submit"><%= matchMode ? "Start Matching" : "Filter" %></button>
+                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home<%= matchMode ? "?mode=match" : "" %>">Reset</a>
                         </div>
                     </form>
                 </section>
 
                 <div class="ta-job-summary">
-                    当前显示 <strong><%= filteredCandidateCount %></strong> / <strong><%= totalCandidateCount %></strong> 位 TA。
+                    Currently showing <strong><%= filteredCandidateCount %></strong> / <strong><%= totalCandidateCount %></strong> TAs.
                     <% if (matchMode) { %>
-                    <span>当前模式：候选人技能匹配</span>
+                    <span>Current mode: Candidate Skill Matching</span>
                     <% } else { %>
-                    <span>当前模式：关键词筛选</span>
+                    <span>Current mode: Keyword Filter</span>
                     <% } %>
                 </div>
 
@@ -163,61 +163,61 @@
                             <div class="ta-job-card-head ta-job-card-head-inline">
                                 <h2><%= attr(candidate.getDisplayName()) %></h2>
                                 <p class="ta-job-badges">
-                                    <span class="status-pill tag-info">专业：<%= attr(candidate.getProgrammeDisplay()) %></span>
+                                    <span class="status-pill tag-info">Programme: <%= attr(candidate.getProgrammeDisplay()) %></span>
                                     <span class="status-pill <%= candidate.hasCv() ? "tag-good" : (candidate.isProfileCompleted() ? "tag-warning" : "tag-neutral") %>"><%= attr(candidate.getArchiveStatusLabel()) %></span>
                                 </p>
                             </div>
                             <dl class="ta-job-meta-grid">
                                 <div>
-                                    <dt>技能信息</dt>
+                                    <dt>Skills</dt>
                                     <dd><%= attr(candidate.getSkillsDisplay()) %></dd>
                                 </div>
                                 <div>
-                                    <dt>可工作时间</dt>
+                                    <dt>Availability</dt>
                                     <dd><%= attr(candidate.getAvailabilityDisplay()) %></dd>
                                 </div>
                             </dl>
                             <% if (showMatchDetails) { %>
                             <div class="ta-card-footnote">
-                                <strong>匹配度：</strong><%= candidate.getMatchScore() %>%　
-                                <strong>说明：</strong><%= attr(candidate.getMatchNote()) %>
+                                <strong>Match score:</strong> <%= candidate.getMatchScore() %>%&nbsp;
+                                <strong>Notes:</strong> <%= attr(candidate.getMatchNote()) %>
                             </div>
                             <% } %>
                             <div class="ta-job-actions">
-                                <a class="link-btn" href="${pageContext.request.contextPath}/mo/ta-profile?studentId=<%= attr(candidate.getStudentId()) %>">查看档案 / 简历</a>
+                                <a class="link-btn" href="${pageContext.request.contextPath}/mo/ta-profile?studentId=<%= attr(candidate.getStudentId()) %>">View Profile / Resume</a>
                             </div>
                         </article>
                         <% }
                         } else { %>
                         <div class="empty-state">
-                            <%= matchMode ? "当前匹配条件下没有找到可展示的 TA。" : "当前筛选条件下没有找到 TA。" %>
+                            <%= matchMode ? "No TAs match the current skill-matching criteria." : "No TAs match the current filters." %>
                         </div>
                         <% } %>
                     </div>
                 </div>
             </div>
-            <button type="button" class="ta-scroll-top-btn" id="moScrollTopBtn" aria-label="返回推荐 TA 顶部">返回顶部</button>
+            <button type="button" class="ta-scroll-top-btn" id="moScrollTopBtn" aria-label="Back to the top of the TA board">Back to Top</button>
         </section>
 
         <aside class="ta-dashboard-pane">
             <section class="ta-dashboard-card">
-                <h2>工作台</h2>
+                <h2>Dashboard</h2>
                 <div class="ta-side-stat-list">
-                    <div class="ta-side-stat-item">我负责的岗位 <strong><%= ownedJobCount %></strong> 个</div>
-                    <div class="ta-side-stat-item">系统岗位总数 <strong><%= allJobCount %></strong> 个</div>
-                    <div class="ta-side-stat-item">未读新申请 <strong><%= unreadCount %></strong> 条</div>
+                    <div class="ta-side-stat-item">Jobs I Manage <strong><%= ownedJobCount %></strong></div>
+                    <div class="ta-side-stat-item">Total Jobs in System <strong><%= allJobCount %></strong></div>
+                    <div class="ta-side-stat-item">Unread New Applications <strong><%= unreadCount %></strong></div>
                 </div>
                 <div class="ta-quick-links">
-                    <a class="link-btn" href="${pageContext.request.contextPath}/mo/post-job">发布岗位</a>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs">岗位列表</a>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">技能匹配页</a>
+                    <a class="link-btn" href="${pageContext.request.contextPath}/mo/post-job">Post Job</a>
+                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs">Job List</a>
+                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">Skill Matching Page</a>
                 </div>
             </section>
 
             <section class="ta-dashboard-card" id="moNotificationCenter">
-                <h2>新申请通知</h2>
+                <h2>New Application Notifications</h2>
                 <% if (moNotifications == null || moNotifications.isEmpty()) { %>
-                <p class="hint">当前没有与你负责岗位相关的新申请通知。</p>
+                <p class="hint">There are no new application notifications for the jobs you manage.</p>
                 <% } else { %>
                 <ul class="ta-mini-list is-scrollable">
                     <% for (MoNotificationView item : moNotifications) { %>
@@ -225,7 +225,7 @@
                         <p><%= item.getMessage() %></p>
                         <span><%= item.getCreatedAtDisplay() %></span>
                         <div class="role-home-inline-link">
-                            <a href="<%= item.getActionUrl() %>">查看对应申请</a>
+                            <a href="<%= item.getActionUrl() %>">View Related Application</a>
                         </div>
                     </li>
                     <% } %>
@@ -234,17 +234,17 @@
             </section>
 
             <section class="ta-dashboard-card">
-                <h2>岗位截止提醒</h2>
+                <h2>Job Deadline Reminders</h2>
                 <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
-                <p class="hint">未来 14 天内暂无与你负责岗位相关的截止提醒。</p>
+                <p class="hint">There are no upcoming deadlines for the jobs you manage in the next 14 days.</p>
                 <% } else { %>
                 <ul class="ta-mini-list is-scrollable">
                     <% for (DeadlineReminderView reminder : deadlineReminders) { %>
                     <li class="ta-mini-list-item">
                         <p><%= reminder.getJobTitle() %></p>
-                        <span><%= reminder.getDeadlineDisplay() %> · <%= reminder.getDaysLabel() %></span>
+                        <span><%= reminder.getDeadlineDisplay() %> | <%= reminder.getDaysLabel() %></span>
                         <div class="role-home-inline-link">
-                            <a href="<%= reminder.getActionUrl() %>">查看岗位申请</a>
+                            <a href="<%= reminder.getActionUrl() %>">View Job Applications</a>
                         </div>
                     </li>
                     <% } %>

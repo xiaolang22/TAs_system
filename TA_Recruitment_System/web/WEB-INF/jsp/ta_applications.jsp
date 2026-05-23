@@ -10,29 +10,29 @@
     List<TaNotificationView> taNotifications = (List<TaNotificationView>) request.getAttribute("taNotifications");
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>申请通知与进度 - TA 招聘系统</title>
+    <title>Application Notifications and Progress - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <main class="container wide ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1>申请通知与进度</h1>
-            <p class="hint">查看消息提醒、岗位申请状态与完整时间线。</p>
+            <h1>Application Notifications and Progress</h1>
+            <p class="hint">Review notifications, application status updates, and the full timeline for each role.</p>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
         </div>
     </header>
 
     <section class="card notification-panel" id="notification-center">
-        <h2>申请通知</h2>
+        <h2>Application Notifications</h2>
         <% if (taNotifications == null || taNotifications.isEmpty()) { %>
-        <p class="hint">目前没有新的申请通知。</p>
+        <p class="hint">There are no new application notifications right now.</p>
         <% } else { %>
         <ul class="notification-list">
             <% for (TaNotificationView item : taNotifications) { %>
@@ -47,8 +47,8 @@
 
     <% if (applications == null || applications.isEmpty()) { %>
     <section class="card">
-        <p class="hint">你还没有提交任何申请。</p>
-        <a class="link-btn" href="${pageContext.request.contextPath}/home">去浏览职位</a>
+        <p class="hint">You have not submitted any applications yet.</p>
+        <a class="link-btn" href="${pageContext.request.contextPath}/home">Browse Jobs</a>
     </section>
     <% } else { %>
     <div class="application-status-list">
@@ -57,7 +57,7 @@
             <div class="application-status-head">
                 <div>
                     <h2 class="application-job-title"><%= app.getJobTitle() == null ? "" : app.getJobTitle() %></h2>
-                    <p class="hint application-job-meta">申请编号：<code><%= app.getApplicationId() == null ? "" : app.getApplicationId() %></code></p>
+                    <p class="hint application-job-meta">Application ID: <code><%= app.getApplicationId() == null ? "" : app.getApplicationId() %></code></p>
                 </div>
                 <div class="application-status-badges">
                     <span class="<%= app.getStatusPillClass() == null ? "status-pill tag-neutral" : app.getStatusPillClass() %>">
@@ -66,10 +66,10 @@
                 </div>
             </div>
             <div class="application-last-updated">
-                <span class="label">最近更新时间</span>
-                <span class="value"><%= app.getLastUpdatedDisplay() == null || app.getLastUpdatedDisplay().isEmpty() ? "—" : app.getLastUpdatedDisplay() %></span>
+                <span class="label">Last updated</span>
+                <span class="value"><%= app.getLastUpdatedDisplay() == null || app.getLastUpdatedDisplay().isEmpty() ? "-" : app.getLastUpdatedDisplay() %></span>
             </div>
-            <h3 class="section-title timeline-title">状态时间线</h3>
+            <h3 class="section-title timeline-title">Status timeline</h3>
             <ol class="timeline">
                 <%
                     List<TaTimelineStep> steps = app.getTimelineSteps();

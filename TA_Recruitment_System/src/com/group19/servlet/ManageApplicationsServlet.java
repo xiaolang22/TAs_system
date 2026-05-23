@@ -84,9 +84,9 @@ public class ManageApplicationsServlet extends HttpServlet {
         req.setAttribute("updated", req.getParameter("updated"));
 
         if (jobId == null) {
-            req.setAttribute("errorMsg", "缺少岗位编号。");
+            req.setAttribute("errorMsg", "Job ID is required.");
             req.setAttribute("jobTitle", "");
-            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("缺少岗位编号。", "match".equals(sortMode)));
+            req.setAttribute("applicantRowsHtml", buildEmptyRowsHtml("Job ID is required.", "match".equals(sortMode)));
             req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
             return;
         }
@@ -108,9 +108,9 @@ public class ManageApplicationsServlet extends HttpServlet {
         if (detailMode) {
             ApplicantReviewRow applicant = findApplicant(applicants, studentId);
             if (applicant == null) {
-                req.setAttribute("errorMsg", "未找到该岗位对应的申请人。");
+                req.setAttribute("errorMsg", "No applicants were found for this job.");
                 req.setAttribute("applicantRowsHtml",
-                        buildEmptyRowsHtml("未找到该岗位对应的申请人。", "match".equals(sortMode)));
+                        buildEmptyRowsHtml("No applicants were found for this job.", "match".equals(sortMode)));
                 req.getRequestDispatcher("/WEB-INF/jsp/applicant_review.jsp").forward(req, resp);
                 return;
             }
@@ -195,7 +195,7 @@ public class ManageApplicationsServlet extends HttpServlet {
                                                  String jobId, String sortMode) {
         boolean showMatchColumn = "match".equals(sortMode);
         if (applicants == null || applicants.isEmpty()) {
-            return buildEmptyRowsHtml("当前岗位暂无申请记录。", showMatchColumn);
+            return buildEmptyRowsHtml("There are no applications for this job yet.", showMatchColumn);
         }
 
         String contextPath = req.getContextPath();
@@ -237,7 +237,7 @@ public class ManageApplicationsServlet extends HttpServlet {
                     .append("\">");
             html.append("<label class=\"sr-only\" for=\"status-")
                     .append(escapeHtml(applicant.getApplicationId()))
-                    .append("\">申请状态</label>");
+                    .append("\">Application Status</label>");
             html.append("<select id=\"status-")
                     .append(escapeHtml(applicant.getApplicationId()))
                     .append("\" name=\"status\">");
@@ -248,7 +248,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("<p class=\"table-subtext review-process-note\">")
                     .append(escapeHtml(buildStatusRuleHint()))
                     .append("</p>");
-            html.append("<button type=\"submit\">更新状态</button>");
+            html.append("<button type=\"submit\">Update Status</button>");
             html.append("</form>");
             html.append("</td>");
             html.append("</tr>");
@@ -258,14 +258,14 @@ public class ManageApplicationsServlet extends HttpServlet {
 
     private static String buildProfileLink(String contextPath, String jobId, String studentId, String sortMode) {
         String href = buildCandidateProfileUrl(contextPath, jobId, studentId, sortMode);
-        return "<a class=\"link-btn secondary\" href=\"" + escapeHtml(href) + "\">查看档案 / 简历</a>";
+        return "<a class=\"link-btn secondary\" href=\"" + escapeHtml(href) + "\">View Profile / Resume</a>";
     }
 
     private static String buildCandidateProfileUrl(String contextPath, String jobId, String studentId, String sortMode) {
         String backUrl = contextPath + "/mo/applications?jobId=" + encode(jobId) + "&sort=" + encode(sortMode);
         return contextPath + "/mo/ta-profile?studentId=" + encode(studentId)
                 + "&backUrl=" + encode(backUrl)
-                + "&backLabel=" + encode("返回申请人列表");
+                + "&backLabel=" + encode("Back to Applicant List");
     }
 
     private static String statusClass(String status) {
@@ -296,7 +296,7 @@ public class ManageApplicationsServlet extends HttpServlet {
     }
 
     private static String buildStatusRuleHint() {
-        return "流程：已提交 -> 审核中 -> 已入围 -> 已录用 / 已拒绝。";
+        return "Flow: Submitted -> In Review -> Shortlisted -> Accepted / Rejected.";
     }
 
     private static String buildEmptyRowsHtml(String message, boolean showMatchColumn) {
@@ -308,11 +308,11 @@ public class ManageApplicationsServlet extends HttpServlet {
     private static String statusLabel(String status) {
         String normalized = status == null ? "" : status.trim().toUpperCase(Locale.ROOT);
         return switch (normalized) {
-            case "SUBMITTED" -> "已提交";
-            case "IN_REVIEW" -> "审核中";
-            case "SHORTLISTED" -> "已入围";
-            case "ACCEPTED" -> "已录用";
-            case "REJECTED" -> "已拒绝";
+            case "SUBMITTED" -> "Submitted";
+            case "IN_REVIEW" -> "In Review";
+            case "SHORTLISTED" -> "Shortlisted";
+            case "ACCEPTED" -> "Accepted";
+            case "REJECTED" -> "Rejected";
             default -> normalized.isEmpty() ? "-" : normalized;
         };
     }

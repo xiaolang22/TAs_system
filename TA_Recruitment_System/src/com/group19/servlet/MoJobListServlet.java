@@ -168,7 +168,7 @@ public class MoJobListServlet extends HttpServlet {
 
         Job job = jobService.findById(jobId);
         if (job == null) {
-            req.setAttribute("errorMsg", "未找到对应岗位。");
+            req.setAttribute("errorMsg", "Job not found.");
         } else {
             req.setAttribute("job", job);
             req.setAttribute("isOwnedJob", jobService.isOwnedBy(job, loginUser.getUserId()));

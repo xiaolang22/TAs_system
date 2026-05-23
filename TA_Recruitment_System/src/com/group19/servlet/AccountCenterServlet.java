@@ -44,11 +44,11 @@ public class AccountCenterServlet extends HttpServlet {
 
         populateAccountPage(req, loginUser);
         if ("profile".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "个人信息已更新。");
+            req.setAttribute("success", "Profile information updated successfully.");
         } else if ("password".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "密码已更新。");
+            req.setAttribute("success", "Password updated successfully.");
         } else if ("avatar".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "头像已更新。");
+            req.setAttribute("success", "Avatar updated successfully.");
         }
         req.getRequestDispatcher("/WEB-INF/jsp/account_center.jsp").forward(req, resp);
     }
@@ -91,7 +91,7 @@ public class AccountCenterServlet extends HttpServlet {
                 result = accountCenterService.updateAvatar(loginUser.getUserId(), avatarPart, resolveAvatarUploadDir());
                 break;
             default:
-                result = ServiceResult.failure("无法识别当前操作。");
+                result = ServiceResult.failure("Unable to recognize the current action.");
                 break;
         }
 

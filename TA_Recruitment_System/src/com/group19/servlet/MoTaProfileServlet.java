@@ -84,12 +84,12 @@ public class MoTaProfileServlet extends HttpServlet {
             return rawLabel;
         }
         if (backUrl.contains("/mo/applications")) {
-            return "返回申请人列表";
+            return "Back to Applicant List";
         }
         if (backUrl.contains("/mo/jobs")) {
-            return "返回岗位列表";
+            return "Back to Job List";
         }
-        return "返回首页";
+        return "Back to Home";
     }
 
     private void attachCandidateAssets(HttpServletRequest req, MoTaCandidateCard candidate) {

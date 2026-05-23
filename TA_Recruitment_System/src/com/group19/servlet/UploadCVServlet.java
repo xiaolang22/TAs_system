@@ -51,7 +51,7 @@ public class UploadCVServlet extends HttpServlet {
         LoginUser loginUser = currentLoginUser(req);
         if (loginUser == null || !"TA".equalsIgnoreCase(loginUser.getRole())) {
             if (wantsJsonResponse(req)) {
-                writeJsonResponse(resp, ServiceResult.failure("当前登录状态无效，请重新登录。"));
+                writeJsonResponse(resp, ServiceResult.failure("Your session is invalid. Please sign in again."));
             } else {
                 resp.sendRedirect(req.getContextPath() + "/login");
             }
@@ -67,7 +67,8 @@ public class UploadCVServlet extends HttpServlet {
         }
 
         Path uploadDir = resolveUploadDir();
-        ServiceResult<CVUploadResult> result = cvService.uploadCv(studentId, cvPart, uploadDir);
+        ServiceResult<CVUploadResult> result =
+                cvService.uploadCv(studentId, loginUser.getDisplayName(), cvPart, uploadDir);
 
         if (wantsJsonResponse(req)) {
             writeJsonResponse(resp, result);

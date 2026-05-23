@@ -140,14 +140,20 @@ public class TaApplicationStatusService {
     }
 
     public static String toDisplayStatus(String normalizedStage) {
-        return switch (normalizedStage) {
-            case "SUBMITTED" -> "已提交";
-            case "IN_REVIEW" -> "审核中";
-            case "SHORTLISTED" -> "已入围";
-            case "ACCEPTED" -> "已录用";
-            case "REJECTED" -> "未通过";
-            default -> "状态更新";
-        };
+        switch (normalizedStage) {
+            case "SUBMITTED":
+                return "Submitted";
+            case "IN_REVIEW":
+                return "In Review";
+            case "SHORTLISTED":
+                return "Shortlisted";
+            case "ACCEPTED":
+                return "Accepted";
+            case "REJECTED":
+                return "Rejected";
+            default:
+                return "Status Updated";
+        }
     }
 
     public static String normalizeStatusCode(String status) {
@@ -158,13 +164,18 @@ public class TaApplicationStatusService {
     }
 
     private static String statusPillClass(String normalizedStatus) {
-        return switch (normalizedStatus) {
-            case "SHORTLISTED" -> "status-pill tag-warning";
-            case "ACCEPTED" -> "status-pill tag-good";
-            case "REJECTED" -> "status-pill tag-alert";
-            case "IN_REVIEW" -> "status-pill tag-neutral";
-            default -> "status-pill tag-neutral";
-        };
+        switch (normalizedStatus) {
+            case "SHORTLISTED":
+                return "status-pill tag-warning";
+            case "ACCEPTED":
+                return "status-pill tag-good";
+            case "REJECTED":
+                return "status-pill tag-alert";
+            case "IN_REVIEW":
+                return "status-pill tag-neutral";
+            default:
+                return "status-pill tag-neutral";
+        }
     }
 
     private static String formatDisplay(String iso) {

@@ -6,6 +6,10 @@
 <%@ page import="com.group19.model.LoginUser" %>
 <%@ page import="com.group19.model.UserAccount" %>
 <%!
+    private static final String TA_PANEL = "admin-ta-panel";
+    private static final String MO_PANEL = "admin-mo-panel";
+    private static final String JOB_PANEL = "admin-job-panel";
+
     private String attr(String value) {
         if (value == null) {
             return "";
@@ -29,9 +33,33 @@
 
     private String jobStatusLabel(Job job) {
         if (job == null || job.getStatus() == null) {
-            return "开放中";
+            return "Open";
         }
-        return "CLOSED".equalsIgnoreCase(job.getStatus()) ? "已关闭" : "开放中";
+        return "CLOSED".equalsIgnoreCase(job.getStatus()) ? "Closed" : "Open";
+    }
+
+    private String adminUrl(String contextPath, String taId, String moId, String jobId, String focusSection) {
+        StringBuilder builder = new StringBuilder(contextPath).append("/admin/home");
+        boolean hasQuery = false;
+        hasQuery = appendParam(builder, hasQuery, "selectedTaId", taId);
+        hasQuery = appendParam(builder, hasQuery, "selectedMoId", moId);
+        hasQuery = appendParam(builder, hasQuery, "selectedJobId", jobId);
+        if (focusSection != null && !focusSection.isEmpty()) {
+            hasQuery = appendParam(builder, hasQuery, "focusSection", focusSection);
+            builder.append('#').append(focusSection);
+        }
+        return builder.toString();
+    }
+
+    private boolean appendParam(StringBuilder builder, boolean hasQuery, String name, String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return hasQuery;
+        }
+        builder.append(hasQuery ? '&' : '?')
+                .append(name)
+                .append('=')
+                .append(value.trim());
+        return true;
     }
 %>
 <%
@@ -69,24 +97,27 @@
     UserAccount selectedTa = (UserAccount) request.getAttribute("selectedTa");
     UserAccount selectedMo = (UserAccount) request.getAttribute("selectedMo");
     Job selectedJob = (Job) request.getAttribute("selectedJob");
-    String displayName = loginUser == null ? "管理员" : loginUser.getDisplayName();
+    String displayName = loginUser == null ? "Administrator" : loginUser.getDisplayName();
     String avatarPath = loginUser == null ? "" : loginUser.getAvatarPath();
     String avatarUrl = avatarPath == null || avatarPath.isBlank() ? "" : request.getContextPath() + avatarPath;
     String successMsg = (String) request.getAttribute("successMsg");
     String errorMsg = (String) request.getAttribute("errorMsg");
+    String selectedTaId = selectedTa == null ? null : selectedTa.getUserId();
+    String selectedMoId = selectedMo == null ? null : selectedMo.getUserId();
+    String selectedJobId = selectedJob == null ? null : selectedJob.getJobId();
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理员首页 - TA Recruitment System</title>
+    <title>Admin Home - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <div class="ta-app-shell admin-app-shell">
     <header class="ta-topbar">
-        <a class="ta-brand-link" href="${pageContext.request.contextPath}/admin/home" aria-label="返回管理员首页">
+        <a class="ta-brand-link" href="${pageContext.request.contextPath}/admin/home" aria-label="Back to admin home">
             <span class="ta-brand-logo" aria-hidden="true">
                 <img src="${pageContext.request.contextPath}/assets/logo_1.jpg" alt="TA Recruitment System Logo">
             </span>
@@ -95,10 +126,10 @@
         <div class="ta-topbar-actions">
             <div class="ta-welcome-chip">Welcome! <%= attr(displayName) %></div>
 
-            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/admin/account" aria-label="进入个人中心">
+            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/admin/account" aria-label="Open account center">
                 <span class="ta-avatar <%= avatarUrl.isEmpty() ? "ta-avatar-fallback" : "" %>">
                     <% if (!avatarUrl.isEmpty()) { %>
-                    <img src="<%= attr(avatarUrl) %>" alt="用户头像">
+                    <img src="<%= attr(avatarUrl) %>" alt="User avatar">
                     <% } else { %>
                     <span><%= firstChar(displayName, "A") %></span>
                     <% } %>
@@ -106,7 +137,7 @@
             </a>
 
             <form method="post" action="${pageContext.request.contextPath}/logout" class="ta-logout-form">
-                <button type="submit" class="ta-logout-btn">退出登录</button>
+                <button type="submit" class="ta-logout-btn">Sign Out</button>
             </form>
         </div>
     </header>
@@ -118,11 +149,11 @@
                 <p class="alert error <%= errorMsg == null || errorMsg.isBlank() ? "hidden" : "" %>"><%= errorMsg == null ? "" : attr(errorMsg) %></p>
             </div>
 
-            <section class="admin-panel-card">
+            <section class="admin-panel-card" id="<%= TA_PANEL %>">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>TA管理</h2>
-                        <span><%= taAccounts.size() %> 位 TA</span>
+                        <h2>TA Management</h2>
+                        <span><%= taAccounts.size() %> TA accounts</span>
                     </div>
                 </div>
 
@@ -131,21 +162,23 @@
                     <div class="admin-detail-head">
                         <strong><%= attr(selectedTa.getDisplayName()) %></strong>
                         <span class="status-pill <%= selectedTa.isFrozen() ? "tag-alert" : "tag-good" %>">
-                            <%= selectedTa.isFrozen() ? "已冻结" : "正常" %>
+                            <%= selectedTa.isFrozen() ? "Frozen" : "Active" %>
                         </span>
                     </div>
                     <div class="admin-detail-grid">
-                        <div><span class="label">账号</span><span class="value"><%= attr(selectedTa.getUsername()) %></span></div>
-                        <div><span class="label">学号</span><span class="value"><%= attr(selectedTa.getUserId()) %></span></div>
+                        <div><span class="label">Username</span><span class="value"><%= attr(selectedTa.getUsername()) %></span></div>
+                        <div><span class="label">Student ID</span><span class="value"><%= attr(selectedTa.getUserId()) %></span></div>
                     </div>
                     <div class="admin-inline-actions">
+                        <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), null, selectedMoId, selectedJobId, TA_PANEL) %>">Hide Details</a>
                         <form method="post" action="${pageContext.request.contextPath}/admin/home">
                             <input type="hidden" name="action" value="resetTaPassword">
                             <input type="hidden" name="userId" value="<%= attr(selectedTa.getUserId()) %>">
                             <input type="hidden" name="selectedTaId" value="<%= attr(selectedTa.getUserId()) %>">
                             <% if (selectedMo != null) { %><input type="hidden" name="selectedMoId" value="<%= attr(selectedMo.getUserId()) %>"><% } %>
                             <% if (selectedJob != null) { %><input type="hidden" name="selectedJobId" value="<%= attr(selectedJob.getJobId()) %>"><% } %>
-                            <button type="submit" class="secondary-btn">重置密码</button>
+                            <input type="hidden" name="focusSection" value="<%= TA_PANEL %>">
+                            <button type="submit" class="secondary-btn">Reset Password</button>
                         </form>
                         <form method="post" action="${pageContext.request.contextPath}/admin/home">
                             <input type="hidden" name="action" value="toggleTaFreeze">
@@ -153,7 +186,8 @@
                             <input type="hidden" name="selectedTaId" value="<%= attr(selectedTa.getUserId()) %>">
                             <% if (selectedMo != null) { %><input type="hidden" name="selectedMoId" value="<%= attr(selectedMo.getUserId()) %>"><% } %>
                             <% if (selectedJob != null) { %><input type="hidden" name="selectedJobId" value="<%= attr(selectedJob.getJobId()) %>"><% } %>
-                            <button type="submit" class="secondary-btn"><%= selectedTa.isFrozen() ? "解冻账号" : "冻结账号" %></button>
+                            <input type="hidden" name="focusSection" value="<%= TA_PANEL %>">
+                            <button type="submit" class="secondary-btn"><%= selectedTa.isFrozen() ? "Unfreeze Account" : "Freeze Account" %></button>
                         </form>
                     </div>
                 </section>
@@ -164,21 +198,21 @@
                     <article class="admin-list-item <%= selectedTa != null && account.getUserId().equalsIgnoreCase(selectedTa.getUserId()) ? "is-selected" : "" %>">
                         <div class="admin-list-copy">
                             <strong><%= attr(account.getDisplayName()) %></strong>
-                            <span><%= attr(account.getUsername()) %> · <%= account.isFrozen() ? "已冻结" : "正常" %></span>
+                            <span><%= attr(account.getUsername()) %> | <%= account.isFrozen() ? "Frozen" : "Active" %></span>
                         </div>
                         <div class="admin-list-actions">
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/admin/home?selectedTaId=<%= attr(account.getUserId()) %><% if (selectedMo != null) { %>&selectedMoId=<%= attr(selectedMo.getUserId()) %><% } %><% if (selectedJob != null) { %>&selectedJobId=<%= attr(selectedJob.getJobId()) %><% } %>">查看详情</a>
+                            <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), account.getUserId(), selectedMoId, selectedJobId, TA_PANEL) %>">View Details</a>
                         </div>
                     </article>
                     <% } %>
                 </div>
             </section>
 
-            <section class="admin-panel-card">
+            <section class="admin-panel-card" id="<%= MO_PANEL %>">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>MO管理</h2>
-                        <span><%= moAccounts.size() %> 位 MO</span>
+                        <h2>MO Management</h2>
+                        <span><%= moAccounts.size() %> MO accounts</span>
                     </div>
                 </div>
 
@@ -187,21 +221,23 @@
                     <div class="admin-detail-head">
                         <strong><%= attr(selectedMo.getDisplayName()) %></strong>
                         <span class="status-pill <%= selectedMo.isFrozen() ? "tag-alert" : "tag-good" %>">
-                            <%= selectedMo.isFrozen() ? "已冻结" : "正常" %>
+                            <%= selectedMo.isFrozen() ? "Frozen" : "Active" %>
                         </span>
                     </div>
                     <div class="admin-detail-grid">
-                        <div><span class="label">账号</span><span class="value"><%= attr(selectedMo.getUsername()) %></span></div>
-                        <div><span class="label">编号</span><span class="value"><%= attr(selectedMo.getUserId()) %></span></div>
+                        <div><span class="label">Username</span><span class="value"><%= attr(selectedMo.getUsername()) %></span></div>
+                        <div><span class="label">MO ID</span><span class="value"><%= attr(selectedMo.getUserId()) %></span></div>
                     </div>
                     <div class="admin-inline-actions">
+                        <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), selectedTaId, null, selectedJobId, MO_PANEL) %>">Hide Details</a>
                         <form method="post" action="${pageContext.request.contextPath}/admin/home">
                             <input type="hidden" name="action" value="resetMoPassword">
                             <input type="hidden" name="userId" value="<%= attr(selectedMo.getUserId()) %>">
                             <% if (selectedTa != null) { %><input type="hidden" name="selectedTaId" value="<%= attr(selectedTa.getUserId()) %>"><% } %>
                             <input type="hidden" name="selectedMoId" value="<%= attr(selectedMo.getUserId()) %>">
                             <% if (selectedJob != null) { %><input type="hidden" name="selectedJobId" value="<%= attr(selectedJob.getJobId()) %>"><% } %>
-                            <button type="submit" class="secondary-btn">重置密码</button>
+                            <input type="hidden" name="focusSection" value="<%= MO_PANEL %>">
+                            <button type="submit" class="secondary-btn">Reset Password</button>
                         </form>
                         <form method="post" action="${pageContext.request.contextPath}/admin/home">
                             <input type="hidden" name="action" value="toggleMoFreeze">
@@ -209,7 +245,8 @@
                             <% if (selectedTa != null) { %><input type="hidden" name="selectedTaId" value="<%= attr(selectedTa.getUserId()) %>"><% } %>
                             <input type="hidden" name="selectedMoId" value="<%= attr(selectedMo.getUserId()) %>">
                             <% if (selectedJob != null) { %><input type="hidden" name="selectedJobId" value="<%= attr(selectedJob.getJobId()) %>"><% } %>
-                            <button type="submit" class="secondary-btn"><%= selectedMo.isFrozen() ? "解冻账号" : "冻结账号" %></button>
+                            <input type="hidden" name="focusSection" value="<%= MO_PANEL %>">
+                            <button type="submit" class="secondary-btn"><%= selectedMo.isFrozen() ? "Unfreeze Account" : "Freeze Account" %></button>
                         </form>
                     </div>
                 </section>
@@ -220,21 +257,21 @@
                     <article class="admin-list-item <%= selectedMo != null && account.getUserId().equalsIgnoreCase(selectedMo.getUserId()) ? "is-selected" : "" %>">
                         <div class="admin-list-copy">
                             <strong><%= attr(account.getDisplayName()) %></strong>
-                            <span><%= attr(account.getUsername()) %> · <%= account.isFrozen() ? "已冻结" : "正常" %></span>
+                            <span><%= attr(account.getUsername()) %> | <%= account.isFrozen() ? "Frozen" : "Active" %></span>
                         </div>
                         <div class="admin-list-actions">
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/admin/home?selectedMoId=<%= attr(account.getUserId()) %><% if (selectedTa != null) { %>&selectedTaId=<%= attr(selectedTa.getUserId()) %><% } %><% if (selectedJob != null) { %>&selectedJobId=<%= attr(selectedJob.getJobId()) %><% } %>">查看详情</a>
+                            <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), selectedTaId, account.getUserId(), selectedJobId, MO_PANEL) %>">View Details</a>
                         </div>
                     </article>
                     <% } %>
                 </div>
             </section>
 
-            <section class="admin-panel-card">
+            <section class="admin-panel-card" id="<%= JOB_PANEL %>">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>岗位管理</h2>
-                        <span><%= jobs.size() %> 个岗位</span>
+                        <h2>Job Management</h2>
+                        <span><%= jobs.size() %> jobs</span>
                     </div>
                 </div>
 
@@ -246,27 +283,31 @@
                             <%= jobStatusLabel(selectedJob) %>
                         </span>
                     </div>
+                    <div class="admin-inline-actions">
+                        <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), selectedTaId, selectedMoId, null, JOB_PANEL) %>">Hide Details</a>
+                    </div>
                     <form method="post" action="${pageContext.request.contextPath}/admin/home" class="admin-edit-form">
                         <input type="hidden" name="action" value="updateJob">
                         <input type="hidden" name="jobId" value="<%= attr(selectedJob.getJobId()) %>">
                         <% if (selectedTa != null) { %><input type="hidden" name="selectedTaId" value="<%= attr(selectedTa.getUserId()) %>"><% } %>
                         <% if (selectedMo != null) { %><input type="hidden" name="selectedMoId" value="<%= attr(selectedMo.getUserId()) %>"><% } %>
                         <input type="hidden" name="selectedJobId" value="<%= attr(selectedJob.getJobId()) %>">
+                        <input type="hidden" name="focusSection" value="<%= JOB_PANEL %>">
 
-                        <label for="adminJobTitle">岗位名称</label>
+                        <label for="adminJobTitle">Job Title</label>
                         <input id="adminJobTitle" name="title" type="text" value="<%= attr(selectedJob.getTitle()) %>" required>
 
                         <div class="admin-edit-grid">
                             <div>
-                                <label for="adminJobHours">工作时长</label>
+                                <label for="adminJobHours">Workload</label>
                                 <input id="adminJobHours" name="hours" type="text" value="<%= attr(selectedJob.getHours()) %>" required>
                             </div>
                             <div>
-                                <label for="adminJobDeadline">截止时间</label>
+                                <label for="adminJobDeadline">Deadline</label>
                                 <input id="adminJobDeadline" name="deadline" type="date" value="<%= attr(selectedJob.getDeadline()) %>" required>
                             </div>
                             <div>
-                                <label for="adminJobStatus">岗位状态</label>
+                                <label for="adminJobStatus">Status</label>
                                 <select id="adminJobStatus" name="status">
                                     <option value="OPEN" <%= "CLOSED".equalsIgnoreCase(selectedJob.getStatus()) ? "" : "selected" %>>OPEN</option>
                                     <option value="CLOSED" <%= "CLOSED".equalsIgnoreCase(selectedJob.getStatus()) ? "selected" : "" %>>CLOSED</option>
@@ -274,17 +315,17 @@
                             </div>
                         </div>
 
-                        <label for="adminJobSchedule">时间安排</label>
+                        <label for="adminJobSchedule">Schedule</label>
                         <input id="adminJobSchedule" name="schedule" type="text" value="<%= attr(selectedJob.getSchedule()) %>" required>
 
-                        <label for="adminJobDescription">岗位描述</label>
+                        <label for="adminJobDescription">Description</label>
                         <textarea id="adminJobDescription" name="description" rows="3" required><%= attr(selectedJob.getDescription()) %></textarea>
 
-                        <label for="adminJobRequirements">技能要求</label>
+                        <label for="adminJobRequirements">Requirements</label>
                         <textarea id="adminJobRequirements" name="requirements" rows="3" required><%= attr(selectedJob.getRequirements()) %></textarea>
 
                         <div class="admin-inline-actions">
-                            <button type="submit">保存修改</button>
+                            <button type="submit">Save Changes</button>
                         </div>
                     </form>
                 </section>
@@ -295,17 +336,18 @@
                     <article class="admin-list-item <%= selectedJob != null && job.getJobId().equalsIgnoreCase(selectedJob.getJobId()) ? "is-selected" : "" %>">
                         <div class="admin-list-copy">
                             <strong><%= attr(job.getTitle()) %></strong>
-                            <span><%= attr(job.getJobId()) %> · <%= jobStatusLabel(job) %></span>
+                            <span><%= attr(job.getJobId()) %> | <%= jobStatusLabel(job) %></span>
                         </div>
                         <div class="admin-list-actions">
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/admin/home?selectedJobId=<%= attr(job.getJobId()) %><% if (selectedTa != null) { %>&selectedTaId=<%= attr(selectedTa.getUserId()) %><% } %><% if (selectedMo != null) { %>&selectedMoId=<%= attr(selectedMo.getUserId()) %><% } %>">查看详情</a>
-                            <form method="post" action="${pageContext.request.contextPath}/admin/home" onsubmit="return confirm('确认删除该岗位吗？');">
+                            <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), selectedTaId, selectedMoId, job.getJobId(), JOB_PANEL) %>">View Details</a>
+                            <form method="post" action="${pageContext.request.contextPath}/admin/home" onsubmit="return confirm('Delete this job?');">
                                 <input type="hidden" name="action" value="deleteJob">
                                 <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
                                 <% if (selectedTa != null) { %><input type="hidden" name="selectedTaId" value="<%= attr(selectedTa.getUserId()) %>"><% } %>
                                 <% if (selectedMo != null) { %><input type="hidden" name="selectedMoId" value="<%= attr(selectedMo.getUserId()) %>"><% } %>
                                 <% if (selectedJob != null) { %><input type="hidden" name="selectedJobId" value="<%= attr(selectedJob.getJobId()) %>"><% } %>
-                                <button type="submit" class="secondary-btn">删除岗位</button>
+                                <input type="hidden" name="focusSection" value="<%= JOB_PANEL %>">
+                                <button type="submit" class="secondary-btn">Delete Job</button>
                             </form>
                         </div>
                     </article>
@@ -318,46 +360,46 @@
             <section class="admin-panel-card admin-monitor-card">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>监控栏</h2>
-                        <span>全局概览</span>
+                        <h2>Monitoring</h2>
+                        <span>Global overview</span>
                     </div>
                 </div>
 
                 <div class="admin-stat-grid">
                     <div class="summary-card">
-                        <span class="label">当前开放岗位数</span>
+                        <span class="label">Open jobs</span>
                         <span class="value">${openJobCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">已关闭岗位数</span>
+                        <span class="label">Closed jobs</span>
                         <span class="value">${closedJobCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">TA 总人数</span>
+                        <span class="label">Total TAs</span>
                         <span class="value">${taCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">MO 总人数</span>
+                        <span class="label">Total MOs</span>
                         <span class="value">${moCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">待处理申请数</span>
+                        <span class="label">Pending applications</span>
                         <span class="value">${pendingApplicationCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">已录用数</span>
+                        <span class="label">Accepted</span>
                         <span class="value">${acceptedApplicationCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">已拒绝数</span>
+                        <span class="label">Rejected</span>
                         <span class="value">${rejectedApplicationCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">工作量预警人数</span>
+                        <span class="label">Workload warnings</span>
                         <span class="value">${workloadWarningCount}</span>
                     </div>
                     <div class="summary-card">
-                        <span class="label">时间冲突人数</span>
+                        <span class="label">Time conflicts</span>
                         <span class="value">${timeConflictCount}</span>
                     </div>
                 </div>
@@ -366,12 +408,12 @@
             <section class="admin-panel-card admin-feed-card">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>最近新增岗位</h2>
+                        <h2>Recently Added Jobs</h2>
                     </div>
                 </div>
                 <div class="admin-feed-list">
                     <% if (recentJobs.isEmpty()) { %>
-                    <div class="empty-state">暂无数据</div>
+                    <div class="empty-state">No data available.</div>
                     <% } else { for (AdminFeedItem item : recentJobs) { %>
                     <article class="admin-feed-item">
                         <strong><%= attr(item.getTitle()) %></strong>
@@ -384,12 +426,12 @@
             <section class="admin-panel-card admin-feed-card">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>最近新增申请</h2>
+                        <h2>Recent Applications</h2>
                     </div>
                 </div>
                 <div class="admin-feed-list">
                     <% if (recentApplications.isEmpty()) { %>
-                    <div class="empty-state">暂无数据</div>
+                    <div class="empty-state">No data available.</div>
                     <% } else { for (AdminFeedItem item : recentApplications) { %>
                     <article class="admin-feed-item">
                         <strong><%= attr(item.getTitle()) %></strong>
@@ -402,12 +444,12 @@
             <section class="admin-panel-card admin-feed-card">
                 <div class="admin-panel-head">
                     <div>
-                        <h2>最近异常操作</h2>
+                        <h2>Recent Alerts</h2>
                     </div>
                 </div>
                 <div class="admin-feed-list">
                     <% if (recentAlerts.isEmpty()) { %>
-                    <div class="empty-state">暂无异常</div>
+                    <div class="empty-state">No alerts.</div>
                     <% } else { for (AdminFeedItem item : recentAlerts) { %>
                     <article class="admin-feed-item">
                         <strong><%= attr(item.getTitle()) %></strong>

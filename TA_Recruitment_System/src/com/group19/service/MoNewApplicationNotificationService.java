@@ -44,11 +44,7 @@ public class MoNewApplicationNotificationService {
         String taName = application.getTaName() == null || application.getTaName().isBlank()
                 ? application.getTaStudentId()
                 : application.getTaName().trim();
-        String message = "TA "
-                + taName
-                + " 提交了岗位“"
-                + jobTitle
-                + "”的新申请。";
+        String message = taName + " submitted a new application for \"" + jobTitle + "\".";
 
         Notification notification = new Notification();
         notification.setNotificationId(UUID.randomUUID().toString());
@@ -127,11 +123,11 @@ public class MoNewApplicationNotificationService {
 
     private String resolveJobTitle(String jobId) {
         if (jobId == null || jobId.isBlank()) {
-            return "未知岗位";
+            return "Unknown position";
         }
         Job job = jobDao.findById(jobId);
         if (job == null || job.getTitle() == null || job.getTitle().isBlank()) {
-            return "未知岗位";
+            return "Unknown position";
         }
         return job.getTitle().trim();
     }

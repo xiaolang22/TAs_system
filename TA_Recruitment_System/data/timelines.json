@@ -1,1 +1,3551 @@
-[]
+[
+  {
+    "eventId": "61b04e62-95d0-417f-9ba5-f38274aa3547",
+    "applicationId": "47c12199-d9aa-407d-9947-e8a5e2dc0825",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-01T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "dde3a5f7-77d7-4e1b-b642-5ac2bf44330a",
+    "applicationId": "9eb404cf-6cca-4ff5-bf39-87b2b57f3aee",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-01T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "588be648-06c2-4c25-9e44-4200805d5e5d",
+    "applicationId": "9eb404cf-6cca-4ff5-bf39-87b2b57f3aee",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-02T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5b03ddcb-48a3-4b2b-bb33-3335da184e7d",
+    "applicationId": "8e050586-8118-4993-a63a-0c87aed41176",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-01T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "03f83e5b-5f4e-4973-91fc-0268b3fa0f3f",
+    "applicationId": "8e050586-8118-4993-a63a-0c87aed41176",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-02T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "d5fb2e73-79f4-45cc-889e-0b17026feea7",
+    "applicationId": "8e050586-8118-4993-a63a-0c87aed41176",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-04T23:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "56551a5e-be79-4598-8e94-9db49ae34685",
+    "applicationId": "c230b068-fc16-410f-94a2-f2e1a4e2eda2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-02T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "813c5c28-82fc-4bca-b793-2ee9b29f3e1c",
+    "applicationId": "c230b068-fc16-410f-94a2-f2e1a4e2eda2",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-03T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "c4159c41-d90e-4786-a5ff-54de8c9bb9c8",
+    "applicationId": "c230b068-fc16-410f-94a2-f2e1a4e2eda2",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-05T06:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "17a3d1f2-e394-4099-95e7-11e089b4e16d",
+    "applicationId": "c230b068-fc16-410f-94a2-f2e1a4e2eda2",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-07T07:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "de6148c6-97fd-47e0-ae09-db44b4d1baf6",
+    "applicationId": "f703a532-ad9c-4a6a-854e-6b02d16e4933",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-02T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ac98c523-5577-4b4e-8bdd-2e02e71ffefc",
+    "applicationId": "f703a532-ad9c-4a6a-854e-6b02d16e4933",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-03T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5cd167bc-913b-45e7-9977-5eca66478326",
+    "applicationId": "f703a532-ad9c-4a6a-854e-6b02d16e4933",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-06T16:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "cd66fb1f-0893-48ae-8191-3fcb22b7eba5",
+    "applicationId": "38145245-f81c-4b8f-96ad-b858dac3bdb3",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-02T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "79a4b0ce-666c-4da7-a6ea-1cd3548070e6",
+    "applicationId": "6cd74599-f0cd-45bb-a1cf-81214d14843e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-03T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c7111000-edd4-4f51-9670-18df57e6fd83",
+    "applicationId": "6cd74599-f0cd-45bb-a1cf-81214d14843e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-04T03:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "9cd3c696-3ecf-4220-bb54-87eb1bb9b472",
+    "applicationId": "eb230c14-c9e7-45e1-9334-df4a3151e34b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-03T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "84427cde-a66e-40c1-b39c-547226965cf1",
+    "applicationId": "eb230c14-c9e7-45e1-9334-df4a3151e34b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-04T10:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "2a30373a-663d-4143-bf5c-be7c5322e868",
+    "applicationId": "eb230c14-c9e7-45e1-9334-df4a3151e34b",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-06T10:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "1e7230ad-7c92-45c6-9ffd-96616644b34c",
+    "applicationId": "eb230c14-c9e7-45e1-9334-df4a3151e34b",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-08T11:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "d81e8933-8f96-497a-a528-437cfcb2a12d",
+    "applicationId": "4cb3a779-d4b9-4f8e-8b17-92529e2b45c6",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-03T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "2a20f4e2-a4c8-4857-bf1c-9f87e25b70b1",
+    "applicationId": "4cb3a779-d4b9-4f8e-8b17-92529e2b45c6",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-04T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "7ef3f832-0a28-4c1c-82df-cb781864e440",
+    "applicationId": "4cb3a779-d4b9-4f8e-8b17-92529e2b45c6",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-07T20:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "653a433e-8087-4862-97ca-501aa1df0622",
+    "applicationId": "b15dec55-4533-41b4-85ce-d2659611945a",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-04T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9dd004b5-ec3e-4ac4-bb83-ea7d7cd0ad45",
+    "applicationId": "b15dec55-4533-41b4-85ce-d2659611945a",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-05T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "195087f7-495b-48c0-9442-1f4039a34dd0",
+    "applicationId": "b15dec55-4533-41b4-85ce-d2659611945a",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-07T00:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "322e58d2-969b-484c-a9b0-f966402c8e25",
+    "applicationId": "a2aa99c0-9097-4c83-84ca-5a68c30f69b1",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-04T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ac6db50a-2e66-4fa1-8800-233ff1dc4b81",
+    "applicationId": "db53285b-c3c7-4d3d-be70-48387d03f240",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-04T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "540cd8e2-1408-4845-83a2-f072f14f857a",
+    "applicationId": "db53285b-c3c7-4d3d-be70-48387d03f240",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-05T14:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "663e3cc3-2f14-4606-af88-ef17f1cca34d",
+    "applicationId": "32ac4f8c-d5d2-43f9-a560-bd792dec6fdb",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-04T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c5b1afc9-bcf8-4b53-ad75-f141424c08ec",
+    "applicationId": "32ac4f8c-d5d2-43f9-a560-bd792dec6fdb",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-05T21:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "a1109575-9125-4127-a950-bff9586eee65",
+    "applicationId": "32ac4f8c-d5d2-43f9-a560-bd792dec6fdb",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-07T21:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "e086e955-ebc2-44a8-938c-e7c0f7580d84",
+    "applicationId": "df3e7514-b07b-47b2-8c15-2b5243acc501",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-05T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "37273a42-a8fd-4e6b-9344-874b41151810",
+    "applicationId": "df3e7514-b07b-47b2-8c15-2b5243acc501",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-06T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "705a6ebc-07d6-4fa4-a577-f7e2d78eded0",
+    "applicationId": "df3e7514-b07b-47b2-8c15-2b5243acc501",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-08T04:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "3afa4c02-b619-438d-b186-8989e9f0dbb1",
+    "applicationId": "df3e7514-b07b-47b2-8c15-2b5243acc501",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-10T05:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "4b8729cb-4453-4ba3-a986-3367d71d9ac5",
+    "applicationId": "b049cc6b-d99a-43ce-abe5-2f22ff3b7fe5",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-05T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "af0348a3-3155-45f7-b33f-022e261534cc",
+    "applicationId": "b049cc6b-d99a-43ce-abe5-2f22ff3b7fe5",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-06T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b541f872-e928-4207-89e0-d5c8d3061930",
+    "applicationId": "b049cc6b-d99a-43ce-abe5-2f22ff3b7fe5",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-09T14:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "a75e6a93-ac0c-472d-a1f2-ebec3cb8113f",
+    "applicationId": "6771db19-d6bd-468e-b0cd-b2c2cbb022f9",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-05T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "06865f0a-e7e3-4b12-bc80-799305a639cc",
+    "applicationId": "90df5c9a-82a9-43e2-98b1-392e3ce9e70a",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-06T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9f99de38-0ff5-4e13-83df-66550a82896b",
+    "applicationId": "90df5c9a-82a9-43e2-98b1-392e3ce9e70a",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-07T01:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "54f77700-d66b-4bff-a04a-ca9a24f86e54",
+    "applicationId": "3a0009fd-216a-4aed-8d32-dba1411ffbde",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-06T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7485a0a2-27b9-4354-877f-4f70a0eb82c2",
+    "applicationId": "3a0009fd-216a-4aed-8d32-dba1411ffbde",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-07T08:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "c88392d5-a0ab-442f-9e9b-6c30cfd8594b",
+    "applicationId": "3a0009fd-216a-4aed-8d32-dba1411ffbde",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-09T08:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "f7b1e43f-1fe3-4771-9bad-b3b3c2b27536",
+    "applicationId": "3a0009fd-216a-4aed-8d32-dba1411ffbde",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-11T09:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "ba38a578-cf0b-412d-aef0-58fe45b4729d",
+    "applicationId": "3b400997-b9b6-4c86-81a0-87c667b724a4",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-06T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5f657696-357d-4302-bfb9-686e6a3f164f",
+    "applicationId": "3b400997-b9b6-4c86-81a0-87c667b724a4",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-07T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "004cbdb5-91b5-490a-a41f-7ad1af25fc3f",
+    "applicationId": "3b400997-b9b6-4c86-81a0-87c667b724a4",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-10T18:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "bd228627-e3e6-4745-821f-0d0d4c51dfe1",
+    "applicationId": "7f493a76-b0e8-4ee5-95d2-b1224953bb41",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-06T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f3d2cf9c-98e0-45da-8ef2-59f0cb64a318",
+    "applicationId": "7f493a76-b0e8-4ee5-95d2-b1224953bb41",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-07T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "a7b19a68-d8dd-406e-bc3b-14e34836b9d1",
+    "applicationId": "7f493a76-b0e8-4ee5-95d2-b1224953bb41",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-09T22:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "b9ab591d-5d6c-4b38-bfab-b8143df60261",
+    "applicationId": "74ea3fbc-04dd-47bc-8560-4dda4b358218",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-07T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "d0ed2d21-11ed-47be-9476-b5e76bde2f6c",
+    "applicationId": "d631f716-a2b3-41a2-8957-cd7b3ffe5c37",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-07T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "14571688-1402-4c1a-a5f8-05360640b8b9",
+    "applicationId": "d631f716-a2b3-41a2-8957-cd7b3ffe5c37",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-08T12:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "6e32298d-b013-494e-a52f-ae4981c3a686",
+    "applicationId": "1fc26891-dffd-4cbe-a7a7-bd4c7f795f95",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-07T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5b94990c-1cbd-4249-84d4-6d765994ebc8",
+    "applicationId": "1fc26891-dffd-4cbe-a7a7-bd4c7f795f95",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-08T19:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ae4e6e01-033f-430b-918b-b271953bc316",
+    "applicationId": "1fc26891-dffd-4cbe-a7a7-bd4c7f795f95",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-10T19:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "f5082752-c4af-486c-8394-123dea13952a",
+    "applicationId": "8adebde3-4965-4970-8d9a-cfe7584d318d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-08T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f05e9beb-f2d8-44f3-be19-0f15655d8169",
+    "applicationId": "8adebde3-4965-4970-8d9a-cfe7584d318d",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-09T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ec25b8a2-cc0c-4f8f-8afd-1ac9eb4b2727",
+    "applicationId": "8adebde3-4965-4970-8d9a-cfe7584d318d",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-11T02:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "64b0d307-60ee-4bfb-85fb-f9e14f1e587d",
+    "applicationId": "8adebde3-4965-4970-8d9a-cfe7584d318d",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-13T03:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "e1eeaed1-58d7-4c1d-bb4c-30ce4ae97536",
+    "applicationId": "8851ed93-7254-49dd-a4cd-3d84e6f6e046",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-08T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "37aca684-058e-4adb-84f3-184d6eacfb24",
+    "applicationId": "8851ed93-7254-49dd-a4cd-3d84e6f6e046",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-09T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "63a3b0ed-a275-436b-9e29-3f202904951e",
+    "applicationId": "8851ed93-7254-49dd-a4cd-3d84e6f6e046",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-12T12:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "28e56354-9e98-4760-90f2-27608a991780",
+    "applicationId": "ff4f797c-391a-4bdd-b383-6dd5f0792b0d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-08T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b4157b76-674b-4740-a826-458fb3afe8cb",
+    "applicationId": "f1bcdbac-4d78-4145-8552-65e47db8955b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-08T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "86d8d8d7-9f7a-4761-85d2-96edad6b5cc7",
+    "applicationId": "f1bcdbac-4d78-4145-8552-65e47db8955b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-09T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "0cbfcf62-fc26-4c95-b683-636f8cf3e100",
+    "applicationId": "81e2043c-e1fa-404b-8a9e-247227e1ccc0",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-09T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "3788c047-ccca-4660-803e-b42f24b264a2",
+    "applicationId": "81e2043c-e1fa-404b-8a9e-247227e1ccc0",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-10T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "81ce57a7-3abd-492b-a146-42b414a66cc5",
+    "applicationId": "81e2043c-e1fa-404b-8a9e-247227e1ccc0",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-12T06:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "63dd6209-8251-439d-98c8-aad2680d446c",
+    "applicationId": "81e2043c-e1fa-404b-8a9e-247227e1ccc0",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-14T07:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "7122c75b-7a13-450a-b71d-0192b17b28a2",
+    "applicationId": "bc4bba06-a7e2-4369-8f60-46902d790622",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-09T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "6a5b3767-14b7-4cef-83bb-39d4350387cb",
+    "applicationId": "bc4bba06-a7e2-4369-8f60-46902d790622",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-10T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "1aed9a92-8043-4f79-97e3-8e294b5d26f8",
+    "applicationId": "bc4bba06-a7e2-4369-8f60-46902d790622",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-13T16:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "7c0f445c-a3ae-4cd9-b7ec-8f329d562ad5",
+    "applicationId": "31af54ba-f66a-4efd-9bf0-a57a09b3225e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-09T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "4ed4bd2c-06e2-47f2-9427-e98473035616",
+    "applicationId": "31af54ba-f66a-4efd-9bf0-a57a09b3225e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-10T20:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "91464aef-7857-46a3-8cbd-477880a3e763",
+    "applicationId": "31af54ba-f66a-4efd-9bf0-a57a09b3225e",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-12T20:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "7f0a64f5-0db7-4aba-92f7-6dab013f02f8",
+    "applicationId": "50957a58-9386-46bc-a1e5-0581cee9ba28",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-10T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "633bfca7-73d5-4180-a40e-9606831575f3",
+    "applicationId": "39f53b95-9e0b-4012-b254-3c7fa3f5cbb1",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-10T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "27aec6bd-e864-4c79-b8d7-64fa6bba72ec",
+    "applicationId": "39f53b95-9e0b-4012-b254-3c7fa3f5cbb1",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-11T10:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ff76c552-9803-4b41-884b-d37ed76ffe4e",
+    "applicationId": "45fe40f7-7ace-4889-a1fb-cb841fc9529c",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-10T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e7792c24-6062-4f7e-89b7-09fa7193e84d",
+    "applicationId": "45fe40f7-7ace-4889-a1fb-cb841fc9529c",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-11T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f3990ac6-ac2c-45f3-85b6-908bda0d26d8",
+    "applicationId": "45fe40f7-7ace-4889-a1fb-cb841fc9529c",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-13T17:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "287b7a7b-ab5c-42d1-8e80-e70f16708d5a",
+    "applicationId": "89e44260-a1f3-42bd-b446-a58eccd79836",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-11T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7714f9eb-0f52-4455-8884-172fbdf39003",
+    "applicationId": "89e44260-a1f3-42bd-b446-a58eccd79836",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-12T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ea80cb8b-6e4e-4640-9798-3bdbb73d2cfd",
+    "applicationId": "89e44260-a1f3-42bd-b446-a58eccd79836",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-14T00:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "a6073dc6-630a-4135-a0f4-4eef369d4572",
+    "applicationId": "89e44260-a1f3-42bd-b446-a58eccd79836",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-16T01:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "6980546f-623f-49e0-86c0-85d40c9b8a7a",
+    "applicationId": "eb9a07ba-7485-47b0-9f9b-cfe47cd13d33",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-11T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5740eee5-70dd-4156-9398-a648ddc3ecea",
+    "applicationId": "eb9a07ba-7485-47b0-9f9b-cfe47cd13d33",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-12T07:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "377e8bc6-a2b9-4547-aad9-857f36d24514",
+    "applicationId": "eb9a07ba-7485-47b0-9f9b-cfe47cd13d33",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-15T10:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "9daf3ee3-5ee0-4008-974a-9f3625869b4a",
+    "applicationId": "d3e710d8-648a-4e35-a854-43995d085e7e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-11T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5a08c992-7ae7-42a9-b316-dec0063ae43c",
+    "applicationId": "7a0304fc-8712-462f-a0eb-b2ebaf3ddbb3",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-11T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "0747f1c7-c741-4024-b3c0-8f7ebdbeee08",
+    "applicationId": "7a0304fc-8712-462f-a0eb-b2ebaf3ddbb3",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-12T21:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "801e84c6-9cb3-4b19-9007-9ed4387f48d0",
+    "applicationId": "55f450dd-6b3f-4713-9e05-3dc94b4a4363",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-12T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "12a99046-f7be-4aa2-91b5-15b4d03202b6",
+    "applicationId": "55f450dd-6b3f-4713-9e05-3dc94b4a4363",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-13T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "35db2443-3df6-4e5c-8c89-821036b62d66",
+    "applicationId": "55f450dd-6b3f-4713-9e05-3dc94b4a4363",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-15T04:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "b8fc8fbb-697b-4531-9431-46220ccae8d6",
+    "applicationId": "55f450dd-6b3f-4713-9e05-3dc94b4a4363",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-17T05:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "41f1a040-f8ce-4551-bd7a-af573379577b",
+    "applicationId": "00985211-1e52-4ab6-a7ca-cd0948fda664",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-12T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b4a27731-5e26-4e0a-80a2-6076cc34baa2",
+    "applicationId": "00985211-1e52-4ab6-a7ca-cd0948fda664",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-13T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "684600a1-9929-4baf-804c-b30f831882b2",
+    "applicationId": "00985211-1e52-4ab6-a7ca-cd0948fda664",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-16T14:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "b0caa4f6-d0ac-475a-acc9-16b0f2f8c82b",
+    "applicationId": "daf671d1-861d-4c58-b63e-d81012ce60a8",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-12T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "de6c960d-9bcc-45a2-9121-fa527fdb7f18",
+    "applicationId": "daf671d1-861d-4c58-b63e-d81012ce60a8",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-13T18:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "65b79626-eef0-4a15-b059-ff3ec534a0dd",
+    "applicationId": "daf671d1-861d-4c58-b63e-d81012ce60a8",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-15T18:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "af723fd4-e0cf-41fc-b3b9-8dd57c49b975",
+    "applicationId": "b60a920d-ed1f-488a-8470-34749ca4c55e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-13T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "554ed49f-cb9c-4ad8-8de3-4a0783cc51c1",
+    "applicationId": "e0c18ba0-c5d1-45b1-be54-999fddc6e1ef",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-13T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "bd6b539d-9bac-4e5a-8dae-35bbb798c42c",
+    "applicationId": "e0c18ba0-c5d1-45b1-be54-999fddc6e1ef",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-14T08:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ad93d51f-65fd-4aff-a828-174d3a693906",
+    "applicationId": "481062c3-e9b0-45bf-81cf-dc641908561a",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-13T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "6b51350f-b196-4b31-aab7-af02ef2b717f",
+    "applicationId": "481062c3-e9b0-45bf-81cf-dc641908561a",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-14T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "4034edbe-a0de-4212-9933-68e20a0110b6",
+    "applicationId": "481062c3-e9b0-45bf-81cf-dc641908561a",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-16T15:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "cd9eb20d-74f7-4461-92c8-9f79cee7cca3",
+    "applicationId": "340445f2-87df-40c1-a1c7-10e4ebfc2291",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-13T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "dc18e9dd-fe9f-450d-8b7b-77a5b33a4564",
+    "applicationId": "340445f2-87df-40c1-a1c7-10e4ebfc2291",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-14T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "2d05e1ab-0c8f-4e71-a823-51700ff44f27",
+    "applicationId": "340445f2-87df-40c1-a1c7-10e4ebfc2291",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-16T22:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "5a0a11a1-dae7-4096-bf7c-087825aab60a",
+    "applicationId": "340445f2-87df-40c1-a1c7-10e4ebfc2291",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-18T23:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "a04b0f86-e621-4b2c-9847-dad95b440c71",
+    "applicationId": "8f1a0ded-cd6a-49eb-b3a9-3a278323d887",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-14T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b7a9d673-4baa-4c8e-bcc6-075bbc45bfb3",
+    "applicationId": "8f1a0ded-cd6a-49eb-b3a9-3a278323d887",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-15T05:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "0508a6a5-7aba-4f2c-9c99-7fceb4aefe1f",
+    "applicationId": "8f1a0ded-cd6a-49eb-b3a9-3a278323d887",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-18T08:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "1962985e-a39e-422c-9205-5aa456390a6b",
+    "applicationId": "ab339dbc-6781-44d1-9157-20fdf7c4cead",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-14T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ecdda83b-58fa-4b2f-bf9d-0b87c9b7d4b7",
+    "applicationId": "23582ab9-7cda-4cae-b7f6-783d58443d42",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-14T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c5162afe-d845-44ba-b32f-5c8e509fc756",
+    "applicationId": "23582ab9-7cda-4cae-b7f6-783d58443d42",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-15T19:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "e38e80b1-459e-47c5-8253-b6aee5c7a06a",
+    "applicationId": "b71871b8-4e20-4676-8395-ab01ef6bed99",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-15T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7c8c614c-b0f6-4ed2-9f3c-05bff223b488",
+    "applicationId": "b71871b8-4e20-4676-8395-ab01ef6bed99",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-16T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "40c21860-16f9-4789-842e-62676a8fa4ec",
+    "applicationId": "b71871b8-4e20-4676-8395-ab01ef6bed99",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-18T02:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "29922c52-ef45-437f-bb28-eb023908212c",
+    "applicationId": "b71871b8-4e20-4676-8395-ab01ef6bed99",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-20T03:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "5927230a-102a-454a-bc5e-b3da8ac87a15",
+    "applicationId": "e372fe51-fd5f-498f-abc6-da9d9719bb64",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-15T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b11c934a-a772-4e35-bbff-c626dd5ffdc3",
+    "applicationId": "e372fe51-fd5f-498f-abc6-da9d9719bb64",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-16T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "2423cba6-a300-431a-863b-2973537a4c60",
+    "applicationId": "e372fe51-fd5f-498f-abc6-da9d9719bb64",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-19T12:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "0776cdc4-dd1e-4b2b-af9e-3cb7b5acc966",
+    "applicationId": "70dedad2-5a55-4992-8584-908975c81e0b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-15T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e6232fbd-8ffa-43a8-b5c7-cd1d90f35d19",
+    "applicationId": "70dedad2-5a55-4992-8584-908975c81e0b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-16T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "bc15d6b1-e141-4d53-8e3d-747f80f9abd2",
+    "applicationId": "70dedad2-5a55-4992-8584-908975c81e0b",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-18T16:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "349aad1d-738f-48fb-b083-ebe7ebd8fec6",
+    "applicationId": "a659fabe-414b-4a67-8c93-c68259e16edf",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-15T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "cb473229-28f4-4672-a537-5a320f5d397d",
+    "applicationId": "32b8cbb2-aeab-4453-9c0e-a99fa45d7d28",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-16T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "919294f3-3ca0-4f36-90ca-9a65dfe8589e",
+    "applicationId": "32b8cbb2-aeab-4453-9c0e-a99fa45d7d28",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-17T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ad55b836-5b20-483e-9fe1-f3c9a256665e",
+    "applicationId": "ba53e9d4-1f04-4690-8582-300dcc384afd",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-16T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "27391b58-e0c6-4fec-a470-34de5c48703e",
+    "applicationId": "ba53e9d4-1f04-4690-8582-300dcc384afd",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-17T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3197586b-a56a-426c-8dcd-972cdb91d588",
+    "applicationId": "ba53e9d4-1f04-4690-8582-300dcc384afd",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-19T13:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "d972eca6-695a-4ae8-a807-16ac5aa98d7e",
+    "applicationId": "6572b345-c952-4a32-ad44-eb96c9b10109",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-16T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c4b693b3-68c8-4b09-b6af-2a1199f86990",
+    "applicationId": "6572b345-c952-4a32-ad44-eb96c9b10109",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-17T20:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "751599e1-c686-4e13-b09e-d3a9a17b04b8",
+    "applicationId": "6572b345-c952-4a32-ad44-eb96c9b10109",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-19T20:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "5fb02a01-4551-418b-8569-4dca654d89e4",
+    "applicationId": "6572b345-c952-4a32-ad44-eb96c9b10109",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-21T21:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "7bf390cc-8904-46c0-bab4-5780bdf73184",
+    "applicationId": "d80f6f96-bacf-4b18-8f3b-75698864693f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-17T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "24acf14a-885a-485d-af78-1b94befc5347",
+    "applicationId": "d80f6f96-bacf-4b18-8f3b-75698864693f",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-18T03:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "09d44a8b-0d6b-415f-a5a8-4ff5d68976fd",
+    "applicationId": "d80f6f96-bacf-4b18-8f3b-75698864693f",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-21T06:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "8851f748-e7e0-4d81-b873-789cd248088f",
+    "applicationId": "0919253c-e409-47cd-9fe1-6e8f9faaa09c",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-17T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "879c1059-f204-4d1d-acb8-db55165f7db8",
+    "applicationId": "cb56db2f-4e0c-4be8-8d2b-02eb4fa3717d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-17T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b83c253c-e08f-452c-acac-3e20351d40c5",
+    "applicationId": "cb56db2f-4e0c-4be8-8d2b-02eb4fa3717d",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-18T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "13eca3d8-0293-40dc-bc53-f14a58ac380b",
+    "applicationId": "7f207051-e5e3-48eb-ba80-331fd693eb4c",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-18T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f2ed6309-0e66-4578-9067-fd9f61c5fa0f",
+    "applicationId": "7f207051-e5e3-48eb-ba80-331fd693eb4c",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-19T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "4c5a62fe-7a2d-41c5-90da-12625dd47cd7",
+    "applicationId": "7f207051-e5e3-48eb-ba80-331fd693eb4c",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-21T00:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "f06aac8b-f6c3-4edc-89c2-3b838277f9ba",
+    "applicationId": "7f207051-e5e3-48eb-ba80-331fd693eb4c",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-23T01:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "b8ed8656-ce7b-493d-920e-0353e8e38302",
+    "applicationId": "c5952a21-fb0b-4fb6-89f0-279b21de6194",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-18T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "92d93387-1179-4bc4-be77-f470e3c82a49",
+    "applicationId": "c5952a21-fb0b-4fb6-89f0-279b21de6194",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-19T07:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3f2fc3f3-6acd-468e-9dc1-35fdf4f60d39",
+    "applicationId": "c5952a21-fb0b-4fb6-89f0-279b21de6194",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-22T10:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "ac81ce5b-d99f-47c9-8e79-5d29c8602317",
+    "applicationId": "896137ce-f288-456b-b0d2-3c89b56597c1",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-18T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9f663a52-d1e7-483d-9614-1fed619affa5",
+    "applicationId": "896137ce-f288-456b-b0d2-3c89b56597c1",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-19T14:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "62d03660-9c42-4a43-b7d4-87e3ba9a816a",
+    "applicationId": "896137ce-f288-456b-b0d2-3c89b56597c1",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-21T14:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "e58014bd-ff02-40d5-afc5-67252d52e08e",
+    "applicationId": "76e9975b-9b2d-4fb9-ae59-31563ef3fec2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-18T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "35634695-f018-4d1c-ab9a-6b9c0e210d34",
+    "applicationId": "59932087-a128-4f56-ae4b-9252deaa7a18",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-19T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "4e661c3f-84cb-472d-8ff2-c7d814ec1fcc",
+    "applicationId": "59932087-a128-4f56-ae4b-9252deaa7a18",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-20T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "52ef92c1-73e4-4f49-929c-34099905f608",
+    "applicationId": "d1c0bc18-f09e-4714-af3f-5ff97f82b46b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-19T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8d4620bc-3a5c-400c-9d59-945a5cad7954",
+    "applicationId": "d1c0bc18-f09e-4714-af3f-5ff97f82b46b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-20T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "e013580b-228f-4fd3-9f55-833fe6d3b5f8",
+    "applicationId": "d1c0bc18-f09e-4714-af3f-5ff97f82b46b",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-22T11:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "fd757297-9020-4691-84cc-626667d7498f",
+    "applicationId": "a0869c06-4046-4af5-95d7-947a80625c2f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-19T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "2149f0d3-cba3-4d13-9dbe-93f5f347f2bd",
+    "applicationId": "a0869c06-4046-4af5-95d7-947a80625c2f",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-20T18:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "0175a086-0a89-4c70-8b1c-d44c591efe9b",
+    "applicationId": "a0869c06-4046-4af5-95d7-947a80625c2f",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-22T18:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "75a4f5cb-5241-4b4e-b00f-1acb70b64c6f",
+    "applicationId": "a0869c06-4046-4af5-95d7-947a80625c2f",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-24T19:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "9a18ace7-b171-4805-8f87-9c71f0518a4b",
+    "applicationId": "d080355c-7473-48ba-b574-7d2c5bdbaeca",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-20T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "870ef50f-c8fc-4404-9c04-8257e47d5ee5",
+    "applicationId": "d080355c-7473-48ba-b574-7d2c5bdbaeca",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-21T01:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3c858b6b-0a12-4d31-b8f7-31b67ecd600d",
+    "applicationId": "d080355c-7473-48ba-b574-7d2c5bdbaeca",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-24T04:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "ac73d362-1ed1-4076-bf31-28c7fbc93d48",
+    "applicationId": "6add56e5-a322-4d69-a150-9a3c8713a997",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-20T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ac21fcff-cc25-4a14-bf8d-7744eddfac47",
+    "applicationId": "15834817-0587-4e72-ad2e-854cf10b4ad7",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-20T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f5db7911-dd42-4f48-a5c6-c11fdee1292a",
+    "applicationId": "15834817-0587-4e72-ad2e-854cf10b4ad7",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-21T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "48931b92-dbe5-45fe-b919-466c62083ca3",
+    "applicationId": "aa4cd7fe-d1fa-412f-970e-3050bcfb274f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-20T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b44f7c40-1e95-433e-82c3-021995b8e57c",
+    "applicationId": "aa4cd7fe-d1fa-412f-970e-3050bcfb274f",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-21T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "c86bb9fe-b6cb-4d1e-89b6-2cc764490361",
+    "applicationId": "aa4cd7fe-d1fa-412f-970e-3050bcfb274f",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-23T22:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "1c214214-4033-4779-8470-071d4b2d531d",
+    "applicationId": "aa4cd7fe-d1fa-412f-970e-3050bcfb274f",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-25T23:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "33ea2376-0784-4a9e-9a6f-257ad912c406",
+    "applicationId": "fab3e53f-fcc0-4cd0-a4bf-fd5e29ee9d79",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-21T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8a6c5cb9-db79-497c-a2aa-9a1cddb763c3",
+    "applicationId": "fab3e53f-fcc0-4cd0-a4bf-fd5e29ee9d79",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-22T05:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "47a86cc4-60b7-475a-8f59-0856e7679144",
+    "applicationId": "fab3e53f-fcc0-4cd0-a4bf-fd5e29ee9d79",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-25T08:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "4f5c6fab-9d41-40e9-a158-40642193d0c2",
+    "applicationId": "a85df51a-8eb9-4ca0-aa1e-315e33578eac",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-21T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c32c03cd-bde9-49b1-b964-ec386fffaad1",
+    "applicationId": "a85df51a-8eb9-4ca0-aa1e-315e33578eac",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-22T12:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "2993e98c-c8fc-4cfd-87de-cd67382c34b9",
+    "applicationId": "a85df51a-8eb9-4ca0-aa1e-315e33578eac",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-24T12:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "6f35d9a8-d5c4-4582-bc7c-7f21d29911f6",
+    "applicationId": "6893ac7a-f23e-4de7-a474-e92662b94174",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-21T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8d7ec53a-c664-49f1-ad10-7a32285f6084",
+    "applicationId": "80be0fd1-3dc5-4335-a1ad-49c6d870702e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-22T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8cfb2c2b-201a-4bde-b5e0-c9a9a9d1fcd7",
+    "applicationId": "80be0fd1-3dc5-4335-a1ad-49c6d870702e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-23T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b0c677ff-de26-4d54-98ea-d0f355a4ea26",
+    "applicationId": "c8b22efe-f390-4a6f-acd0-ab909c4e1150",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-22T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f4412ae2-716b-4f91-9a94-52075df2303a",
+    "applicationId": "c8b22efe-f390-4a6f-acd0-ab909c4e1150",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-23T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "c185c855-0c0d-4e57-996a-25f99d652d4e",
+    "applicationId": "c8b22efe-f390-4a6f-acd0-ab909c4e1150",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-25T09:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "c306923a-9fd4-4839-bcd4-cb292fcffc9f",
+    "applicationId": "3566543d-e52e-4095-a470-535693a5be77",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-22T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9c5a4c80-a73b-444a-a817-b348bee0dfad",
+    "applicationId": "3566543d-e52e-4095-a470-535693a5be77",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-23T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "fd1ddd2b-67e6-435b-8bef-51d3a46c9c1f",
+    "applicationId": "3566543d-e52e-4095-a470-535693a5be77",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-25T16:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "c719bc38-8cbd-4704-b404-05c7d5196961",
+    "applicationId": "3566543d-e52e-4095-a470-535693a5be77",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-27T17:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "57c6abad-2bab-4406-9763-589f033c17c8",
+    "applicationId": "c9a11ecd-f466-40b3-be35-445f73cd0fda",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-22T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "58773923-e599-4e70-86c1-dd1c7b85716c",
+    "applicationId": "c9a11ecd-f466-40b3-be35-445f73cd0fda",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-23T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "15abd41e-e70d-40b9-aa24-4515b34a69ea",
+    "applicationId": "c9a11ecd-f466-40b3-be35-445f73cd0fda",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-27T02:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "a921fe9c-873d-4206-a751-d0e0402f4f42",
+    "applicationId": "76435693-71d2-47d6-9a4a-386103d442db",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-23T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c40dd1f4-84eb-41d3-a321-1c626e5b7e61",
+    "applicationId": "03b2fc74-f74e-4f15-8f6e-c279efc28e4c",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-23T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "43e1096f-d3c6-4d3b-8ea8-63a7df3eb4e9",
+    "applicationId": "03b2fc74-f74e-4f15-8f6e-c279efc28e4c",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-24T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "0199f4c2-2bcc-428d-a4d7-a8195b071e14",
+    "applicationId": "091a1f22-1a8a-4112-8afb-c8d5f02bce74",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-23T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5ed54e05-3295-46f9-8638-935665fc47ff",
+    "applicationId": "091a1f22-1a8a-4112-8afb-c8d5f02bce74",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-24T20:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "89df3017-a397-41ed-8907-8bf88ebf1e1d",
+    "applicationId": "091a1f22-1a8a-4112-8afb-c8d5f02bce74",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-26T20:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "a21b9ebe-fb56-41c4-86ab-ac95df624a24",
+    "applicationId": "091a1f22-1a8a-4112-8afb-c8d5f02bce74",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-28T21:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "876f934d-8dc0-4669-b33d-573589f5feb8",
+    "applicationId": "8477fa46-9a2e-4912-a687-20580ee7dc42",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-24T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7e5c6edf-45af-413d-af11-5f6a346f3d6f",
+    "applicationId": "8477fa46-9a2e-4912-a687-20580ee7dc42",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-25T03:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5d82a21c-2ac0-4b62-8267-a35f0cdaef09",
+    "applicationId": "8477fa46-9a2e-4912-a687-20580ee7dc42",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-28T06:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "6693699a-ac41-480f-8377-4b41468bbb8b",
+    "applicationId": "35b92159-3605-492f-b6b3-8e66525cb452",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-24T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "19012a0c-acdb-4c83-8459-858fdad81348",
+    "applicationId": "35b92159-3605-492f-b6b3-8e66525cb452",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-25T10:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3d353b6c-7058-4ed0-99ad-e1ae7e116ee3",
+    "applicationId": "35b92159-3605-492f-b6b3-8e66525cb452",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-27T10:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "6a940c1e-3613-4557-a270-5e0190f92474",
+    "applicationId": "c4cddbd5-60f1-4dba-894e-004a78c39130",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-24T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "d112a53c-6620-4164-8630-a8870c4eddf6",
+    "applicationId": "6de4c598-2f37-4416-b783-5e2857699c0a",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-25T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8978ae5d-0092-4044-af7a-73689b08ebbd",
+    "applicationId": "6de4c598-2f37-4416-b783-5e2857699c0a",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-26T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "8315ff66-7322-44a9-8ca1-5016a8b1c9a1",
+    "applicationId": "626d0704-14a0-40cc-8669-b19fec305d4f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-25T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e348c6b5-fc87-4ebe-9d7b-c42385ff9d8a",
+    "applicationId": "626d0704-14a0-40cc-8669-b19fec305d4f",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-26T07:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "64f9afbd-eaeb-4826-81f3-f08a4c8721c5",
+    "applicationId": "626d0704-14a0-40cc-8669-b19fec305d4f",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-28T07:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "37f61968-596a-4733-858c-dae36c1ba1d0",
+    "applicationId": "07c9210c-916b-4971-b127-8aaaa60aef78",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-25T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "bd5f64b2-a936-45c2-b52c-0eaac489077b",
+    "applicationId": "07c9210c-916b-4971-b127-8aaaa60aef78",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-26T14:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "167b3634-3b81-40c4-ae2a-137ea481efc2",
+    "applicationId": "07c9210c-916b-4971-b127-8aaaa60aef78",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-28T14:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "26909806-324c-4d62-a988-886d1ded18ac",
+    "applicationId": "07c9210c-916b-4971-b127-8aaaa60aef78",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-30T15:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "79f1e686-2bc5-46cd-9084-4b70f8bfc464",
+    "applicationId": "cb974ed5-4b56-4f82-bd74-219e16298f5b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-25T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ec8d93ea-4648-4f1f-8d10-24af374da2b2",
+    "applicationId": "cb974ed5-4b56-4f82-bd74-219e16298f5b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-26T21:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "55d7d698-966d-4faa-b2fd-6218f697627e",
+    "applicationId": "cb974ed5-4b56-4f82-bd74-219e16298f5b",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-30T00:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "de8960c3-84b4-476f-afb4-f2f564fd2a5a",
+    "applicationId": "652e33a7-ada6-4de0-a725-3681508155ff",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-26T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e9962ba0-9cac-4ee5-9d77-1a7e8e6c2f72",
+    "applicationId": "01bb1586-bd5f-4416-97a3-565a646561fb",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-26T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "902600f7-da19-4a71-9c9a-27e36a3669b0",
+    "applicationId": "01bb1586-bd5f-4416-97a3-565a646561fb",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-27T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "6f10d317-48d9-45a2-8b2a-d1f2403f6cd4",
+    "applicationId": "1242d69c-d8e2-4901-aaca-1c541f087722",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-26T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ac614c7c-f13d-46a5-b6b8-c55be034a835",
+    "applicationId": "1242d69c-d8e2-4901-aaca-1c541f087722",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-27T18:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "92de8ed3-1452-43d5-a01f-930a49d2df07",
+    "applicationId": "1242d69c-d8e2-4901-aaca-1c541f087722",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-29T18:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "99f75d02-62fe-40ad-964b-6792053a0ade",
+    "applicationId": "1242d69c-d8e2-4901-aaca-1c541f087722",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-05-31T19:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "922b66e3-6710-490a-a1c4-d51211e92dfb",
+    "applicationId": "7a13937d-2e1d-4b98-9348-5842e59f1a2c",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-27T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9ec3517b-2d77-40c2-b525-18704627402b",
+    "applicationId": "7a13937d-2e1d-4b98-9348-5842e59f1a2c",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-28T01:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "2ad57336-4725-4c97-ab6d-d23a7c84e260",
+    "applicationId": "7a13937d-2e1d-4b98-9348-5842e59f1a2c",
+    "stage": "REJECTED",
+    "occurredAt": "2026-05-31T04:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "a6d53096-5ca9-4c1b-96f4-90dda8592e79",
+    "applicationId": "fa685a3a-3c75-4669-802b-46373c1d50a2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-27T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "25ffba36-92f7-4d8f-b597-5dabb6f9b834",
+    "applicationId": "fa685a3a-3c75-4669-802b-46373c1d50a2",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-28T08:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "01e2a755-9e50-4539-ae32-8e47fe78bf41",
+    "applicationId": "fa685a3a-3c75-4669-802b-46373c1d50a2",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-30T08:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "2c7ab1e3-1cde-4bce-b6bf-d07e173cbd0e",
+    "applicationId": "39b4e83f-23c3-47ef-95c6-b350aaa29cec",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-27T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e273bde7-a5a4-4524-ba1b-3aa0a2e03480",
+    "applicationId": "ee43f6f4-6e5c-470d-94de-97aec01b7e92",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-27T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c1720fb8-815c-4c86-ae4a-99055674430c",
+    "applicationId": "ee43f6f4-6e5c-470d-94de-97aec01b7e92",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-28T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "e940a271-0691-4775-a7f3-2170c74787d2",
+    "applicationId": "b2ac1ed5-350b-4620-b051-ce96ec941b3b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-28T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "cd280331-6736-4f04-adf3-19c40e432808",
+    "applicationId": "b2ac1ed5-350b-4620-b051-ce96ec941b3b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-29T05:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "dea85888-a9d3-4e65-9e56-9809ca20a52e",
+    "applicationId": "b2ac1ed5-350b-4620-b051-ce96ec941b3b",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-31T05:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "78e96bae-d2d0-489c-b104-b65ef3dfde1b",
+    "applicationId": "ee9959f7-5bee-42cd-8675-155a95f44cd8",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-28T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "98270cef-20aa-4547-bf01-7ac0e05ae8df",
+    "applicationId": "ee9959f7-5bee-42cd-8675-155a95f44cd8",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-29T12:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "1c185c12-45b5-454e-bd92-6a126bb3f98b",
+    "applicationId": "ee9959f7-5bee-42cd-8675-155a95f44cd8",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-05-31T12:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "e61a6224-4754-4a27-b9f1-6ca94bf938db",
+    "applicationId": "ee9959f7-5bee-42cd-8675-155a95f44cd8",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-02T13:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "f95176da-2147-4ef5-9c89-7bb3501c95d9",
+    "applicationId": "4c2319b8-80a1-4b0a-a19c-930c99489ecf",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-28T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "13b5bbaa-09b4-4b10-8e9b-afc321e826d6",
+    "applicationId": "4c2319b8-80a1-4b0a-a19c-930c99489ecf",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-29T19:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "a68caa8c-f9f1-47cf-869f-10bc9e08af4d",
+    "applicationId": "4c2319b8-80a1-4b0a-a19c-930c99489ecf",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-01T22:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "ec7aa667-3441-43cf-921c-8158c72c44f1",
+    "applicationId": "f21f3c1c-9585-402c-9ab4-f826858a4049",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-29T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "fd6568af-40b3-4b23-9716-d59c48a4bb77",
+    "applicationId": "6b2113df-5d5b-48c9-8b3c-466dd1147262",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-29T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ef894cd1-062b-44c8-83b1-608fcc70701f",
+    "applicationId": "6b2113df-5d5b-48c9-8b3c-466dd1147262",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-30T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f2b916e2-3e85-4633-8490-638d0d79d872",
+    "applicationId": "3f2466b1-2c72-4344-9d34-03ceda209535",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-29T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8a1c8145-cd77-415b-9a40-dd711c6f1ef6",
+    "applicationId": "3f2466b1-2c72-4344-9d34-03ceda209535",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-30T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3dea96d1-2b5e-4998-ab79-6447286d515f",
+    "applicationId": "3f2466b1-2c72-4344-9d34-03ceda209535",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-01T16:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "06594456-99a3-44b8-abb7-5d98781b2db8",
+    "applicationId": "3f2466b1-2c72-4344-9d34-03ceda209535",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-03T17:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "12dc150b-2db3-4dab-ac15-5b07217f016e",
+    "applicationId": "52029fb9-29b3-420b-9e28-6583ec9ced62",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-29T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8c7f3706-fc1d-4c84-9985-0f997750ef0f",
+    "applicationId": "52029fb9-29b3-420b-9e28-6583ec9ced62",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-30T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "7d5eb482-02db-4189-846c-0250df1e8171",
+    "applicationId": "52029fb9-29b3-420b-9e28-6583ec9ced62",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-03T02:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "90b2e1c9-007d-4e26-a9c8-c96a9c800a20",
+    "applicationId": "e1484f52-1cf7-41da-aff1-ba55af840bb8",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-30T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "55db7c7d-8cca-4785-8af4-5099cb03cc00",
+    "applicationId": "e1484f52-1cf7-41da-aff1-ba55af840bb8",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-31T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "cb167ac5-58c8-428f-98ed-04ba6871a9e2",
+    "applicationId": "e1484f52-1cf7-41da-aff1-ba55af840bb8",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-02T06:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "a8714e1d-c475-49c5-b561-f0c546bd9849",
+    "applicationId": "9555dd1c-e5b4-45af-8a6a-adc225282418",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-30T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "4d7f4f3f-ec9d-40e9-addc-2133b8327736",
+    "applicationId": "74e013e7-66ee-4bdd-aa24-ec10a000ed5b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-30T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b9dc44ad-e280-4b10-84f4-0d6ffb86e683",
+    "applicationId": "74e013e7-66ee-4bdd-aa24-ec10a000ed5b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-05-31T20:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3fccbb34-6970-45bf-b5bd-24ac742b8e05",
+    "applicationId": "713d634d-88ca-4990-8824-2a3ee7d6a6ef",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-31T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f45f0ce4-6c8b-4daa-8b21-1677d7eb706f",
+    "applicationId": "713d634d-88ca-4990-8824-2a3ee7d6a6ef",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-01T03:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f43534f8-9ccc-447a-acea-c33df7c5dedc",
+    "applicationId": "713d634d-88ca-4990-8824-2a3ee7d6a6ef",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-03T03:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "6c0eb5c6-5210-4871-afcd-beb96f994c3e",
+    "applicationId": "a0039c04-3e01-47f1-802d-878c0e632bec",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-31T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7eadb6b4-110c-4358-90e4-418b0a16edb6",
+    "applicationId": "a0039c04-3e01-47f1-802d-878c0e632bec",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-01T10:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "213539c0-5b36-4e6d-b838-821ddb14e837",
+    "applicationId": "a0039c04-3e01-47f1-802d-878c0e632bec",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-03T10:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "735b98fd-99dc-48bb-868f-3ec9064292c9",
+    "applicationId": "a0039c04-3e01-47f1-802d-878c0e632bec",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-05T11:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "e0790585-32b1-427f-9c08-e9e05ef08b19",
+    "applicationId": "11641c8f-a400-494b-8daf-d526bfe0b643",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-05-31T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5d91c400-915d-45e2-aab6-929f3a5e3eb2",
+    "applicationId": "11641c8f-a400-494b-8daf-d526bfe0b643",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-01T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "9d445125-3c6b-44a7-a3df-fed426de656f",
+    "applicationId": "11641c8f-a400-494b-8daf-d526bfe0b643",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-04T20:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "3e8441ab-ed34-4c55-a3e7-bbbedce09e99",
+    "applicationId": "3b7b8e3c-4822-469d-a584-bb2dd39df70a",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-01T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "68e1d91e-1e7b-4898-bdd8-e076369a3b7a",
+    "applicationId": "8027cec9-afc1-4085-9640-9de12becf133",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-01T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ee032e9d-33e9-42b5-8e75-1df9ff870fd1",
+    "applicationId": "8027cec9-afc1-4085-9640-9de12becf133",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-02T07:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "448d5d52-faad-4db6-b5be-a7f68e4395bf",
+    "applicationId": "6222a842-3b59-4587-a59b-ddc5efc30838",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-01T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "90cd6eba-9d64-435e-9ff7-b6e43782eeee",
+    "applicationId": "6222a842-3b59-4587-a59b-ddc5efc30838",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-02T14:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "276003d1-d36e-4a22-8515-e594f4400201",
+    "applicationId": "6222a842-3b59-4587-a59b-ddc5efc30838",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-04T14:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "c59ce656-328b-42cd-a62d-757ee93d42b7",
+    "applicationId": "6222a842-3b59-4587-a59b-ddc5efc30838",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-06T15:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "1aa4fe5e-41f5-4579-93bc-914a1df71bc8",
+    "applicationId": "61a92ccc-043b-4f3c-9043-acc8b1fb99fb",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-01T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "21d51a84-01d9-4e62-b8a0-520847014f50",
+    "applicationId": "61a92ccc-043b-4f3c-9043-acc8b1fb99fb",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-02T21:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b19f3bf1-0e38-46d8-a1e1-b8459c27d5d4",
+    "applicationId": "61a92ccc-043b-4f3c-9043-acc8b1fb99fb",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-06T00:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "5177d43a-074a-496c-a296-71a4d257e742",
+    "applicationId": "6755dbba-11a0-4225-a315-ac8e98ba5f10",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-02T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "1f97cd08-7d63-48c8-9350-02f1dc09299c",
+    "applicationId": "6755dbba-11a0-4225-a315-ac8e98ba5f10",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-03T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "cd793c2b-15e2-4504-9d48-964dba0885ea",
+    "applicationId": "6755dbba-11a0-4225-a315-ac8e98ba5f10",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-05T04:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "d2ea076e-fbae-4cb6-9c20-8572a32b025d",
+    "applicationId": "a586ca6e-0589-4998-954f-1de398a28c81",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-02T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "016ebb75-d0db-4404-8960-7f31b2824ff7",
+    "applicationId": "6c9121a2-f89a-46e2-a999-181279289b77",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-02T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7206ca67-6b85-4588-84ff-7f9f3cc4c43b",
+    "applicationId": "6c9121a2-f89a-46e2-a999-181279289b77",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-03T18:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "a87da619-fc4b-4e34-b3c7-c993e64efe71",
+    "applicationId": "088e2c96-7b5c-43a2-8081-334fa96854f5",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-03T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "69bc3d1b-b8d3-4bee-bc7f-68f83ef1eadd",
+    "applicationId": "088e2c96-7b5c-43a2-8081-334fa96854f5",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-04T01:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "a41f7cd9-dbb1-43f9-80f9-cd84d0188117",
+    "applicationId": "088e2c96-7b5c-43a2-8081-334fa96854f5",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-06T01:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "476f532f-edc3-462c-95b6-2b2e530d5d84",
+    "applicationId": "f5d14232-f910-41fb-a5ba-dde3c9a6d0a7",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-03T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b3ffb4d5-4fd4-4731-9609-f5aceca5c052",
+    "applicationId": "f5d14232-f910-41fb-a5ba-dde3c9a6d0a7",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-04T08:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f3958536-c790-474c-b482-09b9819ff8a2",
+    "applicationId": "f5d14232-f910-41fb-a5ba-dde3c9a6d0a7",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-06T08:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "9dfcd833-55a9-4073-9a63-3d0ba2a8b1a3",
+    "applicationId": "f5d14232-f910-41fb-a5ba-dde3c9a6d0a7",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-08T09:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "79dbd69c-371d-4ff2-a4ab-2ea2ff45fd7e",
+    "applicationId": "4a3620c2-cb42-441f-b414-c7b6551dc484",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-03T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ccfb82cb-015d-4f7d-8cb8-c7768f8bb754",
+    "applicationId": "4a3620c2-cb42-441f-b414-c7b6551dc484",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-04T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "9b52023d-f4e0-4a79-97a3-aa31448495c1",
+    "applicationId": "4a3620c2-cb42-441f-b414-c7b6551dc484",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-07T18:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "72988edd-69e2-4843-835e-9de3c9222ed4",
+    "applicationId": "3cb61c69-e159-449b-b2f8-1d5a356b042f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-03T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8dab3d9c-af93-42db-a722-136b8e5b7c95",
+    "applicationId": "019b42ee-83a5-48ac-b404-c6211d0f1538",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-04T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c9b51762-70dd-4fd8-93af-674f15dc3102",
+    "applicationId": "019b42ee-83a5-48ac-b404-c6211d0f1538",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-05T05:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3a6307dd-e8d8-4e96-bbea-e722a3fa465b",
+    "applicationId": "50c6b8ae-83ce-4328-9719-e7c55bbc79b0",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-04T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b2f0824e-deda-4ccd-902e-d5a4e70ab34e",
+    "applicationId": "50c6b8ae-83ce-4328-9719-e7c55bbc79b0",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-05T12:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5405856c-9df9-4573-8d16-a59dc077867a",
+    "applicationId": "50c6b8ae-83ce-4328-9719-e7c55bbc79b0",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-07T12:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "1843333f-97c5-4abe-a1a0-7f3f2f93750f",
+    "applicationId": "50c6b8ae-83ce-4328-9719-e7c55bbc79b0",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-09T13:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "4aaee53d-e495-4ca2-a63b-227ed1d5fe4a",
+    "applicationId": "8652201f-ad0b-459e-89e0-f4eba7b65482",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-04T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "88664c9e-5d2e-4f38-a4be-ee9c55836c3b",
+    "applicationId": "8652201f-ad0b-459e-89e0-f4eba7b65482",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-05T19:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "2331bc0f-bbd3-47ad-8527-51b5fa58dca6",
+    "applicationId": "8652201f-ad0b-459e-89e0-f4eba7b65482",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-08T22:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "eb3db82b-981c-47e5-aef9-31ec884d9ed0",
+    "applicationId": "d0379ddb-9417-4b7a-82ab-c748b918c4e7",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-05T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "424af673-64ac-487c-b7b4-435116a86e6c",
+    "applicationId": "d0379ddb-9417-4b7a-82ab-c748b918c4e7",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-06T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "10a6c611-ecb6-4a13-b846-786523032764",
+    "applicationId": "d0379ddb-9417-4b7a-82ab-c748b918c4e7",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-08T02:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "9f89f44b-2580-4371-a87f-5035249b768f",
+    "applicationId": "7df5d676-2598-417c-a7b0-de1f2cce21d3",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-05T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "bf427742-953f-4737-964d-aaa101a6acad",
+    "applicationId": "1991b739-6c66-412d-9984-ab6d234ff788",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-05T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "44f2bcd8-b232-40a7-817c-5fa16b47f13c",
+    "applicationId": "1991b739-6c66-412d-9984-ab6d234ff788",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-06T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "d5cb91d8-5771-4ade-96e0-d764ee58cae0",
+    "applicationId": "359137ca-8d67-4312-a012-e00eab9c7417",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-05T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "0f9482f4-8966-45b0-9363-02aded9172b1",
+    "applicationId": "359137ca-8d67-4312-a012-e00eab9c7417",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-06T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "637b8edd-2258-4303-a7fb-041128e0217d",
+    "applicationId": "359137ca-8d67-4312-a012-e00eab9c7417",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-08T23:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "8849e830-cca0-4137-88ca-983a09e4c134",
+    "applicationId": "2751e4d9-f438-4502-9c82-1635dd5d2984",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-06T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "a50d2f77-aad8-4277-b77b-9a4e4d762acb",
+    "applicationId": "2751e4d9-f438-4502-9c82-1635dd5d2984",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-07T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "916ef7f9-768e-4b83-ae60-f37328d1003a",
+    "applicationId": "2751e4d9-f438-4502-9c82-1635dd5d2984",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-09T06:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "f6882588-9d6a-43f8-97e3-039d20d0f429",
+    "applicationId": "2751e4d9-f438-4502-9c82-1635dd5d2984",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-11T07:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "6afc4e8e-469f-46fd-ba38-baa67fe93045",
+    "applicationId": "f54ad8fc-1f1a-4b48-a93b-6eaf87bdd106",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-06T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7b67d84a-bbcb-4ade-a0f4-3b064059b853",
+    "applicationId": "f54ad8fc-1f1a-4b48-a93b-6eaf87bdd106",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-07T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "6d227f1f-aa6c-4014-8f44-9e5600087603",
+    "applicationId": "f54ad8fc-1f1a-4b48-a93b-6eaf87bdd106",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-10T16:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "43ce59f7-4581-4311-8612-1ede7980ed97",
+    "applicationId": "0bf0cb15-5243-451e-a19d-00b8cfdfe378",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-06T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5f322d51-f098-49d2-a863-8bf78ddce044",
+    "applicationId": "ed8cbf6d-0704-4d3a-8468-6537a96169b1",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-07T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "dcf5668e-2890-4a71-bb8a-3cee41155279",
+    "applicationId": "ed8cbf6d-0704-4d3a-8468-6537a96169b1",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-08T03:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b6a03c72-e8ba-465f-91a3-e5e525d7ff2d",
+    "applicationId": "d1cea066-0233-49ca-830c-d4d63f89b813",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-07T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "55e5ec24-b3c0-48dc-ab29-c1cfa6c67ed6",
+    "applicationId": "d1cea066-0233-49ca-830c-d4d63f89b813",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-08T10:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ecf293cd-77b5-4eab-99a7-2967c092c95d",
+    "applicationId": "d1cea066-0233-49ca-830c-d4d63f89b813",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-10T10:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "89711fc1-af66-410c-9b7d-63e9c6886477",
+    "applicationId": "d1cea066-0233-49ca-830c-d4d63f89b813",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-12T11:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "1b435c19-c9d7-49d2-ab0c-297f5203fcd1",
+    "applicationId": "decb6f72-0a35-4baa-a600-1ae17eeee5d7",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-07T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "0f874ad1-7de9-4ecd-bfda-e03601b62454",
+    "applicationId": "decb6f72-0a35-4baa-a600-1ae17eeee5d7",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-08T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "08e9da44-6729-4e56-b844-8f852ddd795e",
+    "applicationId": "decb6f72-0a35-4baa-a600-1ae17eeee5d7",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-11T20:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "7ea4e15c-69ed-49ec-a94d-a370f6735fe2",
+    "applicationId": "59726489-7ffa-46a7-a007-fa251ccfc859",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-08T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "0bde13b5-64ab-4b9a-ac21-e318ea6c02b9",
+    "applicationId": "59726489-7ffa-46a7-a007-fa251ccfc859",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-09T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "413d2fde-5cc0-456a-ace5-06d7c585a6e7",
+    "applicationId": "59726489-7ffa-46a7-a007-fa251ccfc859",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-11T00:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "3a51d200-bc0b-4650-8fce-7a44f65732e5",
+    "applicationId": "0336ea4d-662d-41f1-bc93-dd1b373a653d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-08T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "48b5c47e-8fc4-42ac-8389-80c4528e67f9",
+    "applicationId": "5edc0085-401a-4ee3-8319-2929f2c37d26",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-08T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "4502b9c0-d8b3-4543-be3d-a993cbbe29eb",
+    "applicationId": "5edc0085-401a-4ee3-8319-2929f2c37d26",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-09T14:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "9b330a92-d21a-4f8e-9817-b30469076f56",
+    "applicationId": "c0837827-4b14-4acd-9c42-4da74bb89590",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-08T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "121d286a-f499-421f-b0e5-5a49e1a6244a",
+    "applicationId": "c0837827-4b14-4acd-9c42-4da74bb89590",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-09T21:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "d6ad89f6-b25f-48c5-8e45-f1b94e73cd09",
+    "applicationId": "c0837827-4b14-4acd-9c42-4da74bb89590",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-11T21:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "e7a04099-d6d3-4b4f-9a92-6c8886cec117",
+    "applicationId": "83386d5a-759c-4917-b512-e20c1b24c64e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-09T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "410fcf8f-f09d-4191-be5a-4014d6673457",
+    "applicationId": "83386d5a-759c-4917-b512-e20c1b24c64e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-10T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "fcd7280f-671a-491d-93f9-8cd5004f34eb",
+    "applicationId": "83386d5a-759c-4917-b512-e20c1b24c64e",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-12T04:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "99bbe1b5-9296-4fa7-8165-1199dc29bb38",
+    "applicationId": "83386d5a-759c-4917-b512-e20c1b24c64e",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-14T05:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "71c20849-6755-4b03-873b-e5b3ab805fad",
+    "applicationId": "9dfd0926-99a4-4eae-a676-0d27bef4a6d3",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-09T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "6c337137-efac-441f-8e60-80aaf770135f",
+    "applicationId": "9dfd0926-99a4-4eae-a676-0d27bef4a6d3",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-10T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "58aadd4d-a317-40c6-8361-6d155e81713b",
+    "applicationId": "9dfd0926-99a4-4eae-a676-0d27bef4a6d3",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-13T14:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "49da3f58-d8d1-4fc9-8f2b-852f514217a1",
+    "applicationId": "64d4d473-95f9-408e-8a75-090207285a6e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-09T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "6bc434db-4f32-405d-b1a2-ad3cda4d362d",
+    "applicationId": "5da230e6-79e0-475a-838e-2f6226fab462",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-10T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "46ae2cb9-03d7-4f26-9064-91914cad9890",
+    "applicationId": "5da230e6-79e0-475a-838e-2f6226fab462",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-11T01:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f2d39abf-c833-4d16-97aa-1fc4a5043af9",
+    "applicationId": "37b1cdec-162f-4159-9fd0-0c64ab687eea",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-10T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f8fb1497-230c-43da-ba85-a02b737b421c",
+    "applicationId": "37b1cdec-162f-4159-9fd0-0c64ab687eea",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-11T08:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f6d21cfa-efe1-4d5f-bf54-1b771852c94a",
+    "applicationId": "37b1cdec-162f-4159-9fd0-0c64ab687eea",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-13T08:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "28ab5c48-ea9a-4fd2-945f-3c8e27b3f100",
+    "applicationId": "37b1cdec-162f-4159-9fd0-0c64ab687eea",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-15T09:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "0d4b0e1b-c66c-4f5b-9a9c-d1eb4b426b85",
+    "applicationId": "4ad0e612-0268-4494-9bdd-1d4e89a84193",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-10T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "efe8bc30-6a05-4f18-b2f0-d2d68b98423c",
+    "applicationId": "4ad0e612-0268-4494-9bdd-1d4e89a84193",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-11T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "df76dfc7-053c-4ceb-8969-5693807c87e0",
+    "applicationId": "4ad0e612-0268-4494-9bdd-1d4e89a84193",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-14T18:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "7263a496-0d26-4862-86bd-bde6b28bdba6",
+    "applicationId": "a39ab42c-0562-4ebd-aef1-df924bbbc84b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-10T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "4d67cffd-ea84-408d-a060-9cddc538c348",
+    "applicationId": "a39ab42c-0562-4ebd-aef1-df924bbbc84b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-11T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "931ce48c-e8bd-43f4-a544-4bdb967fbb02",
+    "applicationId": "a39ab42c-0562-4ebd-aef1-df924bbbc84b",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-13T22:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "fd06471a-453d-4502-b4a3-b0d0d4f9cc0a",
+    "applicationId": "7eb05ad3-b605-40fc-aebc-90699126e878",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-11T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5e03f613-b6d5-4e04-ae33-a70b6157dd86",
+    "applicationId": "cd57b697-14c4-44a2-bfc2-90208d0e4eb5",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-11T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "bf43c574-d145-4e0f-b857-cb9168ddf72b",
+    "applicationId": "cd57b697-14c4-44a2-bfc2-90208d0e4eb5",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-12T12:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f348e7c4-a324-4206-adab-31d2da84b436",
+    "applicationId": "ac0b4e6e-68b4-4d86-a940-a38a68a615f5",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-11T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8aa8451a-ac3c-4506-8fbe-66015aa6dad4",
+    "applicationId": "ac0b4e6e-68b4-4d86-a940-a38a68a615f5",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-12T19:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "233d192d-99b2-40aa-a0b6-fe37882ef236",
+    "applicationId": "ac0b4e6e-68b4-4d86-a940-a38a68a615f5",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-14T19:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "7329b782-452e-48f8-a4da-4024702d474d",
+    "applicationId": "b98d84a7-ca38-4f8d-bac7-08f156453bc0",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-12T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "1a871522-dfdb-4093-81b5-be452578358e",
+    "applicationId": "b98d84a7-ca38-4f8d-bac7-08f156453bc0",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-13T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "dfdc1fde-77e7-47ea-984a-fc6ed14f364a",
+    "applicationId": "b98d84a7-ca38-4f8d-bac7-08f156453bc0",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-15T02:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "ab97e5c3-615f-4940-b298-04433105c5cf",
+    "applicationId": "b98d84a7-ca38-4f8d-bac7-08f156453bc0",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-17T03:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "b078809f-5a81-4c56-8961-7f2a757bbf93",
+    "applicationId": "8eaa0871-46ca-4e4e-a728-3a9a1eb67062",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-12T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "721fd02e-ac42-4308-8b56-3065dbd77749",
+    "applicationId": "8eaa0871-46ca-4e4e-a728-3a9a1eb67062",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-13T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "873b302b-4736-4109-8cc7-865f1b1761a6",
+    "applicationId": "8eaa0871-46ca-4e4e-a728-3a9a1eb67062",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-16T12:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "b1add4d6-b38b-490e-8bd7-6b52ea51b6f6",
+    "applicationId": "f3162935-0660-4b6b-95e3-576c4ec1d2c8",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-12T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "bb50d563-8042-4544-a7bf-41c8f7b2c355",
+    "applicationId": "f6513d7e-32e9-4f21-818a-0f76f717988e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-12T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e8f2d997-b9d3-4e78-9731-6a30ced5a65b",
+    "applicationId": "f6513d7e-32e9-4f21-818a-0f76f717988e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-13T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "53513e6b-eb45-4ca9-85f9-48c71cae3baf",
+    "applicationId": "0648b9ff-cf15-4e3e-98bd-04c523e281c1",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-13T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "2232be52-5a29-455e-bd63-626fd739eb96",
+    "applicationId": "0648b9ff-cf15-4e3e-98bd-04c523e281c1",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-14T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "38b3ad4a-007b-416c-849d-5454de879f4a",
+    "applicationId": "0648b9ff-cf15-4e3e-98bd-04c523e281c1",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-16T06:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "bb21fd5d-e431-4277-abbb-f331960fee2c",
+    "applicationId": "0648b9ff-cf15-4e3e-98bd-04c523e281c1",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-18T07:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "b2ed4c7b-ad27-4168-bc8d-42237aae9c4c",
+    "applicationId": "5a543502-dc8a-4f24-b9d5-1031c5d46092",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-13T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "117e5dea-6c97-4195-b708-4c554ba9bd15",
+    "applicationId": "5a543502-dc8a-4f24-b9d5-1031c5d46092",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-14T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ae6cd8b0-abbb-4295-9214-0b1473f9c090",
+    "applicationId": "5a543502-dc8a-4f24-b9d5-1031c5d46092",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-17T16:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "848bed94-a322-4267-a51e-1775f3c19b6c",
+    "applicationId": "12bf7ae0-61b6-4508-83a0-2fcdf239b20f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-13T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "d0145628-0c49-4a33-8d3d-86b9626bccb4",
+    "applicationId": "12bf7ae0-61b6-4508-83a0-2fcdf239b20f",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-14T20:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5771f548-180b-45e6-aee7-8d65b916ee8b",
+    "applicationId": "12bf7ae0-61b6-4508-83a0-2fcdf239b20f",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-16T20:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "4076f8f0-2bad-4a66-94be-aeadd65bdb69",
+    "applicationId": "2ee02ec1-232c-4d6d-be0c-aebc0f1cd7b8",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-14T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c79c3d42-ca78-49b0-8796-530d27644e62",
+    "applicationId": "b22709b0-0702-4a80-a101-a7d1818433d4",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-14T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "798402e1-2d28-4efc-8f89-9c777c8ba4a5",
+    "applicationId": "b22709b0-0702-4a80-a101-a7d1818433d4",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-15T10:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "71d6ec99-9bc5-47df-89bc-8cbba71e8fcc",
+    "applicationId": "aa78e92a-7ff9-4e01-b1ab-45eb104f33c5",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-14T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9487d6cc-ec3f-4e34-945b-11b338f9c9ed",
+    "applicationId": "aa78e92a-7ff9-4e01-b1ab-45eb104f33c5",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-15T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "45317d0e-057f-42de-a535-187c173caef8",
+    "applicationId": "aa78e92a-7ff9-4e01-b1ab-45eb104f33c5",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-17T17:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "e2b0ac90-4b86-45d5-9fa2-a45ab88c898e",
+    "applicationId": "5331b9c5-fedb-45f3-8e00-cbc0422795f4",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-15T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "6630e92e-01f5-40d0-bdd9-7e912e7d0fe6",
+    "applicationId": "5331b9c5-fedb-45f3-8e00-cbc0422795f4",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-16T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f49b9955-04d4-4e6e-9d34-b81a16ef63cf",
+    "applicationId": "5331b9c5-fedb-45f3-8e00-cbc0422795f4",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-18T00:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "080e3adc-ea91-4531-be2a-1d2c0accfe69",
+    "applicationId": "5331b9c5-fedb-45f3-8e00-cbc0422795f4",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-20T01:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "3839a9d4-69c5-4e45-a03e-aa0e3f4fd032",
+    "applicationId": "ee56c189-1bc1-4f8f-a433-cd00084d0c7b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-15T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8cf78672-f65b-45cc-b613-7bb99c1b7d40",
+    "applicationId": "ee56c189-1bc1-4f8f-a433-cd00084d0c7b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-16T07:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "be5d06dd-6a5c-485a-9521-27ba81f0f470",
+    "applicationId": "ee56c189-1bc1-4f8f-a433-cd00084d0c7b",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-19T10:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "376fce72-fa02-4729-a831-2c2864bfca02",
+    "applicationId": "49eb17dd-420e-41f6-b60f-7c1e26a92ec7",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-15T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f47b2954-a21d-4b7a-81f0-edf0f38b48bd",
+    "applicationId": "3d3a503d-ebf7-4634-adf0-62747767846e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-15T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "6200eef2-bc35-4a8e-8828-9d6236b3828c",
+    "applicationId": "3d3a503d-ebf7-4634-adf0-62747767846e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-16T21:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5d2904bb-55dc-4abc-b16c-edc2324362c8",
+    "applicationId": "c7bbd3c4-8ede-4bd8-80a8-10e6b83602d0",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-16T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b2ba9a82-a1f9-440a-9c92-e264b8beef7a",
+    "applicationId": "c7bbd3c4-8ede-4bd8-80a8-10e6b83602d0",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-17T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "af315363-4ec7-4dc6-82a8-024d74f5384e",
+    "applicationId": "c7bbd3c4-8ede-4bd8-80a8-10e6b83602d0",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-19T04:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "d648b4e6-ed22-4bb4-99d4-3651b22821c8",
+    "applicationId": "c7bbd3c4-8ede-4bd8-80a8-10e6b83602d0",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-21T05:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "8e37f065-badb-4070-86a1-739c1f6bd5fb",
+    "applicationId": "ad94fc18-e573-4041-8c61-1740c8fe2d54",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-16T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "26272a23-e9e0-42f1-84a8-e6780777a071",
+    "applicationId": "ad94fc18-e573-4041-8c61-1740c8fe2d54",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-17T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "5f1574eb-b13e-455b-9205-b8a02d2501e3",
+    "applicationId": "ad94fc18-e573-4041-8c61-1740c8fe2d54",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-20T14:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "a4224947-a34c-4207-aff3-0369794ef5cd",
+    "applicationId": "c7c16287-dcc6-43d6-946b-831184c4647d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-16T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "9fac150c-5097-4662-bcbe-9ec919cf4ed2",
+    "applicationId": "c7c16287-dcc6-43d6-946b-831184c4647d",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-17T18:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "a4ca8ded-6735-46b5-89d6-21f29c969902",
+    "applicationId": "c7c16287-dcc6-43d6-946b-831184c4647d",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-19T18:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "44361226-b10f-4320-a159-5ac39fa0fe32",
+    "applicationId": "352b5316-1a5f-4570-a005-bf83269fb594",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-17T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "28d22729-af69-4bf7-a427-acae20b0aece",
+    "applicationId": "736c472b-4f07-4aa3-9680-d6043bec1a5b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-17T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5fe19efc-f4a5-41e3-8970-fed3bbd443bc",
+    "applicationId": "736c472b-4f07-4aa3-9680-d6043bec1a5b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-18T08:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "187b480e-9e23-4870-bf9a-f32096ec0eae",
+    "applicationId": "ba8f2613-968f-4404-8404-436f63388673",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-17T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "db22a137-d848-4101-bbf3-c19fc175a305",
+    "applicationId": "ba8f2613-968f-4404-8404-436f63388673",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-18T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "4a32d4ce-e0e7-4020-9cb4-ff9b98352f43",
+    "applicationId": "ba8f2613-968f-4404-8404-436f63388673",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-20T15:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "6285f45d-495f-4213-8719-79a6b2d38fa8",
+    "applicationId": "dde508d2-1a11-4a81-934c-70c4e10c5638",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-17T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "97d310c8-20a5-4443-87c2-eee3937b1533",
+    "applicationId": "dde508d2-1a11-4a81-934c-70c4e10c5638",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-18T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "7d08cfd4-3ef3-41b5-b871-c999abecfbe2",
+    "applicationId": "dde508d2-1a11-4a81-934c-70c4e10c5638",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-20T22:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "b8787d5d-d37f-4573-9da1-4d9e45ddcf57",
+    "applicationId": "dde508d2-1a11-4a81-934c-70c4e10c5638",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-22T23:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "abc652df-ad97-43ac-808f-9a955e1a4fff",
+    "applicationId": "45ecff2d-b448-46b0-a171-0eadac379768",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-18T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "d9b4f70a-9197-4284-af30-d8177768e77e",
+    "applicationId": "45ecff2d-b448-46b0-a171-0eadac379768",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-19T05:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "dfb80fb5-19be-4297-9fc3-84d28b74c7a6",
+    "applicationId": "45ecff2d-b448-46b0-a171-0eadac379768",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-22T08:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "bc9a372b-a4b3-41e6-9506-3ca983b5e2d6",
+    "applicationId": "b606a1d5-eb57-4a88-906b-a2a5a57409f3",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-18T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "02d0b99f-369c-48f9-8f04-384775768a10",
+    "applicationId": "2397571a-e64f-42a8-8b44-a2176ee5982a",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-18T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7bf8d5c0-1d4d-4834-900b-94e391bcf619",
+    "applicationId": "2397571a-e64f-42a8-8b44-a2176ee5982a",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-19T19:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ca1656d3-7cbd-4b1e-820b-6760c4d324c6",
+    "applicationId": "5ef2a0bb-a613-4b54-90a3-91cde9636ba2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-19T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ac11df99-7157-45ed-9414-4e3e720071c3",
+    "applicationId": "5ef2a0bb-a613-4b54-90a3-91cde9636ba2",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-20T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "4d45a2cc-3e9c-44aa-bf89-82593e59de4c",
+    "applicationId": "5ef2a0bb-a613-4b54-90a3-91cde9636ba2",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-22T02:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "a8ac749f-d04d-49f9-8f26-0d0e45742108",
+    "applicationId": "5ef2a0bb-a613-4b54-90a3-91cde9636ba2",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-24T03:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "7058c284-5a8c-4f9a-aa4d-1af2d6adf563",
+    "applicationId": "9d67c369-6582-4e60-8359-8ebe689810ed",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-19T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e94d68cc-7554-4599-b0a4-110c95256c21",
+    "applicationId": "9d67c369-6582-4e60-8359-8ebe689810ed",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-20T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "cc4d4bd9-4255-4ef9-babf-29054a7d04d7",
+    "applicationId": "9d67c369-6582-4e60-8359-8ebe689810ed",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-23T12:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "2e0e91a3-4543-4337-ad2c-9d60aa8e5b27",
+    "applicationId": "c8745b25-a57d-4188-bdc8-179a788bf130",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-19T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5648ce7f-8a4a-4679-a67b-d1ff937b1c63",
+    "applicationId": "c8745b25-a57d-4188-bdc8-179a788bf130",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-20T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "3dc8a2ba-a9bd-4f60-9e24-c4537f80b4c2",
+    "applicationId": "c8745b25-a57d-4188-bdc8-179a788bf130",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-22T16:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "534e161a-67fa-410f-a8fb-78d8ad0ae5f2",
+    "applicationId": "53445344-5785-488c-87ff-bb3a19f4c853",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-19T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "23367b07-37cd-4efb-a5c7-67d846b9c507",
+    "applicationId": "b379545e-f215-4b03-acaa-81c5a7add4c1",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-20T06:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f104a5ca-ac79-42d1-a91a-f24ae2d4e719",
+    "applicationId": "b379545e-f215-4b03-acaa-81c5a7add4c1",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-21T06:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "189072be-8eaa-4335-b390-01ae39bd87a4",
+    "applicationId": "11b3ef6d-4db2-499e-bbe1-8c7ade1d9d1e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-20T13:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "2bf693e4-1619-4150-ae25-d26abfcbb1ec",
+    "applicationId": "11b3ef6d-4db2-499e-bbe1-8c7ade1d9d1e",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-21T13:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "57386c90-ae36-4b73-a2b1-56f888e9a822",
+    "applicationId": "11b3ef6d-4db2-499e-bbe1-8c7ade1d9d1e",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-23T13:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "d36020e0-17be-424a-9b98-2c5d3ddcfb14",
+    "applicationId": "4ded33f7-24d9-48dc-99ae-8430fdce1f08",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-20T20:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f3f17648-f841-46d4-96b0-47b40f455c62",
+    "applicationId": "4ded33f7-24d9-48dc-99ae-8430fdce1f08",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-21T20:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "fad17070-5352-489e-b82b-8b95b8be71f4",
+    "applicationId": "4ded33f7-24d9-48dc-99ae-8430fdce1f08",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-23T20:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "6571a19b-1bc4-41c8-93fd-e6c9a91b2544",
+    "applicationId": "4ded33f7-24d9-48dc-99ae-8430fdce1f08",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-25T21:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "f8971e91-8aa7-4f8d-a52f-a4d4e9f3bd76",
+    "applicationId": "21c8c113-48f6-4463-aafa-2eea2c707f39",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-21T03:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "5d3a8bec-51a7-4b9b-8d5d-dc937c22365a",
+    "applicationId": "21c8c113-48f6-4463-aafa-2eea2c707f39",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-22T03:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "79f78755-1b52-4788-84b7-2f34355bfb9f",
+    "applicationId": "21c8c113-48f6-4463-aafa-2eea2c707f39",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-25T06:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "98d571d1-2a79-4554-9494-7c046b01220e",
+    "applicationId": "f4cf5c51-532d-4e55-a981-0e99541899b8",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-21T10:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "e14d3f13-7a23-409a-86cd-60b654602630",
+    "applicationId": "396fe039-59b8-4559-a0b7-1b5bf8ee0d8f",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-21T17:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "91b9434a-d1fb-4ae0-a8b5-e5297f1d9d71",
+    "applicationId": "396fe039-59b8-4559-a0b7-1b5bf8ee0d8f",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-22T17:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "83a0a8dc-5c4e-4f18-948c-b9f9d7016385",
+    "applicationId": "9cbc703e-9e25-410c-88bb-f06156acd6bc",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-22T00:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "7fa02729-1ef2-4a66-bc40-c14d2e8308ef",
+    "applicationId": "9cbc703e-9e25-410c-88bb-f06156acd6bc",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-23T00:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "ad93a0df-4412-4d9e-a625-906da7b1dba8",
+    "applicationId": "9cbc703e-9e25-410c-88bb-f06156acd6bc",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-25T00:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "eab7571d-72c4-4de4-84dc-db90583251fb",
+    "applicationId": "9cbc703e-9e25-410c-88bb-f06156acd6bc",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-27T01:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "ec4e84c0-04b8-44a9-90a6-9c9a4e6e9632",
+    "applicationId": "9620400f-e8af-43cc-9424-3b39a4b5d075",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-22T07:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "d0794b24-d311-4aea-9049-44d7ab2542f8",
+    "applicationId": "9620400f-e8af-43cc-9424-3b39a4b5d075",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-23T07:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "63a53764-a5b3-40c6-8210-1577803ff6b6",
+    "applicationId": "9620400f-e8af-43cc-9424-3b39a4b5d075",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-26T10:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "9580a891-c94c-40e2-9ba7-ee9746815bb1",
+    "applicationId": "920b640c-4b89-461d-8934-e8d305dfef2d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-22T14:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "19ac1a5b-7bd9-44fd-8d2d-e6f321d7fe59",
+    "applicationId": "920b640c-4b89-461d-8934-e8d305dfef2d",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-23T14:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "fbc9a0bd-e580-4141-9684-8f606cc64f85",
+    "applicationId": "920b640c-4b89-461d-8934-e8d305dfef2d",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-25T14:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "4fee8ce0-6c05-429e-a3d5-f17f6bda5c5c",
+    "applicationId": "8d6cafe5-9ddd-416f-8339-b9d8b52b825e",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-22T21:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b81fffdb-85f8-423c-b703-5cd1619808a7",
+    "applicationId": "8092ac7d-77a7-4f14-a3a4-1a9087ab6478",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-23T04:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "13187836-eba1-420e-8583-4d8f28b97ed9",
+    "applicationId": "8092ac7d-77a7-4f14-a3a4-1a9087ab6478",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-24T04:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "18815b73-ef73-49cd-bffc-9096218b97f8",
+    "applicationId": "e807ce52-ea24-4507-a050-b89ec4c99df4",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-23T11:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b3fabcf1-85c7-4042-9d69-6cbedacafb82",
+    "applicationId": "e807ce52-ea24-4507-a050-b89ec4c99df4",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-24T11:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "72e6ec1d-ae43-4f6c-8ed2-9c29ff670353",
+    "applicationId": "e807ce52-ea24-4507-a050-b89ec4c99df4",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-26T11:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "ebd478ce-99ab-40d6-b680-3827278c6f9b",
+    "applicationId": "302cea83-a68b-455b-8850-703460e7ee87",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-23T18:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "26d8dbda-0023-459d-8cf1-ea0b5be29ae2",
+    "applicationId": "302cea83-a68b-455b-8850-703460e7ee87",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-24T18:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "6830d4ca-99a2-4230-b6d7-30f820601a81",
+    "applicationId": "302cea83-a68b-455b-8850-703460e7ee87",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-26T18:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "8f57abaa-92bd-40aa-8b15-7e269d87d3e3",
+    "applicationId": "302cea83-a68b-455b-8850-703460e7ee87",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-28T19:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "659def2e-1dd8-4e29-b526-7dde2dd48d95",
+    "applicationId": "ca381154-7965-40ed-93ee-80c5dcd0db87",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-24T01:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "edb52a10-e759-470c-8e94-fe0e1d0c3d12",
+    "applicationId": "ca381154-7965-40ed-93ee-80c5dcd0db87",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-25T01:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b05a4e05-0b49-4212-b60f-9f1ffd4bae82",
+    "applicationId": "ca381154-7965-40ed-93ee-80c5dcd0db87",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-28T04:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "a1c69e22-e4cd-4376-ba26-10535fecfc8f",
+    "applicationId": "7e11279c-d10f-46ba-a45b-cb7d268c84e4",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-24T08:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "dd2f632b-a655-4574-8c80-86f974d4113a",
+    "applicationId": "1bc2c661-0011-4b2a-92d4-c36493cf268b",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-24T15:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "ac60bbb3-0f07-4eb9-891b-1f4cd9391411",
+    "applicationId": "1bc2c661-0011-4b2a-92d4-c36493cf268b",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-25T15:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "326db346-fc2d-4490-a526-fdbc5c971a0e",
+    "applicationId": "f8106541-07ee-4460-8a7e-50bcec3239d2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-24T22:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8d5a8aa3-7ff5-4664-bc4f-ae3d2c08b75c",
+    "applicationId": "f8106541-07ee-4460-8a7e-50bcec3239d2",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-25T22:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "f2536f98-b136-47cc-986e-20e686407b75",
+    "applicationId": "f8106541-07ee-4460-8a7e-50bcec3239d2",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-27T22:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "da84ef91-31d0-4204-a402-35ab5c7471c7",
+    "applicationId": "f8106541-07ee-4460-8a7e-50bcec3239d2",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-06-29T23:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "dad0e7e5-d5a4-4a09-80a2-6f019c2ac75c",
+    "applicationId": "41cca7b2-7677-4938-b93e-4a19f0ea1281",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-25T05:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "b73c00c2-5f7a-4d87-91fc-4abe2d66005d",
+    "applicationId": "41cca7b2-7677-4938-b93e-4a19f0ea1281",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-26T05:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "43f6aaaa-5bad-4982-99c2-7bb90c20f167",
+    "applicationId": "41cca7b2-7677-4938-b93e-4a19f0ea1281",
+    "stage": "REJECTED",
+    "occurredAt": "2026-06-29T08:00:00",
+    "note": "Candidate was not selected this round."
+  },
+  {
+    "eventId": "2db42b48-a408-40dc-afa5-98e4004aa6dc",
+    "applicationId": "0eb89b20-2968-4dcc-a4b3-22e2f2aba90d",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-25T12:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "0a401ebe-6720-4a7d-afc0-0c7be1716557",
+    "applicationId": "0eb89b20-2968-4dcc-a4b3-22e2f2aba90d",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-26T12:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "574b6cff-3995-4497-84df-61a8208c3c1e",
+    "applicationId": "0eb89b20-2968-4dcc-a4b3-22e2f2aba90d",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-28T12:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "19b5a0a1-4185-454c-ba8d-e3b6f59a91d2",
+    "applicationId": "7a90cbb3-345e-4532-b196-89312ce1f7a2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-25T19:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "c9470606-8af5-4f5a-a712-9ffb8dfebba2",
+    "applicationId": "452f6fbd-65d7-46d8-9218-23b395a05d85",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-26T02:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "4dd57f9f-c010-4aac-844f-b37a72746fab",
+    "applicationId": "452f6fbd-65d7-46d8-9218-23b395a05d85",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-27T02:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b190e48f-85a7-4ec2-b7ee-70531642f9f0",
+    "applicationId": "81af39a7-16e1-48ba-b97b-3291755787f4",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-26T09:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "8ab337a0-f0ca-4733-bd64-8dbb9f66a006",
+    "applicationId": "81af39a7-16e1-48ba-b97b-3291755787f4",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-27T09:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "6f8b778f-1a76-4664-8172-0395e5d8817c",
+    "applicationId": "81af39a7-16e1-48ba-b97b-3291755787f4",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-29T09:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "86d78d49-6006-4f3d-863a-039621b1fc31",
+    "applicationId": "db4b2d32-797e-44ea-ae82-4b10a744a8a2",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-26T16:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "f02f3b97-13ba-49d9-85f6-346f818ded1f",
+    "applicationId": "db4b2d32-797e-44ea-ae82-4b10a744a8a2",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-27T16:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "b674c957-e4ae-4c50-bdec-065ba3a2ac40",
+    "applicationId": "db4b2d32-797e-44ea-ae82-4b10a744a8a2",
+    "stage": "SHORTLISTED",
+    "occurredAt": "2026-06-29T16:00:00",
+    "note": "Candidate moved to the shortlist."
+  },
+  {
+    "eventId": "092dfe71-a5bc-410d-ae78-76b4484005a5",
+    "applicationId": "db4b2d32-797e-44ea-ae82-4b10a744a8a2",
+    "stage": "ACCEPTED",
+    "occurredAt": "2026-07-01T17:00:00",
+    "note": "Candidate selected for the role."
+  },
+  {
+    "eventId": "0429c827-4df9-4a73-a025-7447a1271b26",
+    "applicationId": "7955cf16-5649-4334-96f5-e1b1c22ccd64",
+    "stage": "SUBMITTED",
+    "occurredAt": "2026-06-26T23:00:00",
+    "note": ""
+  },
+  {
+    "eventId": "70c7996c-5a72-4bae-b635-2f220f597f2c",
+    "applicationId": "7955cf16-5649-4334-96f5-e1b1c22ccd64",
+    "stage": "IN_REVIEW",
+    "occurredAt": "2026-06-27T23:00:00",
+    "note": "Application entered review."
+  },
+  {
+    "eventId": "426b2f14-abbb-4bd7-b66b-6a2c1080d0da",
+    "applicationId": "7955cf16-5649-4334-96f5-e1b1c22ccd64",
+    "stage": "REJECTED",
+    "occurredAt": "2026-07-01T02:00:00",
+    "note": "Candidate was not selected this round."
+  }
+]

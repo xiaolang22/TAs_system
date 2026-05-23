@@ -21,7 +21,6 @@ import java.nio.file.Paths;
 
 @MultipartConfig
 public class ParseCVServlet extends HttpServlet {
-
     private CVParseService cvParseService;
     private final Gson gson = new Gson();
 
@@ -47,19 +46,18 @@ public class ParseCVServlet extends HttpServlet {
         ServiceResult<ParsedCVData> result;
 
         if (loginUser == null || !"TA".equalsIgnoreCase(loginUser.getRole())) {
-            result = ServiceResult.failure("当前登录状态无效，请重新登录。");
+            result = ServiceResult.failure("Your session is invalid. Please sign in again.");
         } else {
             Path uploadDir = resolveUploadDir();
             try {
                 result = cvParseService.parseSavedCv(loginUser.getUserId(), uploadDir);
             } catch (Exception | NoClassDefFoundError e) {
                 e.printStackTrace();
-                result = ServiceResult.failure("简历解析失败，请稍后重试。");
+                result = ServiceResult.failure("Resume parsing failed. Please try again later.");
             }
         }
 
         String jsonResponse = gson.toJson(result);
-
         try (PrintWriter writer = resp.getWriter()) {
             writer.write(jsonResponse);
         }

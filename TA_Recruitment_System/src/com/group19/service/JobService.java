@@ -206,22 +206,22 @@ public class JobService {
 
         boolean success = jobDao.save(job);
         if (!success) {
-            return ServiceResult.failure("保存岗位失败。");
+            return ServiceResult.failure("Failed to save the job.");
         }
 
-        return ServiceResult.success(job, "岗位发布成功。");
+        return ServiceResult.success(job, "Job posted successfully.");
     }
 
     public ServiceResult<Job> updateJob(Job job, String moUserId) {
         if (job == null || job.getJobId() == null || job.getJobId().trim().isEmpty()) {
-            return ServiceResult.failure("缺少岗位编号。");
+            return ServiceResult.failure("Job ID is required.");
         }
         Job existing = jobDao.findById(job.getJobId().trim());
         if (existing == null) {
-            return ServiceResult.failure("未找到对应岗位。");
+            return ServiceResult.failure("Job not found.");
         }
         if (!isOwnedBy(existing, moUserId)) {
-            return ServiceResult.failure("你只能修改自己发布的岗位。");
+            return ServiceResult.failure("You can only edit jobs that you posted.");
         }
 
         ServiceResult<Job> validation = validateDraft(job);
@@ -235,18 +235,18 @@ public class JobService {
 
         boolean updated = jobDao.update(job);
         if (!updated) {
-            return ServiceResult.failure("更新岗位失败。");
+            return ServiceResult.failure("Failed to update the job.");
         }
-        return ServiceResult.success(job, "岗位信息已更新。");
+        return ServiceResult.success(job, "Job information updated successfully.");
     }
 
     public ServiceResult<Job> updateJobAsAdmin(Job job) {
         if (job == null || job.getJobId() == null || job.getJobId().trim().isEmpty()) {
-            return ServiceResult.failure("缺少岗位编号。");
+            return ServiceResult.failure("Job ID is required.");
         }
         Job existing = jobDao.findById(job.getJobId().trim());
         if (existing == null) {
-            return ServiceResult.failure("未找到对应岗位。");
+            return ServiceResult.failure("Job not found.");
         }
 
         ServiceResult<Job> validation = validateDraft(job);
@@ -260,68 +260,68 @@ public class JobService {
 
         boolean updated = jobDao.update(job);
         if (!updated) {
-            return ServiceResult.failure("更新岗位失败。");
+            return ServiceResult.failure("Failed to update the job.");
         }
-        return ServiceResult.success(job, "岗位信息已更新。");
+        return ServiceResult.success(job, "Job information updated successfully.");
     }
 
     public ServiceResult<Void> deleteJob(String jobId, String moUserId) {
         if (jobId == null || jobId.trim().isEmpty()) {
-            return ServiceResult.failure("缺少岗位编号。");
+            return ServiceResult.failure("Job ID is required.");
         }
         Job existing = jobDao.findById(jobId.trim());
         if (existing == null) {
-            return ServiceResult.failure("未找到对应岗位。");
+            return ServiceResult.failure("Job not found.");
         }
         if (!isOwnedBy(existing, moUserId)) {
-            return ServiceResult.failure("你只能删除自己发布的岗位。");
+            return ServiceResult.failure("You can only delete jobs that you posted.");
         }
         boolean deleted = jobDao.delete(jobId.trim());
         if (!deleted) {
-            return ServiceResult.failure("删除岗位失败。");
+            return ServiceResult.failure("Failed to delete the job.");
         }
-        return ServiceResult.success(null, "岗位已删除。");
+        return ServiceResult.success(null, "Job deleted.");
     }
 
     public ServiceResult<Void> deleteJobAsAdmin(String jobId) {
         if (jobId == null || jobId.trim().isEmpty()) {
-            return ServiceResult.failure("缺少岗位编号。");
+            return ServiceResult.failure("Job ID is required.");
         }
         Job existing = jobDao.findById(jobId.trim());
         if (existing == null) {
-            return ServiceResult.failure("未找到对应岗位。");
+            return ServiceResult.failure("Job not found.");
         }
         boolean deleted = jobDao.delete(jobId.trim());
         if (!deleted) {
-            return ServiceResult.failure("删除岗位失败。");
+            return ServiceResult.failure("Failed to delete the job.");
         }
-        return ServiceResult.success(null, "岗位已删除。");
+        return ServiceResult.success(null, "Job deleted.");
     }
 
     private ServiceResult<Job> validateDraft(Job job) {
         if (job == null) {
-            return ServiceResult.failure("岗位信息不能为空。");
+            return ServiceResult.failure("Job information cannot be empty.");
         }
         if (job.getTitle() == null || job.getTitle().trim().isEmpty()) {
-            return ServiceResult.failure("岗位名称不能为空。");
+            return ServiceResult.failure("Job title cannot be empty.");
         }
         if (job.getDescription() == null || job.getDescription().trim().isEmpty()) {
-            return ServiceResult.failure("岗位描述不能为空。");
+            return ServiceResult.failure("Job description cannot be empty.");
         }
         if (job.getRequirements() == null || job.getRequirements().trim().isEmpty()) {
-            return ServiceResult.failure("技能要求不能为空。");
+            return ServiceResult.failure("Requirements cannot be empty.");
         }
         if (job.getHours() == null || job.getHours().trim().isEmpty()) {
-            return ServiceResult.failure("工作时长不能为空。");
+            return ServiceResult.failure("Workload cannot be empty.");
         }
         if (job.getSchedule() == null || job.getSchedule().trim().isEmpty()) {
-            return ServiceResult.failure("时间安排不能为空。");
+            return ServiceResult.failure("Schedule cannot be empty.");
         }
         if (job.getDeadline() == null || job.getDeadline().trim().isEmpty()) {
-            return ServiceResult.failure("截止时间不能为空。");
+            return ServiceResult.failure("Deadline cannot be empty.");
         }
         if (job.getOwnerMoUserId() == null || job.getOwnerMoUserId().trim().isEmpty()) {
-            return ServiceResult.failure("岗位负责人不能为空。");
+            return ServiceResult.failure("Job owner cannot be empty.");
         }
         return ServiceResult.success(job, "");
     }

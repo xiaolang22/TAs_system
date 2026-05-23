@@ -76,60 +76,60 @@ public class AdminDashboardService {
             data.setRecentJobs(buildRecentJobs(jobs));
             data.setRecentApplications(buildRecentApplications(applications, jobs));
             data.setRecentAlerts(buildRecentAlerts(workloadRows, allAccounts));
-            return ServiceResult.success(data, "管理员首页数据加载成功。");
+            return ServiceResult.success(data, "Admin dashboard data loaded successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("读取管理员首页数据失败。");
+            return ServiceResult.failure("Failed to read admin dashboard data.");
         }
     }
 
     public ServiceResult<UserAccount> resetAccountPassword(String userId, String expectedRole) {
         if (isBlank(userId)) {
-            return ServiceResult.failure("缺少账号标识。");
+            return ServiceResult.failure("The account identifier is required.");
         }
         try {
             UserAccount account = userAccountDao.findByUserId(userId.trim());
             if (!isAllowedManagedRole(account, expectedRole)) {
-                return ServiceResult.failure("未找到对应账号。");
+                return ServiceResult.failure("The target account could not be found.");
             }
             account.setPassword(defaultPasswordForRole(account.getRole()));
             UserAccount saved = userAccountDao.updateByUserId(account);
             if (saved == null) {
-                return ServiceResult.failure("重置密码失败。");
+                return ServiceResult.failure("Failed to reset the password.");
             }
-            return ServiceResult.success(saved, "密码已重置。");
+            return ServiceResult.success(saved, "Password reset successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("重置密码失败。");
+            return ServiceResult.failure("Failed to reset the password.");
         }
     }
 
     public ServiceResult<UserAccount> toggleAccountFreeze(String userId, String expectedRole) {
         if (isBlank(userId)) {
-            return ServiceResult.failure("缺少账号标识。");
+            return ServiceResult.failure("The account identifier is required.");
         }
         try {
             UserAccount account = userAccountDao.findByUserId(userId.trim());
             if (!isAllowedManagedRole(account, expectedRole)) {
-                return ServiceResult.failure("未找到对应账号。");
+                return ServiceResult.failure("The target account could not be found.");
             }
             account.setFrozen(!account.isFrozen());
             UserAccount saved = userAccountDao.updateByUserId(account);
             if (saved == null) {
-                return ServiceResult.failure("更新账号状态失败。");
+                return ServiceResult.failure("Failed to update the account status.");
             }
-            return ServiceResult.success(saved, saved.isFrozen() ? "账号已冻结。" : "账号已解冻。");
+            return ServiceResult.success(saved, saved.isFrozen() ? "Account frozen." : "Account unfrozen.");
         } catch (IOException e) {
-            return ServiceResult.failure("更新账号状态失败。");
+            return ServiceResult.failure("Failed to update the account status.");
         }
     }
 
     public ServiceResult<Job> updateJob(String jobId, String title, String description, String requirements,
                                         String hours, String schedule, String deadline, String status) {
         if (isBlank(jobId)) {
-            return ServiceResult.failure("缺少岗位编号。");
+            return ServiceResult.failure("Job ID is required.");
         }
         Job existing = jobDao.findById(jobId.trim());
         if (existing == null) {
-            return ServiceResult.failure("未找到对应岗位。");
+            return ServiceResult.failure("Job not found.");
         }
         Job updated = new Job();
         updated.setJobId(existing.getJobId());
@@ -230,7 +230,7 @@ public class AdminDashboardService {
                 .limit(5)
                 .map(job -> new AdminFeedItem(
                         trimToEmpty(job.getTitle()),
-                        "岗位编号 " + trimToEmpty(job.getJobId()) + " · " + buildJobStatusLabel(job)))
+                        "Job ID " + trimToEmpty(job.getJobId()) + " | " + buildJobStatusLabel(job)))
                 .collect(Collectors.toList());
     }
 
@@ -246,7 +246,7 @@ public class AdminDashboardService {
                 .limit(5)
                 .map(application -> new AdminFeedItem(
                         trimToEmpty(application.getTaName()),
-                        resolveJobTitle(jobs, application.getJobId()) + " · "
+                        resolveJobTitle(jobs, application.getJobId()) + " | "
                                 + buildApplicationStatusLabel(application.getStatus())))
                 .collect(Collectors.toList());
     }
@@ -258,8 +258,8 @@ public class AdminDashboardService {
                     && ("TA".equalsIgnoreCase(trimToEmpty(account.getRole()))
                     || "MO".equalsIgnoreCase(trimToEmpty(account.getRole())))) {
                 items.add(new AdminFeedItem(
-                        "账号已冻结：" + trimToEmpty(account.getDisplayName()),
-                        trimToEmpty(account.getRole()) + " · " + trimToEmpty(account.getUsername())));
+                        "Account frozen: " + trimToEmpty(account.getDisplayName()),
+                        trimToEmpty(account.getRole()) + " | " + trimToEmpty(account.getUsername())));
             }
         }
         for (TaWorkloadRow row : workloadRows) {
@@ -267,18 +267,18 @@ public class AdminDashboardService {
                 continue;
             }
             String reason = row.getWorkloadWarningReasons().isEmpty()
-                    ? "工作量异常"
+                    ? "Workload warning"
                     : row.getWorkloadWarningReasons().get(0);
             items.add(new AdminFeedItem(
                     trimToEmpty(row.getName()),
-                    reason + " · " + trimToEmpty(row.getTotalAssignedHoursLabel())));
+                    reason + " | " + trimToEmpty(row.getTotalAssignedHoursLabel())));
         }
         return items.stream().limit(5).collect(Collectors.toList());
     }
 
     private static String resolveJobTitle(List<Job> jobs, String jobId) {
         Job job = findJobById(jobs, jobId);
-        return job == null ? "未知岗位" : trimToEmpty(job.getTitle());
+        return job == null ? "Unknown job" : trimToEmpty(job.getTitle());
     }
 
     private static String buildJobStatusLabel(Job job) {
@@ -287,28 +287,28 @@ public class AdminDashboardService {
         }
         String status = trimToEmpty(job.getStatus()).toUpperCase(Locale.ROOT);
         if ("CLOSED".equals(status)) {
-            return "已关闭";
+            return "Closed";
         }
         LocalDate deadline = JobService.parseDeadlineDate(job.getDeadline());
         if (deadline != null && LocalDate.now().isAfter(deadline)) {
-            return "已关闭";
+            return "Closed";
         }
-        return "开放中";
+        return "Open";
     }
 
     private static String buildApplicationStatusLabel(String rawStatus) {
         String status = trimToEmpty(rawStatus).toUpperCase(Locale.ROOT);
         switch (status) {
             case "SUBMITTED":
-                return "已提交";
+                return "Submitted";
             case "IN_REVIEW":
-                return "审核中";
+                return "In Review";
             case "SHORTLISTED":
-                return "已入围";
+                return "Shortlisted";
             case "ACCEPTED":
-                return "已录用";
+                return "Accepted";
             case "REJECTED":
-                return "已拒绝";
+                return "Rejected";
             default:
                 return status.isEmpty() ? "-" : status;
         }

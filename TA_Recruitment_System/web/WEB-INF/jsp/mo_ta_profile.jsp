@@ -17,24 +17,24 @@
     MoTaCandidateCard candidate = (MoTaCandidateCard) request.getAttribute("candidate");
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TA 档案 - TA 招聘系统</title>
+    <title>TA Profile - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <main class="container wide ta-subpage-shell review-shell">
     <header class="review-hero">
         <div class="hero-copy">
-            <h1>TA 档案</h1>
-            <p class="hint">默认展示该 TA 的个人档案；若系统中存在已上传简历，可继续查看简历。</p>
+            <h1>TA Profile</h1>
+            <p class="hint">The profile is shown first. If a resume exists in the system, you can open it as well.</p>
         </div>
         <div class="review-badges">
             <a class="link-btn secondary" href="${backUrl}">${backLabel}</a>
             <% if (candidate != null && candidate.hasCv()) { %>
-            <a class="link-btn" href="<%= attr(candidate.getCvUrl()) %>" target="_blank" rel="noopener">查看简历</a>
+            <a class="link-btn" href="<%= attr(candidate.getCvUrl()) %>" target="_blank" rel="noopener">View Resume</a>
             <% } %>
         </div>
     </header>
@@ -46,7 +46,7 @@
         <div class="ta-profile-hero">
             <div class="ta-profile-avatar <%= candidate.getAvatarUrl() == null || candidate.getAvatarUrl().isBlank() ? "ta-avatar-fallback" : "" %>">
                 <% if (candidate.getAvatarUrl() != null && !candidate.getAvatarUrl().isBlank()) { %>
-                <img src="<%= attr(candidate.getAvatarUrl()) %>" alt="TA 头像">
+                <img src="<%= attr(candidate.getAvatarUrl()) %>" alt="TA avatar">
                 <% } else { %>
                 <span><%= attr(candidate.getAvatarInitial()) %></span>
                 <% } %>
@@ -54,11 +54,11 @@
             <div class="ta-profile-hero-copy">
                 <h2><%= attr(candidate.getDisplayName()) %></h2>
                 <div class="review-badges">
-                    <span class="status-pill tag-info">专业：<%= attr(candidate.getProgrammeDisplay()) %></span>
+                    <span class="status-pill tag-info">Programme: <%= attr(candidate.getProgrammeDisplay()) %></span>
                     <span class="status-pill <%= candidate.hasCv() ? "tag-good" : (candidate.isProfileCompleted() ? "tag-warning" : "tag-neutral") %>">
                         <%= attr(candidate.getArchiveStatusLabel()) %>
                     </span>
-                    <span class="status-pill tag-neutral">学号：<%= attr(candidate.getStudentId()) %></span>
+                    <span class="status-pill tag-neutral">Student ID: <%= attr(candidate.getStudentId()) %></span>
                 </div>
             </div>
         </div>
@@ -66,30 +66,30 @@
 
     <section class="detail-layout">
         <section class="card">
-            <h2 class="section-title">档案信息</h2>
+            <h2 class="section-title">Profile Details</h2>
             <div class="detail-grid">
                 <div class="detail-item">
-                    <span class="label">账号</span>
+                    <span class="label">Username</span>
                     <div class="value"><%= attr(candidate.getUsername()) %></div>
                 </div>
                 <div class="detail-item">
-                    <span class="label">邮箱</span>
+                    <span class="label">Email</span>
                     <div class="value"><%= attr(candidate.getEmailDisplay()) %></div>
                 </div>
                 <div class="detail-item">
-                    <span class="label">技能信息</span>
+                    <span class="label">Skills</span>
                     <div class="value"><%= attr(candidate.getSkillsDisplay()) %></div>
                 </div>
                 <div class="detail-item">
-                    <span class="label">可工作时间</span>
+                    <span class="label">Availability</span>
                     <div class="value"><%= attr(candidate.getAvailabilityDisplay()) %></div>
                 </div>
                 <div class="detail-item">
-                    <span class="label">经历</span>
+                    <span class="label">Experience</span>
                     <div class="value"><%= attr(candidate.getExperienceDisplay()) %></div>
                 </div>
                 <div class="detail-item">
-                    <span class="label">最近更新</span>
+                    <span class="label">Last Updated</span>
                     <div class="value"><%= attr(candidate.getUpdatedAtDisplay()) %></div>
                 </div>
             </div>
@@ -97,14 +97,14 @@
 
         <aside class="detail-stack">
             <section class="card">
-                <h2 class="section-title">档案状态</h2>
+                <h2 class="section-title">Profile Status</h2>
                 <div class="detail-item">
-                    <span class="label">个人档案</span>
-                    <div class="value"><%= candidate.isProfileCompleted() ? "已完善" : "未完善" %></div>
+                    <span class="label">Personal Profile</span>
+                    <div class="value"><%= candidate.isProfileCompleted() ? "Completed" : "Incomplete" %></div>
                 </div>
                 <div class="detail-item detail-note">
-                    <span class="label">简历文件</span>
-                    <div class="value"><%= candidate.hasCv() ? "已上传并可查看" : "未上传或未找到文件" %></div>
+                    <span class="label">Resume File</span>
+                    <div class="value"><%= candidate.hasCv() ? "Uploaded and available" : "Not uploaded or file not found" %></div>
                 </div>
             </section>
         </aside>

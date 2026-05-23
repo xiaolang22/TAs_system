@@ -23,6 +23,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 public class AdminDashboardServlet extends HttpServlet {
+    private static final String TA_PANEL = "admin-ta-panel";
+    private static final String MO_PANEL = "admin-mo-panel";
+    private static final String JOB_PANEL = "admin-job-panel";
+
     private AdminDashboardService adminDashboardService;
 
     @Override
@@ -56,6 +60,7 @@ public class AdminDashboardServlet extends HttpServlet {
         String selectedTaId = trimToNull(req.getParameter("selectedTaId"));
         String selectedMoId = trimToNull(req.getParameter("selectedMoId"));
         String selectedJobId = trimToNull(req.getParameter("selectedJobId"));
+        String focusSection = normalizeFocusSection(req.getParameter("focusSection"));
         ServiceResult<AdminDashboardData> result =
                 adminDashboardService.loadDashboard(selectedTaId, selectedMoId, selectedJobId);
 
@@ -65,6 +70,7 @@ public class AdminDashboardServlet extends HttpServlet {
         req.setAttribute("selectedTaId", selectedTaId);
         req.setAttribute("selectedMoId", selectedMoId);
         req.setAttribute("selectedJobId", selectedJobId);
+        req.setAttribute("focusSection", focusSection);
         if (result.isSuccess()) {
             bindDashboard(req, result.getData());
         } else {
@@ -88,25 +94,26 @@ public class AdminDashboardServlet extends HttpServlet {
         String selectedTaId = trimToNull(req.getParameter("selectedTaId"));
         String selectedMoId = trimToNull(req.getParameter("selectedMoId"));
         String selectedJobId = trimToNull(req.getParameter("selectedJobId"));
+        String focusSection = normalizeFocusSection(req.getParameter("focusSection"));
 
         if ("resetTaPassword".equals(action)) {
             handleAccountResult(req, resp, adminDashboardService.resetAccountPassword(req.getParameter("userId"), "TA"),
-                    selectedOr(req.getParameter("userId"), selectedTaId), selectedMoId, selectedJobId);
+                    selectedOr(req.getParameter("userId"), selectedTaId), selectedMoId, selectedJobId, focusSection);
             return;
         }
         if ("toggleTaFreeze".equals(action)) {
             handleAccountResult(req, resp, adminDashboardService.toggleAccountFreeze(req.getParameter("userId"), "TA"),
-                    selectedOr(req.getParameter("userId"), selectedTaId), selectedMoId, selectedJobId);
+                    selectedOr(req.getParameter("userId"), selectedTaId), selectedMoId, selectedJobId, focusSection);
             return;
         }
         if ("resetMoPassword".equals(action)) {
             handleAccountResult(req, resp, adminDashboardService.resetAccountPassword(req.getParameter("userId"), "MO"),
-                    selectedTaId, selectedOr(req.getParameter("userId"), selectedMoId), selectedJobId);
+                    selectedTaId, selectedOr(req.getParameter("userId"), selectedMoId), selectedJobId, focusSection);
             return;
         }
         if ("toggleMoFreeze".equals(action)) {
             handleAccountResult(req, resp, adminDashboardService.toggleAccountFreeze(req.getParameter("userId"), "MO"),
-                    selectedTaId, selectedOr(req.getParameter("userId"), selectedMoId), selectedJobId);
+                    selectedTaId, selectedOr(req.getParameter("userId"), selectedMoId), selectedJobId, focusSection);
             return;
         }
         if ("updateJob".equals(action)) {
@@ -120,31 +127,39 @@ public class AdminDashboardServlet extends HttpServlet {
                     req.getParameter("deadline"),
                     req.getParameter("status"));
             redirectWithResult(req, resp, result.getMessage(), result.isSuccess(), selectedTaId, selectedMoId,
-                    selectedOr(req.getParameter("jobId"), selectedJobId));
+                    selectedOr(req.getParameter("jobId"), selectedJobId), focusSection);
             return;
         }
         if ("deleteJob".equals(action)) {
             ServiceResult<Void> result = adminDashboardService.deleteJob(req.getParameter("jobId"));
-            redirectWithResult(req, resp, result.getMessage(), result.isSuccess(), selectedTaId, selectedMoId, null);
+            redirectWithResult(req, resp, result.getMessage(), result.isSuccess(), selectedTaId, selectedMoId, null, focusSection);
             return;
         }
 
-        redirectWithResult(req, resp, "无法识别当前操作。", false, selectedTaId, selectedMoId, selectedJobId);
+        redirectWithResult(req, resp, "Unable to recognize the current action.", false,
+                selectedTaId, selectedMoId, selectedJobId, focusSection);
     }
 
     private void handleAccountResult(HttpServletRequest req, HttpServletResponse resp, ServiceResult<UserAccount> result,
-                                     String selectedTaId, String selectedMoId, String selectedJobId) throws IOException {
-        redirectWithResult(req, resp, result.getMessage(), result.isSuccess(), selectedTaId, selectedMoId, selectedJobId);
+                                     String selectedTaId, String selectedMoId, String selectedJobId,
+                                     String focusSection) throws IOException {
+        redirectWithResult(req, resp, result.getMessage(), result.isSuccess(),
+                selectedTaId, selectedMoId, selectedJobId, focusSection);
     }
 
     private void redirectWithResult(HttpServletRequest req, HttpServletResponse resp, String message, boolean success,
-                                    String selectedTaId, String selectedMoId, String selectedJobId) throws IOException {
+                                    String selectedTaId, String selectedMoId, String selectedJobId,
+                                    String focusSection) throws IOException {
         StringBuilder target = new StringBuilder(req.getContextPath()).append("/admin/home");
         boolean hasQuery = false;
         hasQuery = appendQuery(target, hasQuery, success ? "success" : "error", message);
         hasQuery = appendQuery(target, hasQuery, "selectedTaId", selectedTaId);
         hasQuery = appendQuery(target, hasQuery, "selectedMoId", selectedMoId);
         hasQuery = appendQuery(target, hasQuery, "selectedJobId", selectedJobId);
+        if (focusSection != null) {
+            hasQuery = appendQuery(target, hasQuery, "focusSection", focusSection);
+            target.append('#').append(focusSection);
+        }
         resp.sendRedirect(target.toString());
     }
 
@@ -188,7 +203,7 @@ public class AdminDashboardServlet extends HttpServlet {
             return null;
         }
         if (!"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "只有管理员可以访问该页面。");
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only administrators can access this page.");
             return null;
         }
         return loginUser;
@@ -197,6 +212,14 @@ public class AdminDashboardServlet extends HttpServlet {
     private static String selectedOr(String preferred, String fallback) {
         String value = trimToNull(preferred);
         return value != null ? value : fallback;
+    }
+
+    private static String normalizeFocusSection(String value) {
+        String trimmed = trimToNull(value);
+        if (TA_PANEL.equals(trimmed) || MO_PANEL.equals(trimmed) || JOB_PANEL.equals(trimmed)) {
+            return trimmed;
+        }
+        return null;
     }
 
     private static String trimToNull(String value) {

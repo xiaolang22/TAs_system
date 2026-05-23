@@ -6,10 +6,12 @@ import com.group19.dto.ServiceResult;
 import com.group19.model.TA;
 import com.group19.util.FileUploadUtil;
 import jakarta.servlet.http.Part;
+
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 
 public class CVService {
     private final TADao taDao;
@@ -18,19 +20,19 @@ public class CVService {
         this.taDao = taDao;
     }
 
-    public ServiceResult<CVUploadResult> uploadCv(String studentId, Part cvPart, Path uploadDir) {
+    public ServiceResult<CVUploadResult> uploadCv(String studentId, String displayName, Part cvPart, Path uploadDir) {
         if (studentId == null || studentId.isBlank()) {
-            return ServiceResult.failure("当前账号缺少学号，暂时无法上传简历。");
+            return ServiceResult.failure("The current account is missing a student ID, so the resume cannot be uploaded.");
         }
         if (cvPart == null || cvPart.getSize() <= 0) {
-            return ServiceResult.failure("请选择要上传的简历文件。");
+            return ServiceResult.failure("Please choose a resume file to upload.");
         }
         String submittedName = cvPart.getSubmittedFileName();
         if (!FileUploadUtil.isAllowedCvFile(submittedName)) {
-            return ServiceResult.failure("简历仅支持 PDF、DOC 或 DOCX 格式。");
+            return ServiceResult.failure("Only PDF, DOC, and DOCX files are supported.");
         }
         if (uploadDir == null) {
-            return ServiceResult.failure("简历上传目录不可用。");
+            return ServiceResult.failure("The resume upload directory is unavailable.");
         }
 
         String normalizedId = studentId.trim();
@@ -38,11 +40,14 @@ public class CVService {
         try {
             existing = taDao.findByStudentId(normalizedId);
         } catch (IOException e) {
-            return ServiceResult.failure("读取个人档案失败。");
+            return ServiceResult.failure("Failed to read the current profile.");
         }
 
         if (existing == null) {
-            return ServiceResult.failure("请先保存个人档案，再上传简历。");
+            existing = new TA();
+            existing.setStudentId(normalizedId);
+            existing.setName(displayName == null || displayName.isBlank() ? normalizedId : displayName.trim());
+            existing.setUpdatedAt(LocalDateTime.now().toString());
         }
 
         String storedFileName = FileUploadUtil.buildStoredCvFileName(normalizedId, submittedName);
@@ -52,16 +57,17 @@ public class CVService {
             deleteExistingCvFiles(normalizedId, uploadDir, targetFile);
             FileUploadUtil.savePartToFile(cvPart, targetFile);
         } catch (IOException e) {
-            return ServiceResult.failure("保存简历文件失败。");
+            return ServiceResult.failure("Failed to save the resume file.");
         }
 
         existing.setCvFilePath("/uploads/" + storedFileName);
+        existing.setUpdatedAt(LocalDateTime.now().toString());
         try {
             TA saved = taDao.saveOrUpdate(existing);
             CVUploadResult payload = new CVUploadResult(saved, null);
-            return ServiceResult.success(payload, "简历上传成功。");
+            return ServiceResult.success(payload, "Resume uploaded successfully.");
         } catch (IOException e) {
-            return ServiceResult.failure("更新简历信息失败。");
+            return ServiceResult.failure("Failed to update the resume information.");
         }
     }
 
@@ -84,4 +90,3 @@ public class CVService {
         }
     }
 }
-

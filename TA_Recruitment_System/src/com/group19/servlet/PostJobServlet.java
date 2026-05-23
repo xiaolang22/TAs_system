@@ -62,9 +62,9 @@ public class PostJobServlet extends HttpServlet {
         if (jobId != null) {
             Job existing = jobService.findById(jobId);
             if (existing == null) {
-                req.setAttribute("errorMsg", "未找到对应岗位。");
+                req.setAttribute("errorMsg", "Job not found.");
             } else if (!jobService.isOwnedBy(existing, loginUser.getUserId())) {
-                req.setAttribute("errorMsg", "你只能修改自己发布的岗位。");
+                req.setAttribute("errorMsg", "You can only edit jobs that you posted.");
             } else {
                 req.setAttribute("job", existing);
                 req.setAttribute("editing", true);
