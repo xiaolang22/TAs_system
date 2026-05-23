@@ -284,7 +284,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             html.append("<textarea name=\"decisionNote\" rows=\"3\" placeholder=\"Optional note\">")
                     .append(escapeHtml(applicant.getDecisionNote()))
                     .append("</textarea>");
-            html.append("<button type=\"submit\">Update</button>");
+            html.append("<button type=\"submit\">Update Decision</button>");
             html.append("</form>");
             html.append("</td>");
             html.append("</tr>");
@@ -297,7 +297,7 @@ public class ManageApplicationsServlet extends HttpServlet {
                 + "&studentId=" + encode(studentId)
                 + "&detail=1"
                 + "&sort=" + encode(sortMode);
-        return "<a class=\"link-btn secondary\" href=\"" + escapeHtml(href) + "\">Open profile</a>";
+        return "<a class=\"link-btn secondary\" href=\"" + escapeHtml(href) + "\">View Profile</a>";
     }
 
     private static String buildResumeLink(String contextPath, String cvFilePath) {
@@ -306,7 +306,7 @@ public class ManageApplicationsServlet extends HttpServlet {
         }
         return "<a class=\"link-btn\" href=\""
                 + escapeHtml(contextPath + cvFilePath)
-                + "\" target=\"_blank\" rel=\"noopener\">Open resume</a>";
+                + "\" target=\"_blank\" rel=\"noopener\">View CV</a>";
     }
 
     private static String buildResumeHref(HttpServletRequest req, String cvFilePath) {
@@ -322,7 +322,7 @@ public class ManageApplicationsServlet extends HttpServlet {
             case "shortlisted" -> "tag-warning";
             case "accepted" -> "tag-good";
             case "rejected" -> "tag-alert";
-            case "in_review" -> "tag-neutral";
+            case "in_review" -> "tag-info";
             default -> "tag-neutral";
         };
     }

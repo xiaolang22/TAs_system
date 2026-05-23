@@ -32,6 +32,18 @@
 
     String errorMsg = (String) request.getAttribute("errorMsg");
 %>
+<%!
+    private double parseDashboardNumber(String value, double fallback) {
+        if (value == null || value.isBlank()) {
+            return fallback;
+        }
+        try {
+            return Double.parseDouble(value.trim());
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +52,8 @@
     <title>TA Workload Dashboard - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container wide workload-shell">
+<body class="ta-page role-page">
+<main class="container wide ta-subpage-shell workload-shell role-page-shell">
     <header class="page-header">
         <div>
             <h1>TA Workload Dashboard</h1>
@@ -166,7 +178,26 @@
                     <span class="status-pill tag-neutral"><%= row.getAssignedPositionCount() %></span>
                 </td>
                 <td>
+                    <%
+                        double maxHours = parseDashboardNumber(maxWeeklyWorkloadHours, 20);
+                        double totalHours = row.getTotalAssignedHours();
+                        int percent = maxHours <= 0 ? 0 : (int) Math.round((totalHours / maxHours) * 100);
+                        if (percent < 0) {
+                            percent = 0;
+                        }
+                        if (percent > 100) {
+                            percent = 100;
+                        }
+                        boolean highLoad = !row.isHasWorkloadWarning() && totalHours >= maxHours * 0.75;
+                        String meterClass = row.isHasWorkloadWarning() ? "is-overloaded" : (highLoad ? "is-high" : "is-normal");
+                        String badgeClass = row.isHasWorkloadWarning() ? "tag-alert" : (highLoad ? "tag-warning" : "tag-good");
+                        String loadLabel = row.isHasWorkloadWarning() ? "Overloaded" : (highLoad ? "High" : "Normal");
+                    %>
                     <span class="workload-hours"><%= HtmlEscape.escape(row.getTotalAssignedHoursLabel()) %></span>
+                    <div class="workload-meter <%= meterClass %>" aria-hidden="true">
+                        <span style="width: <%= percent %>%"></span>
+                    </div>
+                    <span class="status-pill <%= badgeClass %>"><%= loadLabel %></span>
                 </td>
                 <td>
                     <% if (row.isHasWorkloadWarning()) { %>

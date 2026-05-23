@@ -7,8 +7,8 @@
     <title>Applicant Profile - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container wide review-shell">
+<body class="ta-page role-page">
+<main class="container wide ta-subpage-shell review-shell role-page-shell">
     <header class="review-hero">
         <div class="hero-copy">
             <h1>Applicant Profile</h1>
@@ -31,7 +31,7 @@
                 <h2 class="section-title">${applicant.taName}</h2>
                 <div class="review-badges">
                     <span class="status-pill tag-neutral">Match degree: ${applicant.matchScore}%</span>
-                    <span class="status-pill tag-neutral">${workloadLabel}</span>
+                    <span class="status-pill tag-neutral">${applicant.currentWorkloadLabel}</span>
                     <span class="status-pill tag-neutral">${applicant.status}</span>
                 </div>
             </section>

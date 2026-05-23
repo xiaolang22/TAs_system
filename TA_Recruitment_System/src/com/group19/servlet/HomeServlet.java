@@ -4,8 +4,12 @@ import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
+import com.group19.dao.TADao;
 import com.group19.dao.UserAccountDao;
 import com.group19.dto.MoNotificationView;
+import com.group19.dto.ServiceResult;
+import com.group19.dto.TaWorkloadRow;
+import com.group19.model.Application;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.DeadlineReminderService;
@@ -13,6 +17,7 @@ import com.group19.service.JobService;
 import com.group19.service.MoNewApplicationNotificationService;
 import com.group19.service.SavedJobService;
 import com.group19.service.TaStatusNotificationService;
+import com.group19.service.WorkloadService;
 import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,11 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeServlet extends HttpServlet {
+    private JobDao jobDao;
+    private ApplicationDao applicationDao;
+    private TADao taDao;
     private JobService jobService;
     private SavedJobService savedJobService;
     private TaStatusNotificationService taStatusNotificationService;
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
     private DeadlineReminderService deadlineReminderService;
+    private WorkloadService workloadService;
 
     @Override
     public void init() {
@@ -45,16 +54,21 @@ public class HomeServlet extends HttpServlet {
         Path applicationPath = DataPathResolver.resolve(
                 getServletContext(), "applicationDataFile", "/data/applications.json", "applications.json");
 
-        JobDao jobDao = new JobDao(jobPath);
+        this.jobDao = new JobDao(jobPath);
+        this.applicationDao = new ApplicationDao(applicationPath);
         this.jobService = new JobService(jobDao);
         this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), jobDao);
         this.deadlineReminderService = new DeadlineReminderService(
                 this.jobService,
-                new ApplicationDao(applicationPath),
+                applicationDao,
                 savedJobService);
         NotificationDao notificationDao = new NotificationDao(notificationPath);
         Path userPath = DataPathResolver.resolve(
                 getServletContext(), "userDataFile", "/data/users.json", "users.json");
+        Path taPath = DataPathResolver.resolve(
+                getServletContext(), "taDataFile", "/data/tas.json", "tas.json");
+        this.taDao = new TADao(taPath);
+        this.workloadService = new WorkloadService(taDao, applicationDao, jobDao);
         this.taStatusNotificationService = new TaStatusNotificationService(notificationDao, jobDao);
         this.moNewApplicationNotificationService =
                 new MoNewApplicationNotificationService(notificationDao, jobDao, new UserAccountDao(userPath));
@@ -123,6 +137,7 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("deadlineReminders",
                     deadlineReminderService.buildRemindersForMo(today, contextPath));
             req.setAttribute("moNotificationPreviewCount", moNotifications.size());
+            prepareMoDashboardStats(req, today);
             req.getRequestDispatcher("/WEB-INF/jsp/mo_home.jsp").forward(req, resp);
             return;
         }
@@ -132,6 +147,7 @@ public class HomeServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
                 return;
             }
+            prepareAdminDashboardStats(req);
             req.getRequestDispatcher("/WEB-INF/jsp/admin_home.jsp").forward(req, resp);
             return;
         }
@@ -162,6 +178,72 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("hiddenPoolCount", hiddenJobs.size());
         req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, schedule, skills));
         req.setAttribute("taUserId", taStudentId);
+    }
+
+    private void prepareMoDashboardStats(HttpServletRequest req, LocalDate today) {
+        List<Job> allJobs = jobDao.findAll();
+        List<Application> allApplications = applicationDao.findAll();
+        req.setAttribute("moPostedJobsCount", allJobs.size());
+        req.setAttribute("moPendingApplicationsCount",
+                countApplicationsByStatus(allApplications, "SUBMITTED", "IN_REVIEW"));
+        req.setAttribute("moShortlistedCandidatesCount",
+                countApplicationsByStatus(allApplications, "SHORTLISTED"));
+        req.setAttribute("moClosedJobsCount", jobService.findHiddenFromOpenJobs(today).size());
+    }
+
+    private void prepareAdminDashboardStats(HttpServletRequest req) {
+        List<Job> allJobs = jobDao.findAll();
+        List<Application> allApplications = applicationDao.findAll();
+        req.setAttribute("adminTotalJobs", allJobs.size());
+        req.setAttribute("adminActiveApplications",
+                countApplicationsByStatus(allApplications, "SUBMITTED", "IN_REVIEW", "SHORTLISTED"));
+        req.setAttribute("adminAcceptedApplications",
+                countApplicationsByStatus(allApplications, "ACCEPTED"));
+        req.setAttribute("adminTotalTAs", countTas());
+        req.setAttribute("adminOverloadedTAs", countOverloadedTas());
+    }
+
+    private int countTas() {
+        try {
+            List<?> tas = taDao.findAll();
+            return tas == null ? 0 : tas.size();
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+
+    private int countOverloadedTas() {
+        ServiceResult<List<TaWorkloadRow>> result = workloadService.loadWorkloadRows("", "all");
+        if (!result.isSuccess() || result.getData() == null) {
+            return 0;
+        }
+        int count = 0;
+        for (TaWorkloadRow row : result.getData()) {
+            if (row.isHasWorkloadWarning()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private static int countApplicationsByStatus(List<Application> applications, String... statuses) {
+        if (applications == null || statuses == null || statuses.length == 0) {
+            return 0;
+        }
+        int count = 0;
+        for (Application application : applications) {
+            if (application == null || application.getStatus() == null) {
+                continue;
+            }
+            String status = application.getStatus().trim();
+            for (String accepted : statuses) {
+                if (accepted != null && accepted.equalsIgnoreCase(status)) {
+                    count++;
+                    break;
+                }
+            }
+        }
+        return count;
     }
 
     private static void setSavedJobFeedback(HttpServletRequest req) {

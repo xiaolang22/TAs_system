@@ -7,14 +7,15 @@
     <title>Candidate Skill Match Review</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container review-container">
-    <header class="page-header">
+<body class="ta-page role-page">
+<main class="container wide ta-subpage-shell review-container review-shell role-page-shell">
+    <header class="role-hero">
         <div>
-            <h1>US10 - Candidate Skill Match Review</h1>
+            <span class="role-eyebrow">Candidate Review</span>
+            <h1>Skill Match Review</h1>
             <p class="hint">Signed in as <strong>${loginUser.role}</strong> (<code>${loginUser.username}</code>)</p>
         </div>
-        <div class="header-actions">
+        <div class="role-hero-actions">
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
             <form method="post" action="${pageContext.request.contextPath}/logout">
                 <button type="submit" class="secondary-btn">Logout</button>
@@ -22,23 +23,31 @@
         </div>
     </header>
 
-    <p class="hint">Enter job-required skills to calculate each applicant's match score and missing skills.</p>
-
-    <form method="get" action="${pageContext.request.contextPath}/mo/review" class="profile-form">
-        <label for="requiredSkills">Job Required Skills *</label>
-        <textarea
-                id="requiredSkills"
-                name="requiredSkills"
-                rows="3"
-                placeholder="Example: Java, communication, teaching experience"
-                required>${requiredSkills}</textarea>
-        <button type="submit">Calculate Match Score</button>
-    </form>
+    <section class="card role-form-card">
+        <div>
+            <h2 class="section-title">Review Criteria</h2>
+            <p class="hint">Enter job-required skills to calculate each applicant's match score and missing skills.</p>
+        </div>
+        <form method="get" action="${pageContext.request.contextPath}/mo/review" class="role-form-card">
+            <div class="role-form-field">
+                <label for="requiredSkills">Job Required Skills *</label>
+                <textarea
+                        id="requiredSkills"
+                        name="requiredSkills"
+                        rows="3"
+                        placeholder="Example: Java, communication, teaching experience"
+                        required>${requiredSkills}</textarea>
+            </div>
+            <div class="role-submit-row">
+                <button type="submit">Calculate Match Score</button>
+            </div>
+        </form>
+    </section>
 
     <p class="alert success ${empty resultMessage ? 'hidden' : ''}">${resultMessage}</p>
     <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
-    <section id="reviewResultPanel" class="card review-result-panel hidden">
+    <section id="reviewResultPanel" class="card table-card review-result-panel hidden">
         <h2>Review Results</h2>
         <div class="table-wrap">
             <table class="review-table">

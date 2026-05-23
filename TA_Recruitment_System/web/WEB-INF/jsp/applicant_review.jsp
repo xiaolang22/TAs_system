@@ -7,8 +7,8 @@
     <title>Applicant Review - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container wide review-shell">
+<body class="ta-page role-page">
+<main class="container wide ta-subpage-shell review-shell role-page-shell">
     <header class="review-hero">
         <div class="hero-copy">
             <h1>Applicant Review</h1>
@@ -80,7 +80,7 @@
         </div>
     </section>
 
-    <section class="card table-card">
+    <section class="card table-card applicant-table-card">
         <table>
             <thead>
             <tr>
