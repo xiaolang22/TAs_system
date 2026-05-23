@@ -2,10 +2,13 @@ package com.group19.servlet;
 
 import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
+import com.group19.dao.NotificationDao;
 import com.group19.dao.TimelineDao;
 import com.group19.dto.TaApplicationOverview;
 import com.group19.model.LoginUser;
 import com.group19.service.TaApplicationStatusService;
+import com.group19.service.TaStatusNotificationService;
+import com.group19.util.DataPathResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,35 +23,24 @@ import java.util.List;
 
 public class TaApplicationsServlet extends HttpServlet {
     private TaApplicationStatusService taApplicationStatusService;
+    private TaStatusNotificationService taStatusNotificationService;
 
     @Override
     public void init() {
-        Path applicationPath = resolveDataPath(
-                firstNonBlank(
-                        getServletContext().getInitParameter("applicationDataFile"),
-                        "/data/applications.json"
-                ),
-                "applications.json"
-        );
-        Path jobPath = resolveDataPath(
-                firstNonBlank(
-                        getServletContext().getInitParameter("jobDataFile"),
-                        "/data/jobs.json"
-                ),
-                "jobs.json"
-        );
-        Path timelinePath = resolveDataPath(
-                firstNonBlank(
-                        getServletContext().getInitParameter("timelineDataFile"),
-                        "/data/timelines.json"
-                ),
-                "timelines.json"
-        );
+        Path applicationPath = DataPathResolver.resolve(
+                getServletContext(), "applicationDataFile", "/data/applications.json", "applications.json");
+        Path jobPath = DataPathResolver.resolve(
+                getServletContext(), "jobDataFile", "/data/jobs.json", "jobs.json");
+        Path timelinePath = DataPathResolver.resolve(
+                getServletContext(), "timelineDataFile", "/data/timelines.json", "timelines.json");
+        Path notificationPath = DataPathResolver.resolve(
+                getServletContext(), "notificationDataFile", "/data/notifications.json", "notifications.json");
 
         ApplicationDao applicationDao = new ApplicationDao(applicationPath);
         JobDao jobDao = new JobDao(jobPath);
         TimelineDao timelineDao = new TimelineDao(timelinePath);
         this.taApplicationStatusService = new TaApplicationStatusService(applicationDao, jobDao, timelineDao);
+        this.taStatusNotificationService = new TaStatusNotificationService(new NotificationDao(notificationPath), jobDao);
     }
 
     @Override
@@ -66,23 +58,10 @@ public class TaApplicationsServlet extends HttpServlet {
 
         String studentId = loginUser.getUserId();
         List<TaApplicationOverview> overviews = taApplicationStatusService.loadOverviewsForTa(studentId);
+        req.setAttribute("taNotifications", taStatusNotificationService.loadAllForTa(studentId));
+        taStatusNotificationService.markAllAsRead(studentId);
         req.setAttribute("applications", overviews);
         req.setAttribute("loginUser", loginUser);
         req.getRequestDispatcher("/WEB-INF/jsp/ta_applications.jsp").forward(req, resp);
-    }
-
-    private Path resolveDataPath(String webRelativePath, String fallbackFileName) {
-        String realPath = getServletContext().getRealPath(webRelativePath);
-        if (realPath != null && !realPath.isBlank()) {
-            return Paths.get(realPath);
-        }
-        return Paths.get(System.getProperty("user.dir"), "data", fallbackFileName);
-    }
-
-    private static String firstNonBlank(String preferred, String fallback) {
-        if (preferred != null && !preferred.isBlank()) {
-            return preferred;
-        }
-        return fallback;
     }
 }

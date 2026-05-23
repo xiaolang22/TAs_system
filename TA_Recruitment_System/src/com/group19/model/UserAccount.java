@@ -6,6 +6,7 @@ public class UserAccount {
     private String role;
     private String displayName;
     private String userId;
+    private String avatarPath;
 
     public UserAccount() {
     }
@@ -16,11 +17,22 @@ public class UserAccount {
             String role,
             String displayName,
             String userId) {
+        this(username, password, role, displayName, userId, "");
+    }
+
+    public UserAccount(
+            String username,
+            String password,
+            String role,
+            String displayName,
+            String userId,
+            String avatarPath) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.displayName = displayName;
         this.userId = userId;
+        this.avatarPath = avatarPath;
     }
 
     public String getUsername() {
@@ -61,5 +73,13 @@ public class UserAccount {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

@@ -48,11 +48,11 @@ public class TaStatusNotificationService {
 
         String jobTitle = resolveJobTitle(application.getJobId());
         String displayStatus = TaApplicationStatusService.toDisplayStatus(current);
-        String message = "Your application for \""
+        String message = "你申请的岗位“"
                 + jobTitle
-                + "\" was updated to "
+                + "”状态已更新为："
                 + displayStatus
-                + ".";
+                + "。";
 
         Notification notification = new Notification();
         notification.setNotificationId(UUID.randomUUID().toString());
@@ -67,6 +67,21 @@ public class TaStatusNotificationService {
     }
 
     public List<TaNotificationView> loadForTaDashboard(String taStudentId) {
+        return buildViews(taStudentId, DASHBOARD_LIMIT);
+    }
+
+    public List<TaNotificationView> loadAllForTa(String taStudentId) {
+        return buildViews(taStudentId, Integer.MAX_VALUE);
+    }
+
+    public void markAllAsRead(String taStudentId) {
+        if (taStudentId == null || taStudentId.isBlank()) {
+            return;
+        }
+        notificationDao.markAllAsReadByRecipientAndType(taStudentId, TYPE_STATUS_CHANGED);
+    }
+
+    private List<TaNotificationView> buildViews(String taStudentId, int limitCap) {
         if (taStudentId == null || taStudentId.isBlank()) {
             return new ArrayList<>();
         }
@@ -78,7 +93,7 @@ public class TaStatusNotificationService {
                 .reversed());
 
         List<TaNotificationView> views = new ArrayList<>();
-        int limit = Math.min(DASHBOARD_LIMIT, notifications.size());
+        int limit = Math.min(limitCap, notifications.size());
         for (int i = 0; i < limit; i++) {
             Notification notification = notifications.get(i);
             TaNotificationView view = new TaNotificationView();

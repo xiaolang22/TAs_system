@@ -57,36 +57,36 @@ public class SavedJobService {
 
     public ServiceResult<Void> saveJob(String userId, String jobId) {
         if (isBlank(userId)) {
-            return ServiceResult.failure("Please log in before saving jobs.");
+            return ServiceResult.failure("请先登录后再收藏职位。");
         }
         if (isBlank(jobId)) {
-            return ServiceResult.failure("Job ID is missing.");
+            return ServiceResult.failure("缺少岗位编号。");
         }
         if (jobDao.findById(jobId.trim()) == null) {
-            return ServiceResult.failure("Job not found.");
+            return ServiceResult.failure("未找到对应岗位。");
         }
 
         SavedJob savedJob = new SavedJob(userId.trim(), jobId.trim(), LocalDateTime.now().toString());
         boolean saved = savedJobDao.save(savedJob);
         if (!saved) {
-            return ServiceResult.failure("Failed to save job.");
+            return ServiceResult.failure("收藏职位失败。");
         }
-        return ServiceResult.success(null, "Job saved.");
+        return ServiceResult.success(null, "职位已收藏。");
     }
 
     public ServiceResult<Void> removeSavedJob(String userId, String jobId) {
         if (isBlank(userId)) {
-            return ServiceResult.failure("Please log in before removing saved jobs.");
+            return ServiceResult.failure("请先登录后再取消收藏。");
         }
         if (isBlank(jobId)) {
-            return ServiceResult.failure("Job ID is missing.");
+            return ServiceResult.failure("缺少岗位编号。");
         }
 
         boolean removed = savedJobDao.delete(userId.trim(), jobId.trim());
         if (!removed) {
-            return ServiceResult.failure("Failed to remove saved job.");
+            return ServiceResult.failure("取消收藏失败。");
         }
-        return ServiceResult.success(null, "Saved job removed.");
+        return ServiceResult.success(null, "已取消收藏。");
     }
 
     private static String safeSavedAt(SavedJob savedJob) {

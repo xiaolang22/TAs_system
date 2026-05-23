@@ -90,4 +90,22 @@ public class UserAccountDao {
         JsonFileUtil.writeList(userFilePath, accounts);
         return account;
     }
+
+    public UserAccount updateByUserId(UserAccount target) throws IOException {
+        if (target == null || target.getUserId() == null || target.getUserId().isBlank()) {
+            return null;
+        }
+
+        List<UserAccount> accounts = new ArrayList<>(findAll());
+        String normalizedUserId = target.getUserId().trim();
+        for (int i = 0; i < accounts.size(); i++) {
+            UserAccount current = accounts.get(i);
+            if (current.getUserId() != null && normalizedUserId.equalsIgnoreCase(current.getUserId().trim())) {
+                accounts.set(i, target);
+                JsonFileUtil.writeList(userFilePath, accounts);
+                return target;
+            }
+        }
+        return null;
+    }
 }

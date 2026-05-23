@@ -103,6 +103,17 @@ public class AuthService {
         }
     }
 
+    public UserAccount getAccountByUserId(String userId) {
+        if (isBlank(userId)) {
+            return null;
+        }
+        try {
+            return userAccountDao.findByUserId(userId.trim());
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     private static boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
     }
@@ -112,7 +123,8 @@ public class AuthService {
                 account.getUsername(),
                 account.getRole(),
                 account.getDisplayName(),
-                account.getUserId());
+                account.getUserId(),
+                account.getAvatarPath());
     }
 
     private static String normalizeRole(String role) {

@@ -5,6 +5,7 @@ import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
 import com.group19.dao.UserAccountDao;
+import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.DeadlineReminderService;
 import com.group19.service.JobService;
@@ -21,8 +22,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class HomeServlet extends HttpServlet {
+    private JobService jobService;
     private SavedJobService savedJobService;
     private TaStatusNotificationService taStatusNotificationService;
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
@@ -41,10 +46,10 @@ public class HomeServlet extends HttpServlet {
                 getServletContext(), "applicationDataFile", "/data/applications.json", "applications.json");
 
         JobDao jobDao = new JobDao(jobPath);
-        JobService jobService = new JobService(jobDao);
+        this.jobService = new JobService(jobDao);
         this.savedJobService = new SavedJobService(new SavedJobDao(savedJobPath), jobDao);
         this.deadlineReminderService = new DeadlineReminderService(
-                jobService,
+                this.jobService,
                 new ApplicationDao(applicationPath),
                 savedJobService);
         NotificationDao notificationDao = new NotificationDao(notificationPath);
@@ -77,16 +82,19 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("loginUser", loginUser);
         req.setAttribute("currentRequestPath", buildCurrentRequestPath(req));
         setSavedJobFeedback(req);
+        setPageError(req);
         String contextPath = req.getContextPath();
         LocalDate today = LocalDate.now();
 
         if ("TA".equalsIgnoreCase(loginUser.getRole())) {
             String taStudentId = loginUser.getUserId();
             req.setAttribute("savedJobs", savedJobService.findSavedJobs(taStudentId));
+            req.setAttribute("savedJobIds", savedJobService.findSavedJobIds(taStudentId));
             req.setAttribute("taNotifications", taStatusNotificationService.loadForTaDashboard(taStudentId));
             req.setAttribute("unreadNotificationCount", taStatusNotificationService.countUnread(taStudentId));
             req.setAttribute("deadlineReminders",
                     deadlineReminderService.buildRemindersForTa(taStudentId, today, contextPath));
+            prepareTaJobs(req, today, taStudentId);
         } else if ("MO".equalsIgnoreCase(loginUser.getRole())) {
             String moUserId = loginUser.getUserId();
             req.setAttribute("moNotifications",
@@ -97,6 +105,33 @@ public class HomeServlet extends HttpServlet {
                     deadlineReminderService.buildRemindersForMo(today, contextPath));
         }
         req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+    }
+
+    private void prepareTaJobs(HttpServletRequest req, LocalDate today, String taStudentId) {
+        String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
+        String category = trimToNull(req.getParameter("category"));
+        String schedule = trimToNull(req.getParameter("schedule"));
+        String skills = trimToNull(req.getParameter("skills"));
+        boolean showingHidden = isTruthy(req.getParameter("showHidden"));
+
+        List<Job> openJobs = jobService.findOpenActiveJobs(today);
+        List<Job> hiddenJobs = jobService.findHiddenFromOpenJobs(today);
+        List<Job> visibleJobs = showingHidden
+                ? jobService.filterJobs(hiddenJobs, keyword, category, schedule, skills)
+                : jobService.filterJobs(openJobs, keyword, category, schedule, skills);
+
+        req.setAttribute("jobs", visibleJobs);
+        req.setAttribute("filterKeyword", nullToEmpty(keyword));
+        req.setAttribute("filterCategory", nullToEmpty(category));
+        req.setAttribute("filterSchedule", nullToEmpty(schedule));
+        req.setAttribute("filterSkills", nullToEmpty(skills));
+        req.setAttribute("showingHidden", showingHidden);
+        req.setAttribute("openJobCount", openJobs.size());
+        req.setAttribute("filteredCount", visibleJobs.size());
+        req.setAttribute("hiddenFromOpenCount", hiddenJobs.size());
+        req.setAttribute("hiddenPoolCount", hiddenJobs.size());
+        req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, category, schedule, skills));
+        req.setAttribute("taUserId", taStudentId);
     }
 
     private static void setSavedJobFeedback(HttpServletRequest req) {
@@ -110,10 +145,50 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+    private static void setPageError(HttpServletRequest req) {
+        String error = trimToNull(req.getParameter("error"));
+        if (error != null) {
+            req.setAttribute("error", error);
+        }
+    }
+
     private static String buildCurrentRequestPath(HttpServletRequest req) {
         String query = req.getQueryString();
         String path = req.getRequestURI();
         return query == null || query.isBlank() ? path : path + "?" + query;
+    }
+
+    private static boolean isTruthy(String value) {
+        if (value == null) {
+            return false;
+        }
+        String t = value.trim();
+        return "1".equals(t) || "true".equalsIgnoreCase(t) || "yes".equalsIgnoreCase(t);
+    }
+
+    private static String buildViewHiddenJobsUrl(HttpServletRequest req, String keyword, String category,
+                                                 String schedule, String skills) {
+        List<String> parts = new ArrayList<>();
+        parts.add("showHidden=1");
+        appendQuery(parts, "keyword", keyword);
+        appendQuery(parts, "category", category);
+        appendQuery(parts, "schedule", schedule);
+        appendQuery(parts, "skills", skills);
+        return req.getContextPath() + "/home?" + String.join("&", parts);
+    }
+
+    private static void appendQuery(List<String> parts, String name, String raw) {
+        if (raw == null || raw.isBlank()) {
+            return;
+        }
+        parts.add(name + "=" + java.net.URLEncoder.encode(raw, StandardCharsets.UTF_8));
+    }
+
+    private static String firstNonBlank(String preferred, String fallback) {
+        if (preferred != null && !preferred.isBlank()) {
+            return preferred;
+        }
+        return fallback;
     }
 
     private static String trimToNull(String value) {
@@ -122,5 +197,9 @@ public class HomeServlet extends HttpServlet {
         }
         String t = value.trim();
         return t.isEmpty() ? null : t;
+    }
+
+    private static String nullToEmpty(String value) {
+        return value == null ? "" : value;
     }
 }

@@ -101,7 +101,7 @@ public class DeadlineReminderService {
 
             long daysUntil = ChronoUnit.DAYS.between(today, deadline);
             DeadlineReminderView view = new DeadlineReminderView();
-            String title = job.getTitle() == null || job.getTitle().isBlank() ? "Untitled position" : job.getTitle().trim();
+            String title = job.getTitle() == null || job.getTitle().isBlank() ? "未命名岗位" : job.getTitle().trim();
             view.setJobTitle(HtmlEscape.escape(title));
             view.setDeadlineDisplay(deadline.format(dateFormatter));
             view.setDaysLabel(buildDaysLabel(daysUntil));
@@ -118,12 +118,12 @@ public class DeadlineReminderService {
 
     private static String buildDaysLabel(long daysUntil) {
         if (daysUntil <= 0) {
-            return "Deadline is today";
+            return "今天截止";
         }
         if (daysUntil == 1) {
-            return "Deadline in 1 day";
+            return "1 天后截止";
         }
-        return "Deadline in " + daysUntil + " days";
+        return daysUntil + " 天后截止";
     }
 
     private static String reminderClass(long daysUntil) {
