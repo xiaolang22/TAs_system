@@ -6,11 +6,13 @@ import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
 import com.group19.dao.TADao;
 import com.group19.dao.UserAccountDao;
+import com.group19.dto.AdminDashboardData;
 import com.group19.dto.MoTaCandidateCard;
 import com.group19.dto.MoNotificationView;
 import com.group19.dto.ServiceResult;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
+import com.group19.service.AdminDashboardService;
 import com.group19.service.DeadlineReminderService;
 import com.group19.service.JobService;
 import com.group19.service.MoNewApplicationNotificationService;
@@ -43,6 +45,7 @@ public class HomeServlet extends HttpServlet {
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
     private DeadlineReminderService deadlineReminderService;
     private MoTaDirectoryService moTaDirectoryService;
+    private AdminDashboardService adminDashboardService;
 
     @Override
     public void init() {
@@ -73,6 +76,11 @@ public class HomeServlet extends HttpServlet {
         this.moNewApplicationNotificationService =
                 new MoNewApplicationNotificationService(notificationDao, jobDao);
         this.moTaDirectoryService = new MoTaDirectoryService(new TADao(taPath), new UserAccountDao(userPath));
+        this.adminDashboardService = new AdminDashboardService(
+                new UserAccountDao(userPath),
+                new ApplicationDao(applicationPath),
+                new JobDao(jobPath),
+                new TADao(taPath));
     }
 
     @Override
@@ -227,6 +235,37 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("moCandidateTotalCount", allCandidates.size());
         req.setAttribute("moCandidateFilteredCount", visibleCandidates.size());
         req.setAttribute("moShowMatchDetails", showMatchDetails);
+    }
+
+    private void prepareAdminDashboardStats(HttpServletRequest req) {
+        ServiceResult<AdminDashboardData> result = adminDashboardService.loadDashboard(
+                trimToNull(req.getParameter("selectedTaId")),
+                trimToNull(req.getParameter("selectedMoId")),
+                trimToNull(req.getParameter("selectedJobId")));
+        if (!result.isSuccess()) {
+            req.setAttribute("errorMsg", result.getMessage());
+            return;
+        }
+
+        AdminDashboardData data = result.getData();
+        req.setAttribute("taAccounts", data.getTaAccounts());
+        req.setAttribute("moAccounts", data.getMoAccounts());
+        req.setAttribute("jobs", data.getJobs());
+        req.setAttribute("selectedTa", data.getSelectedTa());
+        req.setAttribute("selectedMo", data.getSelectedMo());
+        req.setAttribute("selectedJob", data.getSelectedJob());
+        req.setAttribute("openJobCount", data.getOpenJobCount());
+        req.setAttribute("closedJobCount", data.getClosedJobCount());
+        req.setAttribute("taCount", data.getTaCount());
+        req.setAttribute("moCount", data.getMoCount());
+        req.setAttribute("pendingApplicationCount", data.getPendingApplicationCount());
+        req.setAttribute("acceptedApplicationCount", data.getAcceptedApplicationCount());
+        req.setAttribute("rejectedApplicationCount", data.getRejectedApplicationCount());
+        req.setAttribute("workloadWarningCount", data.getWorkloadWarningCount());
+        req.setAttribute("timeConflictCount", data.getTimeConflictCount());
+        req.setAttribute("recentJobs", data.getRecentJobs());
+        req.setAttribute("recentApplications", data.getRecentApplications());
+        req.setAttribute("recentAlerts", data.getRecentAlerts());
     }
 
     private static void attachMoCandidateUrls(HttpServletRequest req, List<MoTaCandidateCard> candidates) {
