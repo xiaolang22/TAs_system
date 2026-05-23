@@ -1819,6 +1819,48 @@ body.ta-page {
     box-shadow: 0 18px 48px rgba(15, 23, 42, 0.06);
 }
 
+.role-home-shell {
+    margin-top: 24px;
+    border: 1px solid #e4eefc;
+    border-radius: 28px;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.06);
+}
+
+.role-home-summary {
+    margin-top: 18px;
+}
+
+.role-home-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.role-home-card h2 {
+    margin-top: 0;
+}
+
+.role-home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.role-home-inline-link {
+    margin-top: 8px;
+}
+
+.role-home-inline-link a {
+    color: #1296c6;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.role-home-inline-link a:hover {
+    color: #0d7ea7;
+}
+
 .account-center-card {
     display: grid;
     grid-template-columns: 220px minmax(0, 1fr);
@@ -1897,6 +1939,7 @@ body.ta-page {
 
     .ta-filter-grid,
     .ta-job-meta-grid,
+    .role-home-grid,
     .ta-dashboard-pane,
     .account-center-card {
         grid-template-columns: 1fr;

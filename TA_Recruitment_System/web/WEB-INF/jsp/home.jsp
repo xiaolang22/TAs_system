@@ -41,7 +41,7 @@
     int unreadCount = unreadNotificationCount == null ? 0 : unreadNotificationCount;
     String currentRequestPath = (String) request.getAttribute("currentRequestPath");
     if (currentRequestPath == null || currentRequestPath.isBlank()) {
-        currentRequestPath = request.getContextPath() + "/home";
+        currentRequestPath = request.getContextPath() + "/ta/home";
     }
     String avatarPath = loginUser == null ? "" : loginUser.getAvatarPath();
     String avatarUrl = avatarPath == null || avatarPath.isBlank() ? "" : request.getContextPath() + avatarPath;
@@ -59,7 +59,7 @@
 <% if (isTa) { %>
 <div class="ta-app-shell">
     <header class="ta-topbar">
-        <a class="ta-brand-link" href="${pageContext.request.contextPath}/home" aria-label="返回 TA 首页">
+        <a class="ta-brand-link" href="${pageContext.request.contextPath}/ta/home" aria-label="返回 TA 首页">
             <span class="ta-brand-mark" aria-hidden="true">
                 <svg viewBox="0 0 180 180">
                     <defs>
@@ -123,7 +123,7 @@
 
             <div class="ta-jobs-scroll" id="taJobsScroll">
                 <section class="ta-filter-card">
-                    <form method="get" action="${pageContext.request.contextPath}/home" class="ta-filter-form">
+                    <form method="get" action="${pageContext.request.contextPath}/ta/home" class="ta-filter-form">
                         <% if (Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
                         <input type="hidden" name="showHidden" value="1">
                         <% } %>
@@ -133,7 +133,7 @@
                                 <p class="hint">筛选条件与职位列表同步滚动。</p>
                             </div>
                             <div class="ta-job-toolbar-actions">
-                                <a class="ta-tab-btn ${!showingHidden ? 'is-active' : ''}" href="${pageContext.request.contextPath}/home">开放职位</a>
+                                <a class="ta-tab-btn ${!showingHidden ? 'is-active' : ''}" href="${pageContext.request.contextPath}/ta/home">开放职位</a>
                                 <a class="ta-tab-btn ${showingHidden ? 'is-active' : ''}" href="${viewHiddenJobsUrl}">历史职位</a>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                         </div>
                         <div class="ta-filter-actions">
                             <button type="submit">筛选职位</button>
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
+                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
                         </div>
                     </form>
                 </section>
@@ -167,7 +167,7 @@
                     <% } %>
                     <% } else { %>
                     当前显示 <strong>${filteredCount}</strong> / <strong>${hiddenPoolCount}</strong> 个历史职位。
-                    <a class="ta-summary-link" href="${pageContext.request.contextPath}/home">返回开放职位</a>
+                    <a class="ta-summary-link" href="${pageContext.request.contextPath}/ta/home">返回开放职位</a>
                     <% } %>
                 </div>
 
