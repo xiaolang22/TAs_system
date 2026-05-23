@@ -88,7 +88,6 @@ public class JobListServlet extends HttpServlet {
 
     private void renderJobList(HttpServletRequest req, LocalDate today, LoginUser loginUser) {
         String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
-        String category = trimToNull(req.getParameter("category"));
         String schedule = trimToNull(req.getParameter("schedule"));
         String skills = trimToNull(req.getParameter("skills"));
         boolean showingHidden = isTruthy(req.getParameter("showHidden"));
@@ -99,14 +98,13 @@ public class JobListServlet extends HttpServlet {
 
         List<Job> jobs;
         if (showingHidden) {
-            jobs = jobService.filterJobs(hiddenPool, keyword, category, schedule, skills);
+            jobs = jobService.filterJobs(hiddenPool, keyword, schedule, skills);
         } else {
-            jobs = jobService.filterJobs(openJobs, keyword, category, schedule, skills);
+            jobs = jobService.filterJobs(openJobs, keyword, schedule, skills);
         }
 
         req.setAttribute("jobs", jobs);
         req.setAttribute("filterKeyword", nullToEmpty(keyword));
-        req.setAttribute("filterCategory", nullToEmpty(category));
         req.setAttribute("filterSchedule", nullToEmpty(schedule));
         req.setAttribute("filterSkills", nullToEmpty(skills));
         req.setAttribute("openJobCount", openJobs.size());
@@ -114,7 +112,7 @@ public class JobListServlet extends HttpServlet {
         req.setAttribute("hiddenFromOpenCount", hiddenFromOpenCount);
         req.setAttribute("hiddenPoolCount", hiddenPool.size());
         req.setAttribute("showingHidden", showingHidden);
-        req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, category, schedule, skills));
+        req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, schedule, skills));
 
         if (isTa(loginUser)) {
             Set<String> savedJobIds = savedJobService.findSavedJobIds(loginUser.getUserId());
@@ -162,12 +160,11 @@ public class JobListServlet extends HttpServlet {
         return "1".equals(t) || "true".equalsIgnoreCase(t) || "yes".equalsIgnoreCase(t);
     }
 
-    private static String buildViewHiddenJobsUrl(HttpServletRequest req, String keyword, String category,
+    private static String buildViewHiddenJobsUrl(HttpServletRequest req, String keyword,
                                                  String schedule, String skills) {
         List<String> parts = new ArrayList<>();
         parts.add("showHidden=1");
         appendQuery(parts, "keyword", keyword);
-        appendQuery(parts, "category", category);
         appendQuery(parts, "schedule", schedule);
         appendQuery(parts, "skills", skills);
         return req.getContextPath() + "/jobs?" + String.join("&", parts);

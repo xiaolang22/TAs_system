@@ -11,13 +11,6 @@
                 .replace(">", "&gt;");
     }
 
-    private String zhCategory(String value) {
-        if (value == null) {
-            return "";
-        }
-        return "Invigilator".equalsIgnoreCase(value.trim()) ? "监考" : value;
-    }
-
     private String zhStatus(String value) {
         if (value == null) {
             return "";
@@ -71,7 +64,6 @@
 
     <section class="card">
         <h2><%= job.getTitle() %></h2>
-        <p><strong>岗位类型：</strong> <%= zhCategory(job.getCategory()) %></p>
         <p><strong>岗位状态：</strong> <%= zhStatus(job.getStatus()) %></p>
         <p><strong>工作时长：</strong> <%= job.getHours() == null ? "" : job.getHours() %></p>
         <p><strong>时间安排：</strong> <%= job.getSchedule() == null ? "" : job.getSchedule() %></p>

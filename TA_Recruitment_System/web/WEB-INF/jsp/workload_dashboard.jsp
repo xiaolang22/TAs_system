@@ -147,7 +147,6 @@
                                 <%= HtmlEscape.escape(position.getTitle()) %>
                             </div>
                             <div class="assigned-position-meta">
-                                <span><%= HtmlEscape.escape(position.getCategory().isEmpty() ? "Uncategorized" : position.getCategory()) %></span>
                                 <span>Job ID: <%= HtmlEscape.escape(position.getJobId()) %></span>
                                 <span>Hours: <%= HtmlEscape.escape(position.getHoursText().isEmpty() ? "Not provided" : position.getHoursText()) %></span>
                                 <span>Schedule: <%= HtmlEscape.escape(position.getScheduleText().isEmpty() ? "Not provided" : position.getScheduleText()) %></span>

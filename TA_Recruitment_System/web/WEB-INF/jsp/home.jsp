@@ -27,12 +27,6 @@
         return trimmed.substring(0, 1);
     }
 
-    private String zhCategory(String value) {
-        if (value == null) {
-            return "";
-        }
-        return "Invigilator".equalsIgnoreCase(value.trim()) ? "监考" : value;
-    }
 %>
 <%
     LoginUser loginUser = (LoginUser) request.getAttribute("loginUser");
@@ -47,7 +41,7 @@
     int unreadCount = unreadNotificationCount == null ? 0 : unreadNotificationCount;
     String currentRequestPath = (String) request.getAttribute("currentRequestPath");
     if (currentRequestPath == null || currentRequestPath.isBlank()) {
-        currentRequestPath = request.getContextPath() + "/home";
+        currentRequestPath = request.getContextPath() + "/ta/home";
     }
     String avatarPath = loginUser == null ? "" : loginUser.getAvatarPath();
     String avatarUrl = avatarPath == null || avatarPath.isBlank() ? "" : request.getContextPath() + avatarPath;
@@ -65,7 +59,7 @@
 <% if (isTa) { %>
 <div class="ta-app-shell">
     <header class="ta-topbar">
-        <a class="ta-brand-link" href="${pageContext.request.contextPath}/home" aria-label="返回 TA 首页">
+        <a class="ta-brand-link" href="${pageContext.request.contextPath}/ta/home" aria-label="返回 TA 首页">
             <span class="ta-brand-mark" aria-hidden="true">
                 <svg viewBox="0 0 180 180">
                     <defs>
@@ -122,17 +116,6 @@
 
     <main class="ta-home-layout">
         <section class="ta-jobs-pane">
-            <div class="ta-jobs-toolbar">
-                <div>
-                    <h1>职位信息</h1>
-                    <p class="hint">筛选区与职位列表同步滚动，可快速浏览并返回顶部。</p>
-                </div>
-                <div class="ta-job-toolbar-actions">
-                    <a class="ta-tab-btn ${!showingHidden ? 'is-active' : ''}" href="${pageContext.request.contextPath}/home">开放职位</a>
-                    <a class="ta-tab-btn ${showingHidden ? 'is-active' : ''}" href="${viewHiddenJobsUrl}">历史职位</a>
-                </div>
-            </div>
-
             <p class="alert success ${empty param.applySuccess ? 'hidden' : ''}">申请提交成功。</p>
             <p class="alert success ${empty savedJobMessage ? 'hidden' : ''}">${savedJobMessage}</p>
             <p class="alert error ${empty savedJobError ? 'hidden' : ''}">${savedJobError}</p>
@@ -140,22 +123,24 @@
 
             <div class="ta-jobs-scroll" id="taJobsScroll">
                 <section class="ta-filter-card">
-                    <form method="get" action="${pageContext.request.contextPath}/home" class="ta-filter-form">
+                    <form method="get" action="${pageContext.request.contextPath}/ta/home" class="ta-filter-form">
                         <% if (Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
                         <input type="hidden" name="showHidden" value="1">
                         <% } %>
+                        <div class="ta-filter-topbar">
+                            <div class="ta-filter-copy">
+                                <h1>职位信息栏</h1>
+                                <p class="hint">筛选条件与职位列表同步滚动。</p>
+                            </div>
+                            <div class="ta-job-toolbar-actions">
+                                <a class="ta-tab-btn ${!showingHidden ? 'is-active' : ''}" href="${pageContext.request.contextPath}/ta/home">开放职位</a>
+                                <a class="ta-tab-btn ${showingHidden ? 'is-active' : ''}" href="${viewHiddenJobsUrl}">历史职位</a>
+                            </div>
+                        </div>
                         <div class="ta-filter-grid">
                             <div class="ta-filter-field">
                                 <label for="keyword">关键词</label>
                                 <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="岗位名、描述、时间">
-                            </div>
-                            <div class="ta-filter-field">
-                                <label for="category">类型</label>
-                                <select id="category" name="category">
-                                    <option value="" ${empty filterCategory ? 'selected' : ''}>全部</option>
-                                    <option value="TA" ${filterCategory eq 'TA' ? 'selected' : ''}>TA</option>
-                                    <option value="Invigilator" ${filterCategory eq 'Invigilator' ? 'selected' : ''}>监考</option>
-                                </select>
                             </div>
                             <div class="ta-filter-field">
                                 <label for="schedule">时间安排</label>
@@ -168,7 +153,7 @@
                         </div>
                         <div class="ta-filter-actions">
                             <button type="submit">筛选职位</button>
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
+                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
                         </div>
                     </form>
                 </section>
@@ -178,9 +163,11 @@
                     当前显示 <strong>${filteredCount}</strong> / <strong>${openJobCount}</strong> 个开放职位。
                     <% if ((Integer) request.getAttribute("hiddenFromOpenCount") > 0) { %>
                     另有 <strong>${hiddenFromOpenCount}</strong> 个已结束或关闭职位。
+                    <a class="ta-summary-link" href="${viewHiddenJobsUrl}">查看已结束或关闭职位</a>
                     <% } %>
                     <% } else { %>
                     当前显示 <strong>${filteredCount}</strong> / <strong>${hiddenPoolCount}</strong> 个历史职位。
+                    <a class="ta-summary-link" href="${pageContext.request.contextPath}/ta/home">返回开放职位</a>
                     <% } %>
                 </div>
 
@@ -192,24 +179,20 @@
                         %>
                         <article class="ta-job-card">
                             <div class="ta-job-card-head">
-                                <div>
-                                    <h2><%= job.getTitle() == null ? "" : job.getTitle() %></h2>
-                                    <p class="ta-job-badges">
-                                        <span class="status-pill tag-neutral"><%= zhCategory(job.getCategory()) %></span>
-                                        <span class="status-pill tag-warning">截止：<%= job.getDeadline() == null ? "" : job.getDeadline() %></span>
-                                    </p>
-                                </div>
-                                <div class="ta-job-hours"><%= job.getHours() == null ? "" : job.getHours() %></div>
+                                <h2><%= job.getTitle() == null ? "" : job.getTitle() %></h2>
+                                <p class="ta-job-badges">
+                                    <span class="status-pill tag-warning">截止：<%= job.getDeadline() == null ? "" : job.getDeadline() %></span>
+                                    <span class="status-pill tag-info">工作时长：<%= job.getHours() == null ? "" : job.getHours() %></span>
+                                </p>
                             </div>
-                            <p class="ta-job-desc"><%= job.getDescription() == null ? "" : job.getDescription() %></p>
                             <dl class="ta-job-meta-grid">
+                                <div>
+                                    <dt>岗位描述</dt>
+                                    <dd><%= job.getDescription() == null ? "" : job.getDescription() %></dd>
+                                </div>
                                 <div>
                                     <dt>技能要求</dt>
                                     <dd><%= job.getRequirements() == null ? "" : job.getRequirements() %></dd>
-                                </div>
-                                <div>
-                                    <dt>时间安排</dt>
-                                    <dd><%= job.getSchedule() == null ? "" : job.getSchedule() %></dd>
                                 </div>
                             </dl>
                             <div class="ta-job-actions">

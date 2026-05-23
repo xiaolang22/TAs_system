@@ -5,6 +5,7 @@ import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
 import com.group19.dao.UserAccountDao;
+import com.group19.dto.MoNotificationView;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.DeadlineReminderService;
@@ -24,7 +25,6 @@ import java.time.LocalDate;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class HomeServlet extends HttpServlet {
     private JobService jobService;
@@ -80,13 +80,23 @@ public class HomeServlet extends HttpServlet {
         }
 
         req.setAttribute("loginUser", loginUser);
+        String servletPath = req.getServletPath();
+        if ("/home".equals(servletPath)) {
+            redirectToRoleHome(req, resp, loginUser);
+            return;
+        }
+
         req.setAttribute("currentRequestPath", buildCurrentRequestPath(req));
         setSavedJobFeedback(req);
         setPageError(req);
         String contextPath = req.getContextPath();
         LocalDate today = LocalDate.now();
 
-        if ("TA".equalsIgnoreCase(loginUser.getRole())) {
+        if ("/ta/home".equals(servletPath)) {
+            if (!"TA".equalsIgnoreCase(loginUser.getRole())) {
+                resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
+                return;
+            }
             String taStudentId = loginUser.getUserId();
             req.setAttribute("savedJobs", savedJobService.findSavedJobs(taStudentId));
             req.setAttribute("savedJobIds", savedJobService.findSavedJobIds(taStudentId));
@@ -95,21 +105,42 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("deadlineReminders",
                     deadlineReminderService.buildRemindersForTa(taStudentId, today, contextPath));
             prepareTaJobs(req, today, taStudentId);
-        } else if ("MO".equalsIgnoreCase(loginUser.getRole())) {
+            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+            return;
+        }
+
+        if ("/mo/home".equals(servletPath)) {
+            if (!"MO".equalsIgnoreCase(loginUser.getRole())) {
+                resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
+                return;
+            }
             String moUserId = loginUser.getUserId();
-            req.setAttribute("moNotifications",
-                    moNewApplicationNotificationService.loadForMoDashboard(moUserId, contextPath));
+            List<MoNotificationView> moNotifications =
+                    moNewApplicationNotificationService.loadForMoDashboard(moUserId, contextPath);
+            req.setAttribute("moNotifications", moNotifications);
             req.setAttribute("moUnreadNotificationCount",
                     moNewApplicationNotificationService.countUnread(moUserId));
             req.setAttribute("deadlineReminders",
                     deadlineReminderService.buildRemindersForMo(today, contextPath));
+            req.setAttribute("moNotificationPreviewCount", moNotifications.size());
+            req.getRequestDispatcher("/WEB-INF/jsp/mo_home.jsp").forward(req, resp);
+            return;
         }
-        req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+
+        if ("/admin/home".equals(servletPath)) {
+            if (!"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+                resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
+                return;
+            }
+            req.getRequestDispatcher("/WEB-INF/jsp/admin_home.jsp").forward(req, resp);
+            return;
+        }
+
+        resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
     }
 
     private void prepareTaJobs(HttpServletRequest req, LocalDate today, String taStudentId) {
         String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
-        String category = trimToNull(req.getParameter("category"));
         String schedule = trimToNull(req.getParameter("schedule"));
         String skills = trimToNull(req.getParameter("skills"));
         boolean showingHidden = isTruthy(req.getParameter("showHidden"));
@@ -117,12 +148,11 @@ public class HomeServlet extends HttpServlet {
         List<Job> openJobs = jobService.findOpenActiveJobs(today);
         List<Job> hiddenJobs = jobService.findHiddenFromOpenJobs(today);
         List<Job> visibleJobs = showingHidden
-                ? jobService.filterJobs(hiddenJobs, keyword, category, schedule, skills)
-                : jobService.filterJobs(openJobs, keyword, category, schedule, skills);
+                ? jobService.filterJobs(hiddenJobs, keyword, schedule, skills)
+                : jobService.filterJobs(openJobs, keyword, schedule, skills);
 
         req.setAttribute("jobs", visibleJobs);
         req.setAttribute("filterKeyword", nullToEmpty(keyword));
-        req.setAttribute("filterCategory", nullToEmpty(category));
         req.setAttribute("filterSchedule", nullToEmpty(schedule));
         req.setAttribute("filterSkills", nullToEmpty(skills));
         req.setAttribute("showingHidden", showingHidden);
@@ -130,7 +160,7 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("filteredCount", visibleJobs.size());
         req.setAttribute("hiddenFromOpenCount", hiddenJobs.size());
         req.setAttribute("hiddenPoolCount", hiddenJobs.size());
-        req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, category, schedule, skills));
+        req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, schedule, skills));
         req.setAttribute("taUserId", taStudentId);
     }
 
@@ -166,15 +196,41 @@ public class HomeServlet extends HttpServlet {
         return "1".equals(t) || "true".equalsIgnoreCase(t) || "yes".equalsIgnoreCase(t);
     }
 
-    private static String buildViewHiddenJobsUrl(HttpServletRequest req, String keyword, String category,
+    private static String buildViewHiddenJobsUrl(HttpServletRequest req, String keyword,
                                                  String schedule, String skills) {
         List<String> parts = new ArrayList<>();
         parts.add("showHidden=1");
         appendQuery(parts, "keyword", keyword);
-        appendQuery(parts, "category", category);
         appendQuery(parts, "schedule", schedule);
         appendQuery(parts, "skills", skills);
-        return req.getContextPath() + "/home?" + String.join("&", parts);
+        return req.getContextPath() + "/ta/home?" + String.join("&", parts);
+    }
+
+    private static void redirectToRoleHome(HttpServletRequest req, HttpServletResponse resp, LoginUser loginUser)
+            throws IOException {
+        String query = req.getQueryString();
+        String target = roleHomePath(loginUser);
+        if (query != null && !query.isBlank()) {
+            target = target + "?" + query;
+        }
+        resp.sendRedirect(req.getContextPath() + target);
+    }
+
+    private static String roleHomePath(LoginUser loginUser) {
+        if (loginUser == null || loginUser.getRole() == null) {
+            return "/login";
+        }
+        String role = loginUser.getRole().trim();
+        if ("TA".equalsIgnoreCase(role)) {
+            return "/ta/home";
+        }
+        if ("MO".equalsIgnoreCase(role)) {
+            return "/mo/home";
+        }
+        if ("ADMIN".equalsIgnoreCase(role)) {
+            return "/admin/home";
+        }
+        return "/login";
     }
 
     private static void appendQuery(List<String> parts, String name, String raw) {

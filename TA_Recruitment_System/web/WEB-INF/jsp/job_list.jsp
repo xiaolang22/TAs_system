@@ -13,12 +13,6 @@
                 .replace(">", "&gt;");
     }
 
-    private String zhCategory(String value) {
-        if (value == null) {
-            return "";
-        }
-        return "Invigilator".equalsIgnoreCase(value.trim()) ? "监考" : value;
-    }
 %>
 <%
     String jobListAction = request.getContextPath() + "/jobs";
@@ -83,14 +77,6 @@
                            value="${filterKeyword}">
                 </div>
                 <div class="form-field">
-                    <label for="category">岗位类型</label>
-                    <select id="category" name="category">
-                        <option value="" ${empty filterCategory ? 'selected' : ''}>全部</option>
-                        <option value="TA" ${filterCategory eq 'TA' ? 'selected' : ''}>TA</option>
-                        <option value="Invigilator" ${filterCategory eq 'Invigilator' ? 'selected' : ''}>监考</option>
-                    </select>
-                </div>
-                <div class="form-field">
                     <label for="schedule">时间安排</label>
                     <input type="text" id="schedule" name="schedule" placeholder="例如：周一、下午"
                            value="${filterSchedule}">
@@ -136,8 +122,6 @@
         <article class="card job-card">
             <h3><%= job.getTitle() %></h3>
             <dl class="job-meta">
-                <dt>岗位类型</dt>
-                <dd><%= zhCategory(job.getCategory()) %></dd>
                 <dt>技能要求</dt>
                 <dd><%= job.getRequirements() == null ? "" : job.getRequirements() %></dd>
                 <dt>时间安排</dt>

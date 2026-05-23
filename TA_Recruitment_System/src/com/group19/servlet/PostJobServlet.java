@@ -73,7 +73,6 @@ public class PostJobServlet extends HttpServlet {
 
         Job job = new Job();
         job.setTitle(req.getParameter("title"));
-        job.setCategory(req.getParameter("category"));
         job.setDescription(req.getParameter("description"));
         job.setRequirements(req.getParameter("requirements"));
         job.setHours(req.getParameter("hours"));

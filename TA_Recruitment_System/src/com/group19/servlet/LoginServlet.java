@@ -132,7 +132,18 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void redirectByRole(HttpServletRequest req, HttpServletResponse resp, LoginUser loginUser) throws IOException {
-        resp.sendRedirect(req.getContextPath() + "/home");
+        String role = loginUser == null ? null : loginUser.getRole();
+        String target;
+        if ("TA".equalsIgnoreCase(role)) {
+            target = "/ta/home";
+        } else if ("MO".equalsIgnoreCase(role)) {
+            target = "/mo/home";
+        } else if (ROLE_ADMIN.equalsIgnoreCase(role)) {
+            target = "/admin/home";
+        } else {
+            target = "/home";
+        }
+        resp.sendRedirect(req.getContextPath() + target);
     }
 
     private void forwardToLoginPage(HttpServletRequest req, HttpServletResponse resp)
