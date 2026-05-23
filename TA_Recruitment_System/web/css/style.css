@@ -444,6 +444,11 @@ button:hover {
     color: #92400e;
 }
 
+.tag-info {
+    background: #dff6fb;
+    color: #0f7490;
+}
+
 .tag-alert {
     background: #fee2e2;
     color: #991b1b;
@@ -1533,23 +1538,6 @@ body.ta-page {
     gap: 14px;
 }
 
-.ta-jobs-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 22px 24px;
-    border-radius: 28px;
-    border: 1px solid #e4eefc;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
-}
-
-.ta-jobs-toolbar h1 {
-    margin: 0 0 6px;
-    color: #0f172a;
-}
-
 .ta-job-toolbar-actions {
     display: inline-flex;
     gap: 8px;
@@ -1594,6 +1582,20 @@ body.ta-page {
     scroll-behavior: smooth;
 }
 
+.ta-filter-topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ta-filter-copy h1 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 1.35rem;
+}
+
 .ta-filter-form,
 .ta-filter-grid {
     display: grid;
@@ -1601,7 +1603,7 @@ body.ta-page {
 }
 
 .ta-filter-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .ta-filter-field label {
@@ -1631,9 +1633,23 @@ body.ta-page {
 }
 
 .ta-job-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
     color: #64748b;
     font-size: 0.95rem;
     padding: 0 6px;
+}
+
+.ta-summary-link {
+    color: #1296c6;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.ta-summary-link:hover {
+    color: #0d7ea7;
 }
 
 .ta-job-list-wrap {
@@ -1651,7 +1667,7 @@ body.ta-page {
 .ta-scroll-top-btn {
     position: absolute;
     right: 18px;
-    bottom: 18px;
+    bottom: 34px;
     z-index: 6;
     display: inline-flex;
     align-items: center;
@@ -1671,11 +1687,12 @@ body.ta-page {
 }
 
 .ta-scroll-top-btn:hover {
+    opacity: 1;
     box-shadow: 0 22px 36px rgba(19, 151, 201, 0.34);
 }
 
 .ta-scroll-top-btn.is-visible {
-    opacity: 1;
+    opacity: 0.42;
     transform: translateY(0);
     pointer-events: auto;
 }
@@ -1689,14 +1706,12 @@ body.ta-page {
 }
 
 .ta-job-card-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 14px;
-    align-items: flex-start;
+    display: grid;
+    gap: 10px;
 }
 
 .ta-job-card h2 {
-    margin: 0 0 8px;
+    margin: 0;
     font-size: 1.24rem;
     color: #0f172a;
 }
@@ -1706,22 +1721,6 @@ body.ta-page {
     flex-wrap: wrap;
     gap: 8px;
     margin: 0;
-}
-
-.ta-job-hours {
-    min-width: 96px;
-    padding: 10px 12px;
-    border-radius: 18px;
-    background: #eff6ff;
-    color: #1d4ed8;
-    font-weight: 800;
-    text-align: center;
-}
-
-.ta-job-desc {
-    margin: 14px 0 0;
-    color: #475569;
-    line-height: 1.7;
 }
 
 .ta-job-meta-grid {
@@ -1881,13 +1880,11 @@ body.ta-page {
     }
 
     .ta-topbar,
-    .ta-jobs-toolbar,
     .account-center-card {
         grid-template-columns: 1fr;
     }
 
-    .ta-topbar,
-    .ta-jobs-toolbar {
+    .ta-topbar {
         display: grid;
     }
 
@@ -1905,6 +1902,10 @@ body.ta-page {
         grid-template-columns: 1fr;
     }
 
+    .ta-filter-topbar {
+        display: grid;
+    }
+
     .ta-brand-copy strong {
         font-size: 1.12rem;
     }
@@ -1915,7 +1916,7 @@ body.ta-page {
 
     .ta-scroll-top-btn {
         right: 14px;
-        bottom: 14px;
+        bottom: 24px;
         min-width: 96px;
         padding: 10px 16px;
     }

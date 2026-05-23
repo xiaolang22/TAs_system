@@ -268,25 +268,14 @@
                         value="<%= job.getTitle() == null ? "" : job.getTitle() %>">
             </div>
 
-            <div class="row">
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select id="category" name="category">
-                        <option value="">Please select</option>
-                        <option value="TA" <%= "TA".equals(job.getCategory()) ? "selected" : "" %>>TA</option>
-                        <option value="Invigilator" <%= "Invigilator".equals(job.getCategory()) ? "selected" : "" %>>Invigilator</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="hours">Hours</label>
-                    <input
-                            type="text"
-                            id="hours"
-                            name="hours"
-                            placeholder="e.g. 10 hours/week"
-                            value="<%= job.getHours() == null ? "" : job.getHours() %>">
-                </div>
+            <div class="form-group">
+                <label for="hours">Hours</label>
+                <input
+                        type="text"
+                        id="hours"
+                        name="hours"
+                        placeholder="e.g. 10 hours/week"
+                        value="<%= job.getHours() == null ? "" : job.getHours() %>">
             </div>
 
             <div class="form-group">

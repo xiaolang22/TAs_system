@@ -100,24 +100,15 @@ public class JobService {
         return status == null || status.isBlank() || "OPEN".equalsIgnoreCase(status.trim());
     }
 
-    public List<Job> filterJobs(List<Job> jobs, String keyword, String category, String scheduleHint, String skillsHint) {
+    public List<Job> filterJobs(List<Job> jobs, String keyword, String scheduleHint, String skillsHint) {
         if (jobs == null || jobs.isEmpty()) {
             return new ArrayList<>();
         }
         return jobs.stream()
                 .filter(job -> matchesKeyword(job, keyword))
-                .filter(job -> matchesCategory(job, category))
                 .filter(job -> containsIgnoreCase(job.getSchedule(), scheduleHint))
                 .filter(job -> containsIgnoreCase(job.getRequirements(), skillsHint))
                 .collect(Collectors.toList());
-    }
-
-    private static boolean matchesCategory(Job job, String category) {
-        if (category == null || category.isBlank()) {
-            return true;
-        }
-        String c = job.getCategory();
-        return c != null && c.trim().equalsIgnoreCase(category.trim());
     }
 
     private static boolean matchesKeyword(Job job, String keyword) {
@@ -126,7 +117,6 @@ public class JobService {
         }
         String k = keyword.trim().toLowerCase(Locale.ROOT);
         return fieldContains(job.getTitle(), k)
-                || fieldContains(job.getCategory(), k)
                 || fieldContains(job.getDescription(), k)
                 || fieldContains(job.getRequirements(), k)
                 || fieldContains(job.getSchedule(), k)
@@ -178,9 +168,6 @@ public class JobService {
     public ServiceResult<Job> createJob(Job job) {
         if (job.getTitle() == null || job.getTitle().trim().isEmpty()) {
             return ServiceResult.failure("Title is required");
-        }
-        if (job.getCategory() == null || job.getCategory().trim().isEmpty()) {
-            return ServiceResult.failure("Category is required");
         }
         if (job.getDescription() == null || job.getDescription().trim().isEmpty()) {
             return ServiceResult.failure("Description is required");

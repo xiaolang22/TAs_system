@@ -181,7 +181,6 @@
 
                     <div class="job-meta">
                         <div><strong>Job ID:</strong> <%= job.getJobId() == null ? "" : job.getJobId() %></div>
-                        <div><strong>Category:</strong> <%= job.getCategory() == null ? "" : job.getCategory() %></div>
                         <div><strong>Status:</strong> <%= job.getStatus() == null ? "" : job.getStatus() %></div>
                         <div><strong>Deadline:</strong> <%= job.getDeadline() == null ? "" : job.getDeadline() %></div>
                     </div>
