@@ -1595,6 +1595,10 @@ body.ta-page {
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
 }
 
+.ta-filter-card-compact {
+    padding: 6px 12px 8px;
+}
+
 .ta-jobs-scroll {
     display: grid;
     gap: 10px;
@@ -1615,10 +1619,39 @@ body.ta-page {
     flex-wrap: wrap;
 }
 
+.ta-mode-switch {
+    flex-shrink: 0;
+    min-width: 198px;
+    margin-top: 0;
+    padding: 1px;
+    gap: 2px;
+    border-radius: 16px;
+}
+
+.ta-mode-switch .choice-chip {
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 14px;
+    min-height: 28px;
+    align-items: center;
+    font-size: 0.93rem;
+}
+
+.ta-mode-switch .choice-chip.is-active {
+    font-weight: 800;
+}
+
 .ta-filter-copy h1 {
     margin: 0;
     color: #0f172a;
     font-size: 1.22rem;
+}
+
+.ta-filter-card-compact .ta-filter-topbar {
+    align-items: center;
+    gap: 10px;
 }
 
 .ta-filter-form,
@@ -1627,14 +1660,26 @@ body.ta-page {
     gap: 10px;
 }
 
+.ta-filter-inline-form {
+    gap: 8px;
+}
+
+.ta-filter-card-compact .ta-filter-inline-form {
+    gap: 6px;
+}
+
 .ta-filter-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.ta-filter-grid-single {
+    grid-template-columns: 1fr;
+}
+
 .ta-filter-field label {
     display: block;
-    margin-bottom: 5px;
-    font-size: 0.84rem;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
     font-weight: 700;
     color: #334155;
 }
@@ -1642,7 +1687,7 @@ body.ta-page {
 .ta-filter-field input,
 .ta-filter-field select {
     width: 100%;
-    height: 40px;
+    height: 38px;
     border: 1px solid #cbd5e1;
     border-radius: 14px;
     padding: 7px 12px;
@@ -1655,6 +1700,13 @@ body.ta-page {
     gap: 10px;
     flex-wrap: wrap;
     align-items: center;
+}
+
+.ta-filter-actions .link-btn,
+.ta-filter-actions button {
+    min-height: 38px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .ta-job-summary {
@@ -1735,6 +1787,14 @@ body.ta-page {
     gap: 10px;
 }
 
+.ta-job-card-head-inline {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
 .ta-job-card h2 {
     margin: 0;
     font-size: 1.24rem;
@@ -1782,6 +1842,22 @@ body.ta-page {
     margin-top: 16px;
 }
 
+.ta-card-footnote {
+    margin-top: 14px;
+    color: #475569;
+    line-height: 1.65;
+}
+
+.mo-disabled-link {
+    background: #cbd5e1;
+    color: #475569;
+    cursor: default;
+}
+
+.mo-disabled-link:hover {
+    background: #cbd5e1;
+}
+
 .ta-dashboard-pane {
     display: grid;
     gap: 14px;
@@ -1806,6 +1882,62 @@ body.ta-page {
 .ta-quick-links {
     display: grid;
     gap: 10px;
+}
+
+.ta-side-stat-list {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.ta-side-stat-item {
+    padding: 10px 12px;
+    border-radius: 16px;
+    border: 1px solid #e6eef8;
+    background: #f8fbff;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.ta-side-stat-item strong {
+    color: #0f172a;
+}
+
+.ta-profile-hero {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.ta-profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 999px;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f2e8c, #2ab8ff);
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.ta-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ta-profile-hero-copy {
+    display: grid;
+    gap: 10px;
+}
+
+.ta-profile-hero-copy h2 {
+    margin: 0;
 }
 
 .ta-mini-list {
@@ -2056,6 +2188,11 @@ body.ta-page {
 
     .ta-filter-topbar {
         display: grid;
+    }
+
+    .ta-mode-switch {
+        min-width: 0;
+        width: 100%;
     }
 
     .ta-brand-logo {

@@ -108,6 +108,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/account</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
     </filter-mapping>
 
@@ -119,6 +124,11 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/applications</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/mo/ta-profile</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
@@ -246,6 +256,11 @@
         <url-pattern>/ta/account</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>AccountCenterServlet</servlet-name>
+        <url-pattern>/mo/account</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>PostJobServlet</servlet-name>
         <servlet-class>com.group19.servlet.PostJobServlet</servlet-class>
@@ -274,6 +289,16 @@
     <servlet-mapping>
         <servlet-name>ManageApplicationsServlet</servlet-name>
         <url-pattern>/mo/applications</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MoTaProfileServlet</servlet-name>
+        <servlet-class>com.group19.servlet.MoTaProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MoTaProfileServlet</servlet-name>
+        <url-pattern>/mo/ta-profile</url-pattern>
     </servlet-mapping>
 
     <servlet>

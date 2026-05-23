@@ -52,4 +52,43 @@ public class JobDao {
             return false;
         }
     }
+
+    public boolean update(Job target) {
+        if (target == null || target.getJobId() == null || target.getJobId().isBlank()) {
+            return false;
+        }
+        List<Job> jobs = findAll();
+        for (int i = 0; i < jobs.size(); i++) {
+            Job current = jobs.get(i);
+            if (current != null && target.getJobId().equalsIgnoreCase(current.getJobId())) {
+                jobs.set(i, target);
+                try {
+                    JsonFileUtil.writeList(jobFilePath, jobs);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean delete(String jobId) {
+        if (jobId == null || jobId.isBlank()) {
+            return false;
+        }
+        List<Job> jobs = findAll();
+        boolean removed = jobs.removeIf(job -> job != null && jobId.equalsIgnoreCase(job.getJobId()));
+        if (!removed) {
+            return false;
+        }
+        try {
+            JsonFileUtil.writeList(jobFilePath, jobs);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

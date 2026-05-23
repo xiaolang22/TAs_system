@@ -14,7 +14,7 @@
             <h1>个人中心</h1>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}${homePath}">返回首页</a>
         </div>
     </header>
 
@@ -23,7 +23,7 @@
 
     <section class="card account-center-card">
         <div class="account-center-avatar-block">
-            <form method="post" action="${pageContext.request.contextPath}/ta/account" enctype="multipart/form-data" class="account-avatar-form">
+            <form method="post" action="${pageContext.request.contextPath}${accountPath}" enctype="multipart/form-data" class="account-avatar-form">
                 <input type="hidden" name="action" value="avatar">
                 <div class="account-avatar-shell">
                     <div class="account-avatar-large ${empty avatarPreviewUrl ? 'account-avatar-fallback' : ''}">
@@ -34,11 +34,11 @@
                     <input id="avatarFile" name="avatarFile" type="file" accept=".png,.jpg,.jpeg,.gif,.webp" class="sr-only" onchange="if (this.files && this.files.length) { this.form.submit(); }">
                 </div>
             </form>
-            <div class="hint">当前身份：TA</div>
+            <div class="hint">当前身份：${roleLabel}</div>
         </div>
 
         <div class="account-center-forms">
-            <form method="post" action="${pageContext.request.contextPath}/ta/account" class="profile-form account-section-form">
+            <form method="post" action="${pageContext.request.contextPath}${accountPath}" class="profile-form account-section-form">
                 <input type="hidden" name="action" value="profile">
                 <h2>个人信息</h2>
 
@@ -54,7 +54,7 @@
                 <button type="submit">修改个人信息</button>
             </form>
 
-            <form method="post" action="${pageContext.request.contextPath}/ta/account" class="profile-form account-section-form">
+            <form method="post" action="${pageContext.request.contextPath}${accountPath}" class="profile-form account-section-form">
                 <input type="hidden" name="action" value="password">
                 <h2>修改密码</h2>
 

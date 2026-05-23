@@ -22,6 +22,25 @@ public class UserAccountDao {
     private static List<UserAccount> buildDefaultAccounts() {
         List<UserAccount> accounts = new ArrayList<>();
         accounts.add(new UserAccount("ta001", "ta123456", "TA", "TA Test User", "231221618"));
+        accounts.add(new UserAccount("ta099", "ta123456", "TA", "US09 tester1", "231221619"));
+        accounts.add(new UserAccount("ta100", "ta123456", "TA", "US09 tester2", "231221620"));
+        String[] taNames = {
+                "Liang Chen", "Yutong Zhao", "Mia Sun", "Haoran Wu", "Iris Gao", "Zexin Hu", "Cindy Wang",
+                "Leo Qian", "Joy Xu", "Victor He", "Fiona Lin", "Owen Yu", "Nina Deng", "Kevin Luo",
+                "Alice Zhou", "Martin Peng", "Grace Shen", "Ethan Xie", "Sophie Tang", "Daniel Ma",
+                "Clara Jiang", "Ryan Cai", "Selina Yao", "Jason Guo", "Amber Fan", "Felix Dai",
+                "Stella Mo", "Aaron Hou", "Vivian Nie", "Oscar Ren", "Bella Kong", "Ian Song",
+                "Chloe Lu", "Mason Jin", "Tina Bai", "Eric Su", "Helen Zou", "Noah Fang",
+                "Doris Yan", "Simon Qu", "Elsa Tao", "Gavin Liao", "Maggie Pei", "Harvey Zhu",
+                "Janice Ke", "Tristan Han", "Wendy Shi", "Colin Fu", "Queenie Ruan", "Shawn Lei",
+                "Theresa Du", "Bruce Wen", "Olivia Ge", "Neil Pan", "Yvonne Cheng", "Aiden Yuan",
+                "Rita Meng"
+        };
+        for (int i = 0; i < taNames.length; i++) {
+            String username = "ta" + String.format("%03d", i + 2);
+            String userId = String.valueOf(231221621 + i);
+            accounts.add(new UserAccount(username, "ta123456", "TA", taNames[i], userId));
+        }
         accounts.add(new UserAccount("mo001", "mo123456", "MO", "MO 01", "MO1001"));
         for (int i = 2; i <= 20; i++) {
             String index = String.format("%03d", i);

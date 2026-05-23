@@ -4,12 +4,17 @@ import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
+import com.group19.dao.TADao;
+import com.group19.dao.UserAccountDao;
+import com.group19.dto.MoTaCandidateCard;
 import com.group19.dto.MoNotificationView;
+import com.group19.dto.ServiceResult;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
 import com.group19.service.DeadlineReminderService;
 import com.group19.service.JobService;
 import com.group19.service.MoNewApplicationNotificationService;
+import com.group19.service.MoTaDirectoryService;
 import com.group19.service.SavedJobService;
 import com.group19.service.TaStatusNotificationService;
 import com.group19.util.DataPathResolver;
@@ -20,8 +25,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +38,7 @@ public class HomeServlet extends HttpServlet {
     private TaStatusNotificationService taStatusNotificationService;
     private MoNewApplicationNotificationService moNewApplicationNotificationService;
     private DeadlineReminderService deadlineReminderService;
+    private MoTaDirectoryService moTaDirectoryService;
 
     @Override
     public void init() {
@@ -43,6 +51,10 @@ public class HomeServlet extends HttpServlet {
 
         Path applicationPath = DataPathResolver.resolve(
                 getServletContext(), "applicationDataFile", "/data/applications.json", "applications.json");
+        Path taPath = DataPathResolver.resolve(
+                getServletContext(), "taDataFile", "/data/tas.json", "tas.json");
+        Path userPath = DataPathResolver.resolve(
+                getServletContext(), "userDataFile", "/data/users.json", "users.json");
 
         JobDao jobDao = new JobDao(jobPath);
         this.jobService = new JobService(jobDao);
@@ -55,6 +67,7 @@ public class HomeServlet extends HttpServlet {
         this.taStatusNotificationService = new TaStatusNotificationService(notificationDao, jobDao);
         this.moNewApplicationNotificationService =
                 new MoNewApplicationNotificationService(notificationDao, jobDao);
+        this.moTaDirectoryService = new MoTaDirectoryService(new TADao(taPath), new UserAccountDao(userPath));
     }
 
     @Override
@@ -122,6 +135,7 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("moNotificationPreviewCount", moNotifications.size());
             req.setAttribute("moOwnedJobCount", jobService.findJobsOwnedBy(moUserId).size());
             req.setAttribute("moAllJobCount", jobService.findAllJobs().size());
+            prepareMoCandidates(req);
             req.getRequestDispatcher("/WEB-INF/jsp/mo_home.jsp").forward(req, resp);
             return;
         }
@@ -161,6 +175,86 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("hiddenPoolCount", hiddenJobs.size());
         req.setAttribute("viewHiddenJobsUrl", buildViewHiddenJobsUrl(req, keyword, schedule, skills));
         req.setAttribute("taUserId", taStudentId);
+    }
+
+    private void prepareMoCandidates(HttpServletRequest req) {
+        String filterMode = normalizeMoFilterMode(req.getParameter("mode"));
+        String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
+        String programme = trimToNull(req.getParameter("programme"));
+        String availability = trimToNull(req.getParameter("availability"));
+        String requiredSkills = trimToNull(req.getParameter("requiredSkills"));
+
+        ServiceResult<List<MoTaCandidateCard>> allResult = moTaDirectoryService.loadAllCandidates();
+        List<MoTaCandidateCard> allCandidates = allResult.isSuccess() ? allResult.getData() : new ArrayList<>();
+        attachMoCandidateUrls(req, allCandidates);
+
+        List<MoTaCandidateCard> visibleCandidates = allCandidates;
+        boolean showMatchDetails = false;
+
+        if (!allResult.isSuccess()) {
+            req.setAttribute("moCandidateError", allResult.getMessage());
+        } else if ("match".equals(filterMode)) {
+            if (requiredSkills == null) {
+                req.setAttribute("moCandidateInfo", "输入岗位所需技能后，可按匹配度查看 TA。");
+            } else {
+                ServiceResult<List<MoTaCandidateCard>> matchResult =
+                        moTaDirectoryService.matchCandidates(allCandidates, requiredSkills);
+                if (matchResult.isSuccess()) {
+                    visibleCandidates = matchResult.getData();
+                    attachMoCandidateUrls(req, visibleCandidates);
+                    showMatchDetails = true;
+                } else {
+                    visibleCandidates = new ArrayList<>();
+                    req.setAttribute("moCandidateError", matchResult.getMessage());
+                }
+            }
+        } else {
+            visibleCandidates = moTaDirectoryService.filterCandidates(allCandidates, keyword, programme, availability);
+        }
+
+        req.setAttribute("moCandidates", visibleCandidates);
+        req.setAttribute("moFilterMode", filterMode);
+        req.setAttribute("moFilterKeyword", nullToEmpty(keyword));
+        req.setAttribute("moFilterProgramme", nullToEmpty(programme));
+        req.setAttribute("moFilterAvailability", nullToEmpty(availability));
+        req.setAttribute("moRequiredSkills", nullToEmpty(requiredSkills));
+        req.setAttribute("moCandidateTotalCount", allCandidates.size());
+        req.setAttribute("moCandidateFilteredCount", visibleCandidates.size());
+        req.setAttribute("moShowMatchDetails", showMatchDetails);
+    }
+
+    private static void attachMoCandidateUrls(HttpServletRequest req, List<MoTaCandidateCard> candidates) {
+        if (candidates == null) {
+            return;
+        }
+        String contextPath = req.getContextPath();
+        for (MoTaCandidateCard candidate : candidates) {
+            if (candidate == null) {
+                continue;
+            }
+            String avatarPath = candidate.getAvatarPath();
+            candidate.setAvatarUrl(avatarPath == null || avatarPath.isBlank() ? "" : contextPath + avatarPath);
+            String cvFilePath = candidate.getCvFilePath();
+            boolean resumeAvailable = hasUploadedResume(req, cvFilePath);
+            candidate.setResumeAvailable(resumeAvailable);
+            candidate.setCvUrl(resumeAvailable ? contextPath + cvFilePath : "");
+        }
+    }
+
+    private static boolean hasUploadedResume(HttpServletRequest req, String cvFilePath) {
+        if (cvFilePath == null || cvFilePath.isBlank()) {
+            return false;
+        }
+        String normalized = cvFilePath.trim().replace("/", java.io.File.separator);
+        if (normalized.startsWith(java.io.File.separator)) {
+            normalized = normalized.substring(1);
+        }
+        String webRelative = "/" + normalized.replace(java.io.File.separatorChar, '/');
+        String realPath = req.getServletContext().getRealPath(webRelative);
+        if (realPath != null && !realPath.isBlank()) {
+            return Files.exists(Paths.get(realPath));
+        }
+        return Files.exists(Paths.get(System.getProperty("user.dir"), "web", normalized));
     }
 
     private static void setSavedJobFeedback(HttpServletRequest req) {
@@ -244,6 +338,10 @@ public class HomeServlet extends HttpServlet {
             return preferred;
         }
         return fallback;
+    }
+
+    private static String normalizeMoFilterMode(String mode) {
+        return "match".equalsIgnoreCase(mode) ? "match" : "keyword";
     }
 
     private static String trimToNull(String value) {

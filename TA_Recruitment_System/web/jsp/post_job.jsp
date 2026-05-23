@@ -8,31 +8,34 @@
 
     String errorMsg = (String) request.getAttribute("errorMsg");
     String success = request.getParameter("success");
+    boolean editing = Boolean.TRUE.equals(request.getAttribute("editing")) || job.getJobId() != null;
+    boolean edited = "true".equals(request.getParameter("edited"));
 %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>发布岗位 - TA 招聘系统</title>
+    <title><%= editing ? "修改岗位" : "发布岗位" %> - TA 招聘系统</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <main class="container ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1>发布岗位</h1>
-            <p class="hint">创建后，该岗位会自动归属到当前登录的 MO 账号。</p>
+            <h1><%= editing ? "修改岗位" : "发布岗位" %></h1>
         </div>
         <div class="header-actions">
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">返回首页</a>
         </div>
     </header>
 
-    <p class="alert success <%= "true".equals(success) ? "" : "hidden" %>">岗位发布成功。</p>
+    <p class="alert success <%= "true".equals(success) ? "" : "hidden" %>"><%= edited ? "岗位信息已更新。" : "岗位发布成功。" %></p>
     <p class="alert error <%= errorMsg == null || errorMsg.trim().isEmpty() ? "hidden" : "" %>"><%= errorMsg == null ? "" : errorMsg %></p>
 
     <form method="post" action="<%= request.getContextPath() %>/mo/post-job" class="profile-form">
+        <input type="hidden" name="jobId" value="<%= job.getJobId() == null ? "" : job.getJobId() %>">
+
         <label for="title">岗位名称</label>
         <input
                 type="text"
@@ -78,7 +81,7 @@
                 name="deadline"
                 value="<%= job.getDeadline() == null ? "" : job.getDeadline() %>">
 
-        <button type="submit">发布岗位</button>
+        <button type="submit"><%= editing ? "保存修改" : "发布岗位" %></button>
     </form>
 </main>
 </body>

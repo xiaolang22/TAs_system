@@ -21,6 +21,405 @@
         "userId":  "231221620"
     },
     {
+        "username":  "ta002",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Liang Chen",
+        "userId":  "231221621"
+    },
+    {
+        "username":  "ta003",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Yutong Zhao",
+        "userId":  "231221622"
+    },
+    {
+        "username":  "ta004",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Mia Sun",
+        "userId":  "231221623"
+    },
+    {
+        "username":  "ta005",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Haoran Wu",
+        "userId":  "231221624"
+    },
+    {
+        "username":  "ta006",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Iris Gao",
+        "userId":  "231221625"
+    },
+    {
+        "username":  "ta007",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Zexin Hu",
+        "userId":  "231221626"
+    },
+    {
+        "username":  "ta008",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Cindy Wang",
+        "userId":  "231221627"
+    },
+    {
+        "username":  "ta009",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Leo Qian",
+        "userId":  "231221628"
+    },
+    {
+        "username":  "ta010",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Joy Xu",
+        "userId":  "231221629"
+    },
+    {
+        "username":  "ta011",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Victor He",
+        "userId":  "231221630"
+    },
+    {
+        "username":  "ta012",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Fiona Lin",
+        "userId":  "231221631"
+    },
+    {
+        "username":  "ta013",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Owen Yu",
+        "userId":  "231221632"
+    },
+    {
+        "username":  "ta014",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Nina Deng",
+        "userId":  "231221633"
+    },
+    {
+        "username":  "ta015",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Kevin Luo",
+        "userId":  "231221634"
+    },
+    {
+        "username":  "ta016",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Alice Zhou",
+        "userId":  "231221635"
+    },
+    {
+        "username":  "ta017",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Martin Peng",
+        "userId":  "231221636"
+    },
+    {
+        "username":  "ta018",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Grace Shen",
+        "userId":  "231221637"
+    },
+    {
+        "username":  "ta019",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Ethan Xie",
+        "userId":  "231221638"
+    },
+    {
+        "username":  "ta020",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Sophie Tang",
+        "userId":  "231221639"
+    },
+    {
+        "username":  "ta021",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Daniel Ma",
+        "userId":  "231221640"
+    },
+    {
+        "username":  "ta022",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Clara Jiang",
+        "userId":  "231221641"
+    },
+    {
+        "username":  "ta023",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Ryan Cai",
+        "userId":  "231221642"
+    },
+    {
+        "username":  "ta024",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Selina Yao",
+        "userId":  "231221643"
+    },
+    {
+        "username":  "ta025",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Jason Guo",
+        "userId":  "231221644"
+    },
+    {
+        "username":  "ta026",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Amber Fan",
+        "userId":  "231221645"
+    },
+    {
+        "username":  "ta027",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Felix Dai",
+        "userId":  "231221646"
+    },
+    {
+        "username":  "ta028",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Stella Mo",
+        "userId":  "231221647"
+    },
+    {
+        "username":  "ta029",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Aaron Hou",
+        "userId":  "231221648"
+    },
+    {
+        "username":  "ta030",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Vivian Nie",
+        "userId":  "231221649"
+    },
+    {
+        "username":  "ta031",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Oscar Ren",
+        "userId":  "231221650"
+    },
+    {
+        "username":  "ta032",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Bella Kong",
+        "userId":  "231221651"
+    },
+    {
+        "username":  "ta033",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Ian Song",
+        "userId":  "231221652"
+    },
+    {
+        "username":  "ta034",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Chloe Lu",
+        "userId":  "231221653"
+    },
+    {
+        "username":  "ta035",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Mason Jin",
+        "userId":  "231221654"
+    },
+    {
+        "username":  "ta036",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Tina Bai",
+        "userId":  "231221655"
+    },
+    {
+        "username":  "ta037",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Eric Su",
+        "userId":  "231221656"
+    },
+    {
+        "username":  "ta038",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Helen Zou",
+        "userId":  "231221657"
+    },
+    {
+        "username":  "ta039",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Noah Fang",
+        "userId":  "231221658"
+    },
+    {
+        "username":  "ta040",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Doris Yan",
+        "userId":  "231221659"
+    },
+    {
+        "username":  "ta041",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Simon Qu",
+        "userId":  "231221660"
+    },
+    {
+        "username":  "ta042",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Elsa Tao",
+        "userId":  "231221661"
+    },
+    {
+        "username":  "ta043",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Gavin Liao",
+        "userId":  "231221662"
+    },
+    {
+        "username":  "ta044",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Maggie Pei",
+        "userId":  "231221663"
+    },
+    {
+        "username":  "ta045",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Harvey Zhu",
+        "userId":  "231221664"
+    },
+    {
+        "username":  "ta046",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Janice Ke",
+        "userId":  "231221665"
+    },
+    {
+        "username":  "ta047",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Tristan Han",
+        "userId":  "231221666"
+    },
+    {
+        "username":  "ta048",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Wendy Shi",
+        "userId":  "231221667"
+    },
+    {
+        "username":  "ta049",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Colin Fu",
+        "userId":  "231221668"
+    },
+    {
+        "username":  "ta050",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Queenie Ruan",
+        "userId":  "231221669"
+    },
+    {
+        "username":  "ta051",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Shawn Lei",
+        "userId":  "231221670"
+    },
+    {
+        "username":  "ta052",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Theresa Du",
+        "userId":  "231221671"
+    },
+    {
+        "username":  "ta053",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Bruce Wen",
+        "userId":  "231221672"
+    },
+    {
+        "username":  "ta054",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Olivia Ge",
+        "userId":  "231221673"
+    },
+    {
+        "username":  "ta055",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Neil Pan",
+        "userId":  "231221674"
+    },
+    {
+        "username":  "ta056",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Yvonne Cheng",
+        "userId":  "231221675"
+    },
+    {
+        "username":  "ta057",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Aiden Yuan",
+        "userId":  "231221676"
+    },
+    {
+        "username":  "ta058",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "Rita Meng",
+        "userId":  "231221677"
+    },
+    {
         "username":  "admin001",
         "password":  "admin123456",
         "role":  "ADMIN",
