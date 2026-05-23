@@ -11,6 +11,10 @@
     List<DeadlineReminderView> deadlineReminders = (List<DeadlineReminderView>) request.getAttribute("deadlineReminders");
     Integer unreadCountAttr = (Integer) request.getAttribute("moUnreadNotificationCount");
     int unreadCount = unreadCountAttr == null ? 0 : unreadCountAttr;
+    Integer ownedJobCountAttr = (Integer) request.getAttribute("moOwnedJobCount");
+    int ownedJobCount = ownedJobCountAttr == null ? 0 : ownedJobCountAttr;
+    Integer allJobCountAttr = (Integer) request.getAttribute("moAllJobCount");
+    int allJobCount = allJobCountAttr == null ? 0 : allJobCountAttr;
     String displayName = loginUser == null || loginUser.getDisplayName() == null ? "MO" : loginUser.getDisplayName();
 %>
 <!DOCTYPE html>
@@ -26,34 +30,36 @@
     <header class="page-header">
         <div>
             <h1>MO 首页</h1>
-            <p class="hint">欢迎，<%= displayName %>。从这里进入 MO 相关功能页面。</p>
+            <p class="hint">欢迎，<%= displayName %>。这里展示你负责岗位的待处理事项与常用入口。</p>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/logout">退出登录</a>
+            <form method="post" action="${pageContext.request.contextPath}/logout">
+                <button type="submit" class="secondary-btn">退出登录</button>
+            </form>
         </div>
     </header>
 
     <section class="review-summary-grid role-home-summary">
         <div class="summary-card">
+            <span class="label">我负责的岗位</span>
+            <span class="value"><%= ownedJobCount %></span>
+        </div>
+        <div class="summary-card">
             <span class="label">未读通知</span>
             <span class="value"><%= unreadCount %></span>
         </div>
         <div class="summary-card">
-            <span class="label">通知预览</span>
-            <span class="value"><%= moNotifications == null ? 0 : moNotifications.size() %></span>
-        </div>
-        <div class="summary-card">
-            <span class="label">截止提醒</span>
-            <span class="value"><%= deadlineReminders == null ? 0 : deadlineReminders.size() %></span>
+            <span class="label">可查看岗位总数</span>
+            <span class="value"><%= allJobCount %></span>
         </div>
     </section>
 
     <section class="card role-home-card">
         <h2 class="section-title">功能入口</h2>
         <div class="role-home-actions">
-            <a class="link-btn" href="${pageContext.request.contextPath}/mo/post-job">发布岗位</a>
-            <a class="link-btn" href="${pageContext.request.contextPath}/mo/jobs">岗位列表</a>
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">候选人评审</a>
+            <a class="link-btn" href="${pageContext.request.contextPath}/mo/post-job">发布新岗位</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs">岗位列表</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">候选人技能匹配</a>
         </div>
     </section>
 
@@ -61,7 +67,7 @@
         <section class="card role-home-card">
             <h2 class="section-title">新申请通知</h2>
             <% if (moNotifications == null || moNotifications.isEmpty()) { %>
-            <p class="hint">当前没有新的申请通知。</p>
+            <p class="hint">当前没有与你负责岗位相关的新申请通知。</p>
             <% } else { %>
             <ul class="ta-mini-list">
                 <% for (MoNotificationView item : moNotifications) { %>
@@ -80,7 +86,7 @@
         <section class="card role-home-card">
             <h2 class="section-title">岗位截止提醒</h2>
             <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
-            <p class="hint">当前没有新的截止提醒。</p>
+            <p class="hint">当前没有与你负责岗位相关的截止提醒。</p>
             <% } else { %>
             <ul class="ta-mini-list">
                 <% for (DeadlineReminderView reminder : deadlineReminders) { %>
@@ -88,7 +94,7 @@
                     <p><%= reminder.getJobTitle() %></p>
                     <span><%= reminder.getDeadlineDisplay() %> · <%= reminder.getDaysLabel() %></span>
                     <div class="role-home-inline-link">
-                        <a href="<%= reminder.getActionUrl() %>">查看岗位</a>
+                        <a href="<%= reminder.getActionUrl() %>">查看岗位申请</a>
                     </div>
                 </li>
                 <% } %>

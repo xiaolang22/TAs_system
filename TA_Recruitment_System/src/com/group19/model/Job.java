@@ -11,6 +11,7 @@ public class Job {
     private String deadline;
     private String status;
     private String createdAt;
+    private String ownerMoUserId;
 
     public Job() {}
 
@@ -43,4 +44,7 @@ public class Job {
 
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+
+    public String getOwnerMoUserId() { return ownerMoUserId; }
+    public void setOwnerMoUserId(String ownerMoUserId) { this.ownerMoUserId = ownerMoUserId; }
 }

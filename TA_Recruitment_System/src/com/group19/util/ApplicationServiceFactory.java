@@ -4,7 +4,6 @@ import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.TimelineDao;
-import com.group19.dao.UserAccountDao;
 import com.group19.service.ApplicationService;
 import com.group19.service.ApplicationTimelineRecorder;
 import com.group19.service.MoNewApplicationNotificationService;
@@ -26,8 +25,6 @@ public final class ApplicationServiceFactory {
                 context, "jobDataFile", "/data/jobs.json", "jobs.json");
         Path notificationFilePath = DataPathResolver.resolve(
                 context, "notificationDataFile", "/data/notifications.json", "notifications.json");
-        Path userFilePath = DataPathResolver.resolve(
-                context, "userDataFile", "/data/users.json", "users.json");
 
         ApplicationDao applicationDao = new ApplicationDao(appFilePath);
         ApplicationTimelineRecorder timelineRecorder =
@@ -38,7 +35,7 @@ public final class ApplicationServiceFactory {
         TaStatusNotificationService taStatusNotificationService =
                 new TaStatusNotificationService(notificationDao, jobDao);
         MoNewApplicationNotificationService moNewApplicationNotificationService =
-                new MoNewApplicationNotificationService(notificationDao, jobDao, new UserAccountDao(userFilePath));
+                new MoNewApplicationNotificationService(notificationDao, jobDao);
 
         return new ApplicationService(
                 applicationDao,

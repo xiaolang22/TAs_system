@@ -99,21 +99,21 @@ public class ApplicationService {
 
     public ServiceResult<Application> updateApplicationStatus(String applicationId, String newStatus, String decisionNote) {
         if (applicationId == null || applicationId.isBlank()) {
-            return ServiceResult.failure("Application ID is required");
+            return ServiceResult.failure("缺少申请编号。");
         }
 
         if (newStatus == null || newStatus.isBlank()) {
-            return ServiceResult.failure("Status is required");
+            return ServiceResult.failure("请选择申请状态。");
         }
 
         String normalizedStatus = normalizeStatus(newStatus);
         if (!isValidStatus(normalizedStatus)) {
-            return ServiceResult.failure("Invalid status");
+            return ServiceResult.failure("申请状态无效。");
         }
 
         Application application = applicationDao.findByApplicationId(applicationId);
         if (application == null) {
-            return ServiceResult.failure("Application not found");
+            return ServiceResult.failure("未找到对应申请。");
         }
 
         String previousStatus = normalizeStatus(application.getStatus());
@@ -130,7 +130,7 @@ public class ApplicationService {
 
         boolean success = applicationDao.update(application);
         if (!success) {
-            return ServiceResult.failure("Failed to update application");
+            return ServiceResult.failure("更新申请状态失败。");
         }
 
         if (!normalizedStatus.equals(previousStatus)) {
@@ -140,7 +140,7 @@ public class ApplicationService {
             }
         }
 
-        return ServiceResult.success(application, "Application status updated successfully");
+        return ServiceResult.success(application, "申请状态更新成功。");
     }
 
     public static boolean isValidStatus(String status) {
@@ -185,10 +185,10 @@ public class ApplicationService {
     }
 
     private static String buildInvalidTransitionMessage(String previousStatus, String nextStatus) {
-        return "Cannot change application status from "
+        return "当前申请状态不允许从 "
                 + previousStatus
-                + " to "
+                + " 变更为 "
                 + nextStatus
-                + ". Allowed workflow: SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED.";
+                + "。允许的流程为：SUBMITTED -> IN_REVIEW -> SHORTLISTED -> ACCEPTED/REJECTED。";
     }
 }

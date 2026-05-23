@@ -27,6 +27,10 @@ public class JobService {
         return jobDao.findById(jobId);
     }
 
+    public List<Job> findAllJobs() {
+        return new ArrayList<>(jobDao.findAll());
+    }
+
     /**
      * Jobs that are open for listing: status OPEN (or missing) and deadline not passed.
      */
@@ -111,6 +115,31 @@ public class JobService {
                 .collect(Collectors.toList());
     }
 
+    public List<Job> filterJobsByOwner(List<Job> jobs, String ownerMoUserId) {
+        if (jobs == null || jobs.isEmpty()) {
+            return new ArrayList<>();
+        }
+        if (ownerMoUserId == null || ownerMoUserId.isBlank()) {
+            return new ArrayList<>();
+        }
+        String normalizedOwner = ownerMoUserId.trim();
+        return jobs.stream()
+                .filter(job -> isOwnedBy(job, normalizedOwner))
+                .collect(Collectors.toList());
+    }
+
+    public List<Job> findJobsOwnedBy(String ownerMoUserId) {
+        return filterJobsByOwner(jobDao.findAll(), ownerMoUserId);
+    }
+
+    public boolean isOwnedBy(Job job, String ownerMoUserId) {
+        if (job == null || ownerMoUserId == null || ownerMoUserId.isBlank()) {
+            return false;
+        }
+        String jobOwner = job.getOwnerMoUserId();
+        return jobOwner != null && ownerMoUserId.trim().equalsIgnoreCase(jobOwner.trim());
+    }
+
     private static boolean matchesKeyword(Job job, String keyword) {
         if (keyword == null || keyword.isBlank()) {
             return true;
@@ -167,22 +196,25 @@ public class JobService {
 
     public ServiceResult<Job> createJob(Job job) {
         if (job.getTitle() == null || job.getTitle().trim().isEmpty()) {
-            return ServiceResult.failure("Title is required");
+            return ServiceResult.failure("岗位名称不能为空。");
         }
         if (job.getDescription() == null || job.getDescription().trim().isEmpty()) {
-            return ServiceResult.failure("Description is required");
+            return ServiceResult.failure("岗位描述不能为空。");
         }
         if (job.getRequirements() == null || job.getRequirements().trim().isEmpty()) {
-            return ServiceResult.failure("Requirements are required");
+            return ServiceResult.failure("技能要求不能为空。");
         }
         if (job.getHours() == null || job.getHours().trim().isEmpty()) {
-            return ServiceResult.failure("Hours are required");
+            return ServiceResult.failure("工作时长不能为空。");
         }
         if (job.getSchedule() == null || job.getSchedule().trim().isEmpty()) {
-            return ServiceResult.failure("Schedule is required");
+            return ServiceResult.failure("时间安排不能为空。");
         }
         if (job.getDeadline() == null || job.getDeadline().trim().isEmpty()) {
-            return ServiceResult.failure("Deadline is required");
+            return ServiceResult.failure("截止时间不能为空。");
+        }
+        if (job.getOwnerMoUserId() == null || job.getOwnerMoUserId().trim().isEmpty()) {
+            return ServiceResult.failure("岗位负责人不能为空。");
         }
 
         job.setJobId(UUID.randomUUID().toString());
@@ -191,9 +223,9 @@ public class JobService {
 
         boolean success = jobDao.save(job);
         if (!success) {
-            return ServiceResult.failure("Failed to save job");
+            return ServiceResult.failure("保存岗位失败。");
         }
 
-        return ServiceResult.success(job, "Job posted successfully");
+        return ServiceResult.success(job, "岗位发布成功。");
     }
 }

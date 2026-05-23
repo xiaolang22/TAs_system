@@ -3,6 +3,7 @@ package com.group19.servlet;
 import com.group19.dao.JobDao;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
+import com.group19.service.JobService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class MoJobListServlet extends HttpServlet {
-    private JobDao jobDao;
+    private JobService jobService;
 
     @Override
     public void init() {
@@ -26,7 +27,7 @@ public class MoJobListServlet extends HttpServlet {
                 : configuredPath;
 
         Path jobFilePath = resolveDataPath(relativePath);
-        this.jobDao = new JobDao(jobFilePath);
+        this.jobService = new JobService(new JobDao(jobFilePath));
     }
 
     @Override
@@ -48,9 +49,16 @@ public class MoJobListServlet extends HttpServlet {
             return;
         }
 
-        List<Job> jobs = jobDao.findAll();
+        boolean showAll = isTruthy(req.getParameter("showAll"));
+        List<Job> allJobs = jobService.findAllJobs();
+        List<Job> ownedJobs = jobService.findJobsOwnedBy(loginUser.getUserId());
+        List<Job> jobs = showAll ? allJobs : ownedJobs;
+
         req.setAttribute("loginUser", loginUser);
         req.setAttribute("jobs", jobs);
+        req.setAttribute("showAll", showAll);
+        req.setAttribute("ownedJobCount", ownedJobs.size());
+        req.setAttribute("allJobCount", allJobs.size());
         req.getRequestDispatcher("/WEB-INF/jsp/mo_job_list.jsp").forward(req, resp);
     }
 
@@ -60,5 +68,13 @@ public class MoJobListServlet extends HttpServlet {
             return Paths.get(realPath);
         }
         return Paths.get(System.getProperty("user.dir"), "data", "jobs.json");
+    }
+
+    private static boolean isTruthy(String value) {
+        if (value == null) {
+            return false;
+        }
+        String normalized = value.trim();
+        return "1".equals(normalized) || "true".equalsIgnoreCase(normalized) || "yes".equalsIgnoreCase(normalized);
     }
 }

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -39,6 +40,10 @@ public class PostJobServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resp.setContentType("text/html; charset=UTF-8");
+
         HttpSession session = req.getSession(false);
         LoginUser loginUser = session == null ? null : (LoginUser) session.getAttribute("loginUser");
 
@@ -58,6 +63,10 @@ public class PostJobServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resp.setContentType("text/html; charset=UTF-8");
+
         HttpSession session = req.getSession(false);
         LoginUser loginUser = session == null ? null : (LoginUser) session.getAttribute("loginUser");
 
@@ -78,16 +87,18 @@ public class PostJobServlet extends HttpServlet {
         job.setHours(req.getParameter("hours"));
         job.setSchedule(req.getParameter("schedule"));
         job.setDeadline(req.getParameter("deadline"));
+        job.setOwnerMoUserId(loginUser.getUserId());
 
         ServiceResult<Job> result = jobService.createJob(job);
 
         if (result.isSuccess()) {
             resp.sendRedirect(req.getContextPath() + "/mo/post-job?success=true");
-        } else {
-            req.setAttribute("errorMsg", result.getMessage());
-            req.setAttribute("job", job);
-            req.setAttribute("loginUser", loginUser);
-            req.getRequestDispatcher("/jsp/post_job.jsp").forward(req, resp);
+            return;
         }
+
+        req.setAttribute("errorMsg", result.getMessage());
+        req.setAttribute("job", job);
+        req.setAttribute("loginUser", loginUser);
+        req.getRequestDispatcher("/jsp/post_job.jsp").forward(req, resp);
     }
 }

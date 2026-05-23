@@ -4,7 +4,6 @@ import com.group19.dao.ApplicationDao;
 import com.group19.dao.JobDao;
 import com.group19.dao.NotificationDao;
 import com.group19.dao.SavedJobDao;
-import com.group19.dao.UserAccountDao;
 import com.group19.dto.MoNotificationView;
 import com.group19.model.Job;
 import com.group19.model.LoginUser;
@@ -53,11 +52,9 @@ public class HomeServlet extends HttpServlet {
                 new ApplicationDao(applicationPath),
                 savedJobService);
         NotificationDao notificationDao = new NotificationDao(notificationPath);
-        Path userPath = DataPathResolver.resolve(
-                getServletContext(), "userDataFile", "/data/users.json", "users.json");
         this.taStatusNotificationService = new TaStatusNotificationService(notificationDao, jobDao);
         this.moNewApplicationNotificationService =
-                new MoNewApplicationNotificationService(notificationDao, jobDao, new UserAccountDao(userPath));
+                new MoNewApplicationNotificationService(notificationDao, jobDao);
     }
 
     @Override
@@ -121,8 +118,10 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("moUnreadNotificationCount",
                     moNewApplicationNotificationService.countUnread(moUserId));
             req.setAttribute("deadlineReminders",
-                    deadlineReminderService.buildRemindersForMo(today, contextPath));
+                    deadlineReminderService.buildRemindersForMo(moUserId, today, contextPath));
             req.setAttribute("moNotificationPreviewCount", moNotifications.size());
+            req.setAttribute("moOwnedJobCount", jobService.findJobsOwnedBy(moUserId).size());
+            req.setAttribute("moAllJobCount", jobService.findAllJobs().size());
             req.getRequestDispatcher("/WEB-INF/jsp/mo_home.jsp").forward(req, resp);
             return;
         }

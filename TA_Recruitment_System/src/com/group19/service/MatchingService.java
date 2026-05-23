@@ -24,7 +24,7 @@ public class MatchingService {
         LinkedHashMap<String, String> requiredSkillsMap = parseSkillMap(requiredSkillsText);
         if (requiredSkillsMap.isEmpty()) {
             return ServiceResult.failure(
-                    "Please enter at least one required skill (split by comma, semicolon, slash, or new line).");
+                    "请至少输入一个岗位所需技能，可用逗号、分号、斜杠或换行分隔。");
         }
 
         try {
@@ -37,13 +37,13 @@ public class MatchingService {
 
             if (reviewList.isEmpty()) {
                 return ServiceResult.failure(
-                        "No TA profiles found. Ask TA users to fill profile skills first.");
+                        "当前没有可评审的 TA 档案，请先让 TA 完善个人档案。");
             }
 
             reviewList.sort((a, b) -> Integer.compare(b.getMatchScore(), a.getMatchScore()));
-            return ServiceResult.success(reviewList, "Match score calculated.");
+            return ServiceResult.success(reviewList, "匹配度计算完成。");
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to load TA profile data.");
+            return ServiceResult.failure("读取 TA 档案失败。");
         }
     }
 
@@ -68,8 +68,8 @@ public class MatchingService {
         int score = (int) Math.round((matched.size() * 100.0) / totalRequired);
 
         String note = missing.isEmpty()
-                ? "Fully matched all required skills."
-                : "Missing skills: " + String.join(", ", missing) + ".";
+                ? "已满足全部岗位要求技能。"
+                : "缺少技能：" + String.join(", ", missing) + "。";
 
         return new CandidateMatchResult(
                 candidateName,

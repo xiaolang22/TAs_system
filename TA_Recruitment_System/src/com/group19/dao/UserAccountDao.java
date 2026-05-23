@@ -6,21 +6,30 @@ import com.group19.util.JsonFileUtil;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserAccountDao {
-    private static final List<UserAccount> DEFAULT_ACCOUNTS = Arrays.asList(
-            new UserAccount("ta001", "ta123456", "TA", "TA Test User", "231221618"),
-            new UserAccount("mo001", "mo123456", "MO", "MO Test User", "MO1001"),
-            new UserAccount("admin001", "admin123456", "ADMIN", "Admin Test User", "ADMIN1001"));
+    private static final List<UserAccount> DEFAULT_ACCOUNTS = buildDefaultAccounts();
     private final Path userFilePath;
     private final Type listType = new TypeToken<List<UserAccount>>() {
     }.getType();
 
     public UserAccountDao(Path userFilePath) {
         this.userFilePath = userFilePath;
+    }
+
+    private static List<UserAccount> buildDefaultAccounts() {
+        List<UserAccount> accounts = new ArrayList<>();
+        accounts.add(new UserAccount("ta001", "ta123456", "TA", "TA Test User", "231221618"));
+        accounts.add(new UserAccount("mo001", "mo123456", "MO", "MO 01", "MO1001"));
+        for (int i = 2; i <= 20; i++) {
+            String index = String.format("%03d", i);
+            String displayIndex = String.format("%02d", i);
+            accounts.add(new UserAccount("mo" + index, "mo123456", "MO", "MO " + displayIndex, "MO10" + String.format("%02d", i)));
+        }
+        accounts.add(new UserAccount("admin001", "admin123456", "ADMIN", "Admin Test User", "ADMIN1001"));
+        return accounts;
     }
 
     public List<UserAccount> findAll() throws IOException {

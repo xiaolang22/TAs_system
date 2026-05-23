@@ -1,37 +1,170 @@
-[
-  {
-    "username": "ta001",
-    "password": "ta123456",
-    "role": "TA",
-    "displayName": "TA Test User",
-    "userId": "231221618"
-  },
-  {
-    "username": "ta099",
-    "password": "ta123456",
-    "role": "TA",
-    "displayName": "US09 tester1",
-    "userId": "231221619"
-  },
-  {
-    "username": "ta100",
-    "password": "ta123456",
-    "role": "TA",
-    "displayName": "US09 tester2",
-    "userId": "231221620"
-  },
-  {
-    "username": "mo001",
-    "password": "mo123456",
-    "role": "MO",
-    "displayName": "MO Test User",
-    "userId": "MO1001"
-  },
-  {
-    "username": "admin001",
-    "password": "admin123456",
-    "role": "ADMIN",
-    "displayName": "Admin Test User",
-    "userId": "ADMIN1001"
-  }
+﻿[
+    {
+        "username":  "ta001",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "TA Test User",
+        "userId":  "231221618"
+    },
+    {
+        "username":  "ta099",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "US09 tester1",
+        "userId":  "231221619"
+    },
+    {
+        "username":  "ta100",
+        "password":  "ta123456",
+        "role":  "TA",
+        "displayName":  "US09 tester2",
+        "userId":  "231221620"
+    },
+    {
+        "username":  "admin001",
+        "password":  "admin123456",
+        "role":  "ADMIN",
+        "displayName":  "Admin Test User",
+        "userId":  "ADMIN1001"
+    },
+    {
+        "username":  "mo001",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 01",
+        "userId":  "MO1001"
+    },
+    {
+        "username":  "mo002",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 02",
+        "userId":  "MO1002"
+    },
+    {
+        "username":  "mo003",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 03",
+        "userId":  "MO1003"
+    },
+    {
+        "username":  "mo004",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 04",
+        "userId":  "MO1004"
+    },
+    {
+        "username":  "mo005",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 05",
+        "userId":  "MO1005"
+    },
+    {
+        "username":  "mo006",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 06",
+        "userId":  "MO1006"
+    },
+    {
+        "username":  "mo007",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 07",
+        "userId":  "MO1007"
+    },
+    {
+        "username":  "mo008",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 08",
+        "userId":  "MO1008"
+    },
+    {
+        "username":  "mo009",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 09",
+        "userId":  "MO1009"
+    },
+    {
+        "username":  "mo010",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 10",
+        "userId":  "MO1010"
+    },
+    {
+        "username":  "mo011",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 11",
+        "userId":  "MO1011"
+    },
+    {
+        "username":  "mo012",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 12",
+        "userId":  "MO1012"
+    },
+    {
+        "username":  "mo013",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 13",
+        "userId":  "MO1013"
+    },
+    {
+        "username":  "mo014",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 14",
+        "userId":  "MO1014"
+    },
+    {
+        "username":  "mo015",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 15",
+        "userId":  "MO1015"
+    },
+    {
+        "username":  "mo016",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 16",
+        "userId":  "MO1016"
+    },
+    {
+        "username":  "mo017",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 17",
+        "userId":  "MO1017"
+    },
+    {
+        "username":  "mo018",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 18",
+        "userId":  "MO1018"
+    },
+    {
+        "username":  "mo019",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 19",
+        "userId":  "MO1019"
+    },
+    {
+        "username":  "mo020",
+        "password":  "mo123456",
+        "role":  "MO",
+        "displayName":  "MO 20",
+        "userId":  "MO1020"
+    }
 ]

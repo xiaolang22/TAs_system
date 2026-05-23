@@ -43,8 +43,12 @@ public class DeadlineReminderService {
         return buildReminderViews(allUpcoming, today, contextPath, true);
     }
 
-    public List<DeadlineReminderView> buildRemindersForMo(LocalDate today, String contextPath) {
-        return buildReminderViews(jobService.findUpcomingDeadlineJobs(today, DEFAULT_WITHIN_DAYS), today, contextPath, false);
+    public List<DeadlineReminderView> buildRemindersForMo(String moUserId, LocalDate today, String contextPath) {
+        List<Job> upcoming = jobService.findUpcomingDeadlineJobs(today, DEFAULT_WITHIN_DAYS);
+        if (moUserId == null || moUserId.isBlank()) {
+            return new ArrayList<>();
+        }
+        return buildReminderViews(jobService.filterJobsByOwner(upcoming, moUserId), today, contextPath, false);
     }
 
     private Set<String> collectTaRelevantJobIds(String taStudentId) {
