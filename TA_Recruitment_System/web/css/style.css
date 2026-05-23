@@ -1528,6 +1528,7 @@ body.ta-page {
 }
 
 .ta-jobs-pane {
+    position: relative;
     display: grid;
     gap: 14px;
 }
@@ -1574,14 +1575,23 @@ body.ta-page {
 }
 
 .ta-filter-card {
-    position: sticky;
-    top: 18px;
-    z-index: 5;
+    position: static;
     padding: 20px 22px;
     border-radius: 26px;
     border: 1px solid #e4eefc;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.ta-jobs-scroll {
+    display: grid;
+    gap: 14px;
+    min-height: 0;
+    max-height: calc(100vh - 246px);
+    padding-right: 6px;
+    padding-bottom: 78px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 .ta-filter-form,
@@ -1633,9 +1643,41 @@ body.ta-page {
 .ta-job-list {
     display: grid;
     gap: 14px;
-    max-height: calc(100vh - 270px);
-    padding-right: 4px;
-    overflow-y: auto;
+    max-height: none;
+    padding-right: 0;
+    overflow: visible;
+}
+
+.ta-scroll-top-btn {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 104px;
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 999px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1397c9, #28b5df 60%, #5ccfe8);
+    box-shadow: 0 18px 32px rgba(19, 151, 201, 0.26);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ta-scroll-top-btn:hover {
+    box-shadow: 0 22px 36px rgba(19, 151, 201, 0.34);
+}
+
+.ta-scroll-top-btn.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .ta-job-card {
@@ -1826,13 +1868,10 @@ body.ta-page {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .ta-jobs-scroll,
     .ta-job-list {
         max-height: none;
         overflow: visible;
-    }
-
-    .ta-filter-card {
-        position: static;
     }
 }
 
@@ -1872,5 +1911,12 @@ body.ta-page {
 
     .ta-user-chip {
         flex: 1;
+    }
+
+    .ta-scroll-top-btn {
+        right: 14px;
+        bottom: 14px;
+        min-width: 96px;
+        padding: 10px 16px;
     }
 }

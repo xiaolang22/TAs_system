@@ -125,7 +125,7 @@
             <div class="ta-jobs-toolbar">
                 <div>
                     <h1>职位信息</h1>
-                    <p class="hint">筛选条件固定在上方，向下滚动可查看更多岗位。</p>
+                    <p class="hint">筛选区与职位列表同步滚动，可快速浏览并返回顶部。</p>
                 </div>
                 <div class="ta-job-toolbar-actions">
                     <a class="ta-tab-btn ${!showingHidden ? 'is-active' : ''}" href="${pageContext.request.contextPath}/home">开放职位</a>
@@ -138,97 +138,100 @@
             <p class="alert error ${empty savedJobError ? 'hidden' : ''}">${savedJobError}</p>
             <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
-            <section class="ta-filter-card">
-                <form method="get" action="${pageContext.request.contextPath}/home" class="ta-filter-form">
-                    <% if (Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
-                    <input type="hidden" name="showHidden" value="1">
+            <div class="ta-jobs-scroll" id="taJobsScroll">
+                <section class="ta-filter-card">
+                    <form method="get" action="${pageContext.request.contextPath}/home" class="ta-filter-form">
+                        <% if (Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
+                        <input type="hidden" name="showHidden" value="1">
+                        <% } %>
+                        <div class="ta-filter-grid">
+                            <div class="ta-filter-field">
+                                <label for="keyword">关键词</label>
+                                <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="岗位名、描述、时间">
+                            </div>
+                            <div class="ta-filter-field">
+                                <label for="category">类型</label>
+                                <select id="category" name="category">
+                                    <option value="" ${empty filterCategory ? 'selected' : ''}>全部</option>
+                                    <option value="TA" ${filterCategory eq 'TA' ? 'selected' : ''}>TA</option>
+                                    <option value="Invigilator" ${filterCategory eq 'Invigilator' ? 'selected' : ''}>监考</option>
+                                </select>
+                            </div>
+                            <div class="ta-filter-field">
+                                <label for="schedule">时间安排</label>
+                                <input id="schedule" name="schedule" type="text" value="${filterSchedule}" placeholder="如：周三下午">
+                            </div>
+                            <div class="ta-filter-field">
+                                <label for="skills">技能要求</label>
+                                <input id="skills" name="skills" type="text" value="${filterSkills}" placeholder="如：Java / Python">
+                            </div>
+                        </div>
+                        <div class="ta-filter-actions">
+                            <button type="submit">筛选职位</button>
+                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
+                        </div>
+                    </form>
+                </section>
+
+                <div class="ta-job-summary">
+                    <% if (!Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
+                    当前显示 <strong>${filteredCount}</strong> / <strong>${openJobCount}</strong> 个开放职位。
+                    <% if ((Integer) request.getAttribute("hiddenFromOpenCount") > 0) { %>
+                    另有 <strong>${hiddenFromOpenCount}</strong> 个已结束或关闭职位。
                     <% } %>
-                    <div class="ta-filter-grid">
-                        <div class="ta-filter-field">
-                            <label for="keyword">关键词</label>
-                            <input id="keyword" name="keyword" type="text" value="${filterKeyword}" placeholder="岗位名、描述、时间">
-                        </div>
-                        <div class="ta-filter-field">
-                            <label for="category">类型</label>
-                            <select id="category" name="category">
-                                <option value="" ${empty filterCategory ? 'selected' : ''}>全部</option>
-                                <option value="TA" ${filterCategory eq 'TA' ? 'selected' : ''}>TA</option>
-                                <option value="Invigilator" ${filterCategory eq 'Invigilator' ? 'selected' : ''}>监考</option>
-                            </select>
-                        </div>
-                        <div class="ta-filter-field">
-                            <label for="schedule">时间安排</label>
-                            <input id="schedule" name="schedule" type="text" value="${filterSchedule}" placeholder="如：周三下午">
-                        </div>
-                        <div class="ta-filter-field">
-                            <label for="skills">技能要求</label>
-                            <input id="skills" name="skills" type="text" value="${filterSkills}" placeholder="如：Java / Python">
-                        </div>
-                    </div>
-                    <div class="ta-filter-actions">
-                        <button type="submit">筛选职位</button>
-                        <a class="link-btn secondary" href="${pageContext.request.contextPath}/home${showingHidden ? '?showHidden=1' : ''}">重置</a>
-                    </div>
-                </form>
-            </section>
-
-            <div class="ta-job-summary">
-                <% if (!Boolean.TRUE.equals(request.getAttribute("showingHidden"))) { %>
-                当前显示 <strong>${filteredCount}</strong> / <strong>${openJobCount}</strong> 个开放职位。
-                <% if ((Integer) request.getAttribute("hiddenFromOpenCount") > 0) { %>
-                另有 <strong>${hiddenFromOpenCount}</strong> 个已结束或关闭职位。
-                <% } %>
-                <% } else { %>
-                当前显示 <strong>${filteredCount}</strong> / <strong>${hiddenPoolCount}</strong> 个历史职位。
-                <% } %>
-            </div>
-
-            <div class="ta-job-list-wrap">
-                <div class="ta-job-list">
-                    <% if (jobs != null && !jobs.isEmpty()) {
-                        for (Job job : jobs) {
-                            boolean saved = savedJobIds != null && savedJobIds.contains(job.getJobId());
-                    %>
-                    <article class="ta-job-card">
-                        <div class="ta-job-card-head">
-                            <div>
-                                <h2><%= job.getTitle() == null ? "" : job.getTitle() %></h2>
-                                <p class="ta-job-badges">
-                                    <span class="status-pill tag-neutral"><%= zhCategory(job.getCategory()) %></span>
-                                    <span class="status-pill tag-warning">截止：<%= job.getDeadline() == null ? "" : job.getDeadline() %></span>
-                                </p>
-                            </div>
-                            <div class="ta-job-hours"><%= job.getHours() == null ? "" : job.getHours() %></div>
-                        </div>
-                        <p class="ta-job-desc"><%= job.getDescription() == null ? "" : job.getDescription() %></p>
-                        <dl class="ta-job-meta-grid">
-                            <div>
-                                <dt>技能要求</dt>
-                                <dd><%= job.getRequirements() == null ? "" : job.getRequirements() %></dd>
-                            </div>
-                            <div>
-                                <dt>时间安排</dt>
-                                <dd><%= job.getSchedule() == null ? "" : job.getSchedule() %></dd>
-                            </div>
-                        </dl>
-                        <div class="ta-job-actions">
-                            <a class="link-btn" href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>">查看详情 / 申请</a>
-                            <form method="post" action="${pageContext.request.contextPath}/ta/saved-jobs" class="save-job-form">
-                                <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
-                                <input type="hidden" name="action" value="<%= saved ? "remove" : "save" %>">
-                                <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
-                                <button type="submit" class="<%= saved ? "secondary-btn save-toggle saved" : "save-toggle" %>">
-                                    <%= saved ? "取消收藏" : "收藏职位" %>
-                                </button>
-                            </form>
-                        </div>
-                    </article>
-                    <% }
-                    } else { %>
-                    <div class="empty-state">当前筛选条件下没有找到职位。</div>
+                    <% } else { %>
+                    当前显示 <strong>${filteredCount}</strong> / <strong>${hiddenPoolCount}</strong> 个历史职位。
                     <% } %>
                 </div>
+
+                <div class="ta-job-list-wrap">
+                    <div class="ta-job-list">
+                        <% if (jobs != null && !jobs.isEmpty()) {
+                            for (Job job : jobs) {
+                                boolean saved = savedJobIds != null && savedJobIds.contains(job.getJobId());
+                        %>
+                        <article class="ta-job-card">
+                            <div class="ta-job-card-head">
+                                <div>
+                                    <h2><%= job.getTitle() == null ? "" : job.getTitle() %></h2>
+                                    <p class="ta-job-badges">
+                                        <span class="status-pill tag-neutral"><%= zhCategory(job.getCategory()) %></span>
+                                        <span class="status-pill tag-warning">截止：<%= job.getDeadline() == null ? "" : job.getDeadline() %></span>
+                                    </p>
+                                </div>
+                                <div class="ta-job-hours"><%= job.getHours() == null ? "" : job.getHours() %></div>
+                            </div>
+                            <p class="ta-job-desc"><%= job.getDescription() == null ? "" : job.getDescription() %></p>
+                            <dl class="ta-job-meta-grid">
+                                <div>
+                                    <dt>技能要求</dt>
+                                    <dd><%= job.getRequirements() == null ? "" : job.getRequirements() %></dd>
+                                </div>
+                                <div>
+                                    <dt>时间安排</dt>
+                                    <dd><%= job.getSchedule() == null ? "" : job.getSchedule() %></dd>
+                                </div>
+                            </dl>
+                            <div class="ta-job-actions">
+                                <a class="link-btn" href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>">查看详情 / 申请</a>
+                                <form method="post" action="${pageContext.request.contextPath}/ta/saved-jobs" class="save-job-form">
+                                    <input type="hidden" name="jobId" value="<%= attr(job.getJobId()) %>">
+                                    <input type="hidden" name="action" value="<%= saved ? "remove" : "save" %>">
+                                    <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
+                                    <button type="submit" class="<%= saved ? "secondary-btn save-toggle saved" : "save-toggle" %>">
+                                        <%= saved ? "取消收藏" : "收藏职位" %>
+                                    </button>
+                                </form>
+                            </div>
+                        </article>
+                        <% }
+                        } else { %>
+                        <div class="empty-state">当前筛选条件下没有找到职位。</div>
+                        <% } %>
+                    </div>
+                </div>
             </div>
+            <button type="button" class="ta-scroll-top-btn" id="taScrollTopBtn" aria-label="返回职位信息顶部">返回顶部</button>
         </section>
 
         <aside class="ta-dashboard-pane">
@@ -305,5 +308,46 @@
     </header>
 </main>
 <% } %>
+<script>
+    (function () {
+        var jobsScroll = document.getElementById('taJobsScroll');
+        var scrollTopBtn = document.getElementById('taScrollTopBtn');
+        if (!jobsScroll || !scrollTopBtn) {
+            return;
+        }
+
+        function useWindowScroll() {
+            return jobsScroll.scrollHeight <= jobsScroll.clientHeight + 8;
+        }
+
+        function currentScrollTop() {
+            if (useWindowScroll()) {
+                return window.pageYOffset || document.documentElement.scrollTop || 0;
+            }
+            return jobsScroll.scrollTop;
+        }
+
+        function updateScrollTopButton() {
+            if (currentScrollTop() > 140) {
+                scrollTopBtn.classList.add('is-visible');
+            } else {
+                scrollTopBtn.classList.remove('is-visible');
+            }
+        }
+
+        scrollTopBtn.addEventListener('click', function () {
+            if (useWindowScroll()) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                jobsScroll.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        jobsScroll.addEventListener('scroll', updateScrollTopButton);
+        window.addEventListener('scroll', updateScrollTopButton);
+        window.addEventListener('resize', updateScrollTopButton);
+        updateScrollTopButton();
+    })();
+</script>
 </body>
 </html>
