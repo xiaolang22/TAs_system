@@ -4,12 +4,15 @@ import com.google.gson.Gson;
 import com.group19.dao.TADao;
 import com.group19.dto.ParsedCVData;
 import com.group19.dto.ServiceResult;
+import com.group19.model.LoginUser;
 import com.group19.service.CVParseService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -40,15 +43,19 @@ public class ParseCVServlet extends HttpServlet {
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         resp.setContentType("application/json; charset=UTF-8");
 
-        String studentId = req.getParameter("studentId");
-        Path uploadDir = resolveUploadDir();
-
+        LoginUser loginUser = currentLoginUser(req);
         ServiceResult<ParsedCVData> result;
-        try {
-            result = cvParseService.parseSavedCv(studentId, uploadDir);
-        } catch (Exception | NoClassDefFoundError e) {
-            e.printStackTrace();
-            result = ServiceResult.failure("Error parsing CV: " + e.getClass().getName() + " - " + e.getMessage());
+
+        if (loginUser == null || !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            result = ServiceResult.failure("当前登录状态无效，请重新登录。");
+        } else {
+            Path uploadDir = resolveUploadDir();
+            try {
+                result = cvParseService.parseSavedCv(loginUser.getUserId(), uploadDir);
+            } catch (Exception | NoClassDefFoundError e) {
+                e.printStackTrace();
+                result = ServiceResult.failure("简历解析失败，请稍后重试。");
+            }
         }
 
         String jsonResponse = gson.toJson(result);
@@ -56,6 +63,15 @@ public class ParseCVServlet extends HttpServlet {
         try (PrintWriter writer = resp.getWriter()) {
             writer.write(jsonResponse);
         }
+    }
+
+    private LoginUser currentLoginUser(HttpServletRequest req) {
+        Object requestUser = req.getAttribute("loginUser");
+        if (requestUser instanceof LoginUser) {
+            return (LoginUser) requestUser;
+        }
+        HttpSession session = req.getSession(false);
+        return session == null ? null : (LoginUser) session.getAttribute("loginUser");
     }
 
     private Path resolveDataPath(String webRelativePath) {

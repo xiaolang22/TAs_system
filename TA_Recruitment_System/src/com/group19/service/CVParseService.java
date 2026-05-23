@@ -20,35 +20,35 @@ public class CVParseService {
 
     public ServiceResult<ParsedCVData> parseSavedCv(String studentId, Path uploadDir) {
         if (studentId == null || studentId.isBlank()) {
-            return ServiceResult.failure("Student ID is required to auto-fill from resume.");
+            return ServiceResult.failure("当前账号缺少学号，暂时无法自动填充。");
         }
         if (uploadDir == null) {
-            return ServiceResult.failure("Upload directory is not configured.");
+            return ServiceResult.failure("简历目录不可用。");
         }
 
         TA existing;
         try {
             existing = taDao.findByStudentId(studentId.trim());
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to load profile data.");
+            return ServiceResult.failure("读取个人档案失败。");
         }
 
         if (existing == null) {
-            return ServiceResult.failure("Please save your profile before using auto-fill.");
+            return ServiceResult.failure("请先保存个人档案，再使用自动填充。");
         }
 
         String fileName = FileUploadUtil.extractFileNameFromPath(existing.getCvFilePath());
         if (fileName == null || fileName.isBlank()) {
-            return ServiceResult.failure("Please save a resume before using auto-fill.");
+            return ServiceResult.failure("请先上传简历，再使用自动填充。");
         }
 
         Path cvPath = uploadDir.resolve(fileName);
         if (!Files.exists(cvPath)) {
-            return ServiceResult.failure("Saved resume file was not found. Please upload it again.");
+            return ServiceResult.failure("未找到已保存的简历文件，请重新上传。");
         }
 
         ParsedCVData parsedData = parseFile(cvPath);
-        return ServiceResult.success(parsedData, "CV parsed successfully.");
+        return ServiceResult.success(parsedData, "简历解析成功。");
     }
 
     private ParsedCVData parseFile(Path cvPath) {

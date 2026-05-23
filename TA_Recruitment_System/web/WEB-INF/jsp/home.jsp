@@ -26,7 +26,6 @@
         }
         return trimmed.substring(0, 1);
     }
-
 %>
 <%
     LoginUser loginUser = (LoginUser) request.getAttribute("loginUser");
@@ -61,7 +60,7 @@
     <header class="ta-topbar">
         <a class="ta-brand-link" href="${pageContext.request.contextPath}/ta/home" aria-label="返回 TA 首页">
             <span class="ta-brand-logo" aria-hidden="true">
-                <img src="${pageContext.request.contextPath}/assets/logo_1.jpg" alt="TAHub logo">
+                <img src="${pageContext.request.contextPath}/assets/logo_1.jpg" alt="TA Recruitment System Logo">
             </span>
         </a>
 
@@ -69,7 +68,7 @@
             <div class="ta-welcome-chip">Welcome! <%= attr(displayName) %></div>
 
             <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/ta/account" aria-label="进入个人中心">
-                <span class="ta-avatar ${avatarUrl.isEmpty() ? "ta-avatar-fallback" : ""}">
+                <span class="ta-avatar <%= avatarUrl.isEmpty() ? "ta-avatar-fallback" : "" %>">
                     <% if (!avatarUrl.isEmpty()) { %>
                     <img src="<%= attr(avatarUrl) %>" alt="用户头像">
                     <% } else { %>
@@ -79,7 +78,7 @@
             </a>
 
             <a class="ta-message-btn" href="${pageContext.request.contextPath}/ta/applications#notification-center" aria-label="查看申请通知">
-                <span class="ta-message-icon" aria-hidden="true">🔔</span>
+                <span class="ta-message-icon" aria-hidden="true">&#128276;</span>
                 <span>消息</span>
                 <% if (unreadCount > 0) { %>
                 <span class="ta-notification-dot"></span>
@@ -109,7 +108,7 @@
                         <% } %>
                         <div class="ta-filter-topbar">
                             <div class="ta-filter-copy">
-                                <h1>职位信息栏</h1>
+                                <h1>职位信息</h1>
                             </div>
                         </div>
                         <div class="ta-filter-grid">
@@ -196,7 +195,7 @@
             <section class="ta-dashboard-card">
                 <h2>工作台</h2>
                 <div class="ta-quick-links">
-                    <a class="link-btn" href="${pageContext.request.contextPath}/profile">申请资料</a>
+                    <a class="link-btn" href="${pageContext.request.contextPath}/profile">个人档案与简历</a>
                     <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/account">个人中心</a>
                     <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">申请进度</a>
                 </div>
@@ -207,7 +206,7 @@
                 <% if (taNotifications == null || taNotifications.isEmpty()) { %>
                 <p class="hint">暂时没有新的申请通知。</p>
                 <% } else { %>
-                <ul class="ta-mini-list">
+                <ul class="ta-mini-list is-scrollable">
                     <% for (TaNotificationView item : taNotifications) { %>
                     <li class="ta-mini-list-item <%= item.isUnread() ? "is-unread" : "" %>">
                         <p><%= item.getMessage() %></p>
@@ -224,7 +223,7 @@
                 <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
                 <p class="hint">未来 14 天内暂无新的截止提醒。</p>
                 <% } else { %>
-                <ul class="ta-mini-list">
+                <ul class="ta-mini-list is-scrollable">
                     <% for (DeadlineReminderView reminder : deadlineReminders) { %>
                     <li class="ta-mini-list-item">
                         <p><%= reminder.getJobTitle() %></p>
@@ -240,7 +239,7 @@
                 <% if (savedJobs == null || savedJobs.isEmpty()) { %>
                 <p class="hint">你还没有收藏任何职位。</p>
                 <% } else { %>
-                <ul class="ta-mini-list">
+                <ul class="ta-mini-list is-scrollable">
                     <% for (Job savedJob : savedJobs) { %>
                     <li class="ta-mini-list-item">
                         <p><%= savedJob.getTitle() == null ? "" : savedJob.getTitle() %></p>

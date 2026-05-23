@@ -3,6 +3,7 @@ package com.group19.service;
 import com.group19.dao.TADao;
 import com.group19.dto.ServiceResult;
 import com.group19.model.TA;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,17 +25,17 @@ public class ProfileService {
 
     public ServiceResult<TA> getProfileByStudentId(String studentId) {
         if (studentId == null || studentId.isBlank()) {
-            return ServiceResult.failure("Student ID is required to load profile.");
+            return ServiceResult.failure("学号不能为空。");
         }
 
         try {
             TA found = taDao.findByStudentId(studentId.trim());
             if (found == null) {
-                return ServiceResult.failure("Profile not found.");
+                return ServiceResult.failure("未找到个人档案。");
             }
-            return ServiceResult.success(found, "Profile loaded.");
+            return ServiceResult.success(found, "个人档案加载成功。");
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to load profile data.");
+            return ServiceResult.failure("读取个人档案失败。");
         }
     }
 
@@ -56,7 +57,7 @@ public class ProfileService {
         try {
             existing = taDao.findByStudentId(normalizedStudentId);
         } catch (IOException ignored) {
-            // If reading fails, we still allow saving profile fields and return a save error if write fails later.
+            // Read failure is handled when saving later.
         }
 
         TA profile = new TA(
@@ -77,9 +78,9 @@ public class ProfileService {
 
         try {
             TA saved = taDao.saveOrUpdate(profile);
-            return ServiceResult.success(saved, "Profile saved successfully.");
+            return ServiceResult.success(saved, "个人档案已保存。");
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to save profile data.");
+            return ServiceResult.failure("保存个人档案失败。");
         }
     }
 
@@ -93,24 +94,24 @@ public class ProfileService {
         List<String> errors = new ArrayList<>();
 
         if (isBlank(name)) {
-            errors.add("Name is required.");
+            errors.add("姓名不能为空。");
         }
         if (isBlank(studentId)) {
-            errors.add("Student ID is required.");
+            errors.add("学号不能为空。");
         }
         if (isBlank(email)) {
-            errors.add("Email is required.");
+            errors.add("邮箱不能为空。");
         } else if (!EMAIL_PATTERN.matcher(normalize(email)).matches()) {
-            errors.add("Email format is invalid.");
+            errors.add("邮箱格式不正确。");
         }
         if (isBlank(programme)) {
-            errors.add("Programme is required.");
+            errors.add("专业不能为空。");
         }
         if (isBlank(skills)) {
-            errors.add("Skills are required.");
+            errors.add("技能不能为空。");
         }
         if (isBlank(availability)) {
-            errors.add("Availability is required.");
+            errors.add("可工作时间不能为空。");
         }
         return errors;
     }

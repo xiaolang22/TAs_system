@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.group19.dao.TADao;
 import com.group19.dto.CVUploadResult;
 import com.group19.dto.ServiceResult;
+import com.group19.model.LoginUser;
 import com.group19.model.TA;
 import com.group19.service.CVService;
 import com.group19.service.ProfileService;
@@ -13,9 +14,10 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,7 +48,17 @@ public class UploadCVServlet extends HttpServlet {
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         resp.setContentType("text/html; charset=UTF-8");
 
-        String studentId = req.getParameter("studentId");
+        LoginUser loginUser = currentLoginUser(req);
+        if (loginUser == null || !"TA".equalsIgnoreCase(loginUser.getRole())) {
+            if (wantsJsonResponse(req)) {
+                writeJsonResponse(resp, ServiceResult.failure("当前登录状态无效，请重新登录。"));
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/login");
+            }
+            return;
+        }
+
+        String studentId = loginUser.getUserId();
         Part cvPart;
         try {
             cvPart = req.getPart("cvFile");
@@ -63,28 +75,37 @@ public class UploadCVServlet extends HttpServlet {
         }
 
         if (result.isSuccess()) {
-            CVUploadResult uploadResult = result.getData();
-            TA profile = uploadResult.getProfile();
-            String encodedId = URLEncoder.encode(profile.getStudentId(), StandardCharsets.UTF_8);
-            String redirectUrl = req.getContextPath() + "/profile?studentId=" + encodedId + "&cvSaved=true";
-            resp.sendRedirect(redirectUrl);
+            resp.sendRedirect(req.getContextPath() + "/profile?cvSaved=true");
             return;
         }
 
-        ServiceResult<TA> profileResult = profileService.getProfileByStudentId(studentId);
-        if (profileResult.isSuccess()) {
-            req.setAttribute("profile", profileResult.getData());
-            req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profileResult.getData().getCvFilePath()));
-        } else {
-            TA draft = new TA();
-            if (studentId != null) {
-                draft.setStudentId(studentId.trim());
-            }
-            req.setAttribute("profile", draft);
-            req.setAttribute("cvFilename", null);
-        }
+        bindProfileForCurrentUser(req, loginUser);
         req.setAttribute("error", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
+    }
+
+    private void bindProfileForCurrentUser(HttpServletRequest req, LoginUser loginUser) {
+        ServiceResult<TA> profileResult = profileService.getProfileByStudentId(loginUser.getUserId());
+        if (profileResult.isSuccess() && profileResult.getData() != null) {
+            req.setAttribute("profile", profileResult.getData());
+            req.setAttribute("cvFilename", FileUploadUtil.extractFileNameFromPath(profileResult.getData().getCvFilePath()));
+            return;
+        }
+
+        TA draft = new TA();
+        draft.setName(loginUser.getDisplayName());
+        draft.setStudentId(loginUser.getUserId());
+        req.setAttribute("profile", draft);
+        req.setAttribute("cvFilename", null);
+    }
+
+    private LoginUser currentLoginUser(HttpServletRequest req) {
+        Object requestUser = req.getAttribute("loginUser");
+        if (requestUser instanceof LoginUser) {
+            return (LoginUser) requestUser;
+        }
+        HttpSession session = req.getSession(false);
+        return session == null ? null : (LoginUser) session.getAttribute("loginUser");
     }
 
     private Path resolveDataPath(String webRelativePath) {
@@ -120,4 +141,3 @@ public class UploadCVServlet extends HttpServlet {
         }
     }
 }
-
