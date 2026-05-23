@@ -20,17 +20,17 @@ public class CVService {
 
     public ServiceResult<CVUploadResult> uploadCv(String studentId, Part cvPart, Path uploadDir) {
         if (studentId == null || studentId.isBlank()) {
-            return ServiceResult.failure("Student ID is required to upload CV.");
+            return ServiceResult.failure("当前账号缺少学号，暂时无法上传简历。");
         }
         if (cvPart == null || cvPart.getSize() <= 0) {
-            return ServiceResult.failure("Please choose a CV file to upload.");
+            return ServiceResult.failure("请选择要上传的简历文件。");
         }
         String submittedName = cvPart.getSubmittedFileName();
         if (!FileUploadUtil.isAllowedCvFile(submittedName)) {
-            return ServiceResult.failure("Invalid file type. Please upload a PDF or DOC/DOCX file.");
+            return ServiceResult.failure("简历仅支持 PDF、DOC 或 DOCX 格式。");
         }
         if (uploadDir == null) {
-            return ServiceResult.failure("Upload directory is not configured.");
+            return ServiceResult.failure("简历上传目录不可用。");
         }
 
         String normalizedId = studentId.trim();
@@ -38,11 +38,11 @@ public class CVService {
         try {
             existing = taDao.findByStudentId(normalizedId);
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to load profile data.");
+            return ServiceResult.failure("读取个人档案失败。");
         }
 
         if (existing == null) {
-            return ServiceResult.failure("Please save your profile before uploading a CV.");
+            return ServiceResult.failure("请先保存个人档案，再上传简历。");
         }
 
         String storedFileName = FileUploadUtil.buildStoredCvFileName(normalizedId, submittedName);
@@ -52,16 +52,16 @@ public class CVService {
             deleteExistingCvFiles(normalizedId, uploadDir, targetFile);
             FileUploadUtil.savePartToFile(cvPart, targetFile);
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to save uploaded CV file.");
+            return ServiceResult.failure("保存简历文件失败。");
         }
 
         existing.setCvFilePath("/uploads/" + storedFileName);
         try {
             TA saved = taDao.saveOrUpdate(existing);
             CVUploadResult payload = new CVUploadResult(saved, null);
-            return ServiceResult.success(payload, "CV uploaded successfully.");
+            return ServiceResult.success(payload, "简历上传成功。");
         } catch (IOException e) {
-            return ServiceResult.failure("Failed to update profile with CV information.");
+            return ServiceResult.failure("更新简历信息失败。");
         }
     }
 

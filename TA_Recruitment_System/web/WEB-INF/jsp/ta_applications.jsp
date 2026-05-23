@@ -26,7 +26,6 @@
         </div>
         <div class="header-actions">
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/profile">申请资料</a>
         </div>
     </header>
 

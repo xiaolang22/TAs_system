@@ -12,11 +12,9 @@
     <header class="page-header">
         <div>
             <h1>个人中心</h1>
-            <p class="hint">在这里更新姓名、账号、密码与头像。</p>
         </div>
         <div class="header-actions">
             <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/profile">申请资料</a>
         </div>
     </header>
 
@@ -25,34 +23,50 @@
 
     <section class="card account-center-card">
         <div class="account-center-avatar-block">
-            <div class="account-avatar-large ${empty avatarPreviewUrl ? 'account-avatar-fallback' : ''}">
-                <img class="${empty avatarPreviewUrl ? 'hidden' : ''}" src="${avatarPreviewUrl}" alt="用户头像">
-                <span class="${empty avatarPreviewUrl ? '' : 'hidden'}">${avatarInitial}</span>
-            </div>
+            <form method="post" action="${pageContext.request.contextPath}/ta/account" enctype="multipart/form-data" class="account-avatar-form">
+                <input type="hidden" name="action" value="avatar">
+                <div class="account-avatar-shell">
+                    <div class="account-avatar-large ${empty avatarPreviewUrl ? 'account-avatar-fallback' : ''}">
+                        <img class="${empty avatarPreviewUrl ? 'hidden' : ''}" src="${avatarPreviewUrl}" alt="用户头像">
+                        <span class="${empty avatarPreviewUrl ? '' : 'hidden'}">${avatarInitial}</span>
+                    </div>
+                    <label class="account-avatar-edit" for="avatarFile">编辑</label>
+                    <input id="avatarFile" name="avatarFile" type="file" accept=".png,.jpg,.jpeg,.gif,.webp" class="sr-only" onchange="if (this.files && this.files.length) { this.form.submit(); }">
+                </div>
+            </form>
             <div class="hint">当前身份：TA</div>
         </div>
 
-        <form method="post" action="${pageContext.request.contextPath}/ta/account" enctype="multipart/form-data" class="profile-form">
-            <label for="displayName">姓名</label>
-            <input id="displayName" name="displayName" type="text" value="${account.displayName}" required>
+        <div class="account-center-forms">
+            <form method="post" action="${pageContext.request.contextPath}/ta/account" class="profile-form account-section-form">
+                <input type="hidden" name="action" value="profile">
+                <h2>个人信息</h2>
 
-            <label for="username">账号</label>
-            <input id="username" name="username" type="text" value="${account.username}" required>
+                <label for="displayName">姓名</label>
+                <input id="displayName" name="displayName" type="text" value="${account.displayName}" required>
 
-            <label for="userId">学号 / 编号</label>
-            <input id="userId" name="userId" type="text" value="${account.userId}" readonly>
+                <label for="username">账号</label>
+                <input id="username" name="username" type="text" value="${account.username}" required>
 
-            <label for="avatarFile">头像图片</label>
-            <input id="avatarFile" name="avatarFile" type="file" accept=".png,.jpg,.jpeg,.gif,.webp">
+                <label for="userId">学号</label>
+                <input id="userId" name="userId" type="text" value="${account.userId}" readonly>
 
-            <label for="newPassword">新密码</label>
-            <input id="newPassword" name="newPassword" type="password" placeholder="不修改可留空">
+                <button type="submit">修改个人信息</button>
+            </form>
 
-            <label for="confirmPassword">确认新密码</label>
-            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="再次输入新密码">
+            <form method="post" action="${pageContext.request.contextPath}/ta/account" class="profile-form account-section-form">
+                <input type="hidden" name="action" value="password">
+                <h2>修改密码</h2>
 
-            <button type="submit">保存个人信息</button>
-        </form>
+                <label for="newPassword">新密码</label>
+                <input id="newPassword" name="newPassword" type="password" placeholder="请输入新密码" required>
+
+                <label for="confirmPassword">确认新密码</label>
+                <input id="confirmPassword" name="confirmPassword" type="password" placeholder="请再次输入新密码" required>
+
+                <button type="submit">修改密码</button>
+            </form>
+        </div>
     </section>
 </main>
 </body>

@@ -26,7 +26,6 @@
         }
         return trimmed.substring(0, 1);
     }
-
 %>
 <%
     LoginUser loginUser = (LoginUser) request.getAttribute("loginUser");
@@ -60,66 +59,46 @@
 <div class="ta-app-shell">
     <header class="ta-topbar">
         <a class="ta-brand-link" href="${pageContext.request.contextPath}/ta/home" aria-label="返回 TA 首页">
-            <span class="ta-brand-mark" aria-hidden="true">
-                <svg viewBox="0 0 180 180">
-                    <defs>
-                        <linearGradient id="homeBrandBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#0f2e8c"/>
-                            <stop offset="55%" stop-color="#1663d6"/>
-                            <stop offset="100%" stop-color="#2ab8ff"/>
-                        </linearGradient>
-                    </defs>
-                    <circle cx="32" cy="90" r="12" fill="#1663d6"/>
-                    <circle cx="148" cy="90" r="12" fill="#27aef5"/>
-                    <circle cx="32" cy="130" r="12" fill="#f5a623"/>
-                    <circle cx="148" cy="130" r="12" fill="#27aef5"/>
-                    <circle cx="90" cy="154" r="12" fill="#2c78ff"/>
-                    <path d="M90 28 L145 52 L125 63 C115 58 103 55 90 55 C77 55 65 58 55 63 L35 52 Z" fill="url(#homeBrandBlue)"/>
-                    <path d="M131 56 L131 88" stroke="#1663d6" stroke-width="6" stroke-linecap="round"/>
-                    <circle cx="131" cy="92" r="7" fill="#1663d6"/>
-                    <path d="M131 97 L125 114 H137 Z" fill="#1663d6"/>
-                    <path d="M90 62 C122 62 148 88 148 120 C148 133 144 144 137 154 L137 170 L121 161 C112 167 101 170 90 170 C58 170 32 144 32 112 C32 80 58 62 90 62 Z" fill="#ffffff" stroke="url(#homeBrandBlue)" stroke-width="8" stroke-linejoin="round"/>
-                    <circle cx="90" cy="104" r="18" fill="url(#homeBrandBlue)"/>
-                    <path d="M62 145 C67 129 79 121 90 121 C101 121 113 129 118 145 Z" fill="url(#homeBrandBlue)"/>
-                </svg>
-            </span>
-            <span class="ta-brand-copy">
-                <strong>TAHub</strong>
-                <span>TA Recruitment System</span>
+            <span class="ta-brand-logo" aria-hidden="true">
+                <img src="${pageContext.request.contextPath}/assets/logo_1.jpg" alt="TA Recruitment System Logo">
             </span>
         </a>
 
         <div class="ta-topbar-actions">
-            <a class="ta-message-btn" href="${pageContext.request.contextPath}/ta/applications#notification-center" aria-label="查看申请通知">
-                <span class="ta-message-icon" aria-hidden="true">🔔</span>
-                <span>消息</span>
-                <% if (unreadCount > 0) { %>
-                <span class="ta-notification-dot"></span>
-                <% } %>
-            </a>
+            <div class="ta-welcome-chip">Welcome! <%= attr(displayName) %></div>
 
-            <a class="ta-user-chip" href="${pageContext.request.contextPath}/ta/account">
-                <span class="ta-avatar ${avatarUrl.isEmpty() ? "ta-avatar-fallback" : ""}">
+            <a class="ta-avatar-entry" href="${pageContext.request.contextPath}/ta/account" aria-label="进入个人中心">
+                <span class="ta-avatar <%= avatarUrl.isEmpty() ? "ta-avatar-fallback" : "" %>">
                     <% if (!avatarUrl.isEmpty()) { %>
                     <img src="<%= attr(avatarUrl) %>" alt="用户头像">
                     <% } else { %>
                     <span><%= firstChar(displayName, "T") %></span>
                     <% } %>
                 </span>
-                <span class="ta-user-meta">
-                    <strong><%= attr(displayName) %></strong>
-                    <span>个人中心</span>
-                </span>
             </a>
+
+            <a class="ta-message-btn" href="${pageContext.request.contextPath}/ta/applications#notification-center" aria-label="查看申请通知">
+                <span class="ta-message-icon" aria-hidden="true">&#128276;</span>
+                <span>消息</span>
+                <% if (unreadCount > 0) { %>
+                <span class="ta-notification-dot"></span>
+                <% } %>
+            </a>
+
+            <form method="post" action="${pageContext.request.contextPath}/logout" class="ta-logout-form">
+                <button type="submit" class="ta-logout-btn">退出登录</button>
+            </form>
         </div>
     </header>
 
     <main class="ta-home-layout">
         <section class="ta-jobs-pane">
-            <p class="alert success ${empty param.applySuccess ? 'hidden' : ''}">申请提交成功。</p>
-            <p class="alert success ${empty savedJobMessage ? 'hidden' : ''}">${savedJobMessage}</p>
-            <p class="alert error ${empty savedJobError ? 'hidden' : ''}">${savedJobError}</p>
-            <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
+            <div class="ta-alert-stack" id="taAlertStack">
+                <p class="alert ta-transient-alert success ${empty param.applySuccess ? 'hidden' : ''}">申请提交成功。</p>
+                <p class="alert ta-transient-alert success ${empty savedJobMessage ? 'hidden' : ''}">${savedJobMessage}</p>
+                <p class="alert ta-transient-alert error ${empty savedJobError ? 'hidden' : ''}">${savedJobError}</p>
+                <p class="alert ta-transient-alert error ${empty error ? 'hidden' : ''}">${error}</p>
+            </div>
 
             <div class="ta-jobs-scroll" id="taJobsScroll">
                 <section class="ta-filter-card">
@@ -129,12 +108,7 @@
                         <% } %>
                         <div class="ta-filter-topbar">
                             <div class="ta-filter-copy">
-                                <h1>职位信息栏</h1>
-                                <p class="hint">筛选条件与职位列表同步滚动。</p>
-                            </div>
-                            <div class="ta-job-toolbar-actions">
-                                <a class="ta-tab-btn ${!showingHidden ? 'is-active' : ''}" href="${pageContext.request.contextPath}/ta/home">开放职位</a>
-                                <a class="ta-tab-btn ${showingHidden ? 'is-active' : ''}" href="${viewHiddenJobsUrl}">历史职位</a>
+                                <h1>职位信息</h1>
                             </div>
                         </div>
                         <div class="ta-filter-grid">
@@ -221,7 +195,7 @@
             <section class="ta-dashboard-card">
                 <h2>工作台</h2>
                 <div class="ta-quick-links">
-                    <a class="link-btn" href="${pageContext.request.contextPath}/profile">申请资料</a>
+                    <a class="link-btn" href="${pageContext.request.contextPath}/profile">个人档案与简历</a>
                     <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/account">个人中心</a>
                     <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/applications">申请进度</a>
                 </div>
@@ -232,7 +206,7 @@
                 <% if (taNotifications == null || taNotifications.isEmpty()) { %>
                 <p class="hint">暂时没有新的申请通知。</p>
                 <% } else { %>
-                <ul class="ta-mini-list">
+                <ul class="ta-mini-list is-scrollable">
                     <% for (TaNotificationView item : taNotifications) { %>
                     <li class="ta-mini-list-item <%= item.isUnread() ? "is-unread" : "" %>">
                         <p><%= item.getMessage() %></p>
@@ -249,7 +223,7 @@
                 <% if (deadlineReminders == null || deadlineReminders.isEmpty()) { %>
                 <p class="hint">未来 14 天内暂无新的截止提醒。</p>
                 <% } else { %>
-                <ul class="ta-mini-list">
+                <ul class="ta-mini-list is-scrollable">
                     <% for (DeadlineReminderView reminder : deadlineReminders) { %>
                     <li class="ta-mini-list-item">
                         <p><%= reminder.getJobTitle() %></p>
@@ -265,7 +239,7 @@
                 <% if (savedJobs == null || savedJobs.isEmpty()) { %>
                 <p class="hint">你还没有收藏任何职位。</p>
                 <% } else { %>
-                <ul class="ta-mini-list">
+                <ul class="ta-mini-list is-scrollable">
                     <% for (Job savedJob : savedJobs) { %>
                     <li class="ta-mini-list-item">
                         <p><%= savedJob.getTitle() == null ? "" : savedJob.getTitle() %></p>
@@ -295,7 +269,27 @@
     (function () {
         var jobsScroll = document.getElementById('taJobsScroll');
         var scrollTopBtn = document.getElementById('taScrollTopBtn');
+        var transientAlerts = document.querySelectorAll('.ta-transient-alert');
+
+        function dismissAlertsLater() {
+            if (!transientAlerts.length) {
+                return;
+            }
+            window.setTimeout(function () {
+                transientAlerts.forEach(function (alertEl) {
+                    if (alertEl.classList.contains('hidden')) {
+                        return;
+                    }
+                    alertEl.classList.add('is-dismissing');
+                    window.setTimeout(function () {
+                        alertEl.classList.add('hidden');
+                    }, 320);
+                });
+            }, 2600);
+        }
+
         if (!jobsScroll || !scrollTopBtn) {
+            dismissAlertsLater();
             return;
         }
 
@@ -330,6 +324,7 @@
         window.addEventListener('scroll', updateScrollTopButton);
         window.addEventListener('resize', updateScrollTopButton);
         updateScrollTopButton();
+        dismissAlertsLater();
     })();
 </script>
 </body>

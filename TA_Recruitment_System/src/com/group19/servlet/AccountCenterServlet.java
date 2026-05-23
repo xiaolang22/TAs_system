@@ -42,17 +42,13 @@ public class AccountCenterServlet extends HttpServlet {
             return;
         }
 
-        ServiceResult<UserAccount> result = accountCenterService.loadAccount(loginUser.getUserId());
-        if (result.isSuccess()) {
-            req.setAttribute("account", result.getData());
-            req.setAttribute("avatarPreviewUrl", buildAvatarPreviewUrl(req, result.getData().getAvatarPath()));
-            req.setAttribute("avatarInitial", buildAvatarInitial(result.getData().getDisplayName()));
-        } else {
-            req.setAttribute("error", result.getMessage());
-        }
-        req.setAttribute("loginUser", loginUser);
-        if ("true".equalsIgnoreCase(req.getParameter("updated"))) {
-            req.setAttribute("success", "个人中心信息已更新。");
+        populateAccountPage(req, loginUser);
+        if ("profile".equalsIgnoreCase(req.getParameter("updated"))) {
+            req.setAttribute("success", "个人信息已更新。");
+        } else if ("password".equalsIgnoreCase(req.getParameter("updated"))) {
+            req.setAttribute("success", "密码已更新。");
+        } else if ("avatar".equalsIgnoreCase(req.getParameter("updated"))) {
+            req.setAttribute("success", "头像已更新。");
         }
         req.getRequestDispatcher("/WEB-INF/jsp/account_center.jsp").forward(req, resp);
     }
@@ -69,48 +65,88 @@ public class AccountCenterServlet extends HttpServlet {
             return;
         }
 
-        Part avatarPart;
-        try {
-            avatarPart = req.getPart("avatarFile");
-        } catch (IllegalStateException e) {
-            avatarPart = null;
-        }
+        String action = trimToEmpty(req.getParameter("action"));
+        ServiceResult<LoginUser> result;
 
-        ServiceResult<LoginUser> result = accountCenterService.updateAccount(
-                loginUser.getUserId(),
-                req.getParameter("displayName"),
-                req.getParameter("username"),
-                req.getParameter("newPassword"),
-                req.getParameter("confirmPassword"),
-                avatarPart,
-                resolveAvatarUploadDir());
+        switch (action) {
+            case "profile":
+                result = accountCenterService.updateProfile(
+                        loginUser.getUserId(),
+                        req.getParameter("displayName"),
+                        req.getParameter("username"));
+                break;
+            case "password":
+                result = accountCenterService.updatePassword(
+                        loginUser.getUserId(),
+                        req.getParameter("newPassword"),
+                        req.getParameter("confirmPassword"));
+                break;
+            case "avatar":
+                Part avatarPart;
+                try {
+                    avatarPart = req.getPart("avatarFile");
+                } catch (IllegalStateException e) {
+                    avatarPart = null;
+                }
+                result = accountCenterService.updateAvatar(loginUser.getUserId(), avatarPart, resolveAvatarUploadDir());
+                break;
+            default:
+                result = ServiceResult.failure("无法识别当前操作。");
+                break;
+        }
 
         if (result.isSuccess()) {
             HttpSession session = req.getSession(false);
             if (session != null) {
                 session.setAttribute("loginUser", result.getData());
             }
-            resp.sendRedirect(req.getContextPath() + "/ta/account?updated=true");
+            resp.sendRedirect(req.getContextPath() + "/ta/account?updated=" + action);
             return;
         }
 
-        ServiceResult<UserAccount> accountResult = accountCenterService.loadAccount(loginUser.getUserId());
-        UserAccount account = accountResult.isSuccess() ? accountResult.getData() : new UserAccount();
-        account.setDisplayName(req.getParameter("displayName"));
-        account.setUsername(req.getParameter("username"));
-        account.setUserId(loginUser.getUserId());
-        account.setRole(loginUser.getRole());
-        account.setAvatarPath(loginUser.getAvatarPath());
-
-        req.setAttribute("loginUser", loginUser);
-        req.setAttribute("account", account);
-        req.setAttribute("avatarPreviewUrl", buildAvatarPreviewUrl(req, account.getAvatarPath()));
-        req.setAttribute("avatarInitial", buildAvatarInitial(account.getDisplayName()));
+        LoginUser latestLoginUser = currentLoginUser(req);
+        if ("profile".equals(action)) {
+            populateAccountPage(req, latestLoginUser);
+            UserAccount account = (UserAccount) req.getAttribute("account");
+            if (account != null) {
+                account.setDisplayName(trimToEmpty(req.getParameter("displayName")));
+                account.setUsername(trimToEmpty(req.getParameter("username")));
+            }
+            req.setAttribute("avatarInitial", buildAvatarInitial(account == null ? "" : account.getDisplayName()));
+        } else {
+            populateAccountPage(req, latestLoginUser);
+        }
         req.setAttribute("error", result.getMessage());
         req.getRequestDispatcher("/WEB-INF/jsp/account_center.jsp").forward(req, resp);
     }
 
+    private void populateAccountPage(HttpServletRequest req, LoginUser loginUser) {
+        req.setAttribute("loginUser", loginUser);
+        ServiceResult<UserAccount> result = accountCenterService.loadAccount(loginUser.getUserId());
+        if (result.isSuccess()) {
+            req.setAttribute("account", result.getData());
+            req.setAttribute("avatarPreviewUrl", buildAvatarPreviewUrl(req, result.getData().getAvatarPath()));
+            req.setAttribute("avatarInitial", buildAvatarInitial(result.getData().getDisplayName()));
+            return;
+        }
+
+        UserAccount fallback = new UserAccount();
+        fallback.setDisplayName(loginUser.getDisplayName());
+        fallback.setUsername(loginUser.getUsername());
+        fallback.setUserId(loginUser.getUserId());
+        fallback.setRole(loginUser.getRole());
+        fallback.setAvatarPath(loginUser.getAvatarPath());
+        req.setAttribute("account", fallback);
+        req.setAttribute("avatarPreviewUrl", buildAvatarPreviewUrl(req, loginUser.getAvatarPath()));
+        req.setAttribute("avatarInitial", buildAvatarInitial(loginUser.getDisplayName()));
+        req.setAttribute("error", result.getMessage());
+    }
+
     private LoginUser currentLoginUser(HttpServletRequest req) {
+        Object requestUser = req.getAttribute("loginUser");
+        if (requestUser instanceof LoginUser) {
+            return (LoginUser) requestUser;
+        }
         HttpSession session = req.getSession(false);
         return session == null ? null : (LoginUser) session.getAttribute("loginUser");
     }
@@ -135,5 +171,9 @@ public class AccountCenterServlet extends HttpServlet {
             return "TA";
         }
         return displayName.trim().substring(0, 1);
+    }
+
+    private String trimToEmpty(String value) {
+        return value == null ? "" : value.trim();
     }
 }
