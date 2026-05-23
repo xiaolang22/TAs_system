@@ -75,7 +75,7 @@ public class JobListServlet extends HttpServlet {
             req.setAttribute("job", job);
             if (job != null && !jobService.isOpenForApplication(job, today)) {
                 req.setAttribute("applyBlockedReason",
-                        "This job is closed or the application deadline has passed.");
+                        "该岗位已关闭，或报名截止时间已过。");
             }
             applySavedState(req, loginUser, job);
             req.getRequestDispatcher("/WEB-INF/jsp/job_detail.jsp").forward(req, resp);

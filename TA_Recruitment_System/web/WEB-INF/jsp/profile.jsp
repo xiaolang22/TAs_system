@@ -1,33 +1,33 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TA Profile</title>
+    <title>申请资料 - TA 招聘系统</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container">
+<body class="ta-page">
+<main class="container ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1>Create / Edit Applicant Profile</h1>
-            <p class="hint">Signed in as <strong>${loginUser.role}</strong> (<code>${loginUser.username}</code>)</p>
+            <h1>申请资料</h1>
+            <p class="hint">在这里维护你的姓名、学号、邮箱、技能、经历和简历。</p>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/ta/account">个人中心</a>
             <form method="post" action="${pageContext.request.contextPath}/logout">
-                <button type="submit" class="secondary-btn">Logout</button>
+                <button type="submit" class="secondary-btn">退出登录</button>
             </form>
         </div>
     </header>
-    <p class="hint">US01: enter and update your profile information.</p>
 
     <form method="get" action="${pageContext.request.contextPath}/profile" class="lookup-form">
-        <label for="lookupStudentId">Open existing profile by Student ID</label>
+        <label for="lookupStudentId">按学号打开已有资料</label>
         <div class="row">
-            <input id="lookupStudentId" name="studentId" type="text" placeholder="e.g. 231221618">
-            <button type="submit">Open</button>
+            <input id="lookupStudentId" name="studentId" type="text" placeholder="例如：231221618">
+            <button type="submit">打开</button>
         </div>
     </form>
 
@@ -35,45 +35,45 @@
     <p class="alert error ${empty error ? 'hidden' : ''}">${error}</p>
 
     <section class="card">
-        <h2>Resume Upload & Auto-Fill</h2>
-        <p class="hint">Upload a PDF or DOC/DOCX file. The latest uploaded resume replaces the previous one.</p>
-        <p class="hint">Auto-Fill uses the latest saved resume for the current Student ID to extract education, skills and experience.</p>
-        <p class="hint">Current CV: <strong id="currentCvName">${empty cvFilename ? 'No CV uploaded.' : cvFilename}</strong></p>
+        <h2>简历上传与自动填充</h2>
+        <p class="hint">支持上传 PDF、DOC、DOCX。新上传的简历会覆盖旧简历。</p>
+        <p class="hint">自动填充会读取当前学号最新保存的简历，并尝试提取专业、技能与经历。</p>
+        <p class="hint">当前简历：<strong id="currentCvName">${empty cvFilename ? '暂未上传简历' : cvFilename}</strong></p>
         <form id="saveCvForm" method="post" action="${pageContext.request.contextPath}/ta/upload-cv" enctype="multipart/form-data" class="profile-form">
             <input id="uploadStudentId" type="hidden" name="studentId" value="${profile.studentId}">
-            <label for="cvFile">Choose resume file *</label>
+            <label for="cvFile">选择简历文件 *</label>
             <input id="cvFile" name="cvFile" type="file" accept=".pdf,.doc,.docx" required>
         </form>
         <div class="row action-row">
-            <button type="button" id="saveCvBtn">Save Resume</button>
-            <button type="button" id="parseCvBtn" class="secondary-btn">Auto-Fill Fields</button>
+            <button type="button" id="saveCvBtn">保存简历</button>
+            <button type="button" id="parseCvBtn" class="secondary-btn">自动填充字段</button>
         </div>
         <p class="alert info hidden" id="parseStatus"></p>
     </section>
 
     <form method="post" action="${pageContext.request.contextPath}/profile" class="profile-form">
-        <label for="name">Name *</label>
+        <label for="name">姓名 *</label>
         <input id="name" name="name" type="text" value="${profile.name}" required>
 
-        <label for="studentId">Student ID *</label>
+        <label for="studentId">学号 *</label>
         <input id="studentId" name="studentId" type="text" value="${profile.studentId}" required>
 
-        <label for="email">Email *</label>
+        <label for="email">邮箱 *</label>
         <input id="email" name="email" type="email" value="${profile.email}" required>
 
-        <label for="programme">Programme *</label>
+        <label for="programme">专业 / 项目 *</label>
         <input id="programme" name="programme" type="text" value="${profile.programme}" required>
 
-        <label for="skills">Skills *</label>
+        <label for="skills">技能 *</label>
         <textarea id="skills" name="skills" rows="4" required>${profile.skills}</textarea>
 
-        <label for="experience">Experience (auto-filled from CV)</label>
+        <label for="experience">经历（可由简历自动填充）</label>
         <textarea id="experience" name="experience" rows="4">${profile.experience}</textarea>
 
-        <label for="availability">Availability *</label>
+        <label for="availability">可工作时间 *</label>
         <textarea id="availability" name="availability" rows="3" required>${profile.availability}</textarea>
 
-        <button type="submit">Save Profile</button>
+        <button type="submit">保存申请资料</button>
     </form>
 </main>
 
@@ -91,20 +91,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     saveCvBtn.addEventListener('click', async function() {
         if (!fileInput.files || fileInput.files.length === 0) {
-            showStatus('Please select a resume file before saving.', 'error');
+            showStatus('请先选择要上传的简历文件。', 'error');
             return;
         }
         if (uploadStudentIdInput && studentIdInput) {
             uploadStudentIdInput.value = studentIdInput.value;
         }
         if (!uploadStudentIdInput.value.trim()) {
-            showStatus('Please enter the Student ID before saving the resume.', 'error');
+            showStatus('请先填写学号，再保存简历。', 'error');
             return;
         }
 
         saveCvBtn.disabled = true;
         parseBtn.disabled = true;
-        showStatus('Saving resume, please wait...', 'info');
+        showStatus('正在保存简历，请稍候...', 'info');
 
         const formData = new FormData(saveCvForm);
 
@@ -127,20 +127,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 result = JSON.parse(responseText);
             } catch (parseError) {
                 console.error('Unexpected save response:', responseText);
-                showStatus('Failed to save resume: server returned an unexpected response.', 'error');
+                showStatus('保存简历失败：服务器返回了无法识别的响应。', 'error');
                 return;
             }
 
             if (result.success && result.data && result.data.profile && result.data.profile.cvFilePath) {
                 currentCvName.textContent = extractFileName(result.data.profile.cvFilePath);
                 fileInput.value = '';
-                showStatus(result.message || 'Resume saved successfully.', 'success');
+                showStatus(result.message || '简历保存成功。', 'success');
             } else {
-                showStatus(result.message || 'Failed to save resume.', 'error');
+                showStatus(result.message || '简历保存失败。', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            showStatus('An error occurred while saving the resume.', 'error');
+            showStatus('保存简历时发生异常。', 'error');
         } finally {
             saveCvBtn.disabled = false;
             parseBtn.disabled = false;
@@ -150,14 +150,14 @@ document.addEventListener('DOMContentLoaded', function() {
     parseBtn.addEventListener('click', async function() {
         const studentIdValue = studentIdInput ? studentIdInput.value.trim() : '';
         if (!studentIdValue) {
-            showStatus('Please enter the Student ID before using auto-fill.', 'error');
+            showStatus('请先填写学号，再使用自动填充。', 'error');
             return;
         }
 
         parseBtn.disabled = true;
         saveCvBtn.disabled = true;
-        parseBtn.textContent = 'Parsing...';
-        showStatus('Parsing the latest saved resume, please wait...', 'info');
+        parseBtn.textContent = '解析中...';
+        showStatus('正在解析最新简历，请稍候...', 'info');
 
         const formData = new FormData();
         formData.append('studentId', studentIdValue);
@@ -173,17 +173,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success && result.data) {
                 const data = result.data;
                 fillForm(data);
-                showStatus('Resume parsed successfully. Review and edit the fields below before saving the profile.', 'success');
+                showStatus('简历解析成功，请检查并完善下方字段后再保存。', 'success');
             } else {
-                showStatus(result.message || 'Failed to parse CV.', 'error');
+                showStatus(result.message || '简历解析失败。', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            showStatus('An error occurred while parsing the saved resume.', 'error');
+            showStatus('解析简历时发生异常。', 'error');
         } finally {
             parseBtn.disabled = false;
             saveCvBtn.disabled = false;
-            parseBtn.textContent = 'Auto-Fill Fields';
+            parseBtn.textContent = '自动填充字段';
         }
     });
 
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function extractFileName(filePath) {
         if (!filePath) {
-            return 'No CV uploaded.';
+            return '暂未上传简历';
         }
         const normalized = String(filePath).replace(/\\/g, '/');
         const lastSlash = normalized.lastIndexOf('/');

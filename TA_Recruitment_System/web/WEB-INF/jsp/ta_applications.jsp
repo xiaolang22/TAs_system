@@ -2,35 +2,54 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.group19.dto.TaApplicationOverview" %>
 <%@ page import="com.group19.dto.TaTimelineStep" %>
+<%@ page import="com.group19.dto.TaNotificationView" %>
 <%
     @SuppressWarnings("unchecked")
     List<TaApplicationOverview> applications = (List<TaApplicationOverview>) request.getAttribute("applications");
+    @SuppressWarnings("unchecked")
+    List<TaNotificationView> taNotifications = (List<TaNotificationView>) request.getAttribute("taNotifications");
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My applications - TA Recruitment System</title>
+    <title>申请通知与进度 - TA 招聘系统</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container wide">
+<body class="ta-page">
+<main class="container wide ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1>Application status</h1>
-            <p class="hint">Track the current stage and history for each position you applied to.</p>
+            <h1>申请通知与进度</h1>
+            <p class="hint">查看消息提醒、岗位申请状态与完整时间线。</p>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/jobs">Browse jobs</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/profile">申请资料</a>
         </div>
     </header>
 
+    <section class="card notification-panel" id="notification-center">
+        <h2>申请通知</h2>
+        <% if (taNotifications == null || taNotifications.isEmpty()) { %>
+        <p class="hint">目前没有新的申请通知。</p>
+        <% } else { %>
+        <ul class="notification-list">
+            <% for (TaNotificationView item : taNotifications) { %>
+            <li class="notification-item <%= item.isUnread() ? "notification-unread" : "" %>">
+                <p class="notification-message"><%= item.getMessage() %></p>
+                <p class="hint notification-time"><%= item.getCreatedAtDisplay() %></p>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </section>
+
     <% if (applications == null || applications.isEmpty()) { %>
     <section class="card">
-        <p class="hint">You have not submitted any applications yet.</p>
-        <a class="link-btn" href="${pageContext.request.contextPath}/jobs">Find open positions</a>
+        <p class="hint">你还没有提交任何申请。</p>
+        <a class="link-btn" href="${pageContext.request.contextPath}/home">去浏览职位</a>
     </section>
     <% } else { %>
     <div class="application-status-list">
@@ -39,7 +58,7 @@
             <div class="application-status-head">
                 <div>
                     <h2 class="application-job-title"><%= app.getJobTitle() == null ? "" : app.getJobTitle() %></h2>
-                    <p class="hint application-job-meta">Application ID: <code><%= app.getApplicationId() == null ? "" : app.getApplicationId() %></code></p>
+                    <p class="hint application-job-meta">申请编号：<code><%= app.getApplicationId() == null ? "" : app.getApplicationId() %></code></p>
                 </div>
                 <div class="application-status-badges">
                     <span class="<%= app.getStatusPillClass() == null ? "status-pill tag-neutral" : app.getStatusPillClass() %>">
@@ -48,12 +67,12 @@
                 </div>
             </div>
             <div class="application-last-updated">
-                <span class="label">Latest update</span>
+                <span class="label">最近更新时间</span>
                 <span class="value"><%= app.getLastUpdatedDisplay() == null || app.getLastUpdatedDisplay().isEmpty() ? "—" : app.getLastUpdatedDisplay() %></span>
             </div>
-            <h3 class="section-title timeline-title">Timeline</h3>
+            <h3 class="section-title timeline-title">状态时间线</h3>
             <ol class="timeline">
-                <% 
+                <%
                     List<TaTimelineStep> steps = app.getTimelineSteps();
                     if (steps != null) {
                         for (TaTimelineStep step : steps) {
@@ -72,8 +91,7 @@
                         <% } %>
                     </div>
                 </li>
-                <% 
-                        }
+                <%      }
                     }
                 %>
             </ol>

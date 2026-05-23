@@ -88,6 +88,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/ta/account</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
     </filter-mapping>
 
@@ -199,6 +204,16 @@
     <servlet-mapping>
         <servlet-name>ParseCVServlet</servlet-name>
         <url-pattern>/ta/parse-cv</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AccountCenterServlet</servlet-name>
+        <servlet-class>com.group19.servlet.AccountCenterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AccountCenterServlet</servlet-name>
+        <url-pattern>/ta/account</url-pattern>
     </servlet-mapping>
 
     <servlet>

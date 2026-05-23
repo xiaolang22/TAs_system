@@ -12,6 +12,13 @@
                 .replace("<", "&lt;")
                 .replace(">", "&gt;");
     }
+
+    private String zhCategory(String value) {
+        if (value == null) {
+            return "";
+        }
+        return "Invigilator".equalsIgnoreCase(value.trim()) ? "监考" : value;
+    }
 %>
 <%
     String jobListAction = request.getContextPath() + "/jobs";
@@ -32,26 +39,26 @@
     }
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= showingHidden ? "Hidden positions" : "Open Jobs" %> - TA Recruitment System</title>
+    <title><%= showingHidden ? "历史职位" : "职位列表" %> - TA 招聘系统</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
-<main class="container wide">
+<body class="ta-page">
+<main class="container wide ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1><%= showingHidden ? "Hidden positions" : "Open positions" %></h1>
+            <h1><%= showingHidden ? "历史职位" : "开放职位" %></h1>
             <p class="hint">
                 <%= showingHidden
-                        ? "These jobs are closed or past the application deadline and are not shown in the open list."
-                        : "Search and filter TA or invigilation roles. Closed or past-deadline jobs are hidden here." %>
+                        ? "这里展示已截止或已关闭的岗位。"
+                        : "在这里搜索、筛选 TA 或监考岗位。已结束岗位会被收纳到历史职位中。" %>
             </p>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">Back to Home</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/home">返回首页</a>
         </div>
     </header>
 
@@ -63,40 +70,40 @@
     </p>
 
     <section class="card job-filters-card">
-        <h2 class="section-title">Search &amp; filters</h2>
+        <h2 class="section-title">搜索与筛选</h2>
         <form class="job-filters-form" method="get" action="<%= jobListAction %>">
             <% if (showingHidden) { %>
             <input type="hidden" name="showHidden" value="1">
             <% } %>
             <div class="filter-grid">
                 <div class="form-field">
-                    <label for="keyword">Keyword</label>
+                    <label for="keyword">关键词</label>
                     <input type="text" id="keyword" name="keyword" autocomplete="off"
-                           placeholder="Title, description, schedule…"
+                           placeholder="岗位名、描述、时间..."
                            value="${filterKeyword}">
                 </div>
                 <div class="form-field">
-                    <label for="category">Module / activity</label>
+                    <label for="category">岗位类型</label>
                     <select id="category" name="category">
-                        <option value="" ${empty filterCategory ? 'selected' : ''}>All types</option>
+                        <option value="" ${empty filterCategory ? 'selected' : ''}>全部</option>
                         <option value="TA" ${filterCategory eq 'TA' ? 'selected' : ''}>TA</option>
-                        <option value="Invigilator" ${filterCategory eq 'Invigilator' ? 'selected' : ''}>Invigilator</option>
+                        <option value="Invigilator" ${filterCategory eq 'Invigilator' ? 'selected' : ''}>监考</option>
                     </select>
                 </div>
                 <div class="form-field">
-                    <label for="schedule">Time (schedule)</label>
-                    <input type="text" id="schedule" name="schedule" placeholder="e.g. Monday, April"
+                    <label for="schedule">时间安排</label>
+                    <input type="text" id="schedule" name="schedule" placeholder="例如：周一、下午"
                            value="${filterSchedule}">
                 </div>
                 <div class="form-field">
-                    <label for="skills">Skills</label>
-                    <input type="text" id="skills" name="skills" placeholder="Keyword in requirements"
+                    <label for="skills">技能要求</label>
+                    <input type="text" id="skills" name="skills" placeholder="要求中的关键词"
                            value="${filterSkills}">
                 </div>
             </div>
             <div class="filter-actions">
-                <button type="submit">Apply filters</button>
-                <a class="link-btn secondary" href="<%= showingHidden ? jobListAction + "?showHidden=1" : jobListAction %>">Clear</a>
+                <button type="submit">应用筛选</button>
+                <a class="link-btn secondary" href="<%= showingHidden ? jobListAction + "?showHidden=1" : jobListAction %>">清空条件</a>
             </div>
         </form>
     </section>
@@ -104,19 +111,19 @@
     <div class="filter-summary-wrap">
         <p class="hint filter-summary">
             <% if (!showingHidden) { %>
-            Showing <strong>${filteredCount}</strong> of <strong>${openJobCount}</strong> open position(s).
+            当前显示 <strong>${filteredCount}</strong> / <strong>${openJobCount}</strong> 个开放职位。
             <% if (hiddenFromOpen > 0) { %>
-            Additionally, <strong><%= hiddenFromOpen %></strong> position(s) are hidden from this list (closed or past deadline).
+            另有 <strong><%= hiddenFromOpen %></strong> 个已关闭或已截止岗位未在此列表显示。
             <% } %>
             <% } else { %>
-            Showing <strong>${filteredCount}</strong> of <strong><%= hiddenPool %></strong> hidden position(s) matching your filters.
+            当前显示 <strong>${filteredCount}</strong> / <strong><%= hiddenPool %></strong> 个历史职位。
             <% } %>
         </p>
         <% if (!showingHidden && hiddenFromOpen > 0) { %>
-        <a class="link-btn secondary filter-summary-btn" href="<%= viewHiddenJobsUrl %>">View hidden positions</a>
+        <a class="link-btn secondary filter-summary-btn" href="<%= viewHiddenJobsUrl %>">查看历史职位</a>
         <% } %>
         <% if (showingHidden) { %>
-        <a class="link-btn secondary filter-summary-btn" href="${pageContext.request.contextPath}/jobs">Back to open positions</a>
+        <a class="link-btn secondary filter-summary-btn" href="${pageContext.request.contextPath}/jobs">返回开放职位</a>
         <% } %>
     </div>
 
@@ -129,18 +136,18 @@
         <article class="card job-card">
             <h3><%= job.getTitle() %></h3>
             <dl class="job-meta">
-                <dt>Module / activity</dt>
-                <dd><%= job.getCategory() == null ? "" : job.getCategory() %></dd>
-                <dt>Required skills</dt>
+                <dt>岗位类型</dt>
+                <dd><%= zhCategory(job.getCategory()) %></dd>
+                <dt>技能要求</dt>
                 <dd><%= job.getRequirements() == null ? "" : job.getRequirements() %></dd>
-                <dt>Schedule</dt>
+                <dt>时间安排</dt>
                 <dd><%= job.getSchedule() == null ? "" : job.getSchedule() %></dd>
-                <dt>Deadline</dt>
+                <dt>截止时间</dt>
                 <dd><%= job.getDeadline() == null ? "" : job.getDeadline() %></dd>
             </dl>
             <div class="job-card-actions">
                 <a href="${pageContext.request.contextPath}/jobs?jobId=<%= job.getJobId() %>" class="link-btn">
-                    View details &amp; apply
+                    查看详情 / 申请
                 </a>
                 <% if (canSaveJobs) {
                     boolean saved = savedJobIds.contains(job.getJobId());
@@ -150,7 +157,7 @@
                     <input type="hidden" name="action" value="<%= saved ? "remove" : "save" %>">
                     <input type="hidden" name="returnTo" value="<%= attr(currentRequestPath) %>">
                     <button type="submit" class="<%= saved ? "secondary-btn save-toggle saved" : "save-toggle" %>">
-                        <%= saved ? "Remove saved" : "Save for later" %>
+                        <%= saved ? "取消收藏" : "收藏职位" %>
                     </button>
                 </form>
                 <% } %>
@@ -160,7 +167,7 @@
                 }
             } else {
         %>
-        <p class="hint"><%= showingHidden ? "No hidden positions match your filters right now." : "No open jobs match your filters right now." %></p>
+        <p class="hint"><%= showingHidden ? "当前筛选条件下没有历史职位。" : "当前筛选条件下没有开放职位。" %></p>
         <%
             }
         %>

@@ -11,6 +11,7 @@ import java.util.Set;
 
 public final class FileUploadUtil {
     private static final Set<String> ALLOWED_EXTENSIONS = Set.of("pdf", "doc", "docx");
+    private static final Set<String> ALLOWED_IMAGE_EXTENSIONS = Set.of("png", "jpg", "jpeg", "gif", "webp");
 
     private FileUploadUtil() {
     }
@@ -26,6 +27,19 @@ public final class FileUploadUtil {
             ext = "pdf";
         }
         return "cv_" + safeToken(studentId) + "." + ext;
+    }
+
+    public static boolean isAllowedImageFile(String submittedFileName) {
+        String ext = getExtension(submittedFileName);
+        return ext != null && ALLOWED_IMAGE_EXTENSIONS.contains(ext);
+    }
+
+    public static String buildStoredAvatarFileName(String userId, String submittedFileName) {
+        String ext = getExtension(submittedFileName);
+        if (ext == null) {
+            ext = "png";
+        }
+        return "avatar_" + safeToken(userId) + "." + ext;
     }
 
     public static void savePartToFile(Part part, Path targetFile) throws IOException {

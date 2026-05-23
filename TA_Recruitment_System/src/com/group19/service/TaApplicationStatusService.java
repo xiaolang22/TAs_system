@@ -141,12 +141,12 @@ public class TaApplicationStatusService {
 
     public static String toDisplayStatus(String normalizedStage) {
         return switch (normalizedStage) {
-            case "SUBMITTED" -> "Submitted";
-            case "IN_REVIEW" -> "In Review";
-            case "SHORTLISTED" -> "Shortlisted";
-            case "ACCEPTED" -> "Accepted";
-            case "REJECTED" -> "Rejected";
-            default -> "Updated";
+            case "SUBMITTED" -> "已提交";
+            case "IN_REVIEW" -> "审核中";
+            case "SHORTLISTED" -> "已入围";
+            case "ACCEPTED" -> "已录用";
+            case "REJECTED" -> "未通过";
+            default -> "状态更新";
         };
     }
 

@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -60,26 +61,20 @@ public class ApplyServlet extends HttpServlet {
 
         String jobId = req.getParameter("jobId");
         if (jobId == null || jobId.isBlank()) {
-            req.setAttribute("error", "Job ID is missing");
-            req.setAttribute("loginUser", loginUser);
-            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+            resp.sendRedirect(buildHomeErrorUrl(req, "缺少岗位编号。"));
             return;
         }
 
         Job job = jobService.findById(jobId.trim());
         if (job == null || !jobService.isOpenForApplication(job, LocalDate.now())) {
-            req.setAttribute("error", "This job is not open for applications.");
-            req.setAttribute("loginUser", loginUser);
-            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+            resp.sendRedirect(buildHomeErrorUrl(req, "该岗位当前不可申请。"));
             return;
         }
 
         String taStudentId = loginUser.getUserId();
         TA taProfile = taDao.findByStudentId(taStudentId);
         if (taProfile == null) {
-            req.setAttribute("error", "Please complete your profile before applying");
-            req.setAttribute("loginUser", loginUser);
-            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+            resp.sendRedirect(buildHomeErrorUrl(req, "请先完善申请资料后再投递。"));
             return;
         }
 
@@ -94,10 +89,11 @@ public class ApplyServlet extends HttpServlet {
         if (result.isSuccess()) {
             resp.sendRedirect(req.getContextPath() + "/home?applySuccess=true");
         } else {
-            req.setAttribute("error", result.getMessage());
-            req.setAttribute("loginUser", loginUser);
-            req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
+            resp.sendRedirect(buildHomeErrorUrl(req, result.getMessage()));
         }
     }
 
+    private String buildHomeErrorUrl(HttpServletRequest req, String message) {
+        return req.getContextPath() + "/home?error=" + URLEncoder.encode(message, StandardCharsets.UTF_8);
+    }
 }
