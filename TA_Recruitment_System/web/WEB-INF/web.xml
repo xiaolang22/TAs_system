@@ -113,6 +113,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/admin/account</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/post-job</url-pattern>
     </filter-mapping>
 
@@ -169,11 +174,6 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/mo/home</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/admin/home</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -259,6 +259,21 @@
     <servlet-mapping>
         <servlet-name>AccountCenterServlet</servlet-name>
         <url-pattern>/mo/account</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AccountCenterServlet</servlet-name>
+        <url-pattern>/admin/account</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>com.group19.servlet.AdminDashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin/home</url-pattern>
     </servlet-mapping>
 
     <servlet>

@@ -1945,6 +1945,225 @@ body.ta-page {
     color: #0f172a;
 }
 
+.admin-home-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
+    gap: 18px;
+    padding: 18px 20px 22px;
+    min-height: calc(100vh - 60px);
+    background: linear-gradient(180deg, #f6fbfd 0%, #ffffff 52%);
+}
+
+.admin-workbench-pane,
+.admin-monitor-pane {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+}
+
+.admin-panel-card {
+    border-radius: 24px;
+    border: 1px solid #dceef4;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.06);
+    padding: 16px 18px;
+}
+
+.admin-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.admin-panel-head h2 {
+    margin: 0;
+    font-size: 1.08rem;
+    color: #0f172a;
+}
+
+.admin-panel-head span {
+    color: #5b6b7e;
+    font-size: 0.9rem;
+}
+
+.admin-scroll-list {
+    max-height: 280px;
+    overflow-y: auto;
+    display: grid;
+    gap: 10px;
+    padding-right: 4px;
+}
+
+.admin-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid #e2edf5;
+    border-radius: 18px;
+    padding: 12px 14px;
+    background: #fbfeff;
+}
+
+.admin-list-item.is-selected {
+    border-color: #7ad2e6;
+    background: linear-gradient(135deg, #f5fdff, #f8fcff);
+}
+
+.admin-list-copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.admin-list-copy strong {
+    color: #0f172a;
+}
+
+.admin-list-copy span {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.admin-list-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.admin-list-actions form,
+.admin-inline-actions form {
+    margin: 0;
+}
+
+.admin-detail-card {
+    border: 1px solid #d8ebf3;
+    border-radius: 20px;
+    padding: 14px;
+    margin-bottom: 12px;
+    background: linear-gradient(180deg, #fcfeff, #f7fbfd);
+}
+
+.admin-detail-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.admin-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+}
+
+.admin-detail-grid div,
+.admin-edit-grid div {
+    display: grid;
+    gap: 4px;
+}
+
+.admin-detail-grid .label {
+    color: #64748b;
+    font-size: 0.86rem;
+}
+
+.admin-detail-grid .value {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.admin-inline-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.admin-edit-form {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.admin-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.admin-stat-grid .summary-card {
+    min-height: 92px;
+}
+
+.admin-feed-card {
+    padding-bottom: 10px;
+}
+
+.admin-feed-list {
+    display: grid;
+    gap: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.admin-feed-item {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid #e2edf5;
+    background: #fbfeff;
+}
+
+.admin-feed-item strong {
+    color: #0f172a;
+}
+
+.admin-feed-item span {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1080px) {
+    .admin-home-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .admin-home-layout {
+        padding: 14px 14px 18px;
+    }
+
+    .admin-detail-grid,
+    .admin-edit-grid,
+    .admin-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-list-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-list-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
 .ta-profile-hero {
     display: flex;
     align-items: center;

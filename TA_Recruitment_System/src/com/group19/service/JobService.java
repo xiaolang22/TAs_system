@@ -240,6 +240,31 @@ public class JobService {
         return ServiceResult.success(job, "岗位信息已更新。");
     }
 
+    public ServiceResult<Job> updateJobAsAdmin(Job job) {
+        if (job == null || job.getJobId() == null || job.getJobId().trim().isEmpty()) {
+            return ServiceResult.failure("缺少岗位编号。");
+        }
+        Job existing = jobDao.findById(job.getJobId().trim());
+        if (existing == null) {
+            return ServiceResult.failure("未找到对应岗位。");
+        }
+
+        ServiceResult<Job> validation = validateDraft(job);
+        if (!validation.isSuccess()) {
+            return validation;
+        }
+
+        job.setOwnerMoUserId(existing.getOwnerMoUserId());
+        job.setCreatedAt(existing.getCreatedAt());
+        job.setStatus(normalizeStatus(job.getStatus()));
+
+        boolean updated = jobDao.update(job);
+        if (!updated) {
+            return ServiceResult.failure("更新岗位失败。");
+        }
+        return ServiceResult.success(job, "岗位信息已更新。");
+    }
+
     public ServiceResult<Void> deleteJob(String jobId, String moUserId) {
         if (jobId == null || jobId.trim().isEmpty()) {
             return ServiceResult.failure("缺少岗位编号。");
@@ -250,6 +275,21 @@ public class JobService {
         }
         if (!isOwnedBy(existing, moUserId)) {
             return ServiceResult.failure("你只能删除自己发布的岗位。");
+        }
+        boolean deleted = jobDao.delete(jobId.trim());
+        if (!deleted) {
+            return ServiceResult.failure("删除岗位失败。");
+        }
+        return ServiceResult.success(null, "岗位已删除。");
+    }
+
+    public ServiceResult<Void> deleteJobAsAdmin(String jobId) {
+        if (jobId == null || jobId.trim().isEmpty()) {
+            return ServiceResult.failure("缺少岗位编号。");
+        }
+        Job existing = jobDao.findById(jobId.trim());
+        if (existing == null) {
+            return ServiceResult.failure("未找到对应岗位。");
         }
         boolean deleted = jobDao.delete(jobId.trim());
         if (!deleted) {

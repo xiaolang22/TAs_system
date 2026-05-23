@@ -62,7 +62,8 @@ public class AccountCenterService {
                     existing.getRole(),
                     displayName.trim(),
                     existing.getUserId(),
-                    firstNonBlank(existing.getAvatarPath(), ""));
+                    firstNonBlank(existing.getAvatarPath(), ""),
+                    existing.isFrozen());
 
             return persistAccount(updated, "个人信息已更新。");
         } catch (IOException e) {
@@ -96,7 +97,8 @@ public class AccountCenterService {
                     existing.getRole(),
                     existing.getDisplayName(),
                     existing.getUserId(),
-                    firstNonBlank(existing.getAvatarPath(), ""));
+                    firstNonBlank(existing.getAvatarPath(), ""),
+                    existing.isFrozen());
 
             return persistAccount(updated, "密码已更新。");
         } catch (IOException e) {
@@ -137,7 +139,8 @@ public class AccountCenterService {
                     existing.getRole(),
                     existing.getDisplayName(),
                     existing.getUserId(),
-                    "/uploads/avatars/" + storedFileName);
+                    "/uploads/avatars/" + storedFileName,
+                    existing.isFrozen());
 
             return persistAccount(updated, "头像已更新。");
         } catch (IOException e) {

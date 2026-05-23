@@ -181,10 +181,13 @@ public class AccountCenterServlet extends HttpServlet {
             return false;
         }
         String role = loginUser.getRole().trim();
-        return "TA".equalsIgnoreCase(role) || "MO".equalsIgnoreCase(role);
+        return "TA".equalsIgnoreCase(role) || "MO".equalsIgnoreCase(role) || "ADMIN".equalsIgnoreCase(role);
     }
 
     private static String accountPath(LoginUser loginUser) {
+        if (loginUser != null && "ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            return "/admin/account";
+        }
         if (loginUser != null && "MO".equalsIgnoreCase(loginUser.getRole())) {
             return "/mo/account";
         }
@@ -192,6 +195,9 @@ public class AccountCenterServlet extends HttpServlet {
     }
 
     private static String homePath(LoginUser loginUser) {
+        if (loginUser != null && "ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            return "/admin/home";
+        }
         if (loginUser != null && "MO".equalsIgnoreCase(loginUser.getRole())) {
             return "/mo/home";
         }
@@ -199,6 +205,9 @@ public class AccountCenterServlet extends HttpServlet {
     }
 
     private static String roleLabel(LoginUser loginUser) {
+        if (loginUser != null && "ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            return "ADMIN";
+        }
         if (loginUser != null && "MO".equalsIgnoreCase(loginUser.getRole())) {
             return "MO";
         }

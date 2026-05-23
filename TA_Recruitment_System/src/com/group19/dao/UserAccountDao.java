@@ -64,7 +64,9 @@ public class UserAccountDao {
                     account.getPassword(),
                     account.getRole(),
                     account.getDisplayName(),
-                    account.getUserId()));
+                    account.getUserId(),
+                    account.getAvatarPath(),
+                    account.isFrozen()));
         }
         JsonFileUtil.writeList(userFilePath, seededAccounts);
         return seededAccounts;

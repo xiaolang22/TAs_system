@@ -34,6 +34,9 @@ public class AuthService {
             if (account == null || !password.trim().equals(account.getPassword())) {
                 return ServiceResult.failure("Invalid username or password.");
             }
+            if (account.isFrozen()) {
+                return ServiceResult.failure("This account has been frozen.");
+            }
             if (normalizedRole != null && !normalizedRole.equalsIgnoreCase(account.getRole())) {
                 return ServiceResult.failure("Account type does not match.");
             }
