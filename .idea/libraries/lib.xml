@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TA_Recruitment_System/build/preview_20260524011017/webapps/TA_Recruitment/WEB-INF/lib/gson-2.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/TA_Recruitment_System/build/preview_20260524011017/webapps/TA_Recruitment/WEB-INF/lib/pdfbox-2.0.29.jar!/" />
+      <root url="jar://$PROJECT_DIR$/TA_Recruitment_System/build/preview_20260524011017/webapps/TA_Recruitment/WEB-INF/lib/fontbox-2.0.29.jar!/" />
+      <root url="jar://$PROJECT_DIR$/TA_Recruitment_System/build/preview_20260524011017/webapps/TA_Recruitment/WEB-INF/lib/itextpdf-5.5.13.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/TA_Recruitment_System/build/preview_20260524011017/webapps/TA_Recruitment/WEB-INF/lib/commons-logging-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
