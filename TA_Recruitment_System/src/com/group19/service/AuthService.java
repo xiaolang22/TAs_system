@@ -7,10 +7,27 @@ import com.group19.model.UserAccount;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * Authentication service handling core login and registration logic.
+ * Includes password verification, role matching, account-freeze detection,
+ * and form validation.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class AuthService {
+
+    /** Minimum password length. */
     private static final int MIN_PASSWORD_LENGTH = 6;
+
+    /** User account data access object. */
     private final UserAccountDao userAccountDao;
 
+    /**
+     * Construct the service instance.
+     *
+     * @param userAccountDao user account data access object
+     */
     public AuthService(UserAccountDao userAccountDao) {
         this.userAccountDao = userAccountDao;
     }

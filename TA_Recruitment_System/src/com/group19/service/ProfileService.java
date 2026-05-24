@@ -11,18 +11,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Profile service responsible for querying and saving TA personal profiles.
+ * Includes validation logic for form fields (name, student ID, email, programme,
+ * skills, experience, availability).
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class ProfileService {
+
+    /** Email format validation regex. */
     private static final Pattern EMAIL_PATTERN =
             Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
+    /** Timestamp formatter. */
     private static final DateTimeFormatter TS_FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    /** TA data access object. */
     private final TADao taDao;
 
+    /**
+     * Construct the service instance.
+     *
+     * @param taDao TA data access object
+     */
     public ProfileService(TADao taDao) {
         this.taDao = taDao;
     }
 
+    /**
+     * Look up a TA profile by student ID.
+     *
+     * @param studentId student ID
+     * @return operation result containing the TA profile
+     */
     public ServiceResult<TA> getProfileByStudentId(String studentId) {
         if (studentId == null || studentId.isBlank()) {
             return ServiceResult.failure("Student ID cannot be empty.");
@@ -39,6 +63,19 @@ public class ProfileService {
         }
     }
 
+    /**
+     * Save (insert or update) a TA personal profile. Includes validation of
+     * all mandatory fields.
+     *
+     * @param name         TA name
+     * @param studentId    student ID
+     * @param email        email address
+     * @param programme    programme/course
+     * @param skills       skills list
+     * @param experience   experience description
+     * @param availability availability
+     * @return operation result
+     */
     public ServiceResult<TA> saveProfile(
             String name,
             String studentId,

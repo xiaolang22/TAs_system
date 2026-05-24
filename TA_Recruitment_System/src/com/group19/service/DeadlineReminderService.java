@@ -14,6 +14,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Deadline reminder service responsible for generating reminders about upcoming
+ * application deadlines. Supports three views: jobs the user has applied for,
+ * saved jobs, and all open positions.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class DeadlineReminderService {
     public static final int DEFAULT_WITHIN_DAYS = 14;
 

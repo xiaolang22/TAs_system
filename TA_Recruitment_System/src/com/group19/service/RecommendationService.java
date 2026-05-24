@@ -13,6 +13,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * TA recommendation service responsible for automatically generating ranking
+ * recommendations based on position requirements and applicant qualifications.
+ * Combines skill matching (weight 70%) and workload (weight 30%) to compute
+ * a final score.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class RecommendationService {
     private static final double SKILL_MATCH_WEIGHT = 0.7;
     private static final double WORKLOAD_WEIGHT = 0.3;

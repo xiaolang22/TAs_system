@@ -22,6 +22,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * Admin dashboard service responsible for aggregating system-wide overview data.
+ * Covers TA/MO/job statistics, application status distribution, workload monitoring,
+ * and recent activity summaries.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class AdminDashboardService {
     private final UserAccountDao userAccountDao;
     private final ApplicationDao applicationDao;

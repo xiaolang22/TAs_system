@@ -15,18 +15,43 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Job position service handling core job posting business logic.
+ * Includes CRUD operations, open/closed status determination, keyword filtering,
+ * deadline parsing, and expiry detection.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class JobService {
 
+    /** Job position data access object. */
     private final JobDao jobDao;
 
+    /**
+     * Construct the service instance.
+     *
+     * @param jobDao job position data access object
+     */
     public JobService(JobDao jobDao) {
         this.jobDao = jobDao;
     }
 
+    /**
+     * Find a job position by exact job ID.
+     *
+     * @param jobId job position ID
+     * @return the matching job, or {@code null} if not found
+     */
     public Job findById(String jobId) {
         return jobDao.findById(jobId);
     }
 
+    /**
+     * Get the full list of job positions.
+     *
+     * @return a copy of the job list
+     */
     public List<Job> findAllJobs() {
         return new ArrayList<>(jobDao.findAll());
     }

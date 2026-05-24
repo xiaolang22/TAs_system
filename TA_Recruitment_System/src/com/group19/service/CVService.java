@@ -13,13 +13,38 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
+/**
+ * CV file service handling curriculum vitae uploads and cleanup of previous files.
+ * Supports PDF, DOC, and DOCX formats, and automatically removes old CV files
+ * belonging to the same user.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class CVService {
+
+    /** TA data access object. */
     private final TADao taDao;
 
+    /**
+     * Construct the service instance.
+     *
+     * @param taDao TA data access object
+     */
     public CVService(TADao taDao) {
         this.taDao = taDao;
     }
 
+    /**
+     * Upload a curriculum vitae file. Automatically creates/updates the TA profile,
+     * removes old CV files, and saves the new one.
+     *
+     * @param studentId   student ID
+     * @param displayName display name (used when creating a new profile)
+     * @param cvPart      uploaded file Part
+     * @param uploadDir   upload target directory
+     * @return operation result containing the updated profile and optional extracted data
+     */
     public ServiceResult<CVUploadResult> uploadCv(String studentId, String displayName, Part cvPart, Path uploadDir) {
         if (studentId == null || studentId.isBlank()) {
             return ServiceResult.failure("The current account is missing a student ID, so the resume cannot be uploaded.");

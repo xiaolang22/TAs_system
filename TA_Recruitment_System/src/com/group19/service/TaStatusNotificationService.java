@@ -17,6 +17,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * TA status change notification service responsible for generating notification
+ * messages when a TA's application status changes. Supports loading the
+ * notification list, marking all as read, and counting unread items.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class TaStatusNotificationService {
     public static final String TYPE_STATUS_CHANGED = "APPLICATION_STATUS_CHANGED";
     private static final int DASHBOARD_LIMIT = 10;

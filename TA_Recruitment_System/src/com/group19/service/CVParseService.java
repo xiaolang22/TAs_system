@@ -12,6 +12,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * CV parse service responsible for automatically extracting information
+ * from a user's uploaded curriculum vitae and using it to auto-fill the
+ * TA profile form (name, email, skills, etc.).
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class CVParseService {
     private final TADao taDao;
 

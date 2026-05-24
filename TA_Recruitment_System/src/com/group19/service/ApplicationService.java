@@ -11,7 +11,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * Application service handling core business logic for TA position applications,
+ * including submission, queries, status updates with state-transition validation,
+ * timeline recording, and notification triggers.
+ *
+ * <p>Application status transition rules: SUBMITTED &rarr; IN_REVIEW &rarr; SHORTLISTED &rarr; ACCEPTED / REJECTED.</p>
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class ApplicationService {
+
+    /** Valid application status list (ordered by workflow progression). */
     private static final List<String> VALID_STATUSES = Arrays.asList(
             "SUBMITTED",
             "IN_REVIEW",
@@ -19,15 +31,28 @@ public class ApplicationService {
             "ACCEPTED",
             "REJECTED");
 
+    /** Application data access object. */
     private final ApplicationDao applicationDao;
+
+    /** Timeline recorder. */
     private final ApplicationTimelineRecorder timelineRecorder;
+
+    /** TA status change notification service (nullable). */
     private final TaStatusNotificationService taStatusNotificationService;
+
+    /** MO new application notification service (nullable). */
     private final MoNewApplicationNotificationService moNewApplicationNotificationService;
 
+    /**
+     * Basic constructor without notification services.
+     */
     public ApplicationService(ApplicationDao applicationDao, ApplicationTimelineRecorder timelineRecorder) {
         this(applicationDao, timelineRecorder, null, null);
     }
 
+    /**
+     * Constructor with TA notification service.
+     */
     public ApplicationService(
             ApplicationDao applicationDao,
             ApplicationTimelineRecorder timelineRecorder,
@@ -35,6 +60,14 @@ public class ApplicationService {
         this(applicationDao, timelineRecorder, taStatusNotificationService, null);
     }
 
+    /**
+     * Full constructor.
+     *
+     * @param applicationDao                     application data access object
+     * @param timelineRecorder                   timeline recorder
+     * @param taStatusNotificationService        TA status notification service
+     * @param moNewApplicationNotificationService MO new application notification service
+     */
     public ApplicationService(
             ApplicationDao applicationDao,
             ApplicationTimelineRecorder timelineRecorder,
@@ -46,6 +79,16 @@ public class ApplicationService {
         this.moNewApplicationNotificationService = moNewApplicationNotificationService;
     }
 
+    /**
+     * Submit an application for a job position.
+     * Validates parameters, creates the application record, records timeline, and sends notifications.
+     *
+     * @param jobId       job position ID
+     * @param taStudentId TA student ID
+     * @param taName      TA name
+     * @param cvFilePath  CV file path
+     * @return operation result containing the newly created application
+     */
     public ServiceResult<Application> applyForJob(String jobId, String taStudentId, String taName, String cvFilePath) {
         if (jobId == null || jobId.isBlank()) {
             return ServiceResult.failure("Job ID is required.");
@@ -90,6 +133,12 @@ public class ApplicationService {
         return ServiceResult.success(application, "Application submitted successfully.");
     }
 
+    /**
+     * Look up all applications by job position ID.
+     *
+     * @param jobId job position ID
+     * @return list of applications
+     */
     public List<Application> getApplicationsByJobId(String jobId) {
         if (jobId == null || jobId.isBlank()) {
             return new ArrayList<>();
@@ -97,6 +146,15 @@ public class ApplicationService {
         return applicationDao.findByJobId(jobId);
     }
 
+    /**
+     * Update application status. Includes state-transition validation,
+     * timeline recording, and notification dispatch.
+     *
+     * @param applicationId application ID
+     * @param newStatus     new status
+     * @param decisionNote  review note
+     * @return operation result
+     */
     public ServiceResult<Application> updateApplicationStatus(String applicationId, String newStatus, String decisionNote) {
         if (applicationId == null || applicationId.isBlank()) {
             return ServiceResult.failure("Application ID is required.");
@@ -143,10 +201,17 @@ public class ApplicationService {
         return ServiceResult.success(application, "Application status updated successfully.");
     }
 
+    /**
+     * Determine whether the given status string is a valid status.
+     */
     public static boolean isValidStatus(String status) {
         return VALID_STATUSES.contains(normalizeStatus(status));
     }
 
+    /**
+     * Determine whether the status can transition from currentStatus to nextStatus.
+     * Status may only move forward, never backward.
+     */
     public static boolean canTransition(String currentStatus, String nextStatus) {
         String normalizedCurrent = normalizeStatus(currentStatus);
         String normalizedNext = normalizeStatus(nextStatus);
@@ -156,6 +221,9 @@ public class ApplicationService {
         return statusRank(normalizedNext) >= statusRank(normalizedCurrent);
     }
 
+    /**
+     * Get the list of target statuses that are allowed from the current status.
+     */
     public static List<String> getAllowedStatuses(String currentStatus) {
         String normalizedCurrent = normalizeStatus(currentStatus);
         List<String> allowed = new ArrayList<>();
