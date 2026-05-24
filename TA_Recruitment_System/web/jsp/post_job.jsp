@@ -12,76 +12,76 @@
     boolean edited = "true".equals(request.getParameter("edited"));
 %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= editing ? "修改岗位" : "发布岗位" %> - TA 招聘系统</title>
+    <title><%= editing ? "Edit Job" : "Post Job" %> - TA Recruitment System</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body class="ta-page">
 <main class="container ta-subpage-shell">
     <header class="page-header">
         <div>
-            <h1><%= editing ? "修改岗位" : "发布岗位" %></h1>
+            <h1><%= editing ? "Edit Job" : "Post Job" %></h1>
         </div>
         <div class="header-actions">
-            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">返回首页</a>
+            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">Back to Home</a>
         </div>
     </header>
 
-    <p class="alert success <%= "true".equals(success) ? "" : "hidden" %>"><%= edited ? "岗位信息已更新。" : "岗位发布成功。" %></p>
+    <p class="alert success <%= "true".equals(success) ? "" : "hidden" %>"><%= edited ? "Job information has been updated." : "Job posted successfully." %></p>
     <p class="alert error <%= errorMsg == null || errorMsg.trim().isEmpty() ? "hidden" : "" %>"><%= errorMsg == null ? "" : errorMsg %></p>
 
     <form method="post" action="<%= request.getContextPath() %>/mo/post-job" class="profile-form">
         <input type="hidden" name="jobId" value="<%= job.getJobId() == null ? "" : job.getJobId() %>">
 
-        <label for="title">岗位名称</label>
+        <label for="title">Job Title</label>
         <input
                 type="text"
                 id="title"
                 name="title"
-                placeholder="例如：Java 程序设计课程助教"
+                placeholder="e.g. Java Programming Teaching Assistant"
                 value="<%= job.getTitle() == null ? "" : job.getTitle() %>">
 
-        <label for="hours">工作时长</label>
+        <label for="hours">Workload</label>
         <input
                 type="text"
                 id="hours"
                 name="hours"
-                placeholder="例如：6 小时/周"
+                placeholder="e.g. 6 hours/week"
                 value="<%= job.getHours() == null ? "" : job.getHours() %>">
 
-        <label for="description">岗位描述</label>
+        <label for="description">Job Description</label>
         <textarea
                 id="description"
                 name="description"
                 rows="4"
-                placeholder="说明该岗位的主要职责。"><%= job.getDescription() == null ? "" : job.getDescription() %></textarea>
+                placeholder="Describe the key responsibilities for this role."><%= job.getDescription() == null ? "" : job.getDescription() %></textarea>
 
-        <label for="requirements">技能要求</label>
+        <label for="requirements">Skill Requirements</label>
         <textarea
                 id="requirements"
                 name="requirements"
                 rows="4"
-                placeholder="说明希望 TA 具备的技能或经验。"><%= job.getRequirements() == null ? "" : job.getRequirements() %></textarea>
+                placeholder="List the skills or experience expected from the TA."><%= job.getRequirements() == null ? "" : job.getRequirements() %></textarea>
 
-        <label for="schedule">时间安排</label>
+        <label for="schedule">Schedule</label>
         <input
                 type="text"
                 id="schedule"
                 name="schedule"
-                placeholder="例如：周二 14:00-16:00，周四线上答疑"
+                placeholder="e.g. Tuesday 14:00-16:00, Thursday online office hours"
                 value="<%= job.getSchedule() == null ? "" : job.getSchedule() %>">
 
-        <label for="deadline">截止时间</label>
+        <label for="deadline">Application Deadline</label>
         <input
                 type="date"
                 id="deadline"
                 name="deadline"
                 value="<%= job.getDeadline() == null ? "" : job.getDeadline() %>">
 
-        <button type="submit"><%= editing ? "保存修改" : "发布岗位" %></button>
+        <button type="submit"><%= editing ? "Save Changes" : "Post Job" %></button>
     </form>
 </main>
 </body>
