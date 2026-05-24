@@ -47,8 +47,6 @@
     String displayName = loginUser == null ? "" : loginUser.getDisplayName();
     String avatarPath = loginUser == null ? "" : loginUser.getAvatarPath();
     String avatarUrl = avatarPath == null || avatarPath.isBlank() ? "" : request.getContextPath() + avatarPath;
-    String filterMode = (String) request.getAttribute("moFilterMode");
-    boolean matchMode = "match".equalsIgnoreCase(filterMode);
     boolean showMatchDetails = Boolean.TRUE.equals(request.getAttribute("moShowMatchDetails"));
 %>
 <!DOCTYPE html>
@@ -108,22 +106,9 @@
                         <div class="ta-filter-copy">
                             <h1>TA Directory</h1>
                         </div>
-                        <div class="choice-group choice-group-simple ta-mode-switch">
-                            <a class="choice-chip choice-chip-mode <%= matchMode ? "" : "is-active" %>" href="${pageContext.request.contextPath}/mo/home">Keyword Filter</a>
-                            <a class="choice-chip choice-chip-mode <%= matchMode ? "is-active" : "" %>" href="${pageContext.request.contextPath}/mo/home?mode=match">Candidate Skill Matching</a>
-                        </div>
                     </div>
 
                     <form method="get" action="${pageContext.request.contextPath}/mo/home" class="ta-filter-form ta-filter-inline-form">
-                        <input type="hidden" name="mode" value="<%= matchMode ? "match" : "keyword" %>">
-                        <% if (matchMode) { %>
-                        <div class="ta-filter-grid ta-filter-grid-single">
-                            <div class="ta-filter-field">
-                                <label for="requiredSkills">Skill Keywords</label>
-                                <input id="requiredSkills" name="requiredSkills" type="text" value="${moRequiredSkills}" placeholder="For example: Java, communication, data structures">
-                            </div>
-                        </div>
-                        <% } else { %>
                         <div class="ta-filter-grid">
                             <div class="ta-filter-field">
                                 <label for="keyword">Keyword</label>
@@ -138,21 +123,16 @@
                                 <input id="availability" name="availability" type="text" value="${moFilterAvailability}" placeholder="For example: Wednesday afternoon / Monday">
                             </div>
                         </div>
-                        <% } %>
                         <div class="ta-filter-actions">
-                            <button type="submit"><%= matchMode ? "Start Matching" : "Filter" %></button>
-                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home<%= matchMode ? "?mode=match" : "" %>">Reset</a>
+                            <button type="submit">Filter</button>
+                            <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/home">Reset</a>
                         </div>
                     </form>
                 </section>
 
                 <div class="ta-job-summary">
                     Currently showing <strong><%= filteredCandidateCount %></strong> / <strong><%= totalCandidateCount %></strong> TAs.
-                    <% if (matchMode) { %>
-                    <span>Current mode: Candidate Skill Matching</span>
-                    <% } else { %>
                     <span>Current mode: Keyword Filter</span>
-                    <% } %>
                 </div>
 
                 <div class="ta-job-list-wrap">
@@ -190,7 +170,7 @@
                         <% }
                         } else { %>
                         <div class="empty-state">
-                            <%= matchMode ? "No TAs match the current skill-matching criteria." : "No TAs match the current filters." %>
+                            No TAs match the current filters.
                         </div>
                         <% } %>
                     </div>
@@ -210,7 +190,6 @@
                 <div class="ta-quick-links">
                     <a class="link-btn" href="${pageContext.request.contextPath}/mo/post-job">Post Job</a>
                     <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/jobs">Job List</a>
-                    <a class="link-btn secondary" href="${pageContext.request.contextPath}/mo/review">Skill Matching Page</a>
                 </div>
             </section>
 

@@ -78,11 +78,6 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/mo/review</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
         <url-pattern>/ta/upload-cv</url-pattern>
     </filter-mapping>
 
@@ -143,6 +138,11 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
+        <url-pattern>/admin/recommendations</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/mo/workload</url-pattern>
     </filter-mapping>
 
@@ -194,16 +194,6 @@
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CandidateReviewServlet</servlet-name>
-        <servlet-class>com.group19.servlet.CandidateReviewServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>CandidateReviewServlet</servlet-name>
-        <url-pattern>/mo/review</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -324,6 +314,16 @@
     <servlet-mapping>
         <servlet-name>WorkloadServlet</servlet-name>
         <url-pattern>/admin/workload</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminRecommendationServlet</servlet-name>
+        <servlet-class>com.group19.servlet.AdminRecommendationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminRecommendationServlet</servlet-name>
+        <url-pattern>/admin/recommendations</url-pattern>
     </servlet-mapping>
 
     <servlet>

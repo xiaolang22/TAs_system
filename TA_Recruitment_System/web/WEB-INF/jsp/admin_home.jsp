@@ -285,6 +285,7 @@
                     </div>
                     <div class="admin-inline-actions">
                         <a class="link-btn secondary" href="<%= adminUrl(request.getContextPath(), selectedTaId, selectedMoId, null, JOB_PANEL) %>">Hide Details</a>
+                        <a class="link-btn" href="${pageContext.request.contextPath}/admin/recommendations?jobId=<%= attr(selectedJob.getJobId()) %>">View TA Recommendations</a>
                     </div>
                     <form method="post" action="${pageContext.request.contextPath}/admin/home" class="admin-edit-form">
                         <input type="hidden" name="action" value="updateJob">
@@ -402,6 +403,9 @@
                         <span class="label">Time conflicts</span>
                         <span class="value">${timeConflictCount}</span>
                     </div>
+                </div>
+                <div class="admin-inline-actions">
+                    <a class="link-btn" href="${pageContext.request.contextPath}/admin/recommendations">TA Recommendations</a>
                 </div>
             </section>
 

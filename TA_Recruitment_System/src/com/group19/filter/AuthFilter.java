@@ -57,11 +57,6 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if ("/mo/review".equals(servletPath) && !"MO".equalsIgnoreCase(loginUser.getRole())) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only MO can access candidate review.");
-            return;
-        }
-
         if ("/ta/upload-cv".equals(servletPath) && !"TA".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only TA can upload CV.");
             return;
@@ -114,6 +109,11 @@ public class AuthFilter implements Filter {
 
         if ("/admin/workload".equals(servletPath) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access workload dashboard.");
+            return;
+        }
+
+        if ("/admin/recommendations".equals(servletPath) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Only admin can access TA recommendations.");
             return;
         }
 

@@ -192,7 +192,7 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void prepareMoCandidates(HttpServletRequest req) {
-        String filterMode = normalizeMoFilterMode(req.getParameter("mode"));
+        String filterMode = "keyword";
         String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
         String programme = trimToNull(req.getParameter("programme"));
         String availability = trimToNull(req.getParameter("availability"));
@@ -207,21 +207,6 @@ public class HomeServlet extends HttpServlet {
 
         if (!allResult.isSuccess()) {
             req.setAttribute("moCandidateError", allResult.getMessage());
-        } else if ("match".equals(filterMode)) {
-            if (requiredSkills == null) {
-                req.setAttribute("moCandidateInfo", "Enter required job skills to rank TAs by match score.");
-            } else {
-                ServiceResult<List<MoTaCandidateCard>> matchResult =
-                        moTaDirectoryService.matchCandidates(allCandidates, requiredSkills);
-                if (matchResult.isSuccess()) {
-                    visibleCandidates = matchResult.getData();
-                    attachMoCandidateUrls(req, visibleCandidates);
-                    showMatchDetails = true;
-                } else {
-                    visibleCandidates = new ArrayList<>();
-                    req.setAttribute("moCandidateError", matchResult.getMessage());
-                }
-            }
         } else {
             visibleCandidates = moTaDirectoryService.filterCandidates(allCandidates, keyword, programme, availability);
         }
@@ -383,10 +368,6 @@ public class HomeServlet extends HttpServlet {
             return preferred;
         }
         return fallback;
-    }
-
-    private static String normalizeMoFilterMode(String mode) {
-        return "match".equalsIgnoreCase(mode) ? "match" : "keyword";
     }
 
     private static String trimToNull(String value) {
