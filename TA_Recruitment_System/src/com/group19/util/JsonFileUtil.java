@@ -10,6 +10,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JSON file read/write utility using Gson for serialisation.
+ * Provides serialisation and deserialisation between Java object lists and JSON array
+ * files. Thread-safe (uses synchronised methods) and automatically creates missing files.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public final class JsonFileUtil {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 

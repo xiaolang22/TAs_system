@@ -9,6 +9,15 @@ import java.nio.file.StandardCopyOption;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * File upload utility class.
+ * Provides upload validation and storage for CV files (PDF/DOC/DOCX) and avatar
+ * images (PNG/JPG/GIF/WEBP). Includes file type checking, safe file name generation,
+ * and writing Part streams to disk.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public final class FileUploadUtil {
     private static final Set<String> ALLOWED_EXTENSIONS = Set.of("pdf", "doc", "docx");
     private static final Set<String> ALLOWED_IMAGE_EXTENSIONS = Set.of("png", "jpg", "jpeg", "gif", "webp");

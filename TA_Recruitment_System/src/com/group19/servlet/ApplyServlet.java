@@ -22,11 +22,34 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
+/**
+ * Job Application Servlet, handling TA users' job application operations.
+ *
+ * <p>URL handled: /apply
+ *
+ * <p>Processing flow:
+ * <ol>
+ *   <li>Verify the TA's login state</li>
+ *   <li>Check that the job exists and is open for applications</li>
+ *   <li>Check that the TA has completed their application materials</li>
+ *   <li>Submit the application and redirect to the result page</li>
+ * </ol>
+ *
+ * <p>Permissions: accessible only by TA role (POST method).
+ *
+ * @author Group 19
+ * @see ApplicationService
+ * @see JobService
+ */
 public class ApplyServlet extends HttpServlet {
     private ApplicationService applicationService;
     private TADao taDao;
     private JobService jobService;
 
+    /**
+     * Initialises the Servlet, loads TA data, application data, and job data files,
+     * and creates the relevant service instances.
+     */
     @Override
     public void init() {
         Path taFilePath = DataPathResolver.resolve(
@@ -40,6 +63,24 @@ public class ApplyServlet extends HttpServlet {
         this.jobService = new JobService(new JobDao(jobFilePath));
     }
 
+    /**
+     * Handles POST requests: executes the TA's job application operation.
+     *
+     * <p>Processing steps:
+     * <ol>
+     *   <li>Verify the user's login state and TA role</li>
+     *   <li>Validate the job ID parameter</li>
+     *   <li>Check that the job exists and is open for applications</li>
+     *   <li>Check that the TA has completed their profile</li>
+     *   <li>Call the service layer to submit the application</li>
+     *   <li>Redirect based on the result (success or failure)</li>
+     * </ol>
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @throws ServletException if a Servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -93,6 +134,13 @@ public class ApplyServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Builds a home page redirect URL with an error message.
+     *
+     * @param req     the HTTP request, used to obtain the context path
+     * @param message the error message
+     * @return the full redirect URL
+     */
     private String buildHomeErrorUrl(HttpServletRequest req, String message) {
         return req.getContextPath() + "/home?error=" + URLEncoder.encode(message, StandardCharsets.UTF_8);
     }

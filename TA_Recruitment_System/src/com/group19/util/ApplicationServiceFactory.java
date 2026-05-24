@@ -12,6 +12,14 @@ import jakarta.servlet.ServletContext;
 
 import java.nio.file.Path;
 
+/**
+ * Factory class for ApplicationService, assembling it together with all its
+ * dependencies (DAO, timeline recorder, notification services) to simplify the
+ * dependency injection flow during Servlet initialisation.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public final class ApplicationServiceFactory {
     private ApplicationServiceFactory() {
     }

@@ -13,6 +13,21 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * Authentication filter that intercepts protected paths, verifying that the user is
+ * logged in and has the appropriate role.
+ *
+ * <p>Filter logic:
+ * <ol>
+ *   <li>Check whether a loginUser exists in the session; if not, redirect to the login page.</li>
+ *   <li>Verify the user's role against the current request path; return 403 if the role does not match.</li>
+ *   <li>Allow the request through once verification passes.</li>
+ * </ol>
+ * </p>
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {

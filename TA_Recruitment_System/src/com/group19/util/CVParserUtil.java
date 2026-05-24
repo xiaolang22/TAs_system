@@ -20,6 +20,15 @@ import java.util.zip.ZipInputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+/**
+ * Curriculum vitae (CV) parsing utility class.
+ * Supports PDF, DOCX, and plain-text CV files, automatically extracting structured
+ * information such as education background, skills, and work experience.
+ * Uses Apache PDFBox for PDF parsing; extracts text from DOCX by decompressing its XML.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public final class CVParserUtil {
     private static final int MAX_SECTION_LENGTH = 600;
 

@@ -17,12 +17,36 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Candidate Intelligent Evaluation Servlet, providing MOs with
+ * skill-match-based ranking of candidate TAs.
+ *
+ * <p>URL handled: /candidate-review
+ *
+ * <p>Processing flow:
+ * <ol>
+ *   <li>Verify the MO identity</li>
+ *   <li>Obtain required skills input by the MO (requiredSkills)</li>
+ *   <li>Call the matching service to score and rank candidates</li>
+ *   <li>Pass the matching results as JSON to the front-end page for rendering</li>
+ * </ol>
+ *
+ * <p>Permissions: accessible only by MO role.
+ *
+ * @author Group 19
+ * @see MatchingService
+ */
 public class CandidateReviewServlet extends HttpServlet {
+    /** Default required skill keywords */
     private static final String DEFAULT_REQUIRED_SKILLS = "Java, communication, problem solving";
 
     private final Gson gson = new Gson();
     private MatchingService matchingService;
 
+    /**
+     * Initialises the Servlet, resolves the TA data file path, and creates the
+     * MatchingService instance.
+     */
     @Override
     public void init() {
         String configuredPath = getServletContext().getInitParameter("taDataFile");
@@ -34,6 +58,24 @@ public class CandidateReviewServlet extends HttpServlet {
         this.matchingService = new MatchingService(new TADao(filePath));
     }
 
+    /**
+     * Handles GET requests: displays the candidate intelligent evaluation page.
+     *
+     * <p>Processing steps:
+     * <ol>
+     *   <li>Verify the MO login identity</li>
+     *   <li>Read the required skills parameter; use default skills if not provided</li>
+     *   <li>If the user has already searched, call the matching service to compute
+     *       candidate TA scores</li>
+     *   <li>Convert the matching results into safe JSON and write to the page</li>
+     *   <li>Forward to candidate_review.jsp</li>
+     * </ol>
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @throws ServletException if a Servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -73,6 +115,13 @@ public class CandidateReviewServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/candidate_review.jsp").forward(req, resp);
     }
 
+    /**
+     * Resolves the absolute path of a data file, preferring the web application's real
+     * path and falling back to the working directory.
+     *
+     * @param webRelativePath the web-relative path
+     * @return the absolute path of the data file
+     */
     private Path resolveDataPath(String webRelativePath) {
         String realPath = getServletContext().getRealPath(webRelativePath);
         if (realPath != null && !realPath.isBlank()) {
@@ -82,6 +131,13 @@ public class CandidateReviewServlet extends HttpServlet {
         return Paths.get(System.getProperty("user.dir"), "data", "tas.json");
     }
 
+    /**
+     * Converts the candidate match result list into a safe JSON string by escaping
+     * special HTML characters to prevent XSS.
+     *
+     * @param results the list of candidate match results
+     * @return a safe JSON string
+     */
     private String toInlineJson(List<CandidateMatchResult> results) {
         String json = gson.toJson(results == null ? Collections.emptyList() : results);
         return json
@@ -90,6 +146,12 @@ public class CandidateReviewServlet extends HttpServlet {
                 .replace("&", "\\u0026");
     }
 
+    /**
+     * Normalises the string, returning an empty string for null values.
+     *
+     * @param value the input string
+     * @return the trimmed string, or an empty string if null
+     */
     private static String normalize(String value) {
         return value == null ? "" : value.trim();
     }
