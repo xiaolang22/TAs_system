@@ -11,15 +11,37 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Data access object for SavedJob entities, responsible for reading and writing
+ * saved (bookmarked) job data stored in JSON files. Supports querying saved jobs
+ * by user, duplicate checking by user and job, and removing saved jobs.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class SavedJobDao {
+
+    /** File path to the saved jobs data JSON file. */
     private final Path savedJobFilePath;
+
+    /** Type token required for Gson deserialisation. */
     private final Type listType = new TypeToken<List<SavedJob>>() {
     }.getType();
 
+    /**
+     * Constructs a new SavedJobDao instance.
+     *
+     * @param savedJobFilePath file path to the saved jobs data JSON file
+     */
     public SavedJobDao(Path savedJobFilePath) {
         this.savedJobFilePath = savedJobFilePath;
     }
 
+    /**
+     * Retrieves all saved job records.
+     *
+     * @return a list of saved jobs, or an empty list if reading fails
+     */
     public List<SavedJob> findAll() {
         try {
             List<SavedJob> savedJobs = JsonFileUtil.readList(savedJobFilePath, listType);
@@ -30,6 +52,12 @@ public class SavedJobDao {
         }
     }
 
+    /**
+     * Finds all saved job records for a given user ID (case-insensitive).
+     *
+     * @param userId the user ID
+     * @return a list of saved jobs belonging to the user
+     */
     public List<SavedJob> findByUserId(String userId) {
         List<SavedJob> result = new ArrayList<>();
         if (userId == null || userId.isBlank()) {
@@ -45,6 +73,13 @@ public class SavedJobDao {
         return result;
     }
 
+    /**
+     * Finds a saved job record by user ID and job ID (case-insensitive).
+     *
+     * @param userId the user ID
+     * @param jobId  the job ID
+     * @return the matching SavedJob, or {@code null} if not found
+     */
     public SavedJob findByUserIdAndJobId(String userId, String jobId) {
         if (userId == null || userId.isBlank() || jobId == null || jobId.isBlank()) {
             return null;
@@ -62,6 +97,12 @@ public class SavedJobDao {
         return null;
     }
 
+    /**
+     * Saves a new saved job record (no-op if a duplicate already exists).
+     *
+     * @param savedJob the SavedJob object to save
+     * @return {@code true} if the write operation succeeds
+     */
     public boolean save(SavedJob savedJob) {
         if (savedJob == null || isBlank(savedJob.getUserId()) || isBlank(savedJob.getJobId())) {
             return false;
@@ -81,6 +122,13 @@ public class SavedJobDao {
         }
     }
 
+    /**
+     * Removes a saved job record by user ID and job ID.
+     *
+     * @param userId the user ID
+     * @param jobId  the job ID
+     * @return {@code true} if the deletion succeeds
+     */
     public boolean delete(String userId, String jobId) {
         if (isBlank(userId) || isBlank(jobId)) {
             return false;
@@ -114,10 +162,17 @@ public class SavedJobDao {
         }
     }
 
+    /**
+     * Safely retrieves a string value, converting {@code null} to an empty string
+     * and trimming whitespace.
+     */
     private static String safe(String value) {
         return value == null ? "" : value.trim();
     }
 
+    /**
+     * Checks whether a string is blank.
+     */
     private static boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
     }

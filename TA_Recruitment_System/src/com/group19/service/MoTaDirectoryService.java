@@ -17,6 +17,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * MO-side TA directory service responsible for loading and filtering all TA
+ * candidate information in the system. Supports searching and filtering by
+ * skills, programme, and other criteria for MOs to browse and match TAs.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class MoTaDirectoryService {
     private final TADao taDao;
     private final UserAccountDao userAccountDao;

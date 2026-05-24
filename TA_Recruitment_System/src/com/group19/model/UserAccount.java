@@ -1,17 +1,51 @@
 package com.group19.model;
 
+/**
+ * User account entity class, recording login account information for all users
+ * in the system. Supports three roles: TA, MO, and ADMIN; contains frozen status
+ * management and avatar path.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class UserAccount {
+
+    /** Username */
     private String username;
+
+    /** Login password */
     private String password;
+
+    /** User role (TA / MO / ADMIN) */
     private String role;
+
+    /** Display name */
     private String displayName;
+
+    /** Unique identifier for the user (student/staff ID) */
     private String userId;
+
+    /** Avatar file path */
     private String avatarPath;
+
+    /** Whether the account is frozen */
     private boolean frozen;
 
+    /**
+     * Default no-argument constructor.
+     */
     public UserAccount() {
     }
 
+    /**
+     * Creates a basic user account (not frozen by default, no avatar).
+     *
+     * @param username    Username
+     * @param password    Password
+     * @param role        Role
+     * @param displayName Display name
+     * @param userId      Unique identifier for the user
+     */
     public UserAccount(
             String username,
             String password,
@@ -21,6 +55,16 @@ public class UserAccount {
         this(username, password, role, displayName, userId, "", false);
     }
 
+    /**
+     * Creates a user account with an avatar (not frozen by default).
+     *
+     * @param username    Username
+     * @param password    Password
+     * @param role        Role
+     * @param displayName Display name
+     * @param userId      Unique identifier for the user
+     * @param avatarPath  Avatar path
+     */
     public UserAccount(
             String username,
             String password,
@@ -31,6 +75,17 @@ public class UserAccount {
         this(username, password, role, displayName, userId, avatarPath, false);
     }
 
+    /**
+     * Creates a complete user account.
+     *
+     * @param username    Username
+     * @param password    Password
+     * @param role        Role
+     * @param displayName Display name
+     * @param userId      Unique identifier for the user
+     * @param avatarPath  Avatar path
+     * @param frozen      Whether the account is frozen
+     */
     public UserAccount(
             String username,
             String password,
@@ -48,59 +103,38 @@ public class UserAccount {
         this.frozen = frozen;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    /** @return Username */
+    public String getUsername() { return username; }
+    /** @param username Username */
+    public void setUsername(String username) { this.username = username; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    /** @return Password */
+    public String getPassword() { return password; }
+    /** @param password Password */
+    public void setPassword(String password) { this.password = password; }
 
-    public String getPassword() {
-        return password;
-    }
+    /** @return Role */
+    public String getRole() { return role; }
+    /** @param role Role */
+    public void setRole(String role) { this.role = role; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    /** @return Display name */
+    public String getDisplayName() { return displayName; }
+    /** @param displayName Display name */
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
-    public String getRole() {
-        return role;
-    }
+    /** @return Unique identifier for the user */
+    public String getUserId() { return userId; }
+    /** @param userId Unique identifier for the user */
+    public void setUserId(String userId) { this.userId = userId; }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+    /** @return Avatar path */
+    public String getAvatarPath() { return avatarPath; }
+    /** @param avatarPath Avatar path */
+    public void setAvatarPath(String avatarPath) { this.avatarPath = avatarPath; }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
-    }
-
-    public boolean isFrozen() {
-        return frozen;
-    }
-
-    public void setFrozen(boolean frozen) {
-        this.frozen = frozen;
-    }
+    /** @return Whether the account is frozen */
+    public boolean isFrozen() { return frozen; }
+    /** @param frozen Whether the account is frozen */
+    public void setFrozen(boolean frozen) { this.frozen = frozen; }
 }

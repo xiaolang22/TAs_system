@@ -16,6 +16,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * MO new application notification service responsible for informing the MO
+ * of a job position whenever a TA submits a new application. Supports loading
+ * MO dashboard notifications, marking as read, and counting unread items.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class MoNewApplicationNotificationService {
     public static final String TYPE_NEW_APPLICATION = "NEW_APPLICATION_SUBMITTED";
     private static final int DASHBOARD_LIMIT = 10;

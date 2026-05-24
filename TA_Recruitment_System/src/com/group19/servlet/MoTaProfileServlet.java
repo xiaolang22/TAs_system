@@ -19,9 +19,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * MO views TA profile servlet, handling Module Organiser viewing of Teaching
+ * Assistant personal profiles and CVs.
+ *
+ * <p>URL handled: /mo/ta-profile
+ *
+ * <p>Processing flow:
+ * <ol>
+ *   <li>Verify MO login identity</li>
+ *   <li>Load detailed candidate TA information based on studentId</li>
+ *   <li>Attach avatar URL, CV availability, and other information</li>
+ *   <li>Support returning to the source page via backUrl/backLabel parameters</li>
+ *   <li>Forward to mo_ta_profile.jsp for display</li>
+ * </ol>
+ *
+ * <p>Permissions: accessible only by MO role.
+ *
+ * @author Group 19
+ * @see MoTaDirectoryService
+ */
 public class MoTaProfileServlet extends HttpServlet {
     private MoTaDirectoryService moTaDirectoryService;
 
+    /**
+     * Initialises the Servlet, loads TA data and user data files, and creates the
+     * MoTaDirectoryService instance.
+     */
     @Override
     public void init() {
         Path taPath = DataPathResolver.resolve(
@@ -31,6 +55,23 @@ public class MoTaProfileServlet extends HttpServlet {
         this.moTaDirectoryService = new MoTaDirectoryService(new TADao(taPath), new UserAccountDao(userPath));
     }
 
+    /**
+     * Handles GET requests: displays the detailed profile page for a specified TA.
+     *
+     * <p>Processing steps:
+     * <ol>
+     *   <li>Verify MO login state</li>
+     *   <li>Obtain the studentId parameter and load candidate TA data</li>
+     *   <li>If loading fails, display an error message</li>
+     *   <li>Attach avatar URL and CV file availability information</li>
+     *   <li>Forward to mo_ta_profile.jsp</li>
+     * </ol>
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @throws ServletException if a Servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -62,6 +103,13 @@ public class MoTaProfileServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/mo_ta_profile.jsp").forward(req, resp);
     }
 
+    /**
+     * Resolves the return URL, allowing only whitelisted paths; falls back to the
+     * MO home page otherwise.
+     *
+     * @param req the HTTP request
+     * @return a safe return URL
+     */
     private String resolveBackUrl(HttpServletRequest req) {
         String fallback = req.getContextPath() + "/mo/home";
         String raw = trimToNull(req.getParameter("backUrl"));
@@ -77,6 +125,13 @@ public class MoTaProfileServlet extends HttpServlet {
         return fallback;
     }
 
+    /**
+     * Resolves the label text for the back button, preferring the backLabel
+     * parameter and otherwise inferring from the return URL.
+     *
+     * @param req the HTTP request
+     * @return the label text for the back button
+     */
     private String resolveBackLabel(HttpServletRequest req) {
         String backUrl = resolveBackUrl(req);
         String rawLabel = trimToNull(req.getParameter("backLabel"));
@@ -92,6 +147,13 @@ public class MoTaProfileServlet extends HttpServlet {
         return "Back to Home";
     }
 
+    /**
+     * Attaches the avatar URL and CV file availability information to a candidate
+     * TA card.
+     *
+     * @param req       the HTTP request
+     * @param candidate the candidate TA card object
+     */
     private void attachCandidateAssets(HttpServletRequest req, MoTaCandidateCard candidate) {
         if (candidate == null) {
             return;
@@ -106,6 +168,12 @@ public class MoTaProfileServlet extends HttpServlet {
         candidate.setCvUrl(resumeAvailable ? contextPath + cvFilePath : "");
     }
 
+    /**
+     * Checks whether the specified CV file exists on the server.
+     *
+     * @param cvFilePath the CV file path
+     * @return true if the file exists
+     */
     private boolean hasUploadedResume(String cvFilePath) {
         if (cvFilePath == null || cvFilePath.isBlank()) {
             return false;
@@ -121,6 +189,12 @@ public class MoTaProfileServlet extends HttpServlet {
         return Files.exists(Paths.get(System.getProperty("user.dir"), "web", normalized));
     }
 
+    /**
+     * Trims the string and returns null if the result is empty.
+     *
+     * @param value the input string
+     * @return the trimmed string, or null if empty
+     */
     private static String trimToNull(String value) {
         if (value == null) {
             return null;

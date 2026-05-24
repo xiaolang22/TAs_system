@@ -27,6 +27,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Workload service responsible for tracking and monitoring TA workload.
+ * Includes parsing hours text, computing total assigned hours, detecting
+ * time conflicts, and issuing workload warnings.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class WorkloadService {
     private static final int DEFAULT_MAX_WEEKLY_WORKLOAD_HOURS = 20;
     private static final Pattern FIRST_NUMBER = Pattern.compile("(\\d+(?:\\.\\d+)?)");

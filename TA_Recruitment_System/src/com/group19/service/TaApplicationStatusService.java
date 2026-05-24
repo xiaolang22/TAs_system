@@ -18,6 +18,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * TA application status query service responsible for providing application
+ * status overviews and timeline display data for the TA side. Assembles
+ * application records, job information, and timeline events into display
+ * view objects needed by the front end.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class TaApplicationStatusService {
     private static final DateTimeFormatter DISPLAY_FORMAT =
             DateTimeFormatter.ofPattern("MMM d, yyyy HH:mm", Locale.ENGLISH);

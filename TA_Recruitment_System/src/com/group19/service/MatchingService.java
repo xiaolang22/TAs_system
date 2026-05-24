@@ -14,6 +14,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Skill matching service responsible for evaluating match scores between TA
+ * candidates and position requirement skills. Supports parsing skill requirement
+ * text, computing match scores, and identifying missing skills.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class MatchingService {
     private final TADao taDao;
 

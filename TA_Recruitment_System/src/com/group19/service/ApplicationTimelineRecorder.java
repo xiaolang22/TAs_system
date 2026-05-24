@@ -6,6 +6,14 @@ import com.group19.model.TimelineEvent;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * Application timeline recorder responsible for capturing status-change events
+ * throughout the application workflow. Each status change (submission, in review,
+ * accepted, rejected, etc.) creates a timeline event that is persisted.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class ApplicationTimelineRecorder {
     private final TimelineDao timelineDao;
 

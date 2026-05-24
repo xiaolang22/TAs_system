@@ -22,6 +22,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Applicant review service handling core logic for MOs to view and assess job applicants.
+ * Includes applicant listing, skill-keyword matching, sorting, and filtering capabilities.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class ApplicantReviewService {
     private static final Set<String> STOP_WORDS = Set.of(
             "a", "an", "and", "are", "as", "be", "by", "for", "from", "good", "help", "helping",

@@ -35,6 +35,28 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Home page routing Servlet, dispatching requests to the corresponding home page
+ * view based on the user's role.
+ *
+ * <p>URL patterns handled:
+ * <ul>
+ *   <li>/home -- generic home entry point, redirects based on role</li>
+ *   <li>/ta/home -- Teaching Assistant home, displaying available jobs, saved jobs,
+ *       notifications, etc.</li>
+ *   <li>/mo/home -- Module Organiser home, displaying candidate TA directory,
+ *       notifications, job overview, etc.</li>
+ *   <li>/admin/home -- Administrator home, displaying system dashboard statistics</li>
+ * </ul>
+ *
+ * <p>Permissions: accessible by all logged-in users; different content is shown
+ * based on role.
+ *
+ * @author Group 19
+ * @see JobService
+ * @see MoTaDirectoryService
+ * @see AdminDashboardService
+ */
 public class HomeServlet extends HttpServlet {
     private JobDao jobDao;
     private ApplicationDao applicationDao;
@@ -47,6 +69,9 @@ public class HomeServlet extends HttpServlet {
     private MoTaDirectoryService moTaDirectoryService;
     private AdminDashboardService adminDashboardService;
 
+    /**
+     * Initialises the Servlet, loads all data files, and creates the various service instances.
+     */
     @Override
     public void init() {
         Path savedJobPath = DataPathResolver.resolve(
@@ -83,6 +108,25 @@ public class HomeServlet extends HttpServlet {
                 new TADao(taPath));
     }
 
+    /**
+     * Handles GET requests: routes to the corresponding home page view based on the
+     * user's role and servletPath.
+     *
+     * <p>Processing steps:
+     * <ol>
+     *   <li>Verify the user's login state</li>
+     *   <li>For the /home path, redirect to the role-specific home page</li>
+     *   <li>For /ta/home, load TA home page data (jobs, notifications, saved jobs, etc.)</li>
+     *   <li>For /mo/home, load MO home page data (notifications, job statistics,
+     *       candidate TA directory, etc.)</li>
+     *   <li>For /admin/home, load administrator dashboard statistics</li>
+     * </ol>
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @throws ServletException if a Servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -166,6 +210,14 @@ public class HomeServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + roleHomePath(loginUser));
     }
 
+    /**
+     * Prepares job data for the TA home page, supporting keyword, schedule, and skill
+     * filtering as well as viewing hidden jobs.
+     *
+     * @param req         the HTTP request
+     * @param today       the current date
+     * @param taStudentId the TA's student ID
+     */
     private void prepareTaJobs(HttpServletRequest req, LocalDate today, String taStudentId) {
         String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
         String schedule = trimToNull(req.getParameter("schedule"));
@@ -191,6 +243,12 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("taUserId", taStudentId);
     }
 
+    /**
+     * Prepares candidate TA data for the MO home page, supporting keyword/programme/
+     * availability filtering and skill-match mode.
+     *
+     * @param req the HTTP request
+     */
     private void prepareMoCandidates(HttpServletRequest req) {
         String filterMode = normalizeMoFilterMode(req.getParameter("mode"));
         String keyword = trimToNull(firstNonBlank(req.getParameter("keyword"), req.getParameter("q")));
@@ -237,6 +295,11 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("moShowMatchDetails", showMatchDetails);
     }
 
+    /**
+     * Prepares administrator dashboard statistics and binds them to request attributes.
+     *
+     * @param req the HTTP request
+     */
     private void prepareAdminDashboardStats(HttpServletRequest req) {
         ServiceResult<AdminDashboardData> result = adminDashboardService.loadDashboard(
                 trimToNull(req.getParameter("selectedTaId")),
@@ -268,6 +331,12 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("recentAlerts", data.getRecentAlerts());
     }
 
+    /**
+     * Attaches context-relative URLs (avatar, CV preview, etc.) to candidate TA cards.
+     *
+     * @param req        the HTTP request
+     * @param candidates the list of candidate TA cards
+     */
     private static void attachMoCandidateUrls(HttpServletRequest req, List<MoTaCandidateCard> candidates) {
         if (candidates == null) {
             return;
@@ -286,6 +355,13 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Checks whether the specified CV file exists on the server.
+     *
+     * @param req        the HTTP request
+     * @param cvFilePath the CV file path
+     * @return true if the file exists
+     */
     private static boolean hasUploadedResume(HttpServletRequest req, String cvFilePath) {
         if (cvFilePath == null || cvFilePath.isBlank()) {
             return false;
@@ -302,6 +378,11 @@ public class HomeServlet extends HttpServlet {
         return Files.exists(Paths.get(System.getProperty("user.dir"), "web", normalized));
     }
 
+    /**
+     * Sets saved-job operation feedback messages into request attributes.
+     *
+     * @param req the HTTP request
+     */
     private static void setSavedJobFeedback(HttpServletRequest req) {
         String message = trimToNull(req.getParameter("savedJobMessage"));
         String error = trimToNull(req.getParameter("savedJobError"));
@@ -313,6 +394,11 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Sets page-level error messages into request attributes.
+     *
+     * @param req the HTTP request
+     */
     private static void setPageError(HttpServletRequest req) {
         String error = trimToNull(req.getParameter("error"));
         if (error != null) {
@@ -320,12 +406,24 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Builds the full path of the current request (including query parameters).
+     *
+     * @param req the HTTP request
+     * @return the request path string
+     */
     private static String buildCurrentRequestPath(HttpServletRequest req) {
         String query = req.getQueryString();
         String path = req.getRequestURI();
         return query == null || query.isBlank() ? path : path + "?" + query;
     }
 
+    /**
+     * Determines whether a string value is truthy (1, true, yes).
+     *
+     * @param value the input string
+     * @return true if the value is truthy
+     */
     private static boolean isTruthy(String value) {
         if (value == null) {
             return false;
@@ -334,6 +432,15 @@ public class HomeServlet extends HttpServlet {
         return "1".equals(t) || "true".equalsIgnoreCase(t) || "yes".equalsIgnoreCase(t);
     }
 
+    /**
+     * Builds the URL for viewing hidden jobs.
+     *
+     * @param req      the HTTP request
+     * @param keyword  the filter keyword
+     * @param schedule the schedule filter
+     * @param skills   the skills filter
+     * @return the URL for the hidden job list
+     */
     private static String buildViewHiddenJobsUrl(HttpServletRequest req, String keyword,
                                                  String schedule, String skills) {
         List<String> parts = new ArrayList<>();
@@ -344,6 +451,14 @@ public class HomeServlet extends HttpServlet {
         return req.getContextPath() + "/ta/home?" + String.join("&", parts);
     }
 
+    /**
+     * Redirects the generic /home path to the home page corresponding to the user's role.
+     *
+     * @param req       the HTTP request
+     * @param resp      the HTTP response
+     * @param loginUser the currently logged-in user
+     * @throws IOException if an I/O error occurs
+     */
     private static void redirectToRoleHome(HttpServletRequest req, HttpServletResponse resp, LoginUser loginUser)
             throws IOException {
         String query = req.getQueryString();
@@ -354,6 +469,12 @@ public class HomeServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + target);
     }
 
+    /**
+     * Returns the home page path corresponding to the user's role.
+     *
+     * @param loginUser the logged-in user
+     * @return the role-specific home page path
+     */
     private static String roleHomePath(LoginUser loginUser) {
         if (loginUser == null || loginUser.getRole() == null) {
             return "/login";
@@ -371,6 +492,13 @@ public class HomeServlet extends HttpServlet {
         return "/login";
     }
 
+    /**
+     * Appends a non-blank parameter to the query parameter list.
+     *
+     * @param parts the query parameter list
+     * @param name  the parameter name
+     * @param raw   the parameter value
+     */
     private static void appendQuery(List<String> parts, String name, String raw) {
         if (raw == null || raw.isBlank()) {
             return;
@@ -378,6 +506,13 @@ public class HomeServlet extends HttpServlet {
         parts.add(name + "=" + java.net.URLEncoder.encode(raw, StandardCharsets.UTF_8));
     }
 
+    /**
+     * Returns the first non-blank value from two strings.
+     *
+     * @param preferred the preferred value
+     * @param fallback  the fallback value
+     * @return the first non-blank string
+     */
     private static String firstNonBlank(String preferred, String fallback) {
         if (preferred != null && !preferred.isBlank()) {
             return preferred;
@@ -385,10 +520,23 @@ public class HomeServlet extends HttpServlet {
         return fallback;
     }
 
+    /**
+     * Normalises the MO candidate filter mode, accepting only "match"; otherwise
+     * defaults to "keyword".
+     *
+     * @param mode the mode parameter
+     * @return the normalised filter mode
+     */
     private static String normalizeMoFilterMode(String mode) {
         return "match".equalsIgnoreCase(mode) ? "match" : "keyword";
     }
 
+    /**
+     * Trims the string and returns null if the result is empty.
+     *
+     * @param value the input string
+     * @return the trimmed string, or null if empty
+     */
     private static String trimToNull(String value) {
         if (value == null) {
             return null;
@@ -397,6 +545,12 @@ public class HomeServlet extends HttpServlet {
         return t.isEmpty() ? null : t;
     }
 
+    /**
+     * Converts a null string to an empty string.
+     *
+     * @param value the input string
+     * @return a non-null string
+     */
     private static String nullToEmpty(String value) {
         return value == null ? "" : value;
     }

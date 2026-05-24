@@ -22,13 +22,37 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
+/**
+ * Administrator Dashboard Servlet, handling comprehensive system management operations.
+ *
+ * <p>URL handled: /admin/home
+ *
+ * <p>Management panels supported:
+ * <ul>
+ *   <li>TA Management panel -- view TA list, reset passwords, freeze/unfreeze accounts</li>
+ *   <li>MO Management panel -- view MO list, reset passwords, freeze/unfreeze accounts</li>
+ *   <li>Job Management panel -- view/edit/delete job information</li>
+ * </ul>
+ *
+ * <p>Permissions: accessible only by ADMIN role.
+ *
+ * @author Group 19
+ * @see AdminDashboardService
+ */
 public class AdminDashboardServlet extends HttpServlet {
+    /** Focus section identifier for the TA management panel */
     private static final String TA_PANEL = "admin-ta-panel";
+    /** Focus section identifier for the MO management panel */
     private static final String MO_PANEL = "admin-mo-panel";
+    /** Focus section identifier for the Job management panel */
     private static final String JOB_PANEL = "admin-job-panel";
 
     private AdminDashboardService adminDashboardService;
 
+    /**
+     * Initialises the Servlet, loads user, application, job, and TA data files,
+     * and creates the AdminDashboardService instance.
+     */
     @Override
     public void init() {
         Path userPath = DataPathResolver.resolve(
@@ -46,6 +70,22 @@ public class AdminDashboardServlet extends HttpServlet {
                 new TADao(taPath));
     }
 
+    /**
+     * Handles GET requests: loads and displays the administrator dashboard.
+     *
+     * <p>Processing steps:
+     * <ol>
+     *   <li>Verify administrator identity</li>
+     *   <li>Load details of the specified TA/MO/job based on optional parameters</li>
+     *   <li>Bind dashboard data to request attributes</li>
+     *   <li>Forward to admin_home.jsp</li>
+     * </ol>
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @throws ServletException if a Servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -79,6 +119,22 @@ public class AdminDashboardServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/admin_home.jsp").forward(req, resp);
     }
 
+    /**
+     * Handles POST requests: executes administrator management operations.
+     *
+     * <p>Different operations are performed based on the action parameter:
+     * <ul>
+     *   <li>resetTaPassword / resetMoPassword -- reset account password</li>
+     *   <li>toggleTaFreeze / toggleMoFreeze -- freeze/unfreeze account</li>
+     *   <li>updateJob -- update job information</li>
+     *   <li>deleteJob -- delete a job</li>
+     * </ul>
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @throws ServletException if a Servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -140,6 +196,18 @@ public class AdminDashboardServlet extends HttpServlet {
                 selectedTaId, selectedMoId, selectedJobId, focusSection);
     }
 
+    /**
+     * Handles the result of an account operation by redirecting with a result message.
+     *
+     * @param req           the HTTP request
+     * @param resp          the HTTP response
+     * @param result        the service-layer result of the account operation
+     * @param selectedTaId  the currently selected TA ID
+     * @param selectedMoId  the currently selected MO ID
+     * @param selectedJobId the currently selected job ID
+     * @param focusSection  the focus panel section
+     * @throws IOException if an I/O error occurs
+     */
     private void handleAccountResult(HttpServletRequest req, HttpServletResponse resp, ServiceResult<UserAccount> result,
                                      String selectedTaId, String selectedMoId, String selectedJobId,
                                      String focusSection) throws IOException {
@@ -147,6 +215,19 @@ public class AdminDashboardServlet extends HttpServlet {
                 selectedTaId, selectedMoId, selectedJobId, focusSection);
     }
 
+    /**
+     * Builds a redirect URL (with query parameters) and performs the redirect.
+     *
+     * @param req           the HTTP request
+     * @param resp          the HTTP response
+     * @param message       the result message
+     * @param success       whether the operation was successful
+     * @param selectedTaId  the currently selected TA ID
+     * @param selectedMoId  the currently selected MO ID
+     * @param selectedJobId the currently selected job ID
+     * @param focusSection  the focus panel section
+     * @throws IOException if an I/O error occurs
+     */
     private void redirectWithResult(HttpServletRequest req, HttpServletResponse resp, String message, boolean success,
                                     String selectedTaId, String selectedMoId, String selectedJobId,
                                     String focusSection) throws IOException {
@@ -163,6 +244,15 @@ public class AdminDashboardServlet extends HttpServlet {
         resp.sendRedirect(target.toString());
     }
 
+    /**
+     * Appends a query parameter to the URL builder.
+     *
+     * @param target   the URL builder
+     * @param hasQuery whether a query parameter already exists
+     * @param name     the parameter name
+     * @param value    the parameter value
+     * @return whether a query parameter is now present after appending
+     */
     private static boolean appendQuery(StringBuilder target, boolean hasQuery, String name, String value) {
         if (value == null || value.isBlank()) {
             return hasQuery;
@@ -174,6 +264,12 @@ public class AdminDashboardServlet extends HttpServlet {
         return true;
     }
 
+    /**
+     * Binds dashboard data to request attributes for JSP page rendering.
+     *
+     * @param req  the HTTP request
+     * @param data the dashboard data
+     */
     private void bindDashboard(HttpServletRequest req, AdminDashboardData data) {
         req.setAttribute("taAccounts", data.getTaAccounts());
         req.setAttribute("moAccounts", data.getMoAccounts());
@@ -195,6 +291,15 @@ public class AdminDashboardServlet extends HttpServlet {
         req.setAttribute("recentAlerts", data.getRecentAlerts());
     }
 
+    /**
+     * Verifies that the current user is an administrator; redirects or returns an
+     * error if not.
+     *
+     * @param req  the HTTP request
+     * @param resp the HTTP response
+     * @return the current admin user, or null if verification fails
+     * @throws IOException if an I/O error occurs (may be thrown during redirect)
+     */
     private LoginUser currentAdmin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
         LoginUser loginUser = session == null ? null : (LoginUser) session.getAttribute("loginUser");
@@ -209,11 +314,25 @@ public class AdminDashboardServlet extends HttpServlet {
         return loginUser;
     }
 
+    /**
+     * Selects a non-null value, preferring the preferred value and falling back
+     * to the fallback when it is null.
+     *
+     * @param preferred the preferred value
+     * @param fallback  the fallback value
+     * @return a non-null value
+     */
     private static String selectedOr(String preferred, String fallback) {
         String value = trimToNull(preferred);
         return value != null ? value : fallback;
     }
 
+    /**
+     * Normalises the focus section parameter, accepting only known panel identifiers.
+     *
+     * @param value the raw focus section parameter
+     * @return a valid focus section identifier, or null if invalid
+     */
     private static String normalizeFocusSection(String value) {
         String trimmed = trimToNull(value);
         if (TA_PANEL.equals(trimmed) || MO_PANEL.equals(trimmed) || JOB_PANEL.equals(trimmed)) {
@@ -222,6 +341,12 @@ public class AdminDashboardServlet extends HttpServlet {
         return null;
     }
 
+    /**
+     * Trims the string and returns null if the result is empty.
+     *
+     * @param value the input string
+     * @return the trimmed string, or null if empty
+     */
     private static String trimToNull(String value) {
         if (value == null) {
             return null;

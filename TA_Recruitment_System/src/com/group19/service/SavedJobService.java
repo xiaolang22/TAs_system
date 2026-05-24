@@ -13,6 +13,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Saved job service handling core logic for TA users to save and unsave
+ * job positions. Supports checking saved status, listing saved jobs,
+ * saving, and removing saved items.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class SavedJobService {
     private final SavedJobDao savedJobDao;
     private final JobDao jobDao;

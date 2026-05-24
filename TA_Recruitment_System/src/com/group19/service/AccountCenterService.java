@@ -12,6 +12,13 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Account centre service handling user profile, password, and avatar management.
+ * Supports updating username/display name, changing password, and uploading avatars.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class AccountCenterService {
     private final UserAccountDao userAccountDao;
 

@@ -9,16 +9,42 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data access object for UserAccount entities, responsible for reading and writing
+ * user account data stored in JSON files. Upon first access, if the data file is
+ * empty, the DAO automatically initialises it with preset accounts (including TA,
+ * MO, and ADMIN test accounts).
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class UserAccountDao {
+
+    /** Preset list of default accounts used for first-time initialisation. */
     private static final List<UserAccount> DEFAULT_ACCOUNTS = buildDefaultAccounts();
+
+    /** File path to the user account data JSON file. */
     private final Path userFilePath;
+
+    /** Type token required for Gson deserialisation. */
     private final Type listType = new TypeToken<List<UserAccount>>() {
     }.getType();
 
+    /**
+     * Constructs a new UserAccountDao instance.
+     *
+     * @param userFilePath file path to the user account data JSON file
+     */
     public UserAccountDao(Path userFilePath) {
         this.userFilePath = userFilePath;
     }
 
+    /**
+     * Builds the system's default account list, including TA test accounts, MO test
+     * accounts, and an administrator account.
+     *
+     * @return a list of preset accounts
+     */
     private static List<UserAccount> buildDefaultAccounts() {
         List<UserAccount> accounts = new ArrayList<>();
         accounts.add(new UserAccount("ta001", "ta123456", "TA", "TA Test User", "231221618"));
@@ -51,6 +77,13 @@ public class UserAccountDao {
         return accounts;
     }
 
+    /**
+     * Retrieves all user accounts (automatically initialises with default data if the
+     * file is empty on first call).
+     *
+     * @return a list of user accounts
+     * @throws IOException if the file cannot be read or written
+     */
     public List<UserAccount> findAll() throws IOException {
         List<UserAccount> accounts = JsonFileUtil.readList(userFilePath, listType);
         if (!accounts.isEmpty()) {
@@ -72,6 +105,13 @@ public class UserAccountDao {
         return seededAccounts;
     }
 
+    /**
+     * Finds a user account by username (case-insensitive).
+     *
+     * @param username the username
+     * @return the matching UserAccount, or {@code null} if not found
+     * @throws IOException if the file cannot be read
+     */
     public UserAccount findByUsername(String username) throws IOException {
         if (username == null || username.isBlank()) {
             return null;
@@ -86,6 +126,13 @@ public class UserAccountDao {
         return null;
     }
 
+    /**
+     * Finds a user account by user ID (case-insensitive).
+     *
+     * @param userId the unique user identifier (student/staff ID)
+     * @return the matching UserAccount, or {@code null} if not found
+     * @throws IOException if the file cannot be read
+     */
     public UserAccount findByUserId(String userId) throws IOException {
         if (userId == null || userId.isBlank()) {
             return null;
@@ -100,6 +147,13 @@ public class UserAccountDao {
         return null;
     }
 
+    /**
+     * Finds the first user with the given role (case-insensitive).
+     *
+     * @param role the role name (TA, MO, or ADMIN)
+     * @return the matching UserAccount, or {@code null} if not found
+     * @throws IOException if the file cannot be read
+     */
     public UserAccount findFirstByRole(String role) throws IOException {
         if (role == null || role.isBlank()) {
             return null;
@@ -114,6 +168,13 @@ public class UserAccountDao {
         return null;
     }
 
+    /**
+     * Saves a new user account (appends to the JSON file).
+     *
+     * @param account the UserAccount object to save
+     * @return the saved UserAccount object
+     * @throws IOException if the file cannot be written
+     */
     public UserAccount save(UserAccount account) throws IOException {
         List<UserAccount> accounts = new ArrayList<>(findAll());
         accounts.add(account);
@@ -121,6 +182,14 @@ public class UserAccountDao {
         return account;
     }
 
+    /**
+     * Updates a user account by user ID (case-insensitive ID matching; replaces if
+     * found).
+     *
+     * @param target the UserAccount object containing updated data
+     * @return the updated UserAccount, or {@code null} if no matching record is found
+     * @throws IOException if the file cannot be written
+     */
     public UserAccount updateByUserId(UserAccount target) throws IOException {
         if (target == null || target.getUserId() == null || target.getUserId().isBlank()) {
             return null;
