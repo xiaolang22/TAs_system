@@ -10,15 +10,37 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data access object for Notification entities, responsible for reading and writing
+ * notification data stored in JSON files. Supports querying notifications by
+ * recipient user and batch mark-as-read operations.
+ *
+ * @author Group19
+ * @since 1.0
+ */
 public class NotificationDao {
+
+    /** File path to the notification data JSON file. */
     private final Path notificationFilePath;
+
+    /** Type token required for Gson deserialisation. */
     private final Type listType = new TypeToken<List<Notification>>() {
     }.getType();
 
+    /**
+     * Constructs a new NotificationDao instance.
+     *
+     * @param notificationFilePath file path to the notification data JSON file
+     */
     public NotificationDao(Path notificationFilePath) {
         this.notificationFilePath = notificationFilePath;
     }
 
+    /**
+     * Retrieves all notification records.
+     *
+     * @return a list of notifications, or an empty list if reading fails
+     */
     public List<Notification> findAll() {
         try {
             List<Notification> notifications = JsonFileUtil.readList(notificationFilePath, listType);
@@ -29,6 +51,12 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Saves a new notification record (appends to the JSON file).
+     *
+     * @param notification the Notification object to save
+     * @return {@code true} if the write operation succeeds
+     */
     public boolean save(Notification notification) {
         List<Notification> notifications = findAll();
         notifications.add(notification);
@@ -41,6 +69,12 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Finds all notifications for a given recipient user ID (case-insensitive).
+     *
+     * @param recipientUserId the recipient user ID
+     * @return a list of matching notifications
+     */
     public List<Notification> findByRecipientUserId(String recipientUserId) {
         if (recipientUserId == null || recipientUserId.isBlank()) {
             return new ArrayList<>();
@@ -54,6 +88,15 @@ public class NotificationDao {
         return result;
     }
 
+    /**
+     * Marks notifications matching the given recipient, application, and type as
+     * read.
+     *
+     * @param recipientUserId the recipient user ID
+     * @param applicationId   the associated application ID
+     * @param type            the notification type ({@code null} means match all types)
+     * @return {@code true} if the operation succeeds
+     */
     public boolean markAsReadByRecipientAndApplication(String recipientUserId, String applicationId, String type) {
         if (recipientUserId == null || recipientUserId.isBlank()
                 || applicationId == null || applicationId.isBlank()) {
@@ -91,6 +134,13 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Marks all notifications for a given recipient and type as read.
+     *
+     * @param recipientUserId the recipient user ID
+     * @param type            the notification type ({@code null} means match all types)
+     * @return {@code true} if the operation succeeds
+     */
     public boolean markAllAsReadByRecipientAndType(String recipientUserId, String type) {
         if (recipientUserId == null || recipientUserId.isBlank()) {
             return false;
