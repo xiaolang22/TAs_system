@@ -1,7 +1,15 @@
+/* =============================================================
+   TA Recruitment System - Global Stylesheet
+   Covering: base reset, layout containers, forms, cards, authentication pages,
+        TA/MO/Admin dashboards, workload monitoring, responsive adaptation
+   ============================================================= */
+
+/* ---------- Global Reset ---------- */
 * {
     box-sizing: border-box;
 }
 
+/* ---------- Base Typography ---------- */
 body {
     margin: 0;
     font-family: "Segoe UI", "PingFang SC", sans-serif;
@@ -78,6 +86,7 @@ label {
     font-weight: 600;
 }
 
+/* ---------- Form Elements ---------- */
 input,
 textarea,
 button {
@@ -139,6 +148,7 @@ button:hover {
     background: #374151;
 }
 
+/* ---------- Alerts & Status Messages ---------- */
 .alert {
     border-radius: 8px;
     padding: 10px 12px;
@@ -191,6 +201,7 @@ button:hover {
     margin: 6px 0;
 }
 
+/* ---------- Card Components ---------- */
 .card {
     margin-top: 16px;
     border: 1px solid #e5e7eb;
@@ -934,6 +945,7 @@ button:hover {
     line-height: 1.5;
 }
 
+/* ---------- Workload Dashboard Styles ---------- */
 .workload-shell {
     display: grid;
     gap: 18px;
@@ -1103,6 +1115,9 @@ button:hover {
     }
 }
 
+/* =============================================================
+   Authentication Page Styles (Login/Registration)
+   ============================================================= */
 body.auth-page {
     min-height: 100vh;
     background:
@@ -1417,6 +1432,9 @@ body.auth-page {
     }
 }
 
+/* =============================================================
+   TA-Side Page Styles (Home, Job List, Dashboard, Top Bar)
+   ============================================================= */
 body.ta-page {
     min-height: 100vh;
     background:
@@ -1945,6 +1963,7 @@ body.ta-page {
     color: #0f172a;
 }
 
+/* ---------- Admin Panel Styles ---------- */
 .admin-home-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
@@ -2164,6 +2183,7 @@ body.ta-page {
     }
 }
 
+/* ---------- TA Profile & Account Centre Styles ---------- */
 .ta-profile-hero {
     display: flex;
     align-items: center;
@@ -2480,7 +2500,9 @@ body.ta-page {
     }
 }
 
-/* Shared MO/Admin visual layer: intentionally reuses the TA page palette and component language. */
+/* =============================================================
+   MO/Admin Role Page Shared Styles
+   ============================================================= */
 body.role-page {
     min-height: 100vh;
 }
